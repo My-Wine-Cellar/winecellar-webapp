@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wine Cellar</title>
+</head>
+<body>
+<h1>Wine List</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Vintage</th>
+        <th>Appellation</th>
+        <th>Varietal</th>
+        <th>Country</th>
+        <th>Rating</th>
+    </tr>
+    <tr th:each="wine : ${wines}">
+        <td th:text="${wine.id}">ID</td>
+        <td th:text="${wine.name}">Name</td>
+        <td th:text="${wine.vintage}">Vintage</td>
+        <td th:text="${wine.appellation}">Appellation</td>
+        <td th:text="${wine.varietal}">Varietal</td>
+        <td th:text="${wine.country}">Country</td>
+        <td th:text="${wine.rating}">Rating</td>
+    </tr>
+</table>
+
+</body>
+</html>

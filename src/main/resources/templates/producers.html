@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wine Cellar</title>
+</head>
+<body>
+<h1>Producers List</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Appellation</th>
+        <th>Country</th>
+    </tr>
+    <tr th:each="producer : ${producers}">
+        <td th:text="${producer.id}">ID</td>
+        <td th:text="${producer.name}">Name</td>
+        <td th:text="${producer.appellation}">Appellation</td>
+        <td th:text="${producer.country}">Country</td>
+    </tr>
+</table>
+
+</body>
+</html>
