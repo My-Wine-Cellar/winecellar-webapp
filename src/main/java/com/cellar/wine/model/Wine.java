@@ -19,9 +19,6 @@ public class Wine {
     private String country;
     private int rating;
 
-    @OneToOne
-    private Importer importer;
-
     @ManyToMany
     @JoinTable(name = "producer_wine", joinColumns = @JoinColumn(name = "wine_id"),
             inverseJoinColumns = @JoinColumn(name = "producer_id"))
