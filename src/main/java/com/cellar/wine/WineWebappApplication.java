@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WineWebappApplication {
 
     @RequestMapping("/")
-    public String welcome() {
+    public String index() {
         return "index";
     }
 
