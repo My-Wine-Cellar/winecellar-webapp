@@ -28,6 +28,13 @@ public class Wine extends BaseEntity {
     public Wine() {
     }
 
+    public Wine(String name, String vintage, String varietal, String country) {
+        this.name = name;
+        this.vintage = vintage;
+        this.varietal = varietal;
+        this.country = country;
+    }
+
     public Wine(String name, String vintage, String appellation, String varietal, String country, int rating, double price) {
         this.name = name;
         this.vintage = vintage;

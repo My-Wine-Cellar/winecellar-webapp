@@ -32,6 +32,9 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         Producer seasmoke = new Producer("Sea Smoke", "USA", "Russian River Valley");
         producerRepository.save(seasmoke);
 
+        Wine malbec = new Wine("King Rabbit", "2016", "n/a", "Malbec", "France", 4, 12.99);
+        wineRepository.save(malbec);
+
     }
 
 }
