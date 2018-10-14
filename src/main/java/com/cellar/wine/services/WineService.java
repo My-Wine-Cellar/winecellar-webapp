@@ -4,9 +4,7 @@ import com.cellar.wine.model.Wine;
 
 import java.util.Set;
 
-public interface WineService {
+public interface WineService extends CrudService<Wine, Long> {
 
-    Wine findById(Long id);
-    Wine save(Wine wine);
-    Set<Wine> findAll();
+    Wine findByName(String name);
 }
