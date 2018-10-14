@@ -1,3 +1,20 @@
  h1 {
      color: #a00025;
  }
+
+ tr {
+     color: yellow;
+ }
+
+ td {
+     color: blue;
+ }
+
+ th {
+     color: green;
+ }
+
+ tr, td, th {
+     word-spacing: 70px;
+     text-align: center;
+ }

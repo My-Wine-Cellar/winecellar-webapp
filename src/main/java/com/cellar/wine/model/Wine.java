@@ -17,6 +17,7 @@ public class Wine {
     private String appellation;
     private String varietal;
     private String country;
+    private double price;
     private int rating;
 
     @ManyToMany
@@ -27,22 +28,24 @@ public class Wine {
     public Wine() {
     }
 
-    public Wine(String name, String vintage, String appellation, String varietal, String country, int rating) {
+    public Wine(String name, String vintage, String appellation, String varietal, String country, int rating, double price) {
         this.name = name;
         this.vintage = vintage;
         this.appellation = appellation;
         this.varietal = varietal;
         this.country = country;
         this.rating = rating;
+        this.price = price;
     }
 
-    public Wine(String name, String vintage, String appellation, String varietal, String country, int rating, Set<Producer> producers) {
+    public Wine(String name, String vintage, String appellation, String varietal, String country, int rating, double price, Set<Producer> producers) {
         this.name = name;
         this.vintage = vintage;
         this.appellation = appellation;
         this.varietal = varietal;
         this.country = country;
         this.rating = rating;
+        this.price = price;
         this.producers = producers;
     }
 
@@ -110,6 +113,14 @@ public class Wine {
         this.producers = producers;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -131,7 +142,8 @@ public class Wine {
                 ", appellation='" + appellation + '\'' +
                 ", varietal='" + varietal + '\'' +
                 ", country='" + country + '\'' +
-                ", rating=" + rating +
+                ", rating=" + rating + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

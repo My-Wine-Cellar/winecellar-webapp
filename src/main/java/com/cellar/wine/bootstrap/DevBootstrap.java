@@ -26,7 +26,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
     private void initData() {
 
-        Wine pinot = new Wine("BombDotCom", "2013", "Bourgogne", "Pinot", "France", 5);
+        Wine pinot = new Wine("BombDotCom", "2013", "Bourgogne", "Pinot", "France", 5, 10.99);
         wineRepository.save(pinot);
 
         Producer seasmoke = new Producer("Sea Smoke", "USA", "Russian River Valley");
