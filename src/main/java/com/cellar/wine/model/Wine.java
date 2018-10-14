@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Wine {
+public class Wine extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

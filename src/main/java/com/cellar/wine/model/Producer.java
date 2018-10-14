@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Producer {
+public class Producer extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
