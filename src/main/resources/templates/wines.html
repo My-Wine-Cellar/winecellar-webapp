@@ -17,6 +17,7 @@
         <th>Varietal</th>
         <th>Country</th>
         <th>Rating</th>
+        <th>Price</th>
     </tr>
     <tr th:each="wine : ${wines}">
         <td th:text="${wine.id}">ID</td>
@@ -26,6 +27,7 @@
         <td th:text="${wine.varietal}">Varietal</td>
         <td th:text="${wine.country}">Country</td>
         <td th:text="${wine.rating}">Rating</td>
+        <td th:text="${wine.price}">Price</td>
     </tr>
 </table>
 
