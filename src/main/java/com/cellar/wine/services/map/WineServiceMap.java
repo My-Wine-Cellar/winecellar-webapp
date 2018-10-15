@@ -1,11 +1,13 @@
 package com.cellar.wine.services.map;
 
 import com.cellar.wine.model.Wine;
-import com.cellar.wine.services.CrudService;
+import com.cellar.wine.services.WineService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-public class WineServiceMap extends AbstractMapService<Wine, Long> implements CrudService<Wine, Long> {
+@Service
+public class WineServiceMap extends AbstractMapService<Wine, Long> implements WineService {
 
     @Override
     public Set<Wine> findAll() {
@@ -30,5 +32,10 @@ public class WineServiceMap extends AbstractMapService<Wine, Long> implements Cr
     @Override
     public void deleteById(Long id) {
         super.deleteById(id);
+    }
+
+    @Override
+    public Wine findByName(String name) {
+        return null;
     }
 }
