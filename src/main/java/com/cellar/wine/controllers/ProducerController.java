@@ -1,22 +1,23 @@
 package com.cellar.wine.controllers;
 
-import com.cellar.wine.repositories.ProducerRepository;
+import com.cellar.wine.services.ProducerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@RequestMapping("/producers")
 @Controller
 public class ProducerController {
 
-    private ProducerRepository producerRepository;
+    private final ProducerService producerService;
 
-    public ProducerController(ProducerRepository producerRepository) {
-        this.producerRepository = producerRepository;
+    public ProducerController(ProducerService producerService) {
+        this.producerService = producerService;
     }
 
-    @RequestMapping("producers")
-    public String getProducers(Model model) {
-        model.addAttribute("producers", producerRepository.findAll());
-        return "producers";
+    @RequestMapping({"", "/", "/index", "/index.html"})
+    public String listProducers(Model model) {
+        model.addAttribute("producers", producerService.findAll());
+        return "producers/index";
     }
 }
