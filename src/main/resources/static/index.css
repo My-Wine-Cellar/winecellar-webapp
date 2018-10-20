@@ -1,20 +1,34 @@
- h1 {
-     color: #a00025;
- }
+html {
+    background: url(wine.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 
- tr {
-     color: yellow;
- }
+h1 {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    color: #a00025;
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 40pt;
 
- td {
-     color: blue;
- }
+}
 
- th {
-     color: green;
- }
+tr {
+    color: yellow;
+}
 
- tr, td, th {
-     word-spacing: 70px;
-     text-align: center;
- }
+td {
+    color: blue;
+}
+
+th {
+    color: green;
+}
+
+tr, td, th {
+    word-spacing: 70px;
+    text-align: center;
+}

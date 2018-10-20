@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class ProducerServiceMap extends AbstractMapService<Producer, Long> implements ProducerService{
+public class ProducerServiceMap extends AbstractMapService<Producer, Long> implements ProducerService {
 
     @Override
     public Set<Producer> findAll() {
