@@ -1,13 +1,9 @@
 html {
-    background: url(wine.jpg) no-repeat center center fixed;
+    background: url(resources/images/wine.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-}
-
-img:hover {
-    opacity: 1.0;
 }
 
 h1 {
@@ -17,7 +13,6 @@ h1 {
     font-family: sans-serif;
     text-align: center;
     font-size: 40pt;
-
 }
 
 h2 {
