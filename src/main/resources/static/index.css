@@ -6,8 +6,12 @@ html {
     background-size: cover;
 }
 
+img:hover {
+    opacity: 1.0;
+}
+
 h1 {
-    writing-mode: vertical-rl;
+    writing-mode: vertical-lr;
     text-orientation: upright;
     color: #a00025;
     font-family: sans-serif;
@@ -16,19 +20,11 @@ h1 {
 
 }
 
-tr {
-    color: yellow;
-}
-
-td {
-    color: blue;
-}
-
-th {
-    color: green;
+h2 {
+    font-family: sans-serif;
 }
 
 tr, td, th {
-    word-spacing: 70px;
+    font-family: sans-serif;
     text-align: center;
 }
