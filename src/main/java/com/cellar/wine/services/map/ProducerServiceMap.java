@@ -21,7 +21,7 @@ public class ProducerServiceMap extends AbstractMapService<Producer, Long> imple
 
     @Override
     public Producer save(Producer object) {
-        return super.save(object.getId(), object);
+        return super.save(object);
     }
 
     @Override

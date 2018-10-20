@@ -11,7 +11,6 @@ public class Wine extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String name;
     private String vintage;
     private String appellation;
@@ -124,7 +123,7 @@ public class Wine extends BaseEntity {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

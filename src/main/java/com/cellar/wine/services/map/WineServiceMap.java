@@ -21,7 +21,7 @@ public class WineServiceMap extends AbstractMapService<Wine, Long> implements Wi
 
     @Override
     public Wine save(Wine object) {
-        return super.save(object.getId(), object);
+        return super.save(object);
     }
 
     @Override
