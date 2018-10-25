@@ -4,6 +4,7 @@ import com.cellar.wine.services.ProducerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping("/producers")
 @Controller
@@ -16,8 +17,8 @@ public class ProducerController {
     }
 
     @RequestMapping({"", "/", "/index", "/index.html"})
-    public String listProducers(Model model) {
+    public ModelAndView listProducers(Model model) {
         model.addAttribute("producers", producerService.findAll());
-        return "producers/index";
+        return new ModelAndView("producers/index");
     }
 }
