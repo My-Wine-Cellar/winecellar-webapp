@@ -9,7 +9,6 @@ html {
 h1 {
     writing-mode: vertical-lr;
     text-orientation: upright;
-    color: #a00025;
     font-family: sans-serif;
     text-align: center;
     font-size: 40pt;
@@ -22,4 +21,8 @@ h2 {
 tr, td, th {
     font-family: sans-serif;
     text-align: center;
+}
+
+h1, h2, tr, td, th {
+    color: #a00025;
 }
