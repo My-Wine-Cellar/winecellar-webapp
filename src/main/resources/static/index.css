@@ -7,10 +7,10 @@ html {
 }
 
 h1 {
-    writing-mode: vertical-lr;
-    text-orientation: upright;
+    /*writing-mode: vertical-lr;*/
+    /*text-orientation: upright;*/
     font-family: sans-serif;
-    text-align: center;
+    /*text-align: center;*/
     font-size: 40pt;
 }
 
@@ -18,7 +18,7 @@ h2 {
     font-family: sans-serif;
 }
 
-tr, td, th {
+tr, td, th, a {
     font-family: sans-serif;
     text-align: center;
 }

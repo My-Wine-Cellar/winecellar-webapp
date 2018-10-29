@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <link rel="stylesheet" href="index.css">
     <meta charset="UTF-8">
@@ -7,7 +7,6 @@
 </head>
 <body>
 <h2 th:text="'List of Wines'">Wine List</h2>
-
 <table>
     <tr>
         <th>ID</th>
@@ -30,6 +29,9 @@
         <td th:text="${wine.price}">Price</td>
     </tr>
 </table>
-
+<br/>
+<a th:href="@{index.html}">Home Page</a>
+<br/>
+<a th:href="@{producers}">Producers</a>
 </body>
 </html>

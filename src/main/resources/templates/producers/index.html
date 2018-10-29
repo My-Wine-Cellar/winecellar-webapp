@@ -6,8 +6,8 @@
     <title>Wine Cellar</title>
 </head>
 <body>
-<h2 th:text="'List of Producers'">Producers List</h2>
 
+<h2 th:text="'List of Producers'">Producers List</h2>
 <table>
     <tr>
         <th>ID</th>
@@ -22,6 +22,9 @@
         <td th:text="${producer.country}">Country</td>
     </tr>
 </table>
-
+<br/>
+<a th:href="@{index.html}">Home Page</a>
+<br/>
+<a th:href="@{wines}">Wines</a>
 </body>
 </html>
