@@ -1,36 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{resources}/index.css">
-    <link rel="icon" type="image/png" href="/resources/static/resources/images/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/resources/static/resources/images/favicon-16x16.png" sizes="16x16" />
-    <link rel="icon" type="image/png" href="${resources(dir: 'images', file: 'favicon-16x16.png')}" sizes="16x16" />
+    <link rel="stylesheet" th:href="index.css">
+    <link rel="shortcut icon" type="image/ico" th:href="@{favicon.ico}"/>
     <meta charset="UTF-8">
     <title>Wine Cellar</title>
 </head>
 <body>
 <h1 th:text="'Wine Cellar'">Wine Cellar</h1>
-
-<table>
-    <thead>
-    <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <!--<tr th:each="wines : ${wines}">-->
-        <!--<td th:text="${wines.name}">Name</td>-->
-        <!--<td th:text="${wines.vintage}">Vintage</td>-->
-        <!--<td th:text="${wines.varietal}">Varietal</td>-->
-    <!--</tr>-->
-    </tbody>
-</table>
-<br/>
-<a th:href="@{producers}">Producers</a>
-<br/>
+<a th:href="@{producers}">Producers</a> |
 <a th:href="@{wines}">Wines</a>
 </body>
 </html>
