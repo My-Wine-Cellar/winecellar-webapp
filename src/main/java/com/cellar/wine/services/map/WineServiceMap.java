@@ -2,11 +2,13 @@ package com.cellar.wine.services.map;
 
 import com.cellar.wine.model.Wine;
 import com.cellar.wine.services.WineService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@Profile({"default", "map"})
 public class WineServiceMap extends AbstractMapService<Wine, Long> implements WineService {
 
     @Override

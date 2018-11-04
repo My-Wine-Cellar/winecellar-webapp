@@ -4,6 +4,7 @@ import com.cellar.wine.model.BaseEntity;
 
 import java.util.*;
 
+//TODO eventually remove the map services
 public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
 
     protected Map<Long, T> map = new HashMap<>();
