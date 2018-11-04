@@ -8,8 +8,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Builder
 @Entity
 @Table(name = "wine")
 public class Wine extends BaseEntity {

@@ -10,8 +10,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Builder
 @Entity
 @Table(name = "producer")
 public class Producer extends BaseEntity {

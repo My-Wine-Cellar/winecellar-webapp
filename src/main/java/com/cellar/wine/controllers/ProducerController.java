@@ -17,8 +17,8 @@ public class ProducerController {
     }
 
     @RequestMapping({"", "/", "/index", "/index.html"})
-    public ModelAndView listProducers(Model model) {
+    public String listProducers(Model model) {
         model.addAttribute("producers", producerService.findAll());
-        return new ModelAndView("producers/index");
+        return "producers/index";
     }
 }
