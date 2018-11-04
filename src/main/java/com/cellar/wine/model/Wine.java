@@ -13,9 +13,9 @@ import javax.persistence.*;
 @Table(name = "wine")
 public class Wine extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "producer_id")
+    private Producer producer;
 
     @Column(name = "name")
     private String name;
@@ -38,8 +38,5 @@ public class Wine extends BaseEntity {
     @Column(name = "rating")
     private int rating;
 
-    @ManyToOne
-    @JoinColumn(name = "producer_id")
-    private Producer producer;
 
 }

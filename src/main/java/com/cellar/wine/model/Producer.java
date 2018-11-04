@@ -10,14 +10,12 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "producer")
 public class Producer extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
+    private Set<Wine> wines = new HashSet<>();
 
     @Column(name = "name")
     private String name;
@@ -27,8 +25,5 @@ public class Producer extends BaseEntity {
 
     @Column(name = "appellation")
     private String appellation;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
-    private Set<Wine> wines = new HashSet<>();
 
 }
