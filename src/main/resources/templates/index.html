@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body}, 'home')}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="index.css">
     <link rel="shortcut icon" type="image/ico" th:href="@{favicon.ico}"/>
@@ -9,12 +9,6 @@
 </head>
 <body>
 <h1 th:text="'Wine Cellar'">Wine Cellar</h1>
-<!--<h2 th:text="#{welcome}">Welcome</h2>-->
-<!--<div class="row">-->
-    <!--<div class="col-md-12">-->
-        <!--<img class="img-responsive" src="../static/resources/images/wine.jpg" th:src="@{/resources/images/wine.jpg}"/>-->
-    <!--</div>-->
-<!--</div>-->
 <a th:href="@{producers}">Producers</a> |
 <a th:href="@{wines}">Wines</a>
 </body>
