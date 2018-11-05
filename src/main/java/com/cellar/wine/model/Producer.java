@@ -15,6 +15,7 @@ import java.util.Set;
 public class Producer extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
+    //@JoinColumn(name = "wine_id")
     private Set<Wine> wines = new HashSet<>();
 
     @Column(name = "name")

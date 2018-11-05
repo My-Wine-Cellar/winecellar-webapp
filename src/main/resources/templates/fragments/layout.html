@@ -1,5 +1,5 @@
 <!doctype html>
-<html th:fragment="layout (template, menu)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (template, menu)">
 
 <head>
 
@@ -51,14 +51,14 @@
                     <span>Home</span>
                 </li>
 
-                <li th:replace="::menuItem ('/producers/find','owners','find owners','search','Find producers')">
+                <li th:replace="::menuItem ('/producers','owners','find owners','search','Producers')">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <span>Find owners</span>
+                    <span>Producers</span>
                 </li>
 
-                <li th:replace="::menuItem ('/wines.html','wines','wines','th-list','Wines')">
+                <li th:replace="::menuItem ('/wines/index.html','wines','wines','th-list','Wines')">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Veterinarians</span>
+                    <span>Wines</span>
                 </li>
 
                 <li th:replace="::menuItem ('/oups','error','trigger a RuntimeException to see how it is handled','warning-sign','Error')">

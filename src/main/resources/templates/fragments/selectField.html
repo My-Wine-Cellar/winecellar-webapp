@@ -1,4 +1,4 @@
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <form>
     <th:block th:fragment="select (label, name, items)">
@@ -10,7 +10,7 @@
             <div class="col-sm-10">
                 <select th:field="*{__${name}__}">
                     <option th:each="item : ${items}" th:value="${item}"
-                            th:text="${item}">wine
+                            th:text="${item}">
                     </option>
                 </select>
                 <span th:if="${valid}"
