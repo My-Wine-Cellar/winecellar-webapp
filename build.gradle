@@ -30,24 +30,25 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.mockito:mockito-junit-jupiter:2.23.0')
 
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('com.h2database:h2')
     runtime('mysql:mysql-connector-java')
 
-    compileOnly('org.projectlombok:lombok')
+    compileOnly('org.projectlombok:lombok:1.18.4')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.mockito:mockito-core:2.+')
-    compile('org.mockito:mockito-junit-jupiter:2.23.0')
     testCompile('org.junit.jupiter:junit-jupiter-api:5.3.1')
     testCompile('org.junit.jupiter:junit-jupiter-params:5.3.1')
+
     testRuntime('org.junit.jupiter:junit-jupiter-engine:5.3.1')
 }
 
 test {
     useJUnitPlatform()
     testLogging {
-        events "passed", "skipped", "failed"
+        events 'passed', 'skipped', 'failed'
     }
 }
