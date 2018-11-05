@@ -24,6 +24,13 @@ public class ProducerController {
         return "producers/index";
     }
 
+    @RequestMapping("/find")
+    public ModelAndView findProducers(@PathVariable("producersName") String producerName) {
+        ModelAndView mav = new ModelAndView("producers/findProducers");
+        mav.addObject(producerService.findByName(producerName));
+        return mav;
+    }
+
     @GetMapping("/{producersId}")
     public ModelAndView showProducer(@PathVariable("producersId") Long producerId) {
         ModelAndView mav = new ModelAndView("producers/producersDetails");
