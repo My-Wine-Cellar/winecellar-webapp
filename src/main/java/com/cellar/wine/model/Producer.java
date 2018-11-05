@@ -14,8 +14,19 @@ import java.util.Set;
 @Table(name = "producer")
 public class Producer extends BaseEntity {
 
+    @Builder
+    public Producer(Long id, String name, String country, String appellation, Set<Wine> wines) {
+        super(id);
+        this.name = name;
+        this.country = country;
+        this.appellation = appellation;
+
+        if (wines != null) {
+            this.wines = wines;
+        }
+    }
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
-    //@JoinColumn(name = "wine_id")
     private Set<Wine> wines = new HashSet<>();
 
     @Column(name = "name")

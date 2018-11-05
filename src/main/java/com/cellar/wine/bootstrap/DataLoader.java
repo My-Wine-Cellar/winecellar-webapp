@@ -1,12 +1,11 @@
 package com.cellar.wine.bootstrap;
 
-import com.cellar.wine.model.Wine;
 import com.cellar.wine.model.Producer;
+import com.cellar.wine.model.Wine;
 import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 
 @Component
 public class DataLoader implements CommandLineRunner {
