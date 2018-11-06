@@ -52,4 +52,14 @@ public class ProducerControllerTest {
                 .andExpect(model().attribute("producers", hasSize(2)));
     }
 
+//    @Test
+//    void displayProducer() throws Exception {
+//        when(producerService.findById(anyLong())).thenReturn(Producer.builder().id(1L).build());
+//
+//        mockMvc.perform(get("/producer/producerDetails"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("producer/producerDetails"))
+//                .andExpect(model().attribute("producers", is("id")));
+//    }
+
 }
