@@ -53,5 +53,8 @@ public class Wine extends BaseEntity {
     @Column(name = "rating")
     private int rating;
 
-
+    @Override
+    public String toString() {
+        return name + ", ";
+    }
 }

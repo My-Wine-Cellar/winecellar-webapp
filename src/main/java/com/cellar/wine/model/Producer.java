@@ -38,4 +38,9 @@ public class Producer extends BaseEntity {
     @Column(name = "appellation")
     private String appellation;
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

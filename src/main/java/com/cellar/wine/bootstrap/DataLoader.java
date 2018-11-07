@@ -21,6 +21,20 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        Producer producer1 = new Producer();
+        producer1.setName("Mark West");
+        producer1.setCountry("USA");
+        producer1.setAppellation("Napa Valley");
+        producerService.save(producer1);
+
+        Producer producer2 = new Producer();
+        producer2.setName("Big Boi");
+        producer2.setCountry("France");
+        producer2.setAppellation("Burgundy");
+        producerService.save(producer2);
+
+        System.out.println("Loaded producers...");
+
         Wine wine1 = new Wine();
         wine1.setAppellation("Willamette Valley");
         wine1.setCountry("USA");
@@ -29,7 +43,7 @@ public class DataLoader implements CommandLineRunner {
         wine1.setVintage("2015");
         wine1.setRating(4);
         wine1.setPrice(12.99);
-
+        wine1.setProducer(producer1);
         wineService.save(wine1);
 
         Wine wine2 = new Wine();
@@ -40,26 +54,12 @@ public class DataLoader implements CommandLineRunner {
         wine2.setVintage("2016");
         wine2.setRating(5);
         wine2.setPrice(9.99);
-
+        wine2.setProducer(producer2);
         wineService.save(wine2);
 
+        producer1.getWines().add(wine1);
+        producer2.getWines().add(wine2);
+
         System.out.println("Loaded wines...");
-
-        Producer producer1 = new Producer();
-        producer1.setName("Mark West");
-        producer1.setCountry("USA");
-        producer1.setAppellation("Napa Valley");
-
-        producerService.save(producer1);
-
-        Producer producer2 = new Producer();
-        producer2.setName("Big Boi");
-        producer2.setCountry("France");
-        producer2.setAppellation("Burgundy");
-
-        producerService.save(producer2);
-
-        System.out.println("Loaded producers...");
-
     }
 }
