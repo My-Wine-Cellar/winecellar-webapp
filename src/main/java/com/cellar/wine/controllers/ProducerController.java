@@ -19,6 +19,7 @@ public class ProducerController {
     private static final String FIND_PRODUCER_BY_NAME_VIEW = "producers/findProducers";
     private static final String CREATE_OR_UPDATE_PRODUCER_VIEW = "producers/createOrUpdateProducerForm";
     private static final String SHOW_PRODUCER_BY_ID_VIEW = "producers/producerDetails";
+    private static final String PRODUCER_INDEX_VIEW = "producers/index";
 
     private final ProducerService producerService;
 
@@ -29,7 +30,7 @@ public class ProducerController {
     @RequestMapping({"", "/", "/index", "/index.html"})
     public String listProducers(Model model) {
         model.addAttribute("producers", producerService.findAll());
-        return "producers/index";
+        return PRODUCER_INDEX_VIEW;
     }
 
     //Not working
@@ -39,12 +40,14 @@ public class ProducerController {
         return FIND_PRODUCER_BY_NAME_VIEW;
     }
 
+    //Not working
     @GetMapping("/{producerId}")
     public String showProducer(@PathVariable Long producerId, Model model) {
         model.addAttribute("producerId", producerService.findById(producerId));
         return SHOW_PRODUCER_BY_ID_VIEW;
     }
 
+    //Sort of working
     @GetMapping("/new")
     public String initCreationForm(Model model) {
         model.addAttribute("producer", Producer.builder().build());

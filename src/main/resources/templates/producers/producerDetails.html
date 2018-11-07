@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="index.css">
     <meta charset="UTF-8">
     <title>Producer Details</title>
 </head>
 <body>
-<h2 th:text="'Producers Details'">Producers Details/h2>
+<h2 th:text="'Producer ID'">Producers ID</h2>
+<table>
+    <tr>
+        <th>ID</th>
+    </tr>
+    <tr th:each="producer : ${producerId}">
+        <td th:text="${producer.id}">ID</td>
+    </tr>
+</table>
 </body>
 </html>

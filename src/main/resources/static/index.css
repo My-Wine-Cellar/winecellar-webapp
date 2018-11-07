@@ -27,17 +27,13 @@ h1, h2, tr, td, th {
     color: #a00025;
 }
 
-th, td {
-    word-spacing: normal;
-}
-
 table {
     border-collapse: collapse;
-    width: 50%;
+    width: auto;
 }
 
 th, td {
-    text-align: left;
+    text-align: center;
     padding: 8px;
 }
 
@@ -47,4 +43,8 @@ tr:nth-child(odd){background-color: white}
 th {
     background-color: #4CAF50;
     color: white;
+}
+
+tr:hover {
+    background-color: transparent;
 }
