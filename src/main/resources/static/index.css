@@ -26,3 +26,25 @@ tr, td, th, a {
 h1, h2, tr, td, th {
     color: #a00025;
 }
+
+th, td {
+    word-spacing: normal;
+}
+
+table {
+    border-collapse: collapse;
+    width: 50%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: lightgrey}
+tr:nth-child(odd){background-color: white}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
