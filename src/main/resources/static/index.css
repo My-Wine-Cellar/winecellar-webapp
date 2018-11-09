@@ -48,3 +48,10 @@ th {
 tr:hover {
     background-color: transparent;
 }
+
+input[type=text] {
+    background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+}
