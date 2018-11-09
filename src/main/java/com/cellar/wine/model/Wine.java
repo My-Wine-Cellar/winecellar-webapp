@@ -3,7 +3,6 @@ package com.cellar.wine.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -55,6 +54,6 @@ public class Wine extends BaseEntity {
 
     @Override
     public String toString() {
-        return name + ", ";
+        return name;
     }
 }
