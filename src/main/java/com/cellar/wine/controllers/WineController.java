@@ -43,5 +43,4 @@ public class WineController {
             return "redirect:/wines";
         }
     }
-
 }
