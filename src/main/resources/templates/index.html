@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
 <head>
-    <link rel="stylesheet" th:href="index.css">
-    <link rel="shortcut icon" type="image/ico" th:href="@{favicon.ico}"/>
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
     <meta charset="UTF-8">
     <title>Wine Cellar</title>
 </head>
 <body>
-<h1 th:text="'Wine Cellar'">Wine Cellar</h1>
-<a th:href="@{producers}">Producers</a> |
-<a th:href="@{wines}">Wines</a>
+
+<!--<h2 th:text="#{welcome}">Welcome</h2>-->
+
+<div class="row">
+    <div class="col-md-12">
+        <img class="img-responsive" src="../static/images/wine.jpg" th:src="@{/resources/images/wine.jpg}"/>
+    </div>
+</div>
+
 </body>
 </html>

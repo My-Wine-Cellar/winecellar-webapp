@@ -57,7 +57,13 @@ public class DataLoader implements CommandLineRunner {
         wine2.setProducer(producer2);
         wineService.save(wine2);
 
+        Wine wine3 = new Wine();
+        wine3.setName("Pauls Test");
+        wine3.setProducer(producer1);
+        wineService.save(wine3);
+
         producer1.getWines().add(wine1);
+        producer1.getWines().add(wine3);
         producer2.getWines().add(wine2);
 
         System.out.println("Loaded wines...");

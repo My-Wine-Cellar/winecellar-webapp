@@ -1,10 +1,10 @@
-html {
-    background: url(images/wine.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
+/*html {*/
+    /*background: url(images/wine.jpg) no-repeat center center fixed;*/
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    /*background-size: cover;*/
+/*}*/
 
 h1 {
     /*writing-mode: vertical-lr;*/
@@ -49,9 +49,15 @@ tr:hover {
     background-color: transparent;
 }
 
-input[type=text] {
-    background-color: white;
-    background-position: 10px 10px;
+/*input[type=text] {*/
+    /*background-color: white;*/
+    /*background-position: 10px 10px;*/
+    /*background-repeat: no-repeat;*/
+    /*padding-left: 40px;*/
+/*}*/
+
+.navbar {
+    background-color:teal;
+    background-image: none;
     background-repeat: no-repeat;
-    padding-left: 40px;
 }

@@ -28,7 +28,7 @@ public class Wine extends BaseEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "producer_id")
+    @JoinColumn(name = "producer_id", nullable = false)
     private Producer producer;
 
     @Column(name = "name")

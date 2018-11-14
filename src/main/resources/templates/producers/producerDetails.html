@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'producers')}">
+
+<body>
+
+
+<h2>Producer Information</h2>
+
+
+<table class="table table-striped" th:object="${producer}">
+    <tr>
+        <th>Name</th>
+        <td><b th:text="*{name}"></b></td>
+    </tr>
+    <tr>
+        <th>Country</th>
+        <td th:text="*{country}" /></td>
+    </tr>
+    <tr>
+        <th>Appellation</th>
+        <td th:text="*{appellation}" /></td>
+    </tr>
+
+</table>
+
+<a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit
+    Producer</a>
+<a th:href="@{{id}/wines/new(id=${producer.id})}" class="btn btn-default">Add
+    New Wine</a>
+
+<br />
+<br />
+<br />
+
+</body>
+
+</html>
