@@ -1,7 +1,6 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.model.Producer;
-import com.cellar.wine.model.Wine;
 import com.cellar.wine.services.ProducerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
