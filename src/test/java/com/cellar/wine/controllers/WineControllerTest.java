@@ -32,23 +32,4 @@ public class WineControllerTest {
 
     MockMvc mockMvc;
 
-    @BeforeEach
-    void setUp() {
-        wines = new HashSet<>();
-        wines.add(Wine.builder().id(1L).build());
-        wines.add(Wine.builder().id(2L).build());
-
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(wineController)
-                .build();
-    }
-
-    @Test
-    void listWines() throws Exception {
-        when(wineService.findAll()).thenReturn(wines);
-        mockMvc.perform(get("/wines"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("wines/index"))
-                .andExpect(model().attribute("wines", hasSize(2)));
-    }
 }
