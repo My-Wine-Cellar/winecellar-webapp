@@ -75,6 +75,7 @@ public class ProducerController {
     }
 
     @GetMapping("/{producerId}/edit")
+    //@PathVariable annotation enables controllers to handle requests for parameterized URL's
     public String initUpdateProducerForm(@PathVariable Long producerId, Model model) {
         model.addAttribute(producerService.findById(producerId));
         return "producers/createOrUpdateProducerForm";
