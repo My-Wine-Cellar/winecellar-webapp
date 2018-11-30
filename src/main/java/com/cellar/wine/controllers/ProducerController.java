@@ -51,6 +51,7 @@ public class ProducerController {
     }
 
     @GetMapping("/{producerId}")
+    //@PathVariable annotation enables controllers to handle requests for parameterized URL's
     public ModelAndView showProducer(@PathVariable Long producerId) {
         ModelAndView mav = new ModelAndView("producers/producerDetails");
         mav.addObject(producerService.findById(producerId));
