@@ -7,19 +7,19 @@
 <form th:object="${producer}" class="form-horizontal" id="add-producer-form" method="post">
     <div class="form-group has-feedback">
         <input
-                th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />
+                th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
         <input
-                th:replace="~{fragments/inputField :: input ('Country', 'country', 'text')}" />
+                th:replace="~{fragments/inputField :: input ('Country', 'country', 'text')}"/>
         <input
-                th:replace="~{fragments/inputField :: input ('Appellation', 'appellation', 'text')}" />
+                th:replace="~{fragments/inputField :: input ('Appellation', 'appellation', 'text')}"/>
 
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button
                     th:with="text=${producer['new']} ? 'Add Producer' : 'Update Producer'"
-                    class="btn btn-default" type="submit" th:text="${text}">Add
-                Producer</button>
+                    class="btn btn-default" type="submit" th:text="${text}">Add Producer
+            </button>
         </div>
     </div>
 </form>

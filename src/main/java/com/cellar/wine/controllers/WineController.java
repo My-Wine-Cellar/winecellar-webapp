@@ -26,7 +26,7 @@ public class WineController {
     }
 
     @ModelAttribute("producer")
-    public Producer findProducer(@PathVariable("producerId") Long producerId) {
+    public Producer findProducer(@PathVariable Long producerId) {
         return producerService.findById(producerId);
     }
 
@@ -77,33 +77,4 @@ public class WineController {
             return "redirect:/producers/" + producer.getId();
         }
     }
-
-
-
 }
-
-//MY OLD CODE
-/*
-    @RequestMapping({"", "/", "/index", "/index.html"})
-    public String listWines(Model model){
-        model.addAttribute("wines", wineService.findAll());
-        return "wines/index";
-    }
-
-    @GetMapping("/showFormForAdd")
-    public String showFormForAdd(Model model) {
-        Wine wine = new Wine();
-        model.addAttribute("addwine", wine);
-        return "wines/createwine";
-    }
-
-    @PostMapping("/saveWine")
-    public String saveForm(@Valid Wine wine, BindingResult result) {
-        if (result.hasErrors()) {
-            return "/wines";
-        } else {
-            wineService.save(wine);
-            return "redirect:/wines";
-        }
-    }
- */

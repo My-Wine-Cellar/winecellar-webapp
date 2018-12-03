@@ -8,18 +8,8 @@
 <body>
 <h2 th:text="'List of Wines'">Wine List</h2>
 <table id="wineTable">
-    <tr class="blah">
-        <th onclick="sortTable(0)">ID</th>
-        <th onclick="sortTable(1)">Name</th>
-        <th onclick="sortTable(2)">Vintage</th>
-        <th onclick="sortTable(3)">Appellation</th>
-        <th onclick="sortTable(4)">Varietal</th>
-        <th onclick="sortTable(5)">Country</th>
-        <th onclick="sortTable(6)">Rating</th>
-        <th onclick="sortTable(7)">Price</th>
-        <th onclick="sortTable(8)">Producer</th>
-    </tr>
-    <tr th:each="wine : ${wine}">
+
+    <tr th:each="wine : ${wines}">
         <td th:text="${wine.id}">ID</td>
         <td th:text="${wine.name}">Name</td>
         <td th:text="${wine.vintage}">Vintage</td>

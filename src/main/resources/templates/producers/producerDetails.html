@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout (~{::body},'producers')}">
 
 <body>
 
-
 <h2>Producer Information</h2>
-
 
 <table class="table table-striped" th:object="${producer}">
     <tr>
@@ -16,11 +14,11 @@
     </tr>
     <tr>
         <th>Country</th>
-        <td th:text="*{country}" /></td>
+        <td><b th:text="*{country}"></b></td>
     </tr>
     <tr>
         <th>Appellation</th>
-        <td th:text="*{appellation}" /></td>
+        <td><b th:text="*{appellation}"></b></td>
     </tr>
 
 </table>

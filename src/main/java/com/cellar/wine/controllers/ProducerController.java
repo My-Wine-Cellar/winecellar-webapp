@@ -26,30 +26,22 @@ public class ProducerController {
         dataBinder.setDisallowedFields("id");
     }
 
+    //working
     @RequestMapping("/find")
     public String findProducers(Model model) {
         model.addAttribute("producer", Producer.builder().build());
         return "producers/findProducers";
     }
 
-    @GetMapping
-    public String processFindForm(Producer producer, BindingResult result, Model model) {
-        //allow parameterless GET request for /producers to return all records
-        if (producer.getName() == null) {
-            producer.setName(""); //empty string signifies broadest possible search
-        }
-
-        Producer results = producerService.findByName("%" + producer.getName() + "%");
-
-        if (results == null) {
-            result.rejectValue("name", "not found", "not found");
-            return "producers/findProducers";
-        } else {
-            model.addAttribute("selections", results);
-            return "producers/producersList";
-        }
+    //close to working...
+    @GetMapping("/producersList")
+    public String listProducers(Model model, Producer producer) {
+        model.addAttribute("producers", producerService.findAll());
+        model.addAttribute(producer);
+        return "producers/producersList";
     }
 
+    //working
     @GetMapping("/{producerId}")
     //@PathVariable annotation enables controllers to handle requests for parameterized URL's
     public ModelAndView showProducer(@PathVariable Long producerId) {
@@ -58,12 +50,14 @@ public class ProducerController {
         return mav;
     }
 
+    //working
     @GetMapping("/new")
     public String initCreationForm(Model model) {
         model.addAttribute("producer", Producer.builder().build());
         return "producers/createOrUpdateProducerForm";
     }
 
+    //working
     @PostMapping("/new")
     public String processCreationForm(@Valid Producer producer, BindingResult result) {
         if (result.hasErrors()) {
@@ -74,6 +68,7 @@ public class ProducerController {
         }
     }
 
+    //working
     @GetMapping("/{producerId}/edit")
     //@PathVariable annotation enables controllers to handle requests for parameterized URL's
     public String initUpdateProducerForm(@PathVariable Long producerId, Model model) {
@@ -81,6 +76,7 @@ public class ProducerController {
         return "producers/createOrUpdateProducerForm";
     }
 
+    //working
     @PostMapping("/{producerId}/edit")
     public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable Long producerId) {
         if (result.hasErrors()) {
@@ -92,39 +88,3 @@ public class ProducerController {
         }
     }
 }
-    //MY OLD CODE
-/*
-    @RequestMapping({"", "/", "/index", "/index.html"})
-    public String listProducers(Model model) {
-        model.addAttribute("producers", producerService.findAll());
-        return "producers/index";
-    }
-
-    @GetMapping("/showFormForAdd")
-    public String showFormForAdd(Model model) {
-        Producer producer = new Producer();
-        model.addAttribute("addproducer", producer);
-        return "producers/createproducer";
-    }
-
-    @PostMapping("/saveProducer")
-    public String saveForm(@Valid Producer producer, BindingResult result) {
-        if (result.hasErrors()) {
-            return "/producers";
-        } else {
-            producerService.save(producer);
-            return "redirect:/producers";
-        }
-    }
-
-    @RequestMapping("/find")
-    public String findProducers(Model model) {
-        model.addAttribute("producer", Producer.builder());
-        return "producers/findProducers";
-    }
-
-    @GetMapping("/producers")
-    public String processFindForm(Producer producer, BindingResult result, Model model) {
-        return "";
-    }
-*/
