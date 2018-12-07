@@ -1,34 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
-    <link rel="stylesheet" th:href="index.css">
     <meta charset="UTF-8">
-    <title>Wine Cellar</title>
+    <title>Title</title>
 </head>
 <body>
-<h2 th:text="'List of Wines'">Wine List</h2>
-<table id="wineTable">
 
-    <tr th:each="wine : ${wines}">
-        <td th:text="${wine.id}">ID</td>
-        <td th:text="${wine.name}">Name</td>
-        <td th:text="${wine.vintage}">Vintage</td>
-        <td th:text="${wine.appellation}">Appellation</td>
-        <td th:text="${wine.varietal}">Varietal</td>
-        <td th:text="${wine.country}">Country</td>
-        <td th:text="${wine.rating}">Rating</td>
-        <td th:text="${wine.price}">Price</td>
-        <td th:text="${wine.producer}">Producer</td>
-    </tr>
-
-</table>
-<br/>
-
-<input type="button" value="Add Wine" onclick="window.location.href='/wines/showFormForAdd'; return false;"
-       class="add-button"/>
-<br/>
-<br/>
-<a th:href="@{index.html}">Home Page</a> |
-<a th:href="@{producers}">Producers</a>
 </body>
 </html>
