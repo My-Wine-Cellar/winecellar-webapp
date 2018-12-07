@@ -1,7 +1,7 @@
 package com.cellar.wine.bootstrap;
 
-import com.cellar.wine.model.Producer;
-import com.cellar.wine.model.Wine;
+import com.cellar.wine.models.Producer;
+import com.cellar.wine.models.Wine;
 import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
 import org.springframework.boot.CommandLineRunner;
@@ -57,13 +57,7 @@ public class DataLoader implements CommandLineRunner {
         wine2.setProducer(producer2);
         wineService.save(wine2);
 
-        Wine wine3 = new Wine();
-        wine3.setName("Pauls Test");
-        wine3.setProducer(producer1);
-        wineService.save(wine3);
-
         producer1.getWines().add(wine1);
-        producer1.getWines().add(wine3);
         producer2.getWines().add(wine2);
 
         System.out.println("Loaded wines...");

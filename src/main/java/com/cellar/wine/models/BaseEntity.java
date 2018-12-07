@@ -1,4 +1,4 @@
-package com.cellar.wine.model;
+package com.cellar.wine.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,11 +1,10 @@
 package com.cellar.wine.services.map;
 
-import com.cellar.wine.model.Producer;
+import com.cellar.wine.models.Producer;
 import com.cellar.wine.services.ProducerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 
 @Service

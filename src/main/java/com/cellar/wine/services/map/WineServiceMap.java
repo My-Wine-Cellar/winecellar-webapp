@@ -1,6 +1,6 @@
 package com.cellar.wine.services.map;
 
-import com.cellar.wine.model.Wine;
+import com.cellar.wine.models.Wine;
 import com.cellar.wine.services.WineService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

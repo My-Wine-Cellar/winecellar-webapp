@@ -1,6 +1,6 @@
 package com.cellar.wine.services.map;
 
-import com.cellar.wine.model.BaseEntity;
+import com.cellar.wine.models.BaseEntity;
 
 import java.util.*;
 

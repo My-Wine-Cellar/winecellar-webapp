@@ -1,7 +1,7 @@
 package com.cellar.wine.services.springdatajpa;
 
 
-import com.cellar.wine.model.Wine;
+import com.cellar.wine.models.Wine;
 import com.cellar.wine.repositories.WineRepository;
 import com.cellar.wine.services.WineService;
 import org.springframework.context.annotation.Profile;

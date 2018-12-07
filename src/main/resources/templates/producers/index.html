@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Producer</title>
 </head>
 <body>
+<h1>Producers</h1>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Country</th>
+        <th>Appellation</th>
+    </tr>
+    <tr th:each="producer : ${producers}">
+        <td th:text="${producer.name}">Name</td>
+        <td th:text="${producer.country}">Country</td>
+        <td th:text="${producer.appellation}">Appellation</td>
+    </tr>
+</table>
 
 </body>
 </html>
