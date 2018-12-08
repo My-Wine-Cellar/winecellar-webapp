@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Wine</title>
 </head>
 <body>
-<h1>Wine</h1>
+<h3>Wine</h3>
 
 <table>
     <tr>
@@ -29,6 +29,10 @@
         <td th:text="${wine.producer.name}">Producer</td>
     </tr>
 </table>
+
+<br/><br/>
+<a th:href="@{/}">Home</a> |
+<a th:href="@{/producers/producerlist}">Producers</a>
 
 </body>
 </html>

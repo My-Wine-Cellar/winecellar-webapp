@@ -43,6 +43,7 @@ public class DataLoader implements CommandLineRunner {
         wine1.setVintage("2015");
         wine1.setRating(4);
         wine1.setPrice(12.99);
+        //may need this in the wine controller to set the producer to that wine
         wine1.setProducer(producer1);
         wineService.save(wine1);
 
@@ -57,6 +58,7 @@ public class DataLoader implements CommandLineRunner {
         wine2.setProducer(producer2);
         wineService.save(wine2);
 
+        //may need this in the producer controller to get its wines
         producer1.getWines().add(wine1);
         producer2.getWines().add(wine2);
 

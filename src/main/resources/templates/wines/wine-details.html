@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+List out an individual wine and it's details to include the Producers it belongs to
+
+<!--<p th:text="${wineId.name}">Wine 'ID' Name</p>-->
+<!--<p th:text="${wineId.producer}">Wine 'ID' Producer</p>-->
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Vintage</th>
+        <th>Appellation</th>
+        <th>Varietal</th>
+        <th>Country</th>
+        <th>Price</th>
+        <th>Rating</th>
+        <th>Producer</th>
+    </tr>
+    <tr>
+        <th th:text="${wineId.name}">Name</th>
+        <th th:text="${wineId.vintage}">Vintage</th>
+        <th th:text="${wineId.appellation}">Appellation</th>
+        <th th:text="${wineId.varietal}">Varietal</th>
+        <th th:text="${wineId.country}">Country</th>
+        <th th:text="${wineId.price}">Price</th>
+        <th th:text="${wineId.rating}">Rating</th>
+        <th th:text="${wineId.producer}">Producer</th>
+    </tr>
+</table>
+
+</body>
+</html>
