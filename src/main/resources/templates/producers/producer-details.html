@@ -2,16 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Wine Cellar</title>
+    <title>Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
 
-<h1>Wine Cellar</h1>
+<p th:text="${producerId.name}">Producer Name</p>
 
-<br/>
-<a th:href="@{/producers/producerlist}">Producers</a> |
-<a th:href="@{/wines/winelist}">Wines</a>
+<!--<p th:text="${producer}">Producer Name</p>-->
+
 
 </body>
 </html>
