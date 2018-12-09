@@ -1,7 +1,7 @@
 package com.cellar.wine.services.map;
 
-import com.cellar.wine.models.Wine;
-import com.cellar.wine.services.WineService;
+import com.cellar.wine.models.Producer;
+import com.cellar.wine.services.ProducerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -9,25 +9,25 @@ import java.util.Set;
 
 @Service
 @Profile({"default", "map"})
-public class WineServiceMap extends AbstractMapService<Wine, Long> implements WineService {
+public class ProducerMapService extends AbstractMapService<Producer, Long> implements ProducerService {
 
     @Override
-    public Set<Wine> findAll() {
+    public Set<Producer> findAll() {
         return super.findAll();
     }
 
     @Override
-    public Wine findById(Long id) {
+    public Producer findById(Long id) {
         return super.findById(id);
     }
 
     @Override
-    public Wine save(Wine object) {
+    public Producer save(Producer object) {
         return super.save(object);
     }
 
     @Override
-    public void delete(Wine object) {
+    public void delete(Producer object) {
         super.delete(object);
     }
 
@@ -37,7 +37,7 @@ public class WineServiceMap extends AbstractMapService<Wine, Long> implements Wi
     }
 
     @Override
-    public Wine findByName(String name) {
+    public Producer findByName(String name) {
         return null;
     }
 }
