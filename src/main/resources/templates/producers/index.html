@@ -3,28 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Producer</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-<h3>Producers</h3>
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Country</th>
-        <th>Appellation</th>
-        <th>Wines</th>
-    </tr>
-    <tr th:each="producer : ${producers}">
-        <td th:text="${producer.name}">Name</td>
-        <td th:text="${producer.country}">Country</td>
-        <td th:text="${producer.appellation}">Appellation</td>
-    </tr>
-</table>
+<nav class="navbar navbar-expand-md bg-secondary navbar-dark">
+    <a class="navbar-brand" href="#">Wine Cellar</a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/producers/producerlist}">Producers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/wines/winelist}">Wines</a>
+        </li>
+    </ul>
+</nav>
 
-<br/><br/>
-<a th:href="@{/}">Home</a> |
-<a th:href="@{/wines/winelist}">Wines</a>
+<div class="container">
+    <table class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Appellation</th>
+            <th>Wines</th>
+        </tr>
+        <tr th:each="producer : ${producers}">
+            <td th:text="${producer.name}">Name</td>
+            <td th:text="${producer.country}">Country</td>
+            <td th:text="${producer.appellation}">Appellation</td>
+        </tr>
+        </thead>
+    </table>
+</div>
 
 </body>
 </html>

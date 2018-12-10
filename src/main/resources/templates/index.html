@@ -7,11 +7,24 @@
 </head>
 <body>
 
-<h1>Wine Cellar</h1>
+<nav class="navbar navbar-expand-md bg-secondary navbar-dark">
+    <a class="navbar-brand" href="#">Wine Cellar</a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+        <a class="nav-link" th:href="@{/}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/producers/producerlist}">Producers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/wines/winelist}">Wines</a>
+        </li>
+    </ul>
+</nav>
 
-<br/>
-<a th:href="@{/producers/producerlist}">Producers</a> |
-<a th:href="@{/wines/winelist}">Wines</a>
+<div class="container">
+    <img class="img-fluid" th:src="@{/static/images/wine.jpg}" src="../static/images/wine.jpg" alt="Wine">
+</div>
 
 </body>
 </html>

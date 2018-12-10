@@ -3,33 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Wine</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-<h3>Wine</h3>
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Vintage</th>
-        <th>Appellation</th>
-        <th>Varietal</th>
-        <th>Country</th>
-        <th>Producer</th>
-    </tr>
-    <tr th:each="wine : ${wines}">
-        <td th:text="${wine.name}">Name</td>
-        <td th:text="${wine.vintage}">Vintage</td>
-        <td th:text="${wine.appellation}">Appellation</td>
-        <td th:text="${wine.varietal}">Varietal</td>
-        <td th:text="${wine.country}">Country</td>
-        <td th:text="${wine.producer.name}">Producer</td>
-    </tr>
-</table>
+<nav class="navbar navbar-expand-md bg-secondary navbar-dark">
+    <a class="navbar-brand" href="#">Wine Cellar</a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/producers/producerlist}">Producers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/wines/winelist}">Wines</a>
+        </li>
+    </ul>
+</nav>
 
-<br/><br/>
-<a th:href="@{/}">Home</a> |
-<a th:href="@{/producers/producerlist}">Producers</a>
+<div class="container">
+    <table class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>Name</th>
+            <th>Vintage</th>
+            <th>Appellation</th>
+            <th>Varietal</th>
+            <th>Country</th>
+            <th>Producer</th>
+        </tr>
+        <tr th:each="wine : ${wines}">
+            <td th:text="${wine.name}">Name</td>
+            <td th:text="${wine.vintage}">Vintage</td>
+            <td th:text="${wine.appellation}">Appellation</td>
+            <td th:text="${wine.varietal}">Varietal</td>
+            <td th:text="${wine.country}">Country</td>
+            <td th:text="${wine.producer.name}">Producer</td>
+        </tr>
+        </thead>
+    </table>
+</div>
+
 
 </body>
 </html>
