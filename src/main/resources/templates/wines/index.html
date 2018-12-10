@@ -15,8 +15,6 @@
         <th>Appellation</th>
         <th>Varietal</th>
         <th>Country</th>
-        <th>Price</th>
-        <th>Rating</th>
         <th>Producer</th>
     </tr>
     <tr th:each="wine : ${wines}">
@@ -25,8 +23,6 @@
         <td th:text="${wine.appellation}">Appellation</td>
         <td th:text="${wine.varietal}">Varietal</td>
         <td th:text="${wine.country}">Country</td>
-        <td th:text="${wine.price}">Price</td>
-        <td th:text="${wine.rating}">Rating</td>
         <td th:text="${wine.producer.name}">Producer</td>
     </tr>
 </table>

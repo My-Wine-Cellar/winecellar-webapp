@@ -1,30 +1,12 @@
 package com.cellar.wine.models;
 
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "producer")
 public class Producer extends BaseEntity {
-
-    @Builder
-    public Producer(Long id, String name, String country, String appellation, Set<Wine> wines) {
-        super(id);
-        this.name = name;
-        this.country = country;
-        this.appellation = appellation;
-
-        if (wines != null) {
-            this.wines = wines;
-        }
-    }
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private Set<Wine> wines = new HashSet<>();
@@ -37,6 +19,38 @@ public class Producer extends BaseEntity {
 
     @Column(name = "appellation")
     private String appellation;
+
+    public Set<Wine> getWines() {
+        return wines;
+    }
+
+    public void setWines(Set<Wine> wines) {
+        this.wines = wines;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getAppellation() {
+        return appellation;
+    }
+
+    public void setAppellation(String appellation) {
+        this.appellation = appellation;
+    }
 
     @Override
     public String toString() {

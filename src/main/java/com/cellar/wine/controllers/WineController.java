@@ -28,11 +28,10 @@ public class WineController {
     }
 
     @RequestMapping("/{wineId}")
-    public String wineDetails(@PathVariable Long wineId, Wine wine, Model model) {
+    public String wineDetails(@PathVariable Long wineId, Wine wine, Producer producer, Model model) {
         model.addAttribute("wineId", wineService.findById(wineId));
-        wine.setProducer(Producer.builder().build());
+        wine.setProducer(producer);
         return "wines/wine-details";
     }
-
 
 }

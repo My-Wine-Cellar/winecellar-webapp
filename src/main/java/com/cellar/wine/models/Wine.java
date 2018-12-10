@@ -1,31 +1,11 @@
 package com.cellar.wine.models;
 
-import lombok.*;
-
 import javax.persistence.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "wine")
 public class Wine extends BaseEntity {
 
-    @Builder
-    public Wine(Long id, String name, String vintage, String appellation, String varietal, String country, Double price,
-                Integer rating, Producer producer) {
-        super(id);
-        this.name = name;
-        this.vintage = vintage;
-        this.appellation = appellation;
-        this.varietal = varietal;
-        this.country = country;
-        this.price = price;
-        this.rating = rating;
-        this.producer = producer;
-    }
 
     @ManyToOne
     @JoinColumn(name = "producer_id", nullable = false)
@@ -46,11 +26,53 @@ public class Wine extends BaseEntity {
     @Column(name = "country")
     private String country;
 
-    @Column(name = "price")
-    private double price;
+    public Producer getProducer() {
+        return producer;
+    }
 
-    @Column(name = "rating")
-    private int rating;
+    public void setProducer(Producer producer) {
+        this.producer = producer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVintage() {
+        return vintage;
+    }
+
+    public void setVintage(String vintage) {
+        this.vintage = vintage;
+    }
+
+    public String getAppellation() {
+        return appellation;
+    }
+
+    public void setAppellation(String appellation) {
+        this.appellation = appellation;
+    }
+
+    public String getVarietal() {
+        return varietal;
+    }
+
+    public void setVarietal(String varietal) {
+        this.varietal = varietal;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     @Override
     public String toString() {
