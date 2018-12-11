@@ -24,11 +24,5 @@ public class WineController {
         return "wines/index";
     }
 
-//    @RequestMapping("/{wineId}")
-//    public String wineDetails(@PathVariable Long wineId, Wine wine, Producer producer, Model model) {
-//        model.addAttribute("wineId", wineService.findById(wineId));
-//        wine.setProducer(producer);
-//        return "wines/wine-details";
-//    }
 
 }
