@@ -9,8 +9,10 @@
 <body>
 
 <nav class="navbar navbar-expand-md bg-secondary navbar-dark">
-    <a class="navbar-brand" href="#">Wine Cellar</a>
-    <ul class="navbar-nav">
+    <a class="navbar-brand" href="">Wine
+        <img th:src="@{/static/images/wine.png}" src="../static/images/wine.png" alt="" style="height: 60px"/>
+        Cellar
+    </a>    <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" th:href="@{/}">Home</a>
         </li>
@@ -36,6 +38,7 @@
             <td th:text="${producer.name}">Name</td>
             <td th:text="${producer.country}">Country</td>
             <td th:text="${producer.appellation}">Appellation</td>
+            <td th:text="${producer.wines}">Wines</td>
         </tr>
         </thead>
     </table>
