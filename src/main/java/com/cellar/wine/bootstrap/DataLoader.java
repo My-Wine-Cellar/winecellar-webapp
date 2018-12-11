@@ -33,14 +33,6 @@ public class DataLoader implements CommandLineRunner {
         producer2.setAppellation("Burgundy");
         producerService.save(producer2);
 
-        Producer producer3 = new Producer();
-        producer3.setName("Producer 3");
-        producerService.save(producer3);
-
-        Producer producer4 = new Producer();
-        producer4.setName("Producer 4");
-        producerService.save(producer4);
-
         System.out.println("Loaded producers...");
 
         Wine wine1 = new Wine();
@@ -51,7 +43,6 @@ public class DataLoader implements CommandLineRunner {
         wine1.setVintage("2015");
         //may need this in the wine controller to set the producer to that wine
         wine1.setProducer(producer1);
-        wine1.setProducer(producer3);
         wineService.save(wine1);
 
         Wine wine2 = new Wine();
@@ -60,15 +51,24 @@ public class DataLoader implements CommandLineRunner {
         wine2.setName("Holla Holla");
         wine2.setVarietal("Malbec");
         wine2.setVintage("2016");
-        wine2.setProducer(producer2);
-        wine2.setProducer(producer4);
+        wine2.setProducer(producer1);
         wineService.save(wine2);
+
+        Wine wine3 = new Wine();
+        wine3.setName("Bread and Butter");
+        wine3.setProducer(producer2);
+        wineService.save(wine3);
+
+        Wine wine4 = new Wine();
+        wine4.setName("Bourgogne");
+        wine4.setProducer(producer2);
+        wineService.save(wine4);
 
         //may need this in the producer controller to get its wines
         producer1.getWines().add(wine1);
-        producer2.getWines().add(wine2);
-        producer3.getWines().add(wine1);
-        producer4.getWines().add(wine2);
+        producer1.getWines().add(wine2);
+        producer2.getWines().add(wine3);
+        producer2.getWines().add(wine4);
 
         System.out.println("Loaded wines...");
     }
