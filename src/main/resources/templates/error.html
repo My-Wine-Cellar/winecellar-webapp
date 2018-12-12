@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{index :: head}">
+
 </head>
 <body>
 
-<h2>Error Page</h2>
+<nav th:insert="~{index :: nav}"></nav>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1>Error Page</h1>
+        <p>To be filled in later...</p>
+    </div>
+</div>
+
+<footer th:include="~{index :: footer}"></footer>
 
 </body>
 </html>
