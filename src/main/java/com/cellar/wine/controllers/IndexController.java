@@ -11,7 +11,7 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping("/errorpage")
+    @RequestMapping("/error")
     public String error() {
         return "error";
     }
