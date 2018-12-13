@@ -5,7 +5,8 @@
 
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -28,7 +29,7 @@
 
 <nav class="navbar navbar-expand-md bg-secondary navbar-dark" th:fragment="navbar">
     <a class="navbar-brand" th:href="@{/}">Wine
-        <img th:src="@{/static/images/wine.png}" src="../static/images/wine.png" alt="" style="height: 60px"/>
+        <img th:src="@{/images/wine.png}" src="../static/images/wine.png" alt="" style="height: 60px"/>
         Cellar
     </a>
     <ul class="nav navbar-nav navbar-right">
@@ -52,13 +53,15 @@
 </div>
 
 <div class="container">
-    <img class="img-fluid" src="../static/images/wine.jpg" th:src="@{/static/images/wine.jpg}" alt="">
+    <img class="rounded mx-auto d-block" style="max-width: 100%; height: auto" src="../static/images/wine.jpg"
+         th:src="@{/images/wine.jpg}" alt="wine bottle">
 </div>
 
 <div th:fragment="footer">
     <footer class="footer">
         <div class="container text-center">
             <a href="https://github.com/pauldpearson/winecellar-webapp" target="_blank"><i class="fa fa-github"></i></a>
+            |
             <a href="https://www.linkedin.com/in/pauldpearson/" target="_blank"><i class="fa fa-linkedin"></i></a>
         </div>
     </footer>
