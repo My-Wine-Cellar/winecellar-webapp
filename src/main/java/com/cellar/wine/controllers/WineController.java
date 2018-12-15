@@ -18,7 +18,7 @@ public class WineController {
         this.producerService = producerService;
     }
 
-    @RequestMapping("/winelist")
+    @RequestMapping("/list")
     public String wine(Model model) {
         model.addAttribute("wines", wineService.findAll());
         return "wines/index";
