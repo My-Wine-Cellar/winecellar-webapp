@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{index :: head}">
+<head th:insert="~{fragments/layout :: head}">
 
 </head>
 <body>
 
-<nav th:insert="~{index :: navbar}"></nav>
+<nav th:insert="~{fragments/layout :: navbar}"></nav>
 
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<footer th:include="~{index :: footer}"></footer>
+<footer th:include="~{fragments/layout :: footer}"></footer>
 
 </body>
 </html>

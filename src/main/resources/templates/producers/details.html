@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{index :: head}">
+<head th:insert="~{fragments/layout :: head}">
 
 <body>
 
-<nav th:insert="~{index :: navbar}"></nav>
+<nav th:insert="~{fragments/layout :: navbar}"></nav>
 
+<br/>
 
 <h4 th:text="${producerId.name}" align="center"></h4>
 
@@ -33,7 +34,7 @@
     </div>
 </div>
 
-<footer th:include="~{index :: footer}"></footer>
+<footer th:include="~{fragments/layout :: footer}"></footer>
 
 </body>
 </html>
