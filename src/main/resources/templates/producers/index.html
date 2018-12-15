@@ -17,7 +17,7 @@
             <th>Wines</th>
         </tr>
         <tr th:each="producer : ${producers}">
-            <td th:text="${producer.name}">Name</td>
+            <td><a href="#" th:href="@{'/producers/' + ${producer.id}}" th:text="${producer.name}">Name</a></td>
             <td th:text="${producer.country}">Country</td>
             <td th:text="${producer.appellation}">Appellation</td>
             <td th:text="${producer.wines}">Wines</td>
