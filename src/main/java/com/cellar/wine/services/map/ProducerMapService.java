@@ -7,6 +7,7 @@ import com.cellar.wine.services.WineService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -58,6 +59,11 @@ public class ProducerMapService extends AbstractMapService<Producer, Long> imple
 
     @Override
     public Producer findByName(String name) {
+        return null;
+    }
+
+    @Override
+    public List<Producer> findAllByNameLike(String name) {
         return null;
     }
 }
