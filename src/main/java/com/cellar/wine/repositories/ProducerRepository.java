@@ -9,5 +9,5 @@ public interface ProducerRepository extends CrudRepository<Producer, Long> {
 
     Producer findByName(String name);
 
-    List<Producer> findAllByName(String name);
+    List<Producer> findAllByNameLike(String name);
 }

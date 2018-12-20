@@ -30,7 +30,7 @@ public class ProducerJpa implements ProducerService {
 
     @Override
     public List<Producer> findAllByNameLike(String name) {
-        return producerRepository.findAllByName(name);
+        return producerRepository.findAllByNameLike(name);
     }
 
     @Override
