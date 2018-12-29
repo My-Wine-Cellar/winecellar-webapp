@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/layout :: head}">
+
+<body>
+
+<nav th:insert="~{fragments/layout :: navbar}"></nav>
+
+<br/>
+
+<div class="container">
+    <h2>Add Wine:</h2>
+    <form th:action="saveWine" th:modelAttribute="addwine" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" th:field="*{addwine.name}" id="name" placeholder="Enter name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="vintage">Vintage:</label>
+            <input type="text" class="form-control" th:field="*{addwine.vintage}" id="vintage" placeholder="Enter vintage" name="vintage">
+        </div>
+        <div class="form-group">
+            <label for="appellation">Appellation:</label>
+            <input type="text" class="form-control" id="appellation" th:field="*{addwine.appellation}" placeholder="Enter appellation" name="appellation">
+        </div>
+        <div class="form-group">
+            <label for="varietal">Varietal:</label>
+            <input type="text" class="form-control" id="varietal" th:field="*{addwine.varietal}" placeholder="Enter varietal" name="varietal">
+        </div>
+        <div class="form-group">
+            <label for="country">Country:</label>
+            <input type="text" class="form-control" id="country" th:field="*{addwine.country}" placeholder="Enter country" name="country">
+        </div>
+        <div class="form-group">
+            <label for="producer">Producer:</label>
+            <input type="text" class="form-control" id="producer" th:field="*{addwine.producer}" placeholder="Enter producer" name="producer">
+        </div>
+        <button type="submit" class="save btn btn-primary" value="Save">Save</button>
+    </form>
+</div>
+
+
+<footer th:include="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>
