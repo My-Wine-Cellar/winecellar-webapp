@@ -34,11 +34,46 @@ public class ProducerController {
         model.addAttribute("producerId", producerService.findById(producerId));
         return "producers/details";
     }
-
 }
 
 
 //TODO implement in v2.0
+
+//    @GetMapping("/new")
+//    public String initCreationForm(Model model) {
+//        Producer producer = new Producer();
+//        model.addAttribute("producer", producer);
+//        return "producers/createOrUpdateProducer";
+//    }
+//
+//    @PostMapping("/new")
+//    public String processCreateUpdateForm(@Valid Producer producer, BindingResult result) {
+//        if (result.hasErrors()) {
+//            return "producers/createOrUpdateProducer";
+//        } else {
+//            producerService.save(producer);
+//            return "redirect:/producers/" + producer.getId();
+//        }
+//    }
+//
+//    @GetMapping("/{producerId}/edit")
+//    public String initUpdateProducerForm(@PathVariable("producerId") Long producerId, Model model) {
+//        model.addAttribute(producerService.findById(producerId));
+//        return "producers/createOrUpdateProducer";
+//    }
+//
+//    @PostMapping("/{producerId}/edit")
+//    public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable("producerId") Long producerId) {
+//        if(result.hasErrors()) {
+//            return "producers/createOrUpdateProducer";
+//        } else {
+//            producer.setId(producerId);
+//            producerService.save(producer);
+//            return "redirect:/producers/{producerId}";
+//        }
+//    }
+
+//TODO implement find in v2.0
 
 //    @RequestMapping("/find")
 //    public String findProducers(Model model, Producer producer) {
