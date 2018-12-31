@@ -52,6 +52,24 @@ public class Producer extends BaseEntity {
         this.appellation = appellation;
     }
 
+    public Wine getWine(String name) {
+        return getWine(name, false);
+    }
+
+    public Wine getWine(String name, boolean ignoreNew) {
+        name = name.toLowerCase();
+        for (Wine wine : wines) {
+            if (!ignoreNew || !wine.isNew()) {
+                String compName = wine.getName();
+                compName = compName.toLowerCase();
+                if(compName.equals(name)) {
+                    return wine;
+                }
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return name;
