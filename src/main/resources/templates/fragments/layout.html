@@ -32,7 +32,8 @@
 
 <body>
 
-<nav class="navbar navbar-expand-md bg-secondary navbar-dark" th:fragment="navbar">
+<!--bg-secondary navbar-dark-->
+<nav class="navbar navbar-custom navbar-expand-md" th:fragment="navbar">
     <a class="navbar-brand" th:href="@{/}">Wine
         <img th:src="@{/images/wine.png}" src="../static/images/wine.png" alt="" style="height: 60px"/>
         Cellar
@@ -53,7 +54,6 @@
     </ul>
 </nav>
 
-
 <div th:fragment="footer">
     <footer class="footer">
         <div class="container text-center">
@@ -63,17 +63,6 @@
         </div>
     </footer>
 
-    <style>
-        .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: lightgrey;
-            /*color: white;*/
-            text-align: center;
-        }
-    </style>
 </div>
 
 </body>

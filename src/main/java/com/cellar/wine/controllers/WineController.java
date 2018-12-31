@@ -1,5 +1,6 @@
 package com.cellar.wine.controllers;
 
+import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
@@ -38,13 +39,16 @@ public class WineController {
     }
 
     @PostMapping("/saveWine")
-    public String saveForm(@Valid Wine wine, BindingResult result) {
+    public String saveForm(@Valid Wine wine, Producer producer, BindingResult result) {
         if (result.hasErrors()) {
             return "/wines";
         } else {
+            producer.isNew();
+            producer.getWines().add(wine);
+            producerService.save(producer);
+            wine.setProducer(producer);
             wineService.save(wine);
             return "redirect:/wines/list";
         }
     }
-
 }

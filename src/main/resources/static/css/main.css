@@ -1,2 +1,64 @@
 /*Comments go here...*/
 
+.navbar-custom {
+    /*wine red*/
+    background-color: #B11227;
+}
+
+.jumbotron {
+    background-color: white;
+}
+
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: rgba(255, 255, 255, .8);
+}
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, .5);
+}
+
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: lightgrey;
+    /*color: white;*/
+    text-align: center;
+}
+
+.fa-github, .fa-linkedin {
+    color: rgba(0, 0, 0, 0.58);
+}
+
+.btn {
+    color: #712F37;
+    background-color: #D1BF73;
+}
+
+.btn:hover {
+    color: #960E1F;
+    background-color: #B89C2B;
+}
+
+.img-responsive {
+    background-size: cover;
+}
+
+body {
+    overflow: hidden;
+}
+
+/*th {*/
+    /*background-color: darkgrey;*/
+    /*color: white;*/
+/*}*/
