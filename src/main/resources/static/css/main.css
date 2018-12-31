@@ -5,9 +5,9 @@
     background-color: #B11227;
 }
 
-.jumbotron {
-    background-color: white;
-}
+/*.jumbotron {*/
+    /*background-color: white;*/
+/*}*/
 
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
@@ -56,6 +56,12 @@
 
 body {
     overflow: hidden;
+}
+
+.nav-item {
+    text-align: center;
+    padding: auto;
+    font-size: 17px;
 }
 
 /*th {*/

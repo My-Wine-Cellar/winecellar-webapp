@@ -35,22 +35,22 @@
 <!--bg-secondary navbar-dark-->
 <nav class="navbar navbar-custom navbar-expand-md" th:fragment="navbar">
     <a class="navbar-brand" th:href="@{/}">Wine
-        <img th:src="@{/images/wine.png}" src="../static/images/wine.png" alt="" style="height: 60px"/>
+        <img th:src="@{/images/wine.png}" src="../../static/images/wine.png" alt="" style="height: 60px"/>
         Cellar
     </a>
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/wines/list}">Wines</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" th:href="@{/producers/list}">Producers</a>
         </li>
         <!--<li class="nav-item">-->
             <!--<a class="nav-link" th:href="@{/producers/find}">Find Producers</a>-->
         <!--</li>-->
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/wines/list}">Wines</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/error}">Error Page</a>
-        </li>
+        <!--<li class="nav-item">-->
+            <!--<a class="nav-link" th:href="@{/error}">Error Page</a>-->
+        <!--</li>-->
     </ul>
 </nav>
 
