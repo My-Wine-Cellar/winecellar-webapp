@@ -14,12 +14,6 @@ public class Producer extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "country")
-    private String country;
-
-    @Column(name = "appellation")
-    private String appellation;
-
     public Set<Wine> getWines() {
         return wines;
     }
@@ -34,22 +28,6 @@ public class Producer extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getAppellation() {
-        return appellation;
-    }
-
-    public void setAppellation(String appellation) {
-        this.appellation = appellation;
     }
 
     public Wine getWine(String name) {

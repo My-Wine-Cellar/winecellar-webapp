@@ -6,7 +6,6 @@ import javax.persistence.*;
 @Table(name = "wine")
 public class Wine extends BaseEntity {
 
-
     @ManyToOne
     @JoinColumn(name = "producer_id", nullable = false)
     private Producer producer;
@@ -17,14 +16,8 @@ public class Wine extends BaseEntity {
     @Column(name = "vintage")
     private String vintage;
 
-    @Column(name = "appellation")
-    private String appellation;
-
     @Column(name = "varietal")
     private String varietal;
-
-    @Column(name = "country")
-    private String country;
 
     public Producer getProducer() {
         return producer;
@@ -50,28 +43,12 @@ public class Wine extends BaseEntity {
         this.vintage = vintage;
     }
 
-    public String getAppellation() {
-        return appellation;
-    }
-
-    public void setAppellation(String appellation) {
-        this.appellation = appellation;
-    }
-
     public String getVarietal() {
         return varietal;
     }
 
     public void setVarietal(String varietal) {
         this.varietal = varietal;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     @Override

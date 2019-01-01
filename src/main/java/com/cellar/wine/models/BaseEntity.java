@@ -1,9 +1,6 @@
 package com.cellar.wine.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.io.Serializable;
 
 
@@ -14,8 +11,30 @@ public class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "appellation")
+    private String appellation;
+
     public boolean isNew() {
         return this.id == null;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getAppellation() {
+        return appellation;
+    }
+
+    public void setAppellation(String appellation) {
+        this.appellation = appellation;
     }
 
     public Long getId() {
