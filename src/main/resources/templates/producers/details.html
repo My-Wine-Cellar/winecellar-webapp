@@ -9,7 +9,7 @@
 
 <br/>
 
-<h4 th:text="${producerId.name}" align="center"></h4>
+<h4 th:text="${producer.name}" align="center"></h4>
 
 <div class="table">
     <div class="container">
@@ -22,7 +22,7 @@
                 <th>Varietal</th>
                 <th>Country</th>
             </tr>
-            <tr th:each="wine : ${producerId.wines}">
+            <tr th:each="wine : ${producer.wines}">
                 <td th:text="${wine.name}">Name</td>
                 <td th:text="${wine.vintage}">Vintage</td>
                 <td th:text="${wine.appellation}">Appellation</td>
@@ -31,6 +31,11 @@
             </tr>
             </thead>
         </table>
+
+        <a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit
+            Producer</a>
+        <a th:href="@{{id}/wines/new(id=${producer.id})}" class="btn btn-default">Add
+            New Wine</a>
     </div>
 </div>
 

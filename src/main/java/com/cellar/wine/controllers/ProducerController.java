@@ -1,12 +1,15 @@
 package com.cellar.wine.controllers;
 
+import com.cellar.wine.models.Producer;
 import com.cellar.wine.services.ProducerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @RequestMapping("/producers")
 @Controller
@@ -29,49 +32,48 @@ public class ProducerController {
         return "producers/index";
     }
 
-    @RequestMapping("/{producerId}")
-    public String producerDetails(@PathVariable("producerId") Long producerId, Model model) {
-        model.addAttribute("producerId", producerService.findById(producerId));
-        return "producers/details";
+    @GetMapping("/{producerId}")
+    public ModelAndView showProducer(@PathVariable Long producerId) {
+        ModelAndView mav = new ModelAndView("producers/details");
+        mav.addObject(producerService.findById(producerId));
+        return mav;
+    }
+
+    @GetMapping("/new")
+    public String initCreationForm(Model model) {
+        Producer producer = new Producer();
+        model.addAttribute("producer", producer);
+        return "producers/createOrUpdateProducer";
+    }
+
+    @PostMapping("/new")
+    public String processCreateUpdateForm(@Valid Producer producer, BindingResult result) {
+        if (result.hasErrors()) {
+            return "producers/createOrUpdateProducer";
+        } else {
+            producerService.save(producer);
+            return "redirect:/producers/" + producer.getId();
+        }
+    }
+
+    @GetMapping("/{producerId}/edit")
+    public String initUpdateProducerForm(@PathVariable("producerId") Long producerId, Model model) {
+        model.addAttribute(producerService.findById(producerId));
+        return "producers/createOrUpdateProducer";
+    }
+
+    @PostMapping("/{producerId}/edit")
+    public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable("producerId") Long producerId) {
+        if(result.hasErrors()) {
+            return "producers/createOrUpdateProducer";
+        } else {
+            producer.setId(producerId);
+            producerService.save(producer);
+            return "redirect:/{producerId}";
+        }
     }
 }
 
-
-//TODO implement in v2.0
-
-//    @GetMapping("/new")
-//    public String initCreationForm(Model model) {
-//        Producer producer = new Producer();
-//        model.addAttribute("producer", producer);
-//        return "producers/createOrUpdateProducer";
-//    }
-//
-//    @PostMapping("/new")
-//    public String processCreateUpdateForm(@Valid Producer producer, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return "producers/createOrUpdateProducer";
-//        } else {
-//            producerService.save(producer);
-//            return "redirect:/producers/" + producer.getId();
-//        }
-//    }
-//
-//    @GetMapping("/{producerId}/edit")
-//    public String initUpdateProducerForm(@PathVariable("producerId") Long producerId, Model model) {
-//        model.addAttribute(producerService.findById(producerId));
-//        return "producers/createOrUpdateProducer";
-//    }
-//
-//    @PostMapping("/{producerId}/edit")
-//    public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable("producerId") Long producerId) {
-//        if(result.hasErrors()) {
-//            return "producers/createOrUpdateProducer";
-//        } else {
-//            producer.setId(producerId);
-//            producerService.save(producer);
-//            return "redirect:/producers/{producerId}";
-//        }
-//    }
 
 //TODO implement find in v2.0
 

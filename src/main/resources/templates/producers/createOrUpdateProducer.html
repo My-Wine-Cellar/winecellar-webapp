@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/layout :: head}">
+
+<body>
+
+<nav th:insert="~{fragments/layout :: navbar}"></nav>
+
+<br/>
+
+<div class="container">
+    <!--<h2>Add Producer:</h2>-->
+    <form th:action="new" th:modelAttribute="producer" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" th:field="*{producer.name}" id="name" placeholder="Enter name" name="name">
+        </div>
+
+        <div class="form-group">
+            <label for="appellation">Appellation:</label>
+            <input type="text" class="form-control" id="appellation" th:field="*{producer.appellation}" placeholder="Enter appellation" name="appellation">
+        </div>
+
+        <div class="form-group">
+            <label for="country">Country:</label>
+            <input type="text" class="form-control" id="country" th:field="*{producer.country}" placeholder="Enter country" name="country">
+        </div>
+        <button type="submit" class="save btn" value="Save">Save</button>
+    </form>
+</div>
+
+<footer th:include="~{fragments/layout :: footer}"></footer>
+
+</body>
+</html>
