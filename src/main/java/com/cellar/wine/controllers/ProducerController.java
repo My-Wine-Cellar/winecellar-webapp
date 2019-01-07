@@ -23,7 +23,7 @@ public class ProducerController {
 
     @InitBinder
     public void setAllowedFields(WebDataBinder dataBinder) {
-        dataBinder.setAllowedFields("id");
+        dataBinder.setDisallowedFields("id");
     }
 
     @RequestMapping("/list")
@@ -34,25 +34,24 @@ public class ProducerController {
 
     @GetMapping("/{producerId}")
     public ModelAndView showProducer(@PathVariable Long producerId) {
-        ModelAndView mav = new ModelAndView("producers/details");
+        ModelAndView mav = new ModelAndView("producers/producerDetails");
         mav.addObject(producerService.findById(producerId));
         return mav;
     }
 
     @GetMapping("/new")
-    public String initCreationForm(Model model) {
-        Producer producer = new Producer();
-        model.addAttribute("producer", producer);
+    public String initCreateForm(Model model) {
+        model.addAttribute("producer", Producer.builder().build());
         return "producers/createOrUpdateProducer";
     }
 
     @PostMapping("/new")
-    public String processCreateUpdateForm(@Valid Producer producer, BindingResult result) {
+    public String processCreateForm(@Valid Producer producer, BindingResult result) {
         if (result.hasErrors()) {
             return "producers/createOrUpdateProducer";
         } else {
-            producerService.save(producer);
-            return "redirect:/producers/" + producer.getId();
+            Producer savedProducer = producerService.save(producer);
+            return "redirect:/producers/" + savedProducer.getId();
         }
     }
 
@@ -68,8 +67,8 @@ public class ProducerController {
             return "producers/createOrUpdateProducer";
         } else {
             producer.setId(producerId);
-            producerService.save(producer);
-            return "redirect:/{producerId}";
+            Producer savedProducer = producerService.save(producer);
+            return "redirect:/producers/" + savedProducer.getId();
         }
     }
 }
