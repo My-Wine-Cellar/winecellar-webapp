@@ -36,8 +36,7 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("Loaded producers...");
 
         Wine wine1 = new Wine();
-        wine1.setAppellation("Willamette Valley");
-        wine1.setCountry("USA");
+
         wine1.setName("Brickhouse");
         wine1.setVarietal("Pinot Noir");
         wine1.setVintage("2015");
@@ -45,8 +44,6 @@ public class DataLoader implements CommandLineRunner {
         wineService.save(wine1);
 
         Wine wine2 = new Wine();
-        wine2.setAppellation("Walla Walla");
-        wine2.setCountry("USA");
         wine2.setName("Holla Holla");
         wine2.setVarietal("Malbec");
         wine2.setVintage("2016");
@@ -54,8 +51,6 @@ public class DataLoader implements CommandLineRunner {
         wineService.save(wine2);
 
         Wine wine3 = new Wine();
-        wine3.setAppellation("Napa");
-        wine3.setCountry("USA");
         wine3.setName("Bread and Butter");
         wine3.setVarietal("Merlot");
         wine3.setVintage("2014");
@@ -63,8 +58,7 @@ public class DataLoader implements CommandLineRunner {
         wineService.save(wine3);
 
         Wine wine4 = new Wine();
-        wine4.setAppellation("Russian River Valley");
-        wine4.setCountry("USA");
+
         wine4.setName("Acrobat");
         wine4.setVarietal("Chardonay");
         wine4.setVintage("2018");

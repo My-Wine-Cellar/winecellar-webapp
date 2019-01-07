@@ -1,34 +1,43 @@
 package com.cellar.wine.models;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
 @Table(name = "producer")
 public class Producer extends BaseEntity {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
-    private Set<Wine> wines = new HashSet<>();
+    @Builder
+    public Producer(Long id, String name, String country, String appellation, Set<Wine> wines) {
+        super(id);
+        this.name = name;
+        this.country = country;
+        this.appellation = appellation;
+        if(wines != null) {
+            this.wines = wines;
+        }
+    }
 
     @Column(name = "name")
     private String name;
 
-    public Set<Wine> getWines() {
-        return wines;
-    }
+    @Column(name = "country")
+    private String country;
 
-    public void setWines(Set<Wine> wines) {
-        this.wines = wines;
-    }
+    @Column(name = "appellation")
+    private String appellation;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
+    private Set<Wine> wines = new HashSet<>();
 
     public Wine getWine(String name) {
         return getWine(name, false);
@@ -46,11 +55,6 @@ public class Producer extends BaseEntity {
             }
         }
         return null;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
 }
