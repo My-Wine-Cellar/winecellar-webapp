@@ -15,6 +15,8 @@ import javax.validation.Valid;
 @Controller
 public class ProducerController {
 
+    private static final String CREATE_OR_UPDATE_PRODUCER_TEMPLATE = "producers/createOrUpdateProducer";
+
     private final ProducerService producerService;
 
     public ProducerController(ProducerService producerService) {
@@ -29,7 +31,7 @@ public class ProducerController {
     @RequestMapping("/list")
     public String producer(Model model) {
         model.addAttribute("producers", producerService.findAll());
-        return "producers/index";
+        return "producers/producersList";
     }
 
     @GetMapping("/{producerId}")
@@ -42,13 +44,13 @@ public class ProducerController {
     @GetMapping("/new")
     public String initCreateForm(Model model) {
         model.addAttribute("producer", Producer.builder().build());
-        return "producers/createOrUpdateProducer";
+        return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
     }
 
     @PostMapping("/new")
     public String processCreateForm(@Valid Producer producer, BindingResult result) {
         if (result.hasErrors()) {
-            return "producers/createOrUpdateProducer";
+            return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
         } else {
             Producer savedProducer = producerService.save(producer);
             return "redirect:/producers/" + savedProducer.getId();
@@ -58,13 +60,13 @@ public class ProducerController {
     @GetMapping("/{producerId}/edit")
     public String initUpdateProducerForm(@PathVariable("producerId") Long producerId, Model model) {
         model.addAttribute(producerService.findById(producerId));
-        return "producers/createOrUpdateProducer";
+        return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
     }
 
     @PostMapping("/{producerId}/edit")
     public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable("producerId") Long producerId) {
         if(result.hasErrors()) {
-            return "producers/createOrUpdateProducer";
+            return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
         } else {
             producer.setId(producerId);
             Producer savedProducer = producerService.save(producer);
@@ -72,38 +74,3 @@ public class ProducerController {
         }
     }
 }
-
-
-//TODO implement find in v2.0
-
-//    @RequestMapping("/find")
-//    public String findProducers(Model model, Producer producer) {
-//        model.addAttribute("producer",  producer);
-//        return "producers/findProducers";
-//    }
-//
-//    //sort of working, but not really at all...12.19.18
-//    @GetMapping
-//    public String processFindForm(Producer producer, BindingResult result, Model model) {
-//        //allow parameterless GET request for producers to return all records
-//        if (producer.getName() == null) {
-//            producer.setName(""); //empty string signifies broadest possible search
-//        }
-//
-//        //find producers by name
-//        List<Producer> results = producerService.findAllByNameLike("%" + producer.getName() + "%");
-//
-//        if (results.isEmpty()) {
-//            //no producers found
-//            result.rejectValue("name", "notFound", "Not Found");
-//            return "producers/findProducers";
-//        } else if (results.size() == 1) {
-//            //1 producer found
-//            producer = results.iterator().next();
-//            return "redirect:/producers/" + producer.getId();
-//        } else {
-//            //multiple producers found
-//            model.addAttribute("selections", results);
-//            return "producers/producersList";
-//        }
-//    }
