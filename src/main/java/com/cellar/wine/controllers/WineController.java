@@ -28,10 +28,11 @@ public class WineController {
         this.producerService = producerService;
     }
 
-    @ModelAttribute("producer")
-    public Producer findProducer(@PathVariable("producerId") Long producerId) {
-        return producerService.findById(producerId);
-    }
+//    //I think this is for the find Producer controller
+//    @ModelAttribute("producer")
+//    public Producer findProducer(@PathVariable("producerId") Long producerId) {
+//        return producerService.findById(producerId);
+//    }
 
     @InitBinder("producer")
     public void initProducerBinder(WebDataBinder dataBinder) {

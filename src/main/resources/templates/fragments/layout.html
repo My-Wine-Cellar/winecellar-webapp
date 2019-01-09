@@ -5,7 +5,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="utf-8">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
@@ -13,7 +13,6 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
 
     <script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
 
@@ -46,7 +45,7 @@
     </button>
 
         <div class="navbar-collapse collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav mr-auto">
 
                 <li th:fragment="menuItem (path,active,title,glyph,text)" class="active"
                     th:class="${active == menu ? 'active' : ''}">
@@ -75,10 +74,10 @@
             </ul>
 
             <!--Save for later-->
-            <!--<form class="form-inline my-2 my-lg-0">-->
-                <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-                <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-            <!--</form>-->
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-default my-2 my-sm-0" type="submit">Search</button>
+            </form>
 
         </div>
 </nav>
@@ -92,10 +91,6 @@
         </div>
     </footer>
 </div>
-
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
 </body>
 </html>

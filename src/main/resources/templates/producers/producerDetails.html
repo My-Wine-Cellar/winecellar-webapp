@@ -1,43 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'producers')}">
 
-<head th:insert="~{fragments/layout :: head}">
 
 <body>
 
-<nav th:insert="~{fragments/layout :: navbar}"></nav>
 
 <br/>
-
-<!--<h4 th:text="${producer.name}" align="center"></h4>-->
-
-<!--<div class="table">-->
-<!--<div class="container">-->
-<!--<table class="table table-hover">-->
-<!--<thead class="thead-light">-->
-<!--<tr>-->
-<!--<th>Wine</th>-->
-<!--<th>Vintage</th>-->
-<!--<th>Appellation</th>-->
-<!--<th>Varietal</th>-->
-<!--<th>Country</th>-->
-<!--</tr>-->
-<!--<tr th:each="wine : ${producer.wines}">-->
-<!--<td th:text="${wine.name}">Name</td>-->
-<!--<td th:text="${wine.vintage}">Vintage</td>-->
-<!--<td th:text="${wine.appellation}">Appellation</td>-->
-<!--<td th:text="${wine.varietal}">Varietal</td>-->
-<!--<td th:text="${wine.country}">Country</td>-->
-<!--</tr>-->
-<!--</thead>-->
-<!--</table>-->
-
-<!--<a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit-->
-<!--Producer</a>-->
-<!--<a th:href="@{{id}/wines/new(id=${producer.id})}" class="btn btn-default">Add-->
-<!--New Wine</a>-->
-<!--</div>-->
-<!--</div>-->
 
 
 <h2 align="center">Producer Information</h2>
@@ -100,7 +68,6 @@
         </table>
     </div>
 </div>
-<footer th:include="~{fragments/layout :: footer}"></footer>
 
 </body>
 </html>
