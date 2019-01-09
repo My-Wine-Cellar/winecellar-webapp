@@ -18,6 +18,8 @@ import javax.validation.Valid;
 @Controller
 public class WineController {
 
+    private static final String CREATE_OR_UPDATE_WINE_TEMPLATE = "wines/createOrUpdateWine";
+
     private final WineService wineService;
     private final ProducerService producerService;
 
@@ -48,7 +50,7 @@ public class WineController {
         producer.getWines().add(wine);
         wine.setProducer(producer);
         model.addAttribute("wine", wine);
-        return "wines/createOrUpdateWine";
+        return CREATE_OR_UPDATE_WINE_TEMPLATE;
     }
 
     @PostMapping("/wines/new")
@@ -59,7 +61,7 @@ public class WineController {
         producer.getWines().add(wine);
         if (result.hasErrors()) {
             model.put("wine", wine);
-            return "wines/createOrUpdateWine";
+            return CREATE_OR_UPDATE_WINE_TEMPLATE;
         } else {
             wineService.save(wine);
             return "redirect:/producers/" + producer.getId();
@@ -69,7 +71,7 @@ public class WineController {
     @GetMapping("/wines/{wineId}/edit")
     public String initUpdateForm(@PathVariable Long wineId, Model model) {
         model.addAttribute("wine", wineService.findById(wineId));
-        return "wines/createOrUpdateWine";
+        return CREATE_OR_UPDATE_WINE_TEMPLATE;
     }
 
     @PostMapping("/wines/{wineId}/edit")
@@ -77,7 +79,7 @@ public class WineController {
         if (result.hasErrors()) {
             wine.setProducer(producer);
             model.addAttribute("wine", wine);
-            return "wines/createOrUpdateWine";
+            return CREATE_OR_UPDATE_WINE_TEMPLATE;
         } else {
             producer.getWines().add(wine);
             wineService.save(wine);
@@ -85,29 +87,3 @@ public class WineController {
         }
     }
 }
-
-//    @GetMapping("/showFormForAdd")
-//    public String showFormForAdd(Model model) {
-//        Wine wine = new Wine();
-//        model.addAttribute("addwine", wine);
-//        return "wines/create-wine";
-//    }
-//
-//    @PostMapping("/saveWine")
-//    public String saveForm(@Valid Wine wine, Producer producer, BindingResult result) {
-////        if (StringUtils.hasLength(wine.getName()) && wine.isNew() && producer.getWine(wine.getName(), true) != null) {
-////            result.rejectValue("name", "duplicate", "already exists");
-////        }
-////        producer.getWines().add(wine);
-//        if (result.hasErrors()) {
-//            return "/wines";
-//        } else {
-//            if(producer.isNew()) {
-//                producerService.save(producer);
-//            }
-//            producer.getWines().add(wine);
-//            wine.setProducer(producer);
-//            wineService.save(wine);
-//            return "redirect:/wines/list";
-//        }
-//    }
