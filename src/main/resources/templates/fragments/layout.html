@@ -39,19 +39,17 @@
         Cellar
     </a>
     <!-- use to move nav item to right: ml-auto-->
-    <ul class="nav navbar-nav">
-        <!--<li class="nav-item">-->
-            <!--<a class="nav-link" th:href="@{/wines/list}">Wines</a>-->
-        <!--</li>-->
+    <ul class="nav navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/producers/list}">Producers</a>
+            <a class="nav-link" th:href="@{/wines/list}">Wines<span class="fa fa-list" aria-hidden="true"></span></a>
         </li>
-        <!--<li class="nav-item">-->
-            <!--<a class="nav-link" th:href="@{/producers/find}">Find Producers</a>-->
-        <!--</li>-->
-        <!--<li class="nav-item">-->
-            <!--<a class="nav-link" th:href="@{/error}">Error Page</a>-->
-        <!--</li>-->
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/producers/list}">Producers<span class="fa fa-list" aria-hidden="true"></span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/errorpage}">Error Page<span class="fa fa-exclamation-triangle" aria-hidden="true"></span></a>
+
+        </li>
     </ul>
 </nav>
 

@@ -17,20 +17,18 @@
             <th>Appellation</th>
             <th>Varietal</th>
             <th>Country</th>
-            <th>Producer</th>
         </tr>
         <tr th:each="wine : ${wines}">
             <td th:text="${wine.name}">Name</td>
             <td th:text="${wine.vintage}">Vintage</td>
-            <!--<td th:text="${wine.appellation}">Appellation</td>-->
+            <td th:text="${wine.appellation}">Appellation</td>
             <td th:text="${wine.varietal}">Varietal</td>
-            <!--<td th:text="${wine.country}">Country</td>-->
-            <td th:text="${wine.producer}">Producer</td>
+            <td th:text="${wine.country}">Country</td>
         </tr>
         </thead>
     </table>
 
-    <!--<button type="submit" class="save btn" onclick="window.location.href='/wines/showFormForAdd'; return false;">Add Wine</button>-->
+    <button type="submit" class="save btn" onclick="window.location.href='/wines/new'; return false;">Add Wine</button>
 
 </div>
 

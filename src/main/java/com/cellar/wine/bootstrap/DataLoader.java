@@ -2,20 +2,22 @@ package com.cellar.wine.bootstrap;
 
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
-import com.cellar.wine.services.ProducerService;
-import com.cellar.wine.services.WineService;
+import com.cellar.wine.repositories.ProducerRepository;
+import com.cellar.wine.repositories.WineRepository;
+import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+@Log
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    private final WineService wineService;
-    private final ProducerService producerService;
+    private final WineRepository wineRepository;
+    private final ProducerRepository producerRepository;
 
-    public DataLoader(WineService wineService, ProducerService producerService) {
-        this.wineService = wineService;
-        this.producerService = producerService;
+    public DataLoader(WineRepository wineRepository, ProducerRepository producerRepository) {
+        this.wineRepository = wineRepository;
+        this.producerRepository = producerRepository;
     }
 
     @Override
@@ -25,51 +27,33 @@ public class DataLoader implements CommandLineRunner {
         producer1.setName("Mark West");
         producer1.setCountry("USA");
         producer1.setAppellation("Napa Valley");
-        producerService.save(producer1);
+        producerRepository.save(producer1);
 
         Producer producer2 = new Producer();
-        producer2.setName("Big Boi");
+        producer2.setName("Clos du Vouget");
         producer2.setCountry("France");
         producer2.setAppellation("Burgundy");
-        producerService.save(producer2);
+        producerRepository.save(producer2);
 
-        System.out.println("Loaded producers...");
+        log.info("Loaded producers...");
 
         Wine wine1 = new Wine();
 
         wine1.setName("Brickhouse");
         wine1.setVarietal("Pinot Noir");
         wine1.setVintage("2015");
-        wine1.setProducer(producer1);
-        wineService.save(wine1);
+        wine1.setAppellation("Willamette Valley");
+        wine1.setCountry("USA");
+        wineRepository.save(wine1);
 
         Wine wine2 = new Wine();
-        wine2.setName("Holla Holla");
+        wine2.setName("Acrobat");
         wine2.setVarietal("Malbec");
         wine2.setVintage("2016");
-        wine2.setProducer(producer1);
-        wineService.save(wine2);
+        wine2.setAppellation("Russian River Valley");
+        wine2.setCountry("USA");
+        wineRepository.save(wine2);
 
-        Wine wine3 = new Wine();
-        wine3.setName("Bread and Butter");
-        wine3.setVarietal("Merlot");
-        wine3.setVintage("2014");
-        wine3.setProducer(producer2);
-        wineService.save(wine3);
-
-        Wine wine4 = new Wine();
-
-        wine4.setName("Acrobat");
-        wine4.setVarietal("Chardonay");
-        wine4.setVintage("2018");
-        wine4.setProducer(producer2);
-        wineService.save(wine4);
-
-        producer1.getWines().add(wine1);
-        producer1.getWines().add(wine2);
-        producer2.getWines().add(wine3);
-        producer2.getWines().add(wine4);
-
-        System.out.println("Loaded wines...");
+        log.info("Loaded wines...");
     }
 }

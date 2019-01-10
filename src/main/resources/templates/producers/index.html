@@ -15,17 +15,15 @@
             <th>Name</th>
             <th>Country</th>
             <th>Appellation</th>
-            <th>Wines</th>
         </tr>
         <tr th:each="producer : ${producers}">
             <td><a href="#" th:href="@{'/producers/' + ${producer.id}}" th:text="${producer.name}">Name</a></td>
             <td th:text="${producer.country}">Country</td>
             <td th:text="${producer.appellation}">Appellation</td>
-            <td th:text="${producer.wines}">Wines</td>
         </tr>
         </thead>
     </table>
-    <button type="submit" class="save btn" onclick="window.location.href='/producers/new'; return false;">Add Producer</button>
+    <button type="submit" class="btn btn-default" onclick="window.location.href='/producers/new'; return false;">Add Producer</button>
 </div>
 
 <footer th:include="~{fragments/layout :: footer}"></footer>

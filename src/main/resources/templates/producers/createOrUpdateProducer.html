@@ -9,46 +9,27 @@
 
 <br/>
 
-<!--<div class="container">-->
-<!--&lt;!&ndash;<h2>Add Producer:</h2>&ndash;&gt;-->
-<!--<form th:action="new" th:modelAttribute="producer" method="post">-->
-<!--<div class="form-group">-->
-<!--<label for="name">Name:</label>-->
-<!--<input type="text" class="form-control" th:field="*{producer.name}" id="name" placeholder="Enter name" name="name">-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="appellation">Appellation:</label>-->
-<!--<input type="text" class="form-control" id="appellation" th:field="*{producer.appellation}" placeholder="Enter appellation" name="appellation">-->
-<!--</div>-->
-
-<!--<div class="form-group">-->
-<!--<label for="country">Country:</label>-->
-<!--<input type="text" class="form-control" id="country" th:field="*{producer.country}" placeholder="Enter country" name="country">-->
-<!--</div>-->
-<!--<button type="submit" class="save btn" value="Save">Save</button>-->
-<!--</form>-->
-<!--</div>-->
 <div class="container">
-    <h2>Producer</h2>
-    <form th:object="${producer}" class="form-fhorizontal" id="add-producer-form" method="post">
+    <!--<h2>Add Producer:</h2>-->
+    <form  th:modelAttribute="producer" method="post">
         <div class="form-group has-feedback">
-            <input
-                    th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
-            <input
-                    th:replace="~{fragments/inputField :: input ('Country', 'country', 'text')}"/>
-            <input
-                    th:replace="~{fragments/inputField :: input ('Appellation', 'appellation', 'text')}"/>
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" th:field="*{producer.name}" id="name" placeholder="Enter name"
+                   name="name">
+        </div>
+        <div class="form-group has-feedback">
+            <label for="appellation">Appellation:</label>
+            <input type="text" class="form-control" id="appellation" th:field="*{producer.appellation}"
+                   placeholder="Enter appellation" name="appellation">
+        </div>
+        <div class="form-group has-feedback">
+            <label for="country">Country:</label>
+            <input type="text" class="form-control" id="country" th:field="*{producer.country}"
+                   placeholder="Enter country" name="country">
+        </div>
 
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button
-                        th:with="text=${producer['new']} ? 'Add Producer' : 'Update Producer'"
-                        class="btn btn-default" type="submit" th:text="${text}">Add
-                    Producer
-                </button>
-            </div>
-        </div>
+        <button type="submit" class="save btn" value="Save">Save</button>
+
     </form>
 </div>
 
