@@ -31,7 +31,7 @@ public class WineController {
     }
 
     @GetMapping("/new")
-    public String initCreationForm(Wine wine, Model model) {
+    public String initCreationForm(Model model) {
         model.addAttribute("wine", Wine.builder().build());
         return CREATE_UPDATE_WINE_FORM;
     }
@@ -42,7 +42,7 @@ public class WineController {
             return CREATE_UPDATE_WINE_FORM;
         } else {
             wineRepository.save(wine);
-            return "forward:/wines/list";
+            return "redirect:/wines/list";
         }
     }
 
@@ -53,12 +53,12 @@ public class WineController {
     }
 
     @PostMapping("/{wineId}/edit")
-    public String processUpdateForm(@Valid Wine wine, @PathVariable Long wineId, BindingResult result, Model model) {
+    public String processUpdateForm(@Valid Wine wine, BindingResult result, @PathVariable Long wineId) {
         if (result.hasErrors()) {
-            model.addAttribute("wine", wine);
             return CREATE_UPDATE_WINE_FORM;
         } else {
-            model.addAttribute("wine", wineRepository.findById(wineId));
+            wine.setId(wineId);
+            wineRepository.save(wine);
             return "redirect:/wines/list";
         }
     }

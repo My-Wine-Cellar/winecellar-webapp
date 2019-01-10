@@ -11,17 +11,20 @@
 
 <div class="container">
     <h2>Add Producer:</h2>
-    <form th:modelAttribute="producer" method="post" th:object="${producer}">
+    <form method="post" th:object="${producer}">
+
         <div class="form-group has-feedback">
             <label for="name">Name:</label>
             <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Enter name"
                    name="name">
         </div>
+
         <div class="form-group has-feedback">
             <label for="appellation">Appellation:</label>
             <input type="text" class="form-control" id="appellation" th:field="*{appellation}"
                    placeholder="Enter appellation" name="appellation">
         </div>
+
         <div class="form-group has-feedback">
             <label for="country">Country:</label>
             <input type="text" class="form-control" id="country" th:field="*{country}"

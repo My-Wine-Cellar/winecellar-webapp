@@ -17,6 +17,7 @@
             <th>Appellation</th>
             <th>Varietal</th>
             <th>Country</th>
+            <th></th>
         </tr>
         <tr th:each="wine : ${wines}">
             <td th:text="${wine.name}">Name</td>
@@ -24,11 +25,12 @@
             <td th:text="${wine.appellation}">Appellation</td>
             <td th:text="${wine.varietal}">Varietal</td>
             <td th:text="${wine.country}">Country</td>
+            <td><a th:href="@{/wines/{id}/edit(id=${wine.id})}" class="btn btn-default">Update</a></td>
         </tr>
         </thead>
     </table>
 
-    <button type="submit" class="save btn" onclick="window.location.href='/wines/new'; return false;">Add Wine</button>
+    <a th:href="@{/wines/new}" class="btn btn-default">Add Wine</a>
 
 </div>
 

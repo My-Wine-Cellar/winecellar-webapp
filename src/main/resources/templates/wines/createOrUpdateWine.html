@@ -11,7 +11,7 @@
 
 <div class="container">
     <h2>Add Wine:</h2>
-    <form th:modelAttribute="wine" method="post" th:object="${wine}">
+    <form method="post" th:object="${wine}">
         <div class="form-group has-feedback">
             <label for="name">Name:</label>
             <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Enter name"

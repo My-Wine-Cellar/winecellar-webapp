@@ -24,7 +24,6 @@ public class ProducerController {
         this.producerRepository = producerRepository;
     }
 
-
     @RequestMapping("/list")
     public String producer(Model model) {
         model.addAttribute("producers", producerRepository.findAll());
@@ -43,24 +42,24 @@ public class ProducerController {
             return CREATE_UPDATE_PRODUCER_FORM;
         } else {
             producerRepository.save(producer);
-            return "forward:/producers/list";
+            return "redirect:/producers/list";
         }
     }
 
     @GetMapping("/{producerId}/edit")
-    public String initUpdateProducerForm(@PathVariable("producerId") Long producerId, Model model) {
-        model.addAttribute(producerRepository.findById(producerId));
+    public String initUpdateProducerForm(@PathVariable Long producerId, Model model) {
+        model.addAttribute("producer", producerRepository.findById(producerId));
         return CREATE_UPDATE_PRODUCER_FORM;
     }
 
     @PostMapping("/{producerId}/edit")
-    public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable("producerId") Long producerId) {
+    public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable Long producerId) {
         if(result.hasErrors()) {
             return CREATE_UPDATE_PRODUCER_FORM;
         } else {
             producer.setId(producerId);
-            Producer savedProducer = producerRepository.save(producer);
-            return "redirect:/producers/" + savedProducer.getId();
+            producerRepository.save(producer);
+            return "redirect:/producers/list";
         }
     }
 }

@@ -54,9 +54,10 @@
     background-size: cover;
 }
 
-body {
-    overflow: hidden;
-}
+/*THIS DOES NOT WORK!!! It removes the ability to scroll*/
+/*body {*/
+    /*overflow: hidden;*/
+/*}*/
 
 .nav-item {
     text-align: center;
