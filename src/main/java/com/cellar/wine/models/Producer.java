@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -18,7 +17,7 @@ import java.util.Set;
 public class Producer extends BaseEntity {
 
     @Builder
-    public Producer(Long id, String name, String country, String appellation, Set<Wine> wines) {
+    public Producer(Long id, String name, String country, String appellation) {
         super(id, country, appellation);
         this.name = name;
     }

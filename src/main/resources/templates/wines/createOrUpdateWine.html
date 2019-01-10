@@ -11,30 +11,30 @@
 
 <div class="container">
     <h2>Add Wine:</h2>
-    <form th:modelAttribute="wine" method="post">
-        <div class="form-group">
+    <form th:modelAttribute="wine" method="post" th:object="${wine}">
+        <div class="form-group has-feedback">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" th:field="${wine.name}" id="name" placeholder="Enter name"
+            <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Enter name"
                    name="name">
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
             <label for="vintage">Vintage:</label>
-            <input type="text" class="form-control" th:field="*{wine.vintage}" id="vintage" placeholder="Enter vintage"
+            <input type="text" class="form-control" th:field="*{vintage}" id="vintage" placeholder="Enter vintage"
                    name="vintage">
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
             <label for="appellation">Appellation:</label>
-            <input type="text" class="form-control" id="appellation" th:field="*{wine.appellation}"
+            <input type="text" class="form-control" id="appellation" th:field="*{appellation}"
                    placeholder="Enter appellation" name="appellation">
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
             <label for="varietal">Varietal:</label>
-            <input type="text" class="form-control" id="varietal" th:field="*{wine.varietal}"
+            <input type="text" class="form-control" id="varietal" th:field="*{varietal}"
                    placeholder="Enter varietal" name="varietal">
         </div>
-        <div class="form-group">
+        <div class="form-group has-feedback">
             <label for="country">Country:</label>
-            <input type="text" class="form-control" id="country" th:field="*{wine.country}" placeholder="Enter country"
+            <input type="text" class="form-control" id="country" th:field="*{country}" placeholder="Enter country"
                    name="country">
         </div>
 

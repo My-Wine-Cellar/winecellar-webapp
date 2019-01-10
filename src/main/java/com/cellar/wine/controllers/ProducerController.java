@@ -5,7 +5,10 @@ import com.cellar.wine.repositories.ProducerRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
@@ -21,21 +24,12 @@ public class ProducerController {
         this.producerRepository = producerRepository;
     }
 
-    @ModelAttribute("producer")
-
 
     @RequestMapping("/list")
     public String producer(Model model) {
         model.addAttribute("producers", producerRepository.findAll());
         return "producers/index";
     }
-
-//    @GetMapping("/{producerId}")
-//    public ModelAndView showProducer(@PathVariable Long producerId) {
-//        ModelAndView mav = new ModelAndView("producers/producerDetails");
-//        mav.addObject("producer", producerRepository.findById(producerId));
-//        return mav;
-//    }
 
     @GetMapping("/new")
     public String initCreateForm(Model model) {

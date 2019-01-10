@@ -4,7 +4,6 @@ import com.cellar.wine.models.Wine;
 import com.cellar.wine.repositories.WineRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,9 +38,6 @@ public class WineController {
 
     @PostMapping("/new")
     public String processCreationForm(@Valid Wine wine, BindingResult result) {
-        if (StringUtils.hasLength(wine.getName()) && wine.isNew()) {
-            result.rejectValue("name", "duplicate", "already exists");
-        }
         if (result.hasErrors()) {
             return CREATE_UPDATE_WINE_FORM;
         } else {
@@ -63,7 +59,7 @@ public class WineController {
             return CREATE_UPDATE_WINE_FORM;
         } else {
             model.addAttribute("wine", wineRepository.findById(wineId));
-            return "redirect:/producers/" + wineRepository.save(wine);
+            return "redirect:/wines/list";
         }
     }
 }
