@@ -58,13 +58,13 @@ public class ProducerController {
     }
 
     @GetMapping("/{producerId}/edit")
-    public String initUpdateProducerForm(@PathVariable("producerId") Long producerId, Model model) {
-        model.addAttribute(producerService.findById(producerId));
+    public String initUpdateProducerForm(@PathVariable Long producerId, Model model) {
+        model.addAttribute("producer", producerService.findById(producerId));
         return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
     }
 
     @PostMapping("/{producerId}/edit")
-    public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable("producerId") Long producerId) {
+    public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable Long producerId) {
         if(result.hasErrors()) {
             return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
         } else {

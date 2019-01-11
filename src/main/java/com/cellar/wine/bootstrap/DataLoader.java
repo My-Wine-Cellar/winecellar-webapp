@@ -4,9 +4,11 @@ import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
+import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+@Log
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -33,7 +35,7 @@ public class DataLoader implements CommandLineRunner {
         producer2.setAppellation("Burgundy");
         producerService.save(producer2);
 
-        System.out.println("Loaded producers...");
+        log.info("Loaded producers...");
 
         Wine wine1 = new Wine();
 
@@ -70,6 +72,6 @@ public class DataLoader implements CommandLineRunner {
         producer2.getWines().add(wine3);
         producer2.getWines().add(wine4);
 
-        System.out.println("Loaded wines...");
+        log.info("Loaded wines...");
     }
 }

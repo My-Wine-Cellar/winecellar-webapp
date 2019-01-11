@@ -68,13 +68,13 @@ public class WineController {
         return CREATE_OR_UPDATE_WINE_TEMPLATE;
     }
 
+    //gonna try RequestParam to see if it works, vs PathVariable
     @PostMapping("/wines/{wineId}/edit")
-    public String processUpdateForm(@Valid Wine wine, BindingResult result, Producer producer, Model model) {
+    public String processUpdateForm(@Valid Wine wine, @RequestParam(name = "wineId") Long wineId, BindingResult result, Producer producer, Model model) {
         if (result.hasErrors()) {
-            wine.setProducer(producer);
-            model.addAttribute("wine", wine);
             return CREATE_OR_UPDATE_WINE_TEMPLATE;
         } else {
+            wine.setId(wineId);
             producer.getWines().add(wine);
             wineService.save(wine);
             return "redirect:/producers/" + producer.getId();

@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Wine extends BaseEntity {
 
     @Builder
-    public Wine(Long id, String name, Producer producer, String appellation, String country, String vintage, String varietal) {
+    public Wine(Long id, String name, Producer producer, String vintage, String varietal) {
         super(id);
         this.producer = producer;
         this.name = name;

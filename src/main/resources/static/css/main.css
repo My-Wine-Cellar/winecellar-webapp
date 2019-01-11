@@ -54,9 +54,10 @@
     background-size: cover;
 }
 
-body {
-    overflow: hidden;
-}
+/*THIS REMOVES THE ABILITY TO SCROLL*/
+/*body {*/
+    /*overflow: hidden;*/
+/*}*/
 
 .nav-item {
     text-align: center;
