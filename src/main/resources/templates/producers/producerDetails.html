@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'producers')}">
 
-<head th:insert="~{fragments/layout :: head}">
+<!--<head th:insert="~{fragments/layout :: head}">-->
 
 <body>
 
-<nav th:insert="~{fragments/layout :: navbar}"></nav>
+<!--<nav th:insert="~{fragments/layout :: navbar}"></nav>-->
 
-<br/>
+<!--<br/>-->
 
 <!--<h4 th:text="${producer.name}" align="center"></h4>-->
 
@@ -72,35 +72,31 @@
 <br/>
 <br/>
 <br/>
-<div class="container">
-    <h2 align="center">Wines</h2>
-    <div class="table">
-        <table class="table table-striped">
 
-            <tr th:each="wine : ${producer.wines}">
-                <td valign="top">
-                    <dl class="dl-horizontal">
-                        <dt>Name</dt>
-                        <dd th:text="${wine.name}">
-                        </dd>
-                    </dl>
-                </td>
-                <td valign="top">
-                    <table class="table-condensed">
-                        <thead>
-                        <tr>
-                            <td><a
-                                    th:href="@{{producerId}/wines/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}">Edit
-                                Wine</a></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+<h2 align="center">Wines</h2>
+<table class="table table-striped">
+    <tr th:each="wine : ${producer.wines}">
+        <td valign="top">
+            <dl class="dl-horizontal">
+                <dt>Name</dt>
+                <dd th:text="${wine.name}">
+                </dd>
+            </dl>
+        </td>
+        <td valign="top">
+            <table class="table-condensed">
+                <thead>
+                <tr>
+                    <td><a
+                            th:href="@{{producerId}/wines/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}">Edit
+                        Wine</a></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
-        </table>
-    </div>
-</div>
-<footer th:include="~{fragments/layout :: footer}"></footer>
+<!--<footer th:include="~{fragments/layout :: footer}"></footer>-->
 
 </body>
 </html>
