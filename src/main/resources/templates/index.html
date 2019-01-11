@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -7,6 +8,48 @@
 <div class="jumbotron">
     <h2>Welcome</h2>
 </div>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head th:insert="~{fragments/layout :: head}">-->
+
+<!--<body>-->
+
+<!--<nav th:insert="~{fragments/layout :: navbar}"></nav>-->
+
+<!--&lt;!&ndash;<div class="jumbotron jumbotron-fluid">&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="container text-center">&ndash;&gt;-->
+<!--&lt;!&ndash;<h1>Welcome to the Wine Cellar</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--<div class="container-fluid">-->
+<!--<div class="row">-->
+<!--<img class='img-fluid w-100' style="background-size: 100%; background-repeat: no-repeat" src="#" th:src="@{/images/wine.jpg}" alt="wine bottle"/>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<footer th:insert="~{fragments/layout :: footer}"></footer>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Wine Cellar Index</title>
+</head>
+<body>
+
+<!--<h2 th:text="#{welcome}">Welcome</h2>-->
+
+<!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+        <!--<img class="img-responsive" src="../static/resources/images/pets.png" th:src="@{/resources/images/pets.png}"/>-->
+    <!--</div>-->
+<!--</div>-->
 
 </body>
 </html>

@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -21,16 +20,6 @@ public class ProducerJpa implements ProducerService {
     public ProducerJpa(ProducerRepository producerRepository, WineRepository wineRepository) {
         this.producerRepository = producerRepository;
         this.wineRepository = wineRepository;
-    }
-
-    @Override
-    public Producer findByName(String name) {
-        return producerRepository.findByName(name);
-    }
-
-    @Override
-    public List<Producer> findAllByNameLike(String name) {
-        return producerRepository.findAllByNameLike(name);
     }
 
     @Override
