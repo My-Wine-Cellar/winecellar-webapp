@@ -42,38 +42,70 @@
 <br/>
 <br/>
 
+<h2 align="center">Wines</h2>
+<br/>
 <div class="container">
-    <h2 align="center">Wines</h2>
-    <div class="table">
-        <table class="table table-striped">
-            <tr th:each="wine : ${producer.wines}">
-                <td valign="top">
-                    <dl class="dl-horizontal">
-                        <dt>Name</dt>
-                        <dd th:text="${wine.name}">
-                        </dd>
-                        <dt>Vintage</dt>
-                        <dd th:text="${wine.vintage}">
-                        </dd>
-                        <dt>Varietal</dt>
-                        <dd th:text="${wine.varietal}">
-                        </dd>
-                    </dl>
-                </td>
-                <td valign="top">
-                    <table class="table-condensed">
-                        <thead>
-                        <tr>
-                            <td><a class="btn btn-default"
-                                    th:href="@{{producerId}/wines/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}">Edit
-                                Wine</a></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </div>
+    <table class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>Name</th>
+            <th>Vintage</th>
+            <th>Appellation</th>
+            <th>Varietal</th>
+            <th>Country</th>
+            <th></th>
+        </tr>
+        <tr th:each="wine : ${producer.wines}">
+            <td th:text="${wine.name}">Name</td>
+            <td th:text="${wine.vintage}">Vintage</td>
+            <td th:text="${producer.appellation}">Appellation</td>
+            <td th:text="${wine.varietal}">Varietal</td>
+            <td th:text="${producer.country}">Country</td>
+            <td><a th:href="@{{producerId}/wines/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}" class="btn btn-default">Update</a></td>
+        </tr>
+        </thead>
+    </table>
 </div>
+
+<!--<div class="container">-->
+    <!--<h2 align="center">Wines</h2>-->
+    <!--<br/>-->
+    <!--<div class="table">-->
+        <!--<table class="table table-striped">-->
+            <!--<tr th:each="wine : ${producer.wines}">-->
+                <!--<td valign="top">-->
+                    <!--<dl class="dl-horizontal">-->
+                        <!--<dt>Name</dt>-->
+                        <!--<dd th:text="${wine.name}">-->
+                        <!--</dd>-->
+                        <!--<dt>Vintage</dt>-->
+                        <!--<dd th:text="${wine.vintage}">-->
+                        <!--</dd>-->
+                        <!--<dt>Varietal</dt>-->
+                        <!--<dd th:text="${wine.varietal}">-->
+                        <!--</dd>-->
+                        <!--<dt>Country</dt>-->
+                        <!--<dd th:text="${wine.producer.country}">-->
+                        <!--</dd>-->
+                        <!--<dt>Appellation</dt>-->
+                        <!--<dd th:text="${wine.producer.appellation}">-->
+                        <!--</dd>-->
+                    <!--</dl>-->
+                <!--</td>-->
+                <!--<td valign="top">-->
+                    <!--<table class="table-condensed">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<td><a class="btn btn-default"-->
+                                    <!--th:href="@{{producerId}/wines/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}">Edit-->
+                                <!--Wine</a></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+    <!--</div>-->
+<!--</div>-->
 
 </body>
 </html>
