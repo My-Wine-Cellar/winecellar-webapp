@@ -1,9 +1,15 @@
+
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'producers')}">
+
 <!--<!DOCTYPE html>-->
 <!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
 
 <!--<head th:insert="~{fragments/layout :: head}">-->
 
+
 <!--<body>-->
+
 
 <!--<nav th:insert="~{fragments/layout :: navbar}"></nav>-->
 
@@ -54,6 +60,7 @@
       th:replace="~{fragments/layout :: layout (~{::body},'producers')}">
 
 <body>
+
 
 <h2>
     <th:block th:if="${wine['new']}">New </th:block>

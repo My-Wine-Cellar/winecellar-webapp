@@ -1,22 +1,17 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'error')}">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Error page</title>
+</head>
+<body>
 
-<!--<head th:insert="~{fragments/layout :: head}">-->
+<div class="jumbotron jumbotron-fluid text-center">
+    <div class="container">
+      <h1>Error:</h1>-->
+       <p>You have made a mistake or my app is broken. Either way, try to <a th:href="@{/}">start from the beginning</a></p>
+    </div>
+</div>
 
-<!--</head>-->
-<!--<body>-->
-
-<!--<nav th:insert="~{fragments/layout :: navbar}"></nav>-->
-
-<!--<div class="jumbotron jumbotron-fluid text-center">-->
-    <!--<div class="container">-->
-        <!--<h1>Error:</h1>-->
-        <!--<p>You have made a mistake or my app is broken. Either way, try to <a th:href="@{/}">start from the-->
-            <!--beginning</a></p>-->
-    <!--</div>-->
-<!--</div>-->
-
-<!--<footer th:include="~{fragments/layout :: footer}"></footer>-->
-
-<!--</body>-->
-<!--</html>-->
+</body>
+</html>

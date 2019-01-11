@@ -38,12 +38,6 @@ public class WineController {
         dataBinder.setDisallowedFields("id");
     }
 
-    @RequestMapping("/list")
-    public String wine(Model model) {
-        model.addAttribute("wines", wineService.findAll());
-        return "wines/index";
-    }
-
     @GetMapping("/wines/new")
     public String initCreationForm(Producer producer, Model model) {
         Wine wine = new Wine();
