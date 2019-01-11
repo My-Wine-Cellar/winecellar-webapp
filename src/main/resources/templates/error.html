@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<header th:replace="~{fragments/layout :: header}"></header>
-<nav th:replace="~{fragments/layout :: nav}"></nav>
+<head th:insert="~{fragments/layout :: header}"/>
 
 <body>
 
-<div class="jumbotron jumbotron-fluid text-center">
-    <div class="container">
-      <h1>Error:</h1>
-       <p>You have made a mistake or my app is broken. Either way, try to <a th:href="@{/}">start from the beginning</a></p>
+<nav th:insert="~{fragments/layout :: nav}"/>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container text-center">
+        <h1>Error:</h1>
+        <p>You have made a mistake or my app is broken. Either way, try to <a th:href="@{/}">start from the
+            beginning</a></p>
     </div>
 </div>
 

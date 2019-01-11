@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
 
-<header th:replace="~{fragments/layout :: header}"></header>
-<nav th:replace="~{fragments/layout :: nav}"></nav>
+<head th:insert="~{fragments/layout :: header}"/>
 
+<body>
+
+<nav th:insert="~{fragments/layout :: nav}"/>
+<br/>
 <div class="container">
     <h2>Producer</h2>
+    <br/>
     <form th:object="${producer}" class="form-fhorizontal" id="add-producer-form" method="post">
         <div class="form-group has-feedback">
             <input
@@ -27,7 +31,6 @@
         </div>
     </form>
 </div>
-
 
 </body>
 </html>

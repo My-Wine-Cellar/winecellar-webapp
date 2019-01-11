@@ -1,39 +1,47 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::body},'producers')}">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<header th:replace="~{fragments/layout :: header}"></header>
+<head th:insert="~{fragments/layout :: header}"/>
 
-<nav th:replace="~{fragments/layout :: nav}"></nav>
+<body>
 
-<h2>
-    <th:block th:if="${wine['new']}">New </th:block>
+<nav th:insert="~{fragments/layout :: nav}"/>
+
+<br/>
+
+<h2 align="center">
+    <th:block th:if="${wine['new']}">New</th:block>
     Wine
 </h2>
-<form th:object="${wine}" class="form-horizontal" method="post">
-    <input type="hidden" name="id" th:value="*{id}" />
-    <div class="form-group has-feedback">
+
+<div class="container">
+    <form th:object="${wine}" class="form-horizontal" method="post">
+        <input type="hidden" name="id" th:value="*{id}"/>
+        <div class="form-group has-feedback">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Producer</label>
+                <div class="col-sm-10">
+                    <span th:text="${wine.producer.name}"/>
+                </div>
+            </div>
+
+            <input
+                    th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
+            <input
+                    th:replace="~{fragments/inputField :: input ('Vintage', 'vintage', 'text')}"/>
+            <input
+                    th:replace="~{fragments/inputField :: input ('Varietal', 'varietal', 'text')}"/>
+        </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label">Producer</label>
-            <div class="col-sm-10">
-                <span th:text="${wine.producer.name}" />
+            <div class="col-sm-offset-2 col-sm-10">
+                <button
+                        th:with="text=${wine['new']} ? 'Add Wine' : 'Update Wine'"
+                        class="btn btn-default" type="submit" th:text="${text}">Add
+                    Wine
+                </button>
             </div>
         </div>
-        <input
-                th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}" />
-        <input
-                th:replace="~{fragments/inputField :: input ('Vintage', 'vintage', 'text')}" />
-        <input
-                th:replace="~{fragments/selectField :: select ('Varietal', 'varietal', 'text')}" />
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button
-                    th:with="text=${wine['new']} ? 'Add Wine' : 'Update Wine'"
-                    class="btn btn-default" type="submit" th:text="${text}">Add
-                Wine</button>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
 
 </body>
 

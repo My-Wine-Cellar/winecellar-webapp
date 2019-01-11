@@ -69,8 +69,8 @@ public class ProducerController {
             return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
         } else {
             producer.setId(producerId);
-            Producer savedProducer = producerService.save(producer);
-            return "redirect:/producers/" + savedProducer.getId();
+            producerService.save(producer);
+            return "redirect:/producers/" + producer.getId();
         }
     }
 }

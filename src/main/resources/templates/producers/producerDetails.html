@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<header th:replace="~{fragments/layout :: header}"></header>
-<nav th:replace="~{fragments/layout :: nav}"></nav>
+<head th:insert="~{fragments/layout :: header}"/>
 
 <br/>
 
 <body>
+
+<nav th:insert="~{fragments/layout :: nav}"/>
 
 <h2 align="center">Producer Information</h2>
 
@@ -40,11 +41,11 @@
 <br/>
 <br/>
 <br/>
+
 <div class="container">
     <h2 align="center">Wines</h2>
     <div class="table">
         <table class="table table-striped">
-
             <tr th:each="wine : ${producer.wines}">
                 <td valign="top">
                     <dl class="dl-horizontal">
@@ -57,14 +58,13 @@
                     <table class="table-condensed">
                         <thead>
                         <tr>
-                            <td><a
+                            <td><a class="btn btn-default"
                                     th:href="@{{producerId}/wines/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}">Edit
                                 Wine</a></td>
                         </tr>
                     </table>
                 </td>
             </tr>
-
         </table>
     </div>
 </div>
