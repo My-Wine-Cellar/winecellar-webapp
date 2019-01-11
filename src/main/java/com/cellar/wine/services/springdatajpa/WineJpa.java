@@ -21,11 +21,6 @@ public class WineJpa implements WineService {
     }
 
     @Override
-    public Wine findByName(String name) {
-        return wineRepository.findByName(name);
-    }
-
-    @Override
     public Set<Wine> findAll() {
         Set<Wine> wines = new HashSet<>();
         wineRepository.findAll().forEach(wines::add);
