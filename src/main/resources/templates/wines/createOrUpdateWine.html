@@ -1,7 +1,8 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::body},'producers')}">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<body>
+<header th:replace="~{fragments/layout :: header}"></header>
+
+<nav th:replace="~{fragments/layout :: nav}"></nav>
 
 <h2>
     <th:block th:if="${wine['new']}">New </th:block>

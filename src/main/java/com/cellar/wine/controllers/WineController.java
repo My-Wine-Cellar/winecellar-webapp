@@ -52,12 +52,12 @@ public class WineController {
         if (StringUtils.hasLength(wine.getName()) && wine.isNew() && producer.getWine(wine.getName(), true) != null) {
             result.rejectValue("name", "duplicate", "already exists");
         }
-        producer.getWines().add(wine);
         if (result.hasErrors()) {
             model.put("wine", wine);
             return CREATE_OR_UPDATE_WINE_TEMPLATE;
         } else {
             wineService.save(wine);
+            producer.getWines().add(wine);
             return "redirect:/producers/" + producer.getId();
         }
     }

@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (template, menu)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
+<head th:fragment="header">
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta charset="utf-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
@@ -35,41 +33,34 @@
 
 <body>
 
-<nav class="navbar navbar-custom navbar-expand-md" role="navigation">
+<nav th:fragment="nav" class="navbar navbar-custom navbar-expand-md" role="navigation">
             <a class="navbar-brand" th:href="@{/}">Wine
                 <img th:src="@{/images/wine.png}" src="../../static/images/wine.png" alt="" style="height: 60px"/>
                 Cellar
             </a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+        <!--<span class="navbar-toggler-icon"></span>-->
+    <!--</button>-->
 
         <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-
-                <li th:fragment="menuItem (path,active,title,glyph,text)" class="active"
-                    th:class="${active == menu ? 'active' : ''}">
-                    <a th:href="@{__${path}__}" th:title="${title}">
-                        <span th:class="'fa  fa-'+${glyph}" class="fa fa-home"
-                              aria-hidden="true"></span>
-                        <span th:text="${text}">Template</span>
-                    </a>
+                <li class="nav-item" >
+                    <a class="nav-link" th:href="@{/}">Home<span class="fa fa-home" aria-hidden="true"></span></a>
+                    <!--<span class="fa fa-home" aria-hidden="true"></span>-->
+                    <!--<span>Home</span>-->
                 </li>
 
-                <li th:replace="::menuItem ('/','home','home page','home','Home')">
-                    <span class="fa fa-home" aria-hidden="true"></span>
-                    <span>Home</span>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/producers/list}">Producers<span class="fa fa-list" aria-hidden="true"></span></a>
+                    <!--<span class="fa fa-list" aria-hidden="true"></span>-->
+                    <!--<span>Find owners</span>-->
                 </li>
 
-                <li th:replace="::menuItem ('/producers/list','producers','producers','list','Producers List')">
-                    <span class="fa fa-list" aria-hidden="true"></span>
-                    <span>Find owners</span>
-                </li>
-
-                <li th:replace="::menuItem ('/error','error','trigger a RuntimeException to see how it is handled','exclamation-triangle','Error')">
-                    <span class="fa fa-exclamation-triangle" aria-hidden="true"></span>
-                    <span>Error</span>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/errorpage}">Error<span class="fa fa-exclamation-triangle" aria-hidden="true"></span></a>
+                    <!--<span class="fa fa-exclamation-triangle" aria-hidden="true"></span>-->
+                    <!--<span>Error</span>-->
                 </li>
 
             </ul>
@@ -83,6 +74,8 @@
         </div>
 </nav>
 
+
+
 <div class="container">
     <footer class="footer">
         <div class="container text-center">
@@ -93,9 +86,6 @@
     </footer>
 </div>
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
 </body>
 </html>
