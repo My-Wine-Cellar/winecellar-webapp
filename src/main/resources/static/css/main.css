@@ -1,13 +1,12 @@
 /*Comments go here...*/
 
 .navbar-custom {
-    /*wine red*/
-    background-color: #B11227;
+    background-color: #393f4d;
 }
 
-/*.jumbotron {*/
-    /*background-color: white;*/
-/*}*/
+.jumbotron {
+    background-color: #d4d4dc;
+}
 
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
@@ -37,17 +36,17 @@
 }
 
 .fa-github, .fa-linkedin {
-    color: rgba(0, 0, 0, 0.58);
+    color: #B11227;
 }
 
 .btn {
-    color: #712F37;
-    background-color: #D1BF73;
+    color: #3A4958;
+    background-color: #feda6a;
 }
 
 .btn:hover {
-    color: #960E1F;
-    background-color: #B89C2B;
+    color: #393f4d;
+    background-color: #f7cb5b;
 }
 
 .img-responsive {
@@ -69,7 +68,15 @@
     margin: 4px;
 }
 
-/*th {*/
-    /*background-color: darkgrey;*/
-    /*color: white;*/
-/*}*/
+
+/*
+Are ya yellow?!: #feda6a
+
+Silver Fox: #d4d4dc
+
+Deep Matte Grey: #393f4d
+
+Dark Slate: #1d1e22
+
+Wine Red: #B11227;
+ */
