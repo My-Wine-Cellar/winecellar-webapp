@@ -1,25 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{fragments/layout :: head}"/>
+<head th:insert="~{fragments/layout :: header}"/>
 
 <body>
 
-<nav th:insert="~{fragments/layout :: navbar}"/>
+<nav th:insert="~{fragments/layout :: nav}"/>
 
 <div class="jumbotron jumbotron-fluid">
     <div class="container text-center">
         <h1>Welcome</h1>
     </div>
 </div>
-
-<!--<div class="container-fluid">-->
-    <!--<div class="row">-->
-        <!--<img class='img-fluid w-100' style="background-size: 100%; background-repeat: no-repeat" src="#" th:src="@{/images/wine.jpg}" alt="wine bottle"/>-->
-    <!--</div>-->
-<!--</div>-->
-
-<footer th:insert="~{fragments/layout :: footer}"/>
 
 </body>
 </html>

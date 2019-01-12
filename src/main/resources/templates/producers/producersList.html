@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/layout :: header}"/>
+
+<body>
+
+<nav th:insert="~{fragments/layout :: nav}"/>
+
+<br/>
+<h2 align="center">Producers</h2>
+<br/>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 150px;">Name</th>
+            <th style="width: 200px;">Country</th>
+            <th style="width: 120px">Appellation</th>
+            <th>Wines</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="producer : ${producers}">
+            <td>
+                <a th:href="@{/producers/__${producer.id}__}" th:text="${producer.name}"></a>
+            </td>
+            <td th:text="${producer.country}"></td>
+            <td th:text="${producer.appellation}"></td>
+            <td><span th:each="wine : ${producer.wines}" th:text="${wine.name} "></span></td>
+            <td><a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Update</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <a th:href="@{/producers/new}" class="btn btn-default">Add Producer</a>
+</div>
+
+</body>
+
+</html>

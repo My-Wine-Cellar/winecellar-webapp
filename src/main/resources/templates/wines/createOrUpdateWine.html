@@ -1,49 +1,51 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{fragments/layout :: head}"/>
+<head th:insert="~{fragments/layout :: header}"/>
 
 <body>
 
-<nav th:insert="~{fragments/layout :: navbar}"/>
+<nav th:insert="~{fragments/layout :: nav}"/>
 
 <br/>
 
+<h2 align="center">
+    <th:block th:if="${wine['new']}">New</th:block>
+    Wine
+</h2>
+
 <div class="container">
-    <h2>Add Wine:</h2>
-    <form method="post" th:object="${wine}">
+    <form th:object="${wine}" class="form-horizontal" method="post">
+        <input type="hidden" name="id" th:value="*{id}"/>
         <div class="form-group has-feedback">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Enter name"
-                   name="name">
+            <!--<div class="form-group">-->
+                <!--<label class="col-sm-2 control-label">Producer</label>-->
+                <!--<div class="col-sm-10">-->
+                    <!--<span th:text="${wine.producer.name}"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="container">
+                <h3>Producer: </h3>
+                <h5 th:text="${wine.producer.name}">Producer Name</h5>
+            </div>
+            <input
+                    th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
+            <input
+                    th:replace="~{fragments/inputField :: input ('Vintage', 'vintage', 'text')}"/>
+            <input
+                    th:replace="~{fragments/inputField :: input ('Varietal', 'varietal', 'text')}"/>
         </div>
-        <div class="form-group has-feedback">
-            <label for="vintage">Vintage:</label>
-            <input type="text" class="form-control" th:field="*{vintage}" id="vintage" placeholder="Enter vintage"
-                   name="vintage">
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button
+                        th:with="text=${wine['new']} ? 'Add Wine' : 'Update Wine'"
+                        class="btn btn-default" type="submit" th:text="${text}">Add
+                    Wine
+                </button>
+            </div>
         </div>
-        <div class="form-group has-feedback">
-            <label for="appellation">Appellation:</label>
-            <input type="text" class="form-control" id="appellation" th:field="*{appellation}"
-                   placeholder="Enter appellation" name="appellation">
-        </div>
-        <div class="form-group has-feedback">
-            <label for="varietal">Varietal:</label>
-            <input type="text" class="form-control" id="varietal" th:field="*{varietal}"
-                   placeholder="Enter varietal" name="varietal">
-        </div>
-        <div class="form-group has-feedback">
-            <label for="country">Country:</label>
-            <input type="text" class="form-control" id="country" th:field="*{country}" placeholder="Enter country"
-                   name="country">
-        </div>
-
-        <button type="submit" class="save btn" value="Save">Save</button>
-
     </form>
 </div>
 
-<footer th:insert="~{fragments/layout :: footer}"/>
-
 </body>
+
 </html>

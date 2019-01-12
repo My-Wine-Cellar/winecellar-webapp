@@ -1,65 +1,85 @@
 package com.cellar.wine.controllers;
 
+import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
-import com.cellar.wine.repositories.WineRepository;
+import com.cellar.wine.services.ProducerService;
+import com.cellar.wine.services.WineService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RequestMapping("/wines")
+@RequestMapping("/producers/{producerId}")
 @Controller
 public class WineController {
 
-    private static final String CREATE_UPDATE_WINE_FORM = "wines/createOrUpdateWine";
+    private static final String CREATE_OR_UPDATE_WINE_TEMPLATE = "wines/createOrUpdateWine";
 
-    private final WineRepository wineRepository;
+    private final WineService wineService;
+    private final ProducerService producerService;
 
-    public WineController(WineRepository wineRepository) {
-        this.wineRepository = wineRepository;
+    public WineController(WineService wineService, ProducerService producerService) {
+        this.wineService = wineService;
+        this.producerService = producerService;
     }
 
-    @RequestMapping("/list")
-    public String wine(Model model) {
-        model.addAttribute("wines", wineRepository.findAll());
-        return "wines/index";
+    @ModelAttribute("producer")
+    public Producer findProducer(@PathVariable Long producerId) {
+        return producerService.findById(producerId);
     }
 
-    @GetMapping("/new")
-    public String initCreationForm(Model model) {
-        model.addAttribute("wine", Wine.builder().build());
-        return CREATE_UPDATE_WINE_FORM;
+    @InitBinder("producer")
+    public void initProducerBinder(WebDataBinder dataBinder) {
+        dataBinder.setDisallowedFields("id");
     }
 
-    @PostMapping("/new")
-    public String processCreationForm(@Valid Wine wine, BindingResult result) {
+    @GetMapping("/wines/new")
+    public String initCreationForm(Producer producer, Model model) {
+        Wine wine = new Wine();
+        producer.getWines().add(wine);
+        wine.setProducer(producer);
+        model.addAttribute("wine", wine);
+        return CREATE_OR_UPDATE_WINE_TEMPLATE;
+    }
+
+    @PostMapping("/wines/new")
+    public String processCreationForm(Producer producer, @Valid Wine wine, BindingResult result, ModelMap model) {
+        if (StringUtils.hasLength(wine.getName()) && wine.isNew() && producer.getWine(wine.getName(), true) != null) {
+            result.rejectValue("name", "duplicate", "already exists");
+        }
+        wine.setProducer(producer);
+        producer.getWines().add(wine);
         if (result.hasErrors()) {
-            return CREATE_UPDATE_WINE_FORM;
+            model.put("wine", wine);
+            return CREATE_OR_UPDATE_WINE_TEMPLATE;
         } else {
-            wineRepository.save(wine);
-            return "redirect:/wines/list";
+            wineService.save(wine);
+            return "redirect:/producers/" + producer.getId();
         }
     }
 
-    @GetMapping("/{wineId}/edit")
+    @GetMapping("/wines/{wineId}/edit")
     public String initUpdateForm(@PathVariable Long wineId, Model model) {
-        model.addAttribute("wine", wineRepository.findById(wineId));
-        return CREATE_UPDATE_WINE_FORM;
+        model.addAttribute("wine", wineService.findById(wineId));
+        return CREATE_OR_UPDATE_WINE_TEMPLATE;
     }
 
-    @PostMapping("/{wineId}/edit")
-    public String processUpdateForm(@Valid Wine wine, BindingResult result, @PathVariable Long wineId) {
+    @PostMapping("/wines/{wineId}/edit")
+    public String processUpdateForm(@Valid Wine wine, BindingResult result, Producer producer, Model model) {
+        wine.setProducer(producer);
         if (result.hasErrors()) {
-            return CREATE_UPDATE_WINE_FORM;
+            model.addAttribute("wine", wine);
+            return CREATE_OR_UPDATE_WINE_TEMPLATE;
         } else {
-            wine.setId(wineId);
-            wineRepository.save(wine);
-            return "redirect:/wines/list";
+            //wine.setId(wineId);
+            Wine savedWine = wineService.save(wine);
+            producer.getWines().add(savedWine);
+            return "redirect:/producers/" + producer.getId();
         }
     }
 }

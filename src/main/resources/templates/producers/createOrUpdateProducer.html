@@ -1,42 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 
-<head th:insert="~{fragments/layout :: head}"/>
+<head th:insert="~{fragments/layout :: header}"/>
 
 <body>
 
-<nav th:insert="~{fragments/layout :: navbar}"/>
-
+<nav th:insert="~{fragments/layout :: nav}"/>
 <br/>
-
 <div class="container">
-    <h2>Add Producer:</h2>
-    <form method="post" th:object="${producer}">
-
+    <h2>Producer</h2>
+    <br/>
+    <form th:object="${producer}" class="form-fhorizontal" id="add-producer-form" method="post">
         <div class="form-group has-feedback">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Enter name"
-                   name="name">
+            <input
+                    th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
+            <input
+                    th:replace="~{fragments/inputField :: input ('Country', 'country', 'text')}"/>
+            <input
+                    th:replace="~{fragments/inputField :: input ('Appellation', 'appellation', 'text')}"/>
         </div>
-
-        <div class="form-group has-feedback">
-            <label for="appellation">Appellation:</label>
-            <input type="text" class="form-control" id="appellation" th:field="*{appellation}"
-                   placeholder="Enter appellation" name="appellation">
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button
+                        th:with="text=${producer['new']} ? 'Add Producer' : 'Update Producer'"
+                        class="btn btn-default" type="submit" th:text="${text}">Add
+                    Producer
+                </button>
+            </div>
         </div>
-
-        <div class="form-group has-feedback">
-            <label for="country">Country:</label>
-            <input type="text" class="form-control" id="country" th:field="*{country}"
-                   placeholder="Enter country" name="country">
-        </div>
-
-        <button type="submit" class="save btn" value="Save">Save</button>
-
     </form>
 </div>
-
-<footer th:insert="~{fragments/layout :: footer}"/>
 
 </body>
 </html>
