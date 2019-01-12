@@ -3,13 +3,16 @@
 
 <head th:insert="~{fragments/layout :: header}"/>
 
-<br/>
 
 <body>
 
 <nav th:insert="~{fragments/layout :: nav}"/>
 
+<br/>
+
 <h2 align="center">Producer Information</h2>
+
+<br/>
 
 <div class="table">
     <div class="container">
@@ -39,8 +42,6 @@
 </div>
 
 <br/>
-<br/>
-<br/>
 
 <h2 align="center">Wines</h2>
 <br/>
@@ -66,46 +67,6 @@
         </thead>
     </table>
 </div>
-
-<!--<div class="container">-->
-    <!--<h2 align="center">Wines</h2>-->
-    <!--<br/>-->
-    <!--<div class="table">-->
-        <!--<table class="table table-striped">-->
-            <!--<tr th:each="wine : ${producer.wines}">-->
-                <!--<td valign="top">-->
-                    <!--<dl class="dl-horizontal">-->
-                        <!--<dt>Name</dt>-->
-                        <!--<dd th:text="${wine.name}">-->
-                        <!--</dd>-->
-                        <!--<dt>Vintage</dt>-->
-                        <!--<dd th:text="${wine.vintage}">-->
-                        <!--</dd>-->
-                        <!--<dt>Varietal</dt>-->
-                        <!--<dd th:text="${wine.varietal}">-->
-                        <!--</dd>-->
-                        <!--<dt>Country</dt>-->
-                        <!--<dd th:text="${wine.producer.country}">-->
-                        <!--</dd>-->
-                        <!--<dt>Appellation</dt>-->
-                        <!--<dd th:text="${wine.producer.appellation}">-->
-                        <!--</dd>-->
-                    <!--</dl>-->
-                <!--</td>-->
-                <!--<td valign="top">-->
-                    <!--<table class="table-condensed">-->
-                        <!--<thead>-->
-                        <!--<tr>-->
-                            <!--<td><a class="btn btn-default"-->
-                                    <!--th:href="@{{producerId}/wines/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}">Edit-->
-                                <!--Wine</a></td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</td>-->
-            <!--</tr>-->
-        <!--</table>-->
-    <!--</div>-->
-<!--</div>-->
 
 </body>
 </html>
