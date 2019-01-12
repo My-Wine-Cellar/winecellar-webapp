@@ -30,7 +30,7 @@
             <td th:text="${producer.country}"></td>
             <td th:text="${producer.appellation}"></td>
             <td><span th:each="wine : ${producer.wines}" th:text="${wine.name} "></span></td>
-            <td><a th:href="@{/producers/{id}/edit(id=${producer.id})}" class="btn btn-default">Update</a></td>
+            <td><a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Update</a></td>
         </tr>
         </tbody>
     </table>
