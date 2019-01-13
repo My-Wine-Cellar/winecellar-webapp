@@ -35,44 +35,34 @@
 <body>
 
 <nav th:fragment="nav" class="navbar navbar-custom navbar-expand-md" role="navigation">
-    <a class="navbar-brand" th:href="@{/}">Wine
+    <div class="navbar-brand">Wine
         <img th:src="@{/images/wine.png}" src="../../static/images/wine.png" alt="" style="height: 60px"/>
         Cellar
-    </a>
+    </div>
 
-    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
-    <!--<span class="navbar-toggler-icon"></span>-->
+    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
+            <!--aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+        <!--<span class="navbar-toggler-icon"></span>-->
     <!--</button>-->
 
     <div class="navbar-collapse collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/}">Home<span class="fa fa-home" aria-hidden="true"></span></a>
-                <!--<span class="fa fa-home" aria-hidden="true"></span>-->
-                <!--<span>Home</span>-->
             </li>
-
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/producers/list}">Producers<span class="fa fa-list"
                                                                                 aria-hidden="true"></span></a>
-                <!--<span class="fa fa-list" aria-hidden="true"></span>-->
-                <!--<span>Find owners</span>-->
             </li>
-
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/errorpage}">Error<span class="fa fa-exclamation-triangle"
                                                                        aria-hidden="true"></span></a>
-                <!--<span class="fa fa-exclamation-triangle" aria-hidden="true"></span>-->
-                <!--<span>Error</span>-->
             </li>
-
         </ul>
-
-        <!--Save for later-->
-        <!--<form class="form-inline my-2 my-lg-0">-->
-        <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-        <!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-        <!--</form>-->
+        <form class="form-inline my-2 my-lg-0 ml-auto">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-default my-2 my-sm-0" type="submit">Search</button>
+        </form>
 
     </div>
 </nav>
