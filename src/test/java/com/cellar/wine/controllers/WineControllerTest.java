@@ -41,7 +41,7 @@ public class WineControllerTest {
     @BeforeEach
     void setUp() {
         producer = new Producer();
-
+        producer.setId(1L);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(wineController)
                 .build();
@@ -64,7 +64,7 @@ public class WineControllerTest {
 
         mockMvc.perform(post("/producers/1/wines/new"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/producers/1"));
+                .andExpect(view().name("redirect:/producers/" + producer.getId()));
     }
 
     @Test
@@ -76,7 +76,6 @@ public class WineControllerTest {
         mockMvc.perform(get("/producers/1/wines/2/edit"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("producer"))
-                .andExpect(model().attributeExists("wine"))
                 .andExpect(view().name("wines/createOrUpdateWine"));
     }
 
@@ -86,7 +85,7 @@ public class WineControllerTest {
 
         mockMvc.perform(post("/producers/1/wines/2/edit"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/producers/1"));
+                .andExpect(view().name("redirect:/producers/" + producer.getId()));
 
         verify(wineService).save(any());
     }

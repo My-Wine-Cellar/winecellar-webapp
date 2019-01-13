@@ -15,10 +15,6 @@ class WineJpaTest {
     }
 
     @Test
-    void findByName() {
-    }
-
-    @Test
     void findAll() {
     }
 

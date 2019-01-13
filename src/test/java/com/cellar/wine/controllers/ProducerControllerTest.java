@@ -44,6 +44,7 @@ public class ProducerControllerTest {
 
         producers = new HashSet<>();
         producers.add(producer1);
+        producer1.setId(1L);
         producers.add(producer2);
 
         mockMvc = MockMvcBuilders
@@ -55,10 +56,10 @@ public class ProducerControllerTest {
     void displayOwner() throws Exception {
         when(producerService.findById(anyLong())).thenReturn(producer1);
 
-        mockMvc.perform(get("/producer/1"))
+        mockMvc.perform(get("/producers/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("producers/details"))
-                .andExpect(model().attribute("producer", hasProperty("id", is(1l))));
+                .andExpect(view().name("producers/producerDetails"))
+                .andExpect(model().attribute("producer", hasProperty("id", is(1L))));
     }
 
 
@@ -78,8 +79,7 @@ public class ProducerControllerTest {
 
         mockMvc.perform(post("/producers/new"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/producers/1"))
-                .andExpect(model().attributeExists("producers"));
+                .andExpect(view().name("redirect:/producers/" + producer1.getId()));
 
         verify(producerService).save(ArgumentMatchers.any());
     }
@@ -102,7 +102,7 @@ public class ProducerControllerTest {
 
         mockMvc.perform(post("/producers/1/edit"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/producers/{producerId}"))
+                .andExpect(view().name("redirect:/producers/" + producer1.getId()))
                 .andExpect(model().attributeExists("producer"));
 
         verify(producerService).save(ArgumentMatchers.any());
