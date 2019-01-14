@@ -25,7 +25,7 @@
         Cellar
     </div>
     <div class="navbar-collapse collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ">
+        <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/}">Home<span class="fa fa-home" aria-hidden="true"></span></a>
             </li>
@@ -34,14 +34,25 @@
                                                                                 aria-hidden="true"></span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" th:href="@{/producers/find}">Find<span class="fa fa-search"
+                                                                           aria-hidden="true"></span></a>
+            </li>
+
+            <!-- Remove this once app is tested and ready to deploy -->
+            <li class="nav-item">
                 <a class="nav-link" th:href="@{/errorpage}">Error<span class="fa fa-exclamation-triangle"
                                                                        aria-hidden="true"></span></a>
             </li>
+
         </ul>
-        <form class="form-inline my-2 my-lg-0 ml-auto">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-default my-2 my-sm-0" type="submit">Search</button>
-        </form>
+
+        <!-- Save this for v2.0.0 -->
+        <!--Try and make this work with a named query on the wine and producer tables-->
+        <!--<form class="form-inline my-2 my-lg-0 ml-auto">-->
+        <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+        <!--<button class="btn btn-default my-2 my-sm-0" type="submit">Search</button>-->
+        <!--</form>-->
+
     </div>
 </nav>
 

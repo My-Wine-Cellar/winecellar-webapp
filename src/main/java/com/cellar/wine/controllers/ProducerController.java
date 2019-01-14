@@ -73,4 +73,24 @@ public class ProducerController {
             return "redirect:/producers/" + savedProducer.getId();
         }
     }
+
+    @RequestMapping("/find")
+    public String findProducers(Model model) {
+        model.addAttribute("producer", Producer.builder().build());
+        return "producers/findProducers";
+    }
+
+    @GetMapping
+    public String processFindForm(Producer producer, BindingResult result, Model model) {
+
+        Producer find = producerService.findByName(producer.getName());
+
+        if(find == null) {
+            result.rejectValue("name", "notFound", "not found");
+            return "producers/findProducers";
+        } else {
+            model.addAttribute("producer", find);
+            return "producers/producerDetails";
+        }
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -45,5 +46,15 @@ public class WineJpa implements WineService {
     @Override
     public void deleteById(Long aLong) {
         wineRepository.deleteById(aLong);
+    }
+
+    @Override
+    public Wine findByName(String name) {
+        return wineRepository.findByName(name);
+    }
+
+    @Override
+    public List<Wine> findAllByName(String name) {
+        return wineRepository.findAllByName(name);
     }
 }
