@@ -36,8 +36,4 @@ public class Wine extends BaseEntity {
     @Column(name = "varietal")
     private String varietal;
 
-    @Override
-    public String toString() {
-        return name;
-    }
 }
