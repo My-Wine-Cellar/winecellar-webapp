@@ -56,5 +56,4 @@ public class Producer extends BaseEntity {
         }
         return null;
     }
-
 }

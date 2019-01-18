@@ -10,7 +10,7 @@
 <div class="container">
     <h2>Producer</h2>
     <br/>
-    <form th:object="${producer}" class="form-fhorizontal" id="add-producer-form" method="post">
+    <form th:object="${producer}" class="form-horizontal" id="add-producer-form" method="post">
         <div class="form-group has-feedback">
             <input
                     th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
