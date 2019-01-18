@@ -22,29 +22,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//
-//        // from SFG
-//        http.authorizeRequests().antMatchers("/login","logout").permitAll()
-//                .and().authorizeRequests().antMatchers("/static/css/**","/js/**", "/images/**", "/**/favicon.ico").permitAll()
-//                .and().formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll()
-//                .and().logout()
-//                .deleteCookies("remove")
-//                .invalidateHttpSession(true)
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/logout-success")
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//        ;
-//
-//        // from Chad, sort of
-//        http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll()
-//                //.and().authorizeRequests().antMatchers("/messages", "/static/**/**").permitAll()
-//                .and().logout().deleteCookies("remove").invalidateHttpSession(true)
-//                .logoutUrl("/logout").logoutSuccessUrl("/logout-success").logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-//    }
-
-
     //https://memorynotfound.com/spring-boot-spring-security-thymeleaf-form-login-example/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -54,7 +31,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                         "/js/**",
                         "/css/**",
                         "/images/**",
-                        "/webjars/**").permitAll()
+                        "/webjars/**",
+                        "/messages/**",
+                        "/fonts/**").permitAll()
                 .antMatchers("/user/**").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
@@ -64,6 +43,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
+                .deleteCookies("remove")
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -71,6 +51,9 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .exceptionHandling()
+                .and()
+                .csrf()
+                .disable()
                 ;
     }
 }
