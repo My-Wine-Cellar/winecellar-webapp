@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{fragments/layout :: header}"/>
+<head th:insert="~{fragments/layout :: head}"/>
 
 <body>
 
@@ -28,7 +28,7 @@
                 <h5 th:text="${wine.producer.name}">Producer Name</h5>
             </div>
             <input
-                    th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
+                    th:replace="~{fragments/inputField :: input ('Label', 'label', 'text')}"/>
             <input
                     th:replace="~{fragments/inputField :: input ('Vintage', 'vintage', 'text')}"/>
             <input

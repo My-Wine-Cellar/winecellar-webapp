@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface WineRepository extends CrudRepository<Wine, Long> {
 
-    Wine findByName(String name);
+    Wine findByLabel(String label);
 
-    List<Wine> findAllByName(String name);
+    List<Wine> findAllByLabel(String label);
 
 }

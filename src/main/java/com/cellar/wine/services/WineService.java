@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface WineService extends CrudService<Wine, Long> {
 
-    Wine findByName(String name);
+    Wine findByLabel(String label);
 
-    List<Wine> findAllByName(String name);
+    List<Wine> findAllByLabel(String label);
 }
