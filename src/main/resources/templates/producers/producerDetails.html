@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{fragments/layout :: header}"/>
+<head th:insert="~{fragments/layout :: head}"/>
 
 
 <body>
@@ -49,7 +49,7 @@
     <table class="table table-hover">
         <thead class="thead-light">
         <tr>
-            <th>Name</th>
+            <th>Label</th>
             <th>Vintage</th>
             <th>Appellation</th>
             <th>Varietal</th>
@@ -57,7 +57,7 @@
             <th></th>
         </tr>
         <tr th:each="wine : ${producer.wines}">
-            <td th:text="${wine.name}">Name</td>
+            <td th:text="${wine.label}">Name</td>
             <td th:text="${wine.vintage}">Vintage</td>
             <td th:text="${producer.appellation}">Appellation</td>
             <td th:text="${wine.varietal}">Varietal</td>
