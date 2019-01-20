@@ -49,12 +49,12 @@ public class WineJpa implements WineService {
     }
 
     @Override
-    public Wine findByName(String name) {
-        return wineRepository.findByName(name);
+    public Wine findByLabel(String label) {
+        return wineRepository.findByLabel(label);
     }
 
     @Override
-    public List<Wine> findAllByName(String name) {
-        return wineRepository.findAllByName(name);
+    public List<Wine> findAllByLabel(String label) {
+        return wineRepository.findAllByLabel(label);
     }
 }

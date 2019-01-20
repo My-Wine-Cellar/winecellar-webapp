@@ -41,21 +41,21 @@ public class DataLoader implements CommandLineRunner {
 
         Wine wine1 = new Wine();
 
-        wine1.setName("Brickhouse");
+        wine1.setLabel("Brickhouse");
         wine1.setVarietal("Pinot Noir");
         wine1.setVintage("2015");
         wine1.setProducer(producer1);
         wineService.save(wine1);
 
         Wine wine2 = new Wine();
-        wine2.setName("Holla Holla");
+        wine2.setLabel("Holla Holla");
         wine2.setVarietal("Malbec");
         wine2.setVintage("2016");
         wine2.setProducer(producer1);
         wineService.save(wine2);
 
         Wine wine3 = new Wine();
-        wine3.setName("Bread and Butter");
+        wine3.setLabel("Bread and Butter");
         wine3.setVarietal("Merlot");
         wine3.setVintage("2014");
         wine3.setProducer(producer2);
@@ -63,7 +63,7 @@ public class DataLoader implements CommandLineRunner {
 
         Wine wine4 = new Wine();
 
-        wine4.setName("Acrobat");
+        wine4.setLabel("Acrobat");
         wine4.setVarietal("Chardonay");
         wine4.setVintage("2018");
         wine4.setProducer(producer2);

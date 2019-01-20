@@ -39,17 +39,17 @@ public class Producer extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private Set<Wine> wines = new HashSet<>();
 
-    public Wine getWine(String name) {
-        return getWine(name, false);
+    public Wine getWine(String label) {
+        return getWine(label, false);
     }
 
-    public Wine getWine(String name, boolean ignoreNew) {
-        name = name.toLowerCase();
+    public Wine getWine(String label, boolean ignoreNew) {
+        label = label.toLowerCase();
         for (Wine wine : wines) {
             if (!ignoreNew || !wine.isNew()) {
-                String compName = wine.getName();
+                String compName = wine.getLabel();
                 compName = compName.toLowerCase();
-                if(compName.equals(name)) {
+                if(compName.equals(label)) {
                     return wine;
                 }
             }

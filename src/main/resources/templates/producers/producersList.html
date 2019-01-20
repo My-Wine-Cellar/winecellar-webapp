@@ -2,7 +2,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:insert="~{fragments/layout :: header}"/>
+<head th:insert="~{fragments/layout :: head}"/>
 
 <body>
 
@@ -29,7 +29,7 @@
             </td>
             <td th:text="${producer.country}"></td>
             <td th:text="${producer.appellation}"></td>
-            <td><span th:each="wine : ${producer.wines}" th:utext="${wine.name} + '<br/>'"></span></td>
+            <td><span th:each="wine : ${producer.wines}" th:utext="${wine.label} + '<br/>'"></span></td>
             <td><a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Update</a></td>
         </tr>
         </tbody>

@@ -13,16 +13,16 @@ import javax.persistence.*;
 public class Wine extends BaseEntity {
 
     @Builder
-    public Wine(Long id, String name, Producer producer, String vintage, String varietal) {
+    public Wine(Long id, String label, Producer producer, String vintage, String varietal) {
         super(id);
         this.producer = producer;
-        this.name = name;
+        this.label = label;
         this.vintage = vintage;
         this.varietal = varietal;
     }
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "label")
+    private String label;
 
     @ManyToOne
     @JoinColumns({@JoinColumn(name = "producer_id", referencedColumnName = "id"),
