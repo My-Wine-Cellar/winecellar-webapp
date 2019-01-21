@@ -26,8 +26,6 @@ public class Wine extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "producer_id", referencedColumnName = "id")
-    @JoinColumn(name = "producer_country", referencedColumnName = "country")
-    @JoinColumn(name = "producer_appellation", referencedColumnName = "appellation")
     private Producer producer;
 
     @Column(name = "vintage")
