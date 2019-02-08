@@ -23,8 +23,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class ProducerJpaTest {
 
-    public static final String NAME = "Producer";
-
+    private static final String PRODUCER = "Producer";
 
     @Mock
     ProducerRepository producerRepository;
@@ -35,11 +34,11 @@ public class ProducerJpaTest {
     @InjectMocks
     ProducerJpa producerJpa;
 
-    Producer returnProducer;
+    private Producer returnProducer;
 
     @BeforeEach
     void setUp() {
-        returnProducer = Producer.builder().id(1L).name(NAME).build();
+        returnProducer = Producer.builder().id(1L).name(PRODUCER).build();
     }
 
     @Test

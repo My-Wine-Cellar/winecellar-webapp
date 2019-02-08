@@ -17,6 +17,8 @@ public class ProducerController {
 
     private static final String CREATE_OR_UPDATE_PRODUCER_TEMPLATE = "producers/createOrUpdateProducer";
 
+    private static final String MODEL_ATTRIBUTE_PRODUCER = "producer";
+
     private final ProducerService producerService;
 
     public ProducerController(ProducerService producerService) {
@@ -43,7 +45,7 @@ public class ProducerController {
 
     @GetMapping("/new")
     public String initCreateForm(Model model) {
-        model.addAttribute("producer", Producer.builder().build());
+        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, Producer.builder().build());
         return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
     }
 
@@ -76,7 +78,7 @@ public class ProducerController {
 
     @RequestMapping("/find")
     public String findProducers(Model model) {
-        model.addAttribute("producer", Producer.builder().build());
+        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, Producer.builder().build());
         return "producers/findProducers";
     }
 
@@ -89,7 +91,7 @@ public class ProducerController {
             result.rejectValue("name", "notFound", "not found");
             return "producers/findProducers";
         } else {
-            model.addAttribute("producer", find);
+            model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, find);
             return "producers/producerDetails";
         }
     }
