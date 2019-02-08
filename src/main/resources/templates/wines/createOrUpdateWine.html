@@ -8,25 +8,16 @@
 
 <br/>
 
-<h2 align="center">
-    <th:block th:if="${wine['new']}">New</th:block>
-    Wine
-</h2>
-
 <div class="container">
+    <div class="container">
+        <h2>
+            <th:block th:if="${wine['new']}">Add Wine to:</th:block>
+        </h2>
+        <h5 th:text="${wine.producer.name}">Producer Name</h5>
+    </div>
     <form th:object="${wine}" class="form-horizontal" method="post">
         <input type="hidden" name="id" th:value="*{id}"/>
-        <div class="form-group has-feedback">
-            <!--<div class="form-group">-->
-                <!--<label class="col-sm-2 control-label">Producer</label>-->
-                <!--<div class="col-sm-10">-->
-                    <!--<span th:text="${wine.producer.name}"/>-->
-                <!--</div>-->
-            <!--</div>-->
-            <div class="container">
-                <h3>Producer: </h3>
-                <h5 th:text="${wine.producer.name}">Producer Name</h5>
-            </div>
+        <div class="form-group has-feedback col-sm-6">
             <input
                     th:replace="~{fragments/inputField :: input ('Label', 'label', 'text')}"/>
             <input
@@ -38,8 +29,7 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <button
                         th:with="text=${wine['new']} ? 'Add Wine' : 'Update Wine'"
-                        class="btn btn-default" type="submit" th:text="${text}">Add
-                    Wine
+                        class="btn btn-default" type="submit" th:text="${text}">Add Wine
                 </button>
             </div>
         </div>
