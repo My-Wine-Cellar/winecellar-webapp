@@ -88,7 +88,7 @@ public class ProducerController {
         Producer find = producerService.findByName(producer.getName());
 
         if(find == null) {
-            result.rejectValue("name", "notFound", "not found");
+            result.rejectValue("name", "notFound", "Not found, try again, this searches exact names only");
             return "producers/findProducers";
         } else {
             model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, find);
