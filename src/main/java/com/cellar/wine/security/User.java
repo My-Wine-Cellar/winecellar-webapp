@@ -36,8 +36,7 @@ public class User {
     private boolean enabled;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities;
-
 
 }

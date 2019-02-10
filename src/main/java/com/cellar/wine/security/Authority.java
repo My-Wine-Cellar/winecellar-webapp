@@ -18,7 +18,7 @@ public class Authority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "role_id")
+    @Column(name = "authority_id")
     private int id;
 
     @Column(name = "username")

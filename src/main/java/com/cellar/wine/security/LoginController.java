@@ -25,7 +25,6 @@ public class LoginController {
 
     @GetMapping("/registration")
     public String registration(Model model){
-        //User user = new User();
         model.addAttribute("user", User.builder().build());
         return "security/registration";
     }

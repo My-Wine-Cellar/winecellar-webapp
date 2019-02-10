@@ -23,11 +23,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("user").password(bCryptPasswordEncoder.encode("user")).roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("paul").password(bCryptPasswordEncoder.encode("paul")).roles("USER");
 
         auth.jdbcAuthentication()
-                .usersByUsernameQuery("select username, password, enabled from users where username=?")
-                .authoritiesByUsernameQuery("select u.username, a.authority from users u inner join user_authority ua on(u.user_id=ua.user_id) inner join authorities a on(ua.role_id=a.role_id) where u.username=?")
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
