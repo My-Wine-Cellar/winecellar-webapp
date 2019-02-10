@@ -17,6 +17,7 @@
         <tr>
             <th style="width: 150px;">Name</th>
             <th style="width: 200px;">Country</th>
+            <th style="width: 120px">Province</th>
             <th style="width: 120px">Appellation</th>
             <th>Wines</th>
             <th></th>
@@ -28,6 +29,7 @@
                 <a th:href="@{/producers/__${producer.id}__}" th:text="${producer.name}"></a>
             </td>
             <td th:text="${producer.country}"></td>
+            <td th:text="${producer.province}"></td>
             <td th:text="${producer.appellation}"></td>
             <td><span th:each="wine : ${producer.wines}" th:utext="${wine.label} + '<br/>'"></span></td>
             <td><a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Update</a></td>

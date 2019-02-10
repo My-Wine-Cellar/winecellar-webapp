@@ -25,54 +25,54 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Producer producer1 = new Producer();
-        producer1.setName("Mark West");
-        producer1.setCountry("USA");
-        producer1.setAppellation("Napa Valley");
-        producerService.save(producer1);
+        Producer markWest = new Producer();
+        markWest.setName("Mark West");
+        markWest.setCountry("USA");
+        markWest.setProvince("California");
+        markWest.setAppellation("Napa Valley");
+        producerService.save(markWest);
 
-        Producer producer2 = new Producer();
-        producer2.setName("Big Boi");
-        producer2.setCountry("France");
-        producer2.setAppellation("Burgundy");
-        producerService.save(producer2);
+        Producer bigBoi = new Producer();
+        bigBoi.setName("Big Boi");
+        bigBoi.setCountry("France");
+        bigBoi.setProvince("Burgundy");
+        bigBoi.setAppellation("Pommard");
+        producerService.save(bigBoi);
 
         log.info("Loaded producers...");
 
-        Wine wine1 = new Wine();
+        Wine brickhouse = new Wine();
+        brickhouse.setLabel("Brickhouse");
+        brickhouse.setVarietal("Pinot Noir");
+        brickhouse.setVintage("2015");
+        brickhouse.setProducer(markWest);
+        wineService.save(brickhouse);
 
-        wine1.setLabel("Brickhouse");
-        wine1.setVarietal("Pinot Noir");
-        wine1.setVintage("2015");
-        wine1.setProducer(producer1);
-        wineService.save(wine1);
+        Wine hollaHolla = new Wine();
+        hollaHolla.setLabel("Holla Holla");
+        hollaHolla.setVarietal("Malbec");
+        hollaHolla.setVintage("2016");
+        hollaHolla.setProducer(markWest);
+        wineService.save(hollaHolla);
 
-        Wine wine2 = new Wine();
-        wine2.setLabel("Holla Holla");
-        wine2.setVarietal("Malbec");
-        wine2.setVintage("2016");
-        wine2.setProducer(producer1);
-        wineService.save(wine2);
+        Wine breadButter = new Wine();
+        breadButter.setLabel("Bread and Butter");
+        breadButter.setVarietal("Merlot");
+        breadButter.setVintage("2014");
+        breadButter.setProducer(bigBoi);
+        wineService.save(breadButter);
 
-        Wine wine3 = new Wine();
-        wine3.setLabel("Bread and Butter");
-        wine3.setVarietal("Merlot");
-        wine3.setVintage("2014");
-        wine3.setProducer(producer2);
-        wineService.save(wine3);
+        Wine acrobat = new Wine();
+        acrobat.setLabel("Acrobat");
+        acrobat.setVarietal("Chardonay");
+        acrobat.setVintage("2018");
+        acrobat.setProducer(bigBoi);
+        wineService.save(acrobat);
 
-        Wine wine4 = new Wine();
-
-        wine4.setLabel("Acrobat");
-        wine4.setVarietal("Chardonay");
-        wine4.setVintage("2018");
-        wine4.setProducer(producer2);
-        wineService.save(wine4);
-
-        producer1.getWines().add(wine1);
-        producer1.getWines().add(wine2);
-        producer2.getWines().add(wine3);
-        producer2.getWines().add(wine4);
+        markWest.getWines().add(brickhouse);
+        markWest.getWines().add(hollaHolla);
+        bigBoi.getWines().add(breadButter);
+        bigBoi.getWines().add(acrobat);
 
         log.info("Loaded wines...");
     }
