@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:insert="~{fragments/layout :: head}"/>
 
@@ -10,6 +10,12 @@
 <div class="jumbotron jumbotron-fluid">
     <div class="container text-center">
         <h1 th:text="#{welcome}">Welcome</h1>
+        <h4 sec:authorize="hasRole('USER')">Hello User</h4>
+        <h4 sec:authorize="hasRole('ADMIN')">Hello Admin</h4>
+        Authenticated username:
+        <p sec:authentication="name"></p>
+        Authenticated user roles:
+        <p sec:authentication="principal.authorities"></p>
     </div>
 </div>
 

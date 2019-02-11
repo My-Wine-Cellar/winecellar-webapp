@@ -1,6 +1,8 @@
 package com.cellar.wine.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -20,6 +22,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    UserService userService;
+
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userService);
+        daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder);
+        return daoAuthenticationProvider;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("user").password(bCryptPasswordEncoder.encode("user")).roles("ADMIN");
@@ -27,6 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
+
+        //auth.authenticationProvider(daoAuthenticationProvider());
     }
 
     @Override
@@ -34,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(
+                        "/h2-console/**",
                         "/js/**",
                         "/css/**",
                         "/images/**",
@@ -62,8 +78,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 ;
 
-        http.authorizeRequests().antMatchers("/h2-console").permitAll();
-        http.headers().frameOptions().disable();
+        //http.authorizeRequests().antMatchers("/h2-console").permitAll();
+        http.headers().frameOptions().sameOrigin();
     }
 
     @Override

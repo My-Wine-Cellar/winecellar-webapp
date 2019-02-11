@@ -18,13 +18,13 @@ public class LoginController {
     private UserService userService;
 
     @RequestMapping("/login")
-    public String loginForm(Model model) {
-        model.addAttribute("user", User.builder().build());
+    public String loginForm() {
+        //model.addAttribute("user", User.builder().build());
         return "security/login";
     }
 
     @GetMapping("/registration")
-    public String registration(Model model){
+    public String registration(Model model) {
         model.addAttribute("user", User.builder().build());
         return "security/registration";
     }
@@ -32,20 +32,19 @@ public class LoginController {
     @PostMapping("/registration")
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByUsername(user.getUsername());
+        User userExists = userService.findByUsername(user.getUsername());
         if (userExists != null) {
             bindingResult
-                    .rejectValue("email", "error.user",
-                            "There is already a user registered with the email provided");
+                    .rejectValue("username", "error.user",
+                            "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("security/registration");
         } else {
-            userService.saveUser(user);
+            userService.createUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
             modelAndView.setViewName("security/registration");
-
         }
         return modelAndView;
     }
