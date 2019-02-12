@@ -2,7 +2,6 @@ package com.cellar.wine.services.springdatajpa;
 
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.repositories.ProducerRepository;
-import com.cellar.wine.repositories.WineRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,25 +20,21 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-public class ProducerJpaTest {
+class ProducerJpaTest {
 
-    public static final String NAME = "Producer";
-
+    private static final String PRODUCER = "Producer";
 
     @Mock
     ProducerRepository producerRepository;
 
-    @Mock
-    WineRepository wineRepository;
-
     @InjectMocks
     ProducerJpa producerJpa;
 
-    Producer returnProducer;
+    private Producer returnProducer;
 
     @BeforeEach
     void setUp() {
-        returnProducer = Producer.builder().id(1L).name(NAME).build();
+        returnProducer = Producer.builder().id(1L).name(PRODUCER).build();
     }
 
     @Test

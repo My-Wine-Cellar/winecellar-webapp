@@ -6,10 +6,9 @@
 <body>
 
 <nav th:insert="~{fragments/layout :: nav}"/>
-<br/>
-
+<br/><br/>
 <div class="container">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <h2 align="left">Find Producers</h2>
     </div>
     <form th:object="${producer}" th:action="@{/producers}" method="get"

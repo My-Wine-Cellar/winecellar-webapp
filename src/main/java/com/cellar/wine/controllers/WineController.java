@@ -76,7 +76,6 @@ public class WineController {
             model.addAttribute("wine", wine);
             return CREATE_OR_UPDATE_WINE_TEMPLATE;
         } else {
-            //wine.setId(wineId);
             Wine savedWine = wineService.save(wine);
             producer.getWines().add(savedWine);
             return "redirect:/producers/" + producer.getId();

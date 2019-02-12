@@ -5,7 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +16,6 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "producer")
 public class Producer extends BaseEntity {
 
     @Builder
@@ -35,6 +37,9 @@ public class Producer extends BaseEntity {
 
     @Column(name = "appellation")
     private String appellation;
+
+    @Column(name = "province")
+    private String province;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private Set<Wine> wines = new HashSet<>();

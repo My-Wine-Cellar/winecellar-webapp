@@ -32,12 +32,12 @@ public class ProducerControllerTest {
     @InjectMocks
     ProducerController producerController;
 
-    Set<Producer> producers;
+    private Set<Producer> producers;
 
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-    Producer producer1 = new Producer();
-    Producer producer2 = new Producer();
+    private Producer producer1 = new Producer();
+    private Producer producer2 = new Producer();
 
     @BeforeEach
     void setUp() {

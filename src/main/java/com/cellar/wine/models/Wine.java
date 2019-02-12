@@ -2,14 +2,16 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "wine")
 public class Wine extends BaseEntity {
 
     @Builder
@@ -25,9 +27,7 @@ public class Wine extends BaseEntity {
     private String label;
 
     @ManyToOne
-    @JoinColumns({@JoinColumn(name = "producer_id", referencedColumnName = "id"),
-    @JoinColumn(name = "producer_country", referencedColumnName = "country"),
-    @JoinColumn(name = "producer_appellation", referencedColumnName = "appellation")})
+    @JoinColumn(name = "producer_id", referencedColumnName = "id")
     private Producer producer;
 
     @Column(name = "vintage")
