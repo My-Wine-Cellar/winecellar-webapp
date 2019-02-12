@@ -19,7 +19,6 @@ public class LoginController {
 
     @RequestMapping("/login")
     public String loginForm() {
-        //model.addAttribute("user", User.builder().build());
         return "security/login";
     }
 

@@ -24,14 +24,6 @@ public class UserServiceImpl implements UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-//    public void saveUser(User user) {
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        user.setEnabled(true);
-//        Authority userRole = authorityRepository.findByAuthority("ADMIN");
-//        user.setAuthorities(new HashSet<Authority>(Arrays.asList(userRole)));
-//        userRepository.save(user);
-//    }
-
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);

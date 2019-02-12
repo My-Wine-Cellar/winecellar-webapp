@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Data
 @Builder
@@ -18,13 +17,8 @@ import javax.validation.constraints.NotEmpty;
 public class Authority implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "authority_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
-    @Column(name = "username")
-    @NotEmpty(message = "*Please provide your name")
-    private String username;
 
     @Column(name = "authority")
     private String authority;

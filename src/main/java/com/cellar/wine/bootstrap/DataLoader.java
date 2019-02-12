@@ -2,10 +2,6 @@ package com.cellar.wine.bootstrap;
 
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
-import com.cellar.wine.security.Authority;
-import com.cellar.wine.security.AuthorityRepository;
-import com.cellar.wine.security.AuthoritySerivce;
-import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
 import lombok.extern.java.Log;
@@ -20,16 +16,10 @@ public class DataLoader implements CommandLineRunner {
 
     private final WineService wineService;
     private final ProducerService producerService;
-    private final UserService userService;
-    private final AuthoritySerivce authoritySerivce;
-    private final AuthorityRepository authorityRepository;
 
-    public DataLoader(WineService wineService, ProducerService producerService, UserService userService, AuthorityRepository authorityRepository, AuthoritySerivce authoritySerivce) {
+    public DataLoader(WineService wineService, ProducerService producerService) {
         this.wineService = wineService;
         this.producerService = producerService;
-        this.userService = userService;
-        this.authorityRepository = authorityRepository;
-        this.authoritySerivce = authoritySerivce;
     }
 
     @Override
@@ -85,32 +75,6 @@ public class DataLoader implements CommandLineRunner {
         producer2.getWines().add(wine4);
 
         log.info("Loaded wines...");
-
-        Authority adminAuth = new Authority();
-        adminAuth.setAuthority("ADMIN");
-        adminAuth.setUsername("ADMIN");
-        authoritySerivce.createAuthority(adminAuth);
-
-        Authority userAuth = new Authority();
-        userAuth.setAuthority("USER");
-        userAuth.setUsername("USER");
-        authoritySerivce.createAuthority(userAuth);
-
-//        User admin = new User();
-//        admin.setEnabled(true);
-//        admin.setUsername("admin");
-//        admin.setPassword("password");
-//        Authority adminRole = authorityRepository.findByAuthority("ADMIN");
-//        admin.setAuthorities(Collections.singleton(adminRole));
-//        userService.createAdmin(admin);
-//
-//        User user = new User();
-//        user.setEnabled(true);
-//        user.setUsername("user");
-//        user.setPassword("password");
-//        Authority userRole = authorityRepository.findByAuthority("USER");
-//        user.setAuthorities(Collections.singleton(userRole));
-//        userService.createUser(user);
 
     }
 }
