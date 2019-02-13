@@ -14,7 +14,7 @@
               role="form">
             <h1>Registration Form</h1><br/>
             <div class="form-group">
-                <div class="col-sm-9">
+                <div class="col-sm-12">
                     <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                            class="validation-message"></label>
                     <input type="text" th:field="*{username}" placeholder="Name"
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-9">
+                <div class="col-sm-12">
                     <input type="password" th:field="*{password}"
                            placeholder="Password" class="form-control"/> <label
                         th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-9">
+                <div class="col-sm-12">
                     <button type="submit" class="btn btn-info btn-block">Register User</button>
                 </div>
             </div>
