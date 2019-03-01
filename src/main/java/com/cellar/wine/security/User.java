@@ -1,5 +1,6 @@
 package com.cellar.wine.security;
 
+import com.cellar.wine.models.Producer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
+import java.util.Set;
 
 @Data
 @Builder
@@ -37,6 +39,10 @@ public class User implements UserDetails {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Collection<Authority> authorities;
+
+    @OneToMany
+    @JoinTable(name = "user_producer", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "producer_id"))
+    private Set<Producer> producers;
 
     @Override
     public boolean isAccountNonExpired() {

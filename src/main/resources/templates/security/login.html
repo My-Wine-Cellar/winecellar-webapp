@@ -10,42 +10,46 @@
 
 <div class="container" align="center">
     <div class="col-md-4 col-md-offset-3">
-        <h1>Login page for Wine Cellar</h1><br/>
+        <h1>Login to Wine Cellar</h1><br/>
         <form th:action="@{/login}" method="post">
-            <div th:if="${param.error}">
-                <div class="alert alert-danger">
-                    Invalid username or password
-                </div>
-            </div>
-            <div th:if="${param.logout}">
-                <div class="alert alert-info">
-                    You have been logged out
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="text"
-                       id="username"
-                       name="username"
-                       class="form-control"
-                       autofocus="autofocus"
-                       th:placeholder="Username">
-            </div>
-            <div class="form-group">
-                <input type="password"
-                       id="password"
-                       name="password"
-                       class="form-control"
-                       th:placeholder="Password">
-            </div>
-            <div class="form-group" align="center">
-                <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3">
-                        <input type="submit"
-                               name="login-submit"
-                               id="login-submit"
-                               class="form-control btn btn-info"
-                               value="Log In">
+            <div class="col-sm-12">
+                <div th:if="${param.error}">
+                    <div class="alert alert-danger">
+                        Invalid username or password
                     </div>
+                </div>
+                <div th:if="${param.logout}">
+                    <div class="alert alert-info">
+                        You have been logged out
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="text"
+                           id="username"
+                           name="username"
+                           class="form-control"
+                           autofocus="autofocus"
+                           th:placeholder="Username">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           class="form-control"
+                           th:placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <input type="submit"
+                           name="login-submit"
+                           id="login-submit"
+                           class="form-control btn btn-info"
+                           value="Log In">
                 </div>
             </div>
         </form>
