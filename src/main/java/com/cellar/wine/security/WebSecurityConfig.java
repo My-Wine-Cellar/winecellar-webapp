@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication().withUser("admin").password(bCryptPasswordEncoder.encode("password")).roles("ADMIN");
 
         auth.jdbcAuthentication()
-                .authoritiesByUsernameQuery("select u.username, a.authority from users u inner join user_authority ua on (u.id=ua.users_id) inner join authorities a on(ua.authorities_id=a.id) where u.username=?")
+                .authoritiesByUsernameQuery("select u.username, a.authority from user u inner join user_authority ua on (u.id=ua.users_id) inner join authority a on(ua.authority_id=a.id) where u.username=?")
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }

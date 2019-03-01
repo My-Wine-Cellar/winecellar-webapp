@@ -16,7 +16,6 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
@@ -36,7 +35,7 @@ public class User implements UserDetails {
     private boolean enabled;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "users_id"), inverseJoinColumns = @JoinColumn(name = "authorities_id"))
+    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Collection<Authority> authorities;
 
     @Override
