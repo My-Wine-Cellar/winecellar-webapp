@@ -17,6 +17,8 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    private String SECURITY_REGISTRATION_TEMPLATE = "security/registration";
+
     @RequestMapping("/login")
     public String loginForm() {
         return "security/login";
@@ -25,7 +27,7 @@ public class LoginController {
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("user", User.builder().build());
-        return "security/registration";
+        return SECURITY_REGISTRATION_TEMPLATE;
     }
 
     @PostMapping("/registration")
@@ -38,12 +40,12 @@ public class LoginController {
                             "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("security/registration");
+            modelAndView.setViewName(SECURITY_REGISTRATION_TEMPLATE);
         } else {
             userService.createUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("security/registration");
+            modelAndView.setViewName(SECURITY_REGISTRATION_TEMPLATE);
         }
         return modelAndView;
     }
