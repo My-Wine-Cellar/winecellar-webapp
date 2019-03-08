@@ -1,6 +1,8 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Producer;
+import com.cellar.wine.security.User;
+import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ProducerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RequestMapping("/producers")
 @Controller
@@ -20,9 +23,11 @@ public class ProducerController {
     private static final String MODEL_ATTRIBUTE_PRODUCER = "producer";
 
     private final ProducerService producerService;
+    private final UserService userService;
 
-    public ProducerController(ProducerService producerService) {
+    public ProducerController(ProducerService producerService, UserService userService) {
         this.producerService = producerService;
+        this.userService = userService;
     }
 
     @InitBinder
@@ -50,10 +55,12 @@ public class ProducerController {
     }
 
     @PostMapping("/new")
-    public String processCreateForm(@Valid Producer producer, BindingResult result) {
+    public String processCreateForm(@Valid Producer producer, Principal principal, BindingResult result) {
         if (result.hasErrors()) {
             return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
         } else {
+            User user = userService.findByUsername(principal.getName());
+            producer.setUser(user);
             Producer savedProducer = producerService.save(producer);
             return "redirect:/producers/" + savedProducer.getId();
         }
