@@ -1,6 +1,5 @@
 package com.cellar.wine.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,10 +13,13 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
 
-    @Autowired
     private UserService userService;
 
-    private String SECURITY_REGISTRATION_TEMPLATE = "security/registration";
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
+
+    private static final String SECURITY_REGISTRATION_TEMPLATE = "security/registration";
 
     @RequestMapping("/login")
     public String loginForm() {
