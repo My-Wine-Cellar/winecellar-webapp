@@ -36,7 +36,8 @@ public class ProducerController {
     }
 
     @RequestMapping("/list")
-    public String producer(Model model) {
+    public String producer(Model model, Principal principal) {
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
         model.addAttribute("producers", producerService.findAll());
         return "producers/producersList";
     }
@@ -73,11 +74,13 @@ public class ProducerController {
     }
 
     @PostMapping("/{producerId}/edit")
-    public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable Long producerId) {
+    public String processUpdateProducerForm(@Valid Producer producer, Principal principal, BindingResult result, @PathVariable Long producerId) {
         if(result.hasErrors()) {
             return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
         } else {
+            User user = userService.findByUsername(principal.getName());
             producer.setId(producerId);
+            producer.setUser(user);
             Producer savedProducer = producerService.save(producer);
             return "redirect:/producers/" + savedProducer.getId();
         }

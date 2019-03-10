@@ -37,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(
+                        "/h2-console/**",
                         "/js/**",
                         "/css/**",
                         "/images/**",
@@ -64,8 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 ;
-
-        http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
         http.headers().frameOptions().sameOrigin();
     }
 

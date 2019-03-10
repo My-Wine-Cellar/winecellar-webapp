@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="producer : ${producers}">
+        <tr th:each="producer : ${user.producers}">
             <td>
                 <a th:href="@{/producers/__${producer.id}__}" th:text="${producer.name}"></a>
             </td>
