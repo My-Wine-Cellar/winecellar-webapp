@@ -7,10 +7,9 @@ import com.cellar.wine.services.WineService;
 import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
 @Log
-@Component
+//@Component
 @Profile("dev")
 public class DataLoader implements CommandLineRunner {
 
@@ -75,5 +74,6 @@ public class DataLoader implements CommandLineRunner {
         bigBoi.getWines().add(acrobat);
 
         log.info("Loaded wines...");
+
     }
 }

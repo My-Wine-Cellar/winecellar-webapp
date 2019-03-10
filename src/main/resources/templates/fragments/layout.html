@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head">
 
@@ -24,7 +24,7 @@
         <img th:src="@{/images/wine.png}" src="../../static/images/wine.png" alt="" style="height: 60px"/>
         Cellar
     </div>
-    <div class="navbar-collapse collapse" id="navbarSupportedContent">
+    <div class="navbar-collapse collapse" id="navbarSupportedContent" sec:authorize="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/}">Home<span class="fa fa-home" aria-hidden="true"></span></a>
@@ -37,13 +37,17 @@
                 <a class="nav-link" th:href="@{/producers/find}">Find<span class="fa fa-search"
                                                                            aria-hidden="true"></span></a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Logout<span class="fa fa-sign-out" aria-hidden="true"></span></a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                <a class="nav-link" th:href="@{/registration}">Register Users<span class="fa fa-user-plus" aria-hidden="true"></span></a>
+            </li>
             <!-- Remove this once app is tested and ready to deploy -->
             <!--<li class="nav-item">-->
                 <!--<a class="nav-link" th:href="@{/errorpage}">Error<span class="fa fa-exclamation-triangle"-->
                                                                        <!--aria-hidden="true"></span></a>-->
             <!--</li>-->
-
         </ul>
 
         <!-- Save this for v2.0.0 -->
@@ -56,7 +60,7 @@
     </div>
 </nav>
 
-<div th:fragment="footer" class="container">
+<div th:fragment="footer" class="container" sec:authorize="isAuthenticated()">
     <footer class="footer">
         <div class="container text-center">
             <a href="https://github.com/pauldpearson/winecellar-webapp" target="_blank"><i class="fa fa-github"></i></a>

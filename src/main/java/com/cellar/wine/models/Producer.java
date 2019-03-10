@@ -1,14 +1,12 @@
 package com.cellar.wine.models;
 
+import com.cellar.wine.security.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,6 +42,10 @@ public class Producer extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private Set<Wine> wines = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Wine getWine(String label) {
         return getWine(label, false);
     }
@@ -61,5 +63,4 @@ public class Producer extends BaseEntity {
         }
         return null;
     }
-
 }

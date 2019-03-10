@@ -13,7 +13,7 @@
     </h3>
     <br/>
     <form th:object="${producer}" class="form-horizontal" id="add-producer-form" method="post">
-        <div class="form-group has-feedback col-sm-6">
+        <div class="form-group has-feedback">
             <input
                     th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
             <input
