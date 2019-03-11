@@ -1,5 +1,6 @@
 .gradle
-/build/
+build
+utils
 
 ### STS ###
 .apt_generated
@@ -15,4 +16,4 @@
 *.iws
 *.iml
 *.ipr
-/out/
+out
