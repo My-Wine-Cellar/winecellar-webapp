@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(user.getUsername().toLowerCase());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
-        user.setAuthorities(Collections.singleton(authorityRepository.findByAuthority("USER")));
+        user.setAuthorities(Collections.singleton(authorityRepository.findByAuthority("ROLE_USER")));
         userRepository.save(user);
     }
 
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(user.getUsername().toLowerCase());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
-        user.setAuthorities(Collections.singleton(authorityRepository.findByAuthority("ADMIN")));
+        user.setAuthorities(Collections.singleton(authorityRepository.findByAuthority("ROLE_ADMIN")));
         userRepository.save(user);
     }
 }

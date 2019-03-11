@@ -26,21 +26,21 @@
     </div>
     <div class="navbar-collapse collapse" id="navbarSupportedContent" sec:authorize="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link" th:href="@{/}">Home<span class="fa fa-home" aria-hidden="true"></span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link" th:href="@{/producers/list}">Producers<span class="fa fa-list"
                                                                                 aria-hidden="true"></span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link" th:href="@{/producers/find}">Find<span class="fa fa-search"
                                                                            aria-hidden="true"></span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/logout}">Logout<span class="fa fa-sign-out" aria-hidden="true"></span></a>
             </li>
-            <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" th:href="@{/registration}">Register Users<span class="fa fa-user-plus" aria-hidden="true"></span></a>
             </li>
             <!-- Remove this once app is tested and ready to deploy -->
