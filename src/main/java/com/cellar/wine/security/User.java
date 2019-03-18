@@ -36,7 +36,7 @@ public class User implements UserDetails {
     @Column(name = "enabled")
     private boolean enabled;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Collection<Authority> authorities;
 

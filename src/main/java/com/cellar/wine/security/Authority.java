@@ -22,4 +22,9 @@ public class Authority implements GrantedAuthority {
     @Column(name = "authority")
     private String authority;
 
+    @Override
+    public String toString() {
+        return authority;
+    }
+
 }
