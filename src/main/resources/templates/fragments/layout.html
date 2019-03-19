@@ -38,7 +38,10 @@
                                                                            aria-hidden="true"></span></a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link" th:href="@{/registration}">Register User<span class="fa fa-user-plus" aria-hidden="true"></span></a>
+                <a class="nav-link" th:href="@{/registeruser}">Register User<span class="fa fa-user-plus" aria-hidden="true"></span></a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link" th:href="@{/registeradmin}">Register Admin<span class="fa fa-user-plus" aria-hidden="true"></span></a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" th:href="@{/userlist}">User List<span class="fa fa-users" aria-hidden="true"></span></a>
@@ -46,11 +49,6 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/logout}">Logout<span class="fa fa-sign-out" aria-hidden="true"></span></a>
             </li>
-            <!-- Remove this once app is tested and ready to deploy -->
-            <!--<li class="nav-item">-->
-                <!--<a class="nav-link" th:href="@{/errorpage}">Error<span class="fa fa-exclamation-triangle"-->
-                                                                       <!--aria-hidden="true"></span></a>-->
-            <!--</li>-->
         </ul>
 
         <!-- Save this for v2.0.0 -->
