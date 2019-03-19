@@ -11,6 +11,11 @@ public class IndexController {
         return "index";
     }
 
+    @RequestMapping("/login")
+    public String loginForm() {
+        return "security/login";
+    }
+
     @RequestMapping("/errorpage")
     public String error() {
         return "error";
