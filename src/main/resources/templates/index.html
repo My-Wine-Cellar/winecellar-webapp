@@ -7,15 +7,12 @@
 
 <nav th:insert="~{fragments/layout :: nav}"/>
 
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid" sec:authorize="isAuthenticated()">
     <div class="container text-center">
-        <h1 th:text="#{welcome}">Welcome</h1>
-        <h4 sec:authorize="hasRole('USER')">Hello User</h4>
-        <h4 sec:authorize="hasRole('ADMIN')">Hello Admin</h4>
-        Authenticated username:
-        <p sec:authentication="name"></p>
-        Authenticated user roles:
-        <p sec:authentication="principal.authorities"></p>
+        <h1 th:text="#{welcome}"></h1>
+        <h4 sec:authentication="principal.username"></h4>
+        <p sec:authorize="hasRole('ROLE_USER')">Thanks for coming! Please mess around and let me know what you think.<br/> Email me any suggestions or notes on
+            the app <a href="mailto:paul.darlington.pearson@gmail.com">paul.darlington.pearson@gmail.com</a></p>
     </div>
 </div>
 
