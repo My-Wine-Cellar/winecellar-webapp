@@ -41,9 +41,6 @@
                 <a class="nav-link" th:href="@{/registeruser}">Register User<span class="fa fa-user-plus" aria-hidden="true"></span></a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link" th:href="@{/registeradmin}">Register Admin<span class="fa fa-user-plus" aria-hidden="true"></span></a>
-            </li>
-            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" th:href="@{/userlist}">User List<span class="fa fa-users" aria-hidden="true"></span></a>
             </li>
             <li class="nav-item">

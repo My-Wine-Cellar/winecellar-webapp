@@ -48,32 +48,6 @@ public class AdminController {
         return modelAndView;
     }
 
-    @GetMapping("/registeradmin")
-    public String registerAdmin(Model model) {
-        model.addAttribute("admin", User.builder().build());
-        return ADMIN_REGISTRATION_TEMPLATE;
-    }
-
-    @PostMapping("/registeradmin")
-    public ModelAndView createNewAdmin(@Valid User admin, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        User adminExists = userService.findByUsername(admin.getUsername());
-        if (adminExists != null) {
-            bindingResult
-                    .rejectValue("username", "error.user",
-                            "There is already an admin registered with the username provided");
-        }
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName(ADMIN_REGISTRATION_TEMPLATE);
-        } else {
-            userService.createAdmin(admin);
-            modelAndView.addObject("successMessage", "Admin has been registered successfully");
-            modelAndView.addObject("admin", new User());
-            modelAndView.setViewName(ADMIN_REGISTRATION_TEMPLATE);
-        }
-        return modelAndView;
-    }
-
     @GetMapping("/userlist")
     public String getAllUsers(Model model) {
         model.addAttribute("users", userService.findAll());
