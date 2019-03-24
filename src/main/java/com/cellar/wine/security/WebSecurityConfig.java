@@ -23,9 +23,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //TODO remove once finished testing in dev
-        auth.inMemoryAuthentication().withUser("admin").password(bCryptPasswordEncoder.encode("password")).roles("ADMIN");
-
         auth.jdbcAuthentication()
                 .usersByUsernameQuery("select username, password, enabled from user where username=?")
                 .authoritiesByUsernameQuery("select u.username, a.authority from user u inner join user_authority ua on (u.id=ua.user_id) inner join authority a on(ua.authority_id=a.id) where u.username=?")
@@ -38,7 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(
-                        "/h2-console/**",
                         "/js/**",
                         "/css/**",
                         "/images/**",
@@ -65,7 +61,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable()
-                ;
+        ;
+        //Needed for H2 Console
         http.headers().frameOptions().sameOrigin();
     }
 

@@ -20,7 +20,6 @@ public class AdminController {
     }
 
     private static final String USER_REGISTRATION_TEMPLATE = "security/registerUser";
-    private static final String ADMIN_REGISTRATION_TEMPLATE = "security/registerAdmin";
 
     @GetMapping("/registeruser")
     public String registerUser(Model model) {
