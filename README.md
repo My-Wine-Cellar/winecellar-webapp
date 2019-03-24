@@ -35,7 +35,7 @@ You can then access here: http://localhost:8080/
 
 ## Status
 > *Project will be deployed here:*
-[My Wine Cellar](www.mywinecellar.info)
+[My Wine Cellar](http://www.mywinecellar.info)
 
 ## Inspiration
 
