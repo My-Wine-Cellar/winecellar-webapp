@@ -25,6 +25,10 @@
     color: #ffffff;
 }
 
+.fa.fa-navicon {
+    color:#d4d4dc;
+}
+
 .footer {
     position: fixed;
     left: 0;
