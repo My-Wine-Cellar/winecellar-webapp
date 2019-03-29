@@ -19,7 +19,7 @@
                 <th:block th:if="${!valid}">
             <span class="fa fa-error form-control-feedback"
                   aria-hidden="true"></span>
-                    <span class="help-inline" th:errors="*{__${name}__}">Error</span>
+                    <span class="alert-danger" th:errors="*{__${name}__}">Error</span>
                 </th:block>
             </div>
         </div>

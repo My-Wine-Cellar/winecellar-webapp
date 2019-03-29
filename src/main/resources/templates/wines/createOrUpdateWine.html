@@ -17,7 +17,7 @@
     </div>
     <form th:object="${wine}" class="form-horizontal" method="post">
         <input type="hidden" name="id" th:value="*{id}"/>
-        <div class="form-group has-feedback col-sm-6">
+        <div class="form-group has-feedback col-md-9">
             <input
                     th:replace="~{fragments/inputField :: input ('Label', 'label', 'text')}"/>
             <input

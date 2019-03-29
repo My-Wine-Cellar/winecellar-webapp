@@ -56,7 +56,7 @@ public class ProducerController {
     }
 
     @PostMapping("/new")
-    public String processCreateForm(@Valid Producer producer, Principal principal, BindingResult result) {
+    public String processCreateForm(@Valid Producer producer, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
             return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
         } else {
@@ -74,7 +74,7 @@ public class ProducerController {
     }
 
     @PostMapping("/{producerId}/edit")
-    public String processUpdateProducerForm(@Valid Producer producer, Principal principal, BindingResult result, @PathVariable Long producerId) {
+    public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable Long producerId, Principal principal) {
         if(result.hasErrors()) {
             return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
         } else {

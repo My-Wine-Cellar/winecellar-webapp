@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,15 +28,22 @@ public class Producer extends BaseEntity {
         }
     }
 
+    private static final String REGEXP_STRING_PATTERN = "[a-zA-Z]+";
+    private static final String REGEXP_MESSAGE = "This field cannot be empty and must be an English alphabet character";
+
+    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
     @Column(name = "name")
     private String name;
 
+    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
     @Column(name = "country")
     private String country;
 
+    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
     @Column(name = "appellation")
     private String appellation;
 
+    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
     @Column(name = "province")
     private String province;
 
