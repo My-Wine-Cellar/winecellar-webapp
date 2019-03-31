@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('Compile') {
+        stage('Clean & Compile') {
             steps {
                 gradlew('clean', 'classes')
             }
@@ -16,34 +16,8 @@ pipeline {
             steps {
                 gradlew('test')
             }
-            post {
-                always {
-                    junit '**/build/test-results/test/TEST-*.xml'
-                }
-            }
         }
-        stage('Long-running Verification') {
-            environment {
-                SONAR_LOGIN = credentials('SONARCLOUD_TOKEN')
-            }
-            parallel {
-                stage('Integration Tests') {
-                    steps {
-                        gradlew('integrationTest')
-                    }
-                    post {
-                        always {
-                            junit '**/build/test-results/integrationTest/TEST-*.xml'
-                        }
-                    }
-                }
-                stage('Code Analysis') {
-                    steps {
-                        gradlew('sonarqube')
-                    }
-                }
-            }
-        }
+
         stage('Assemble') {
             steps {
                 gradlew('assemble')
@@ -57,12 +31,9 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Production') {
-            environment {
-                HEROKU_API_KEY = credentials('HEROKU_API_KEY')
-            }
+        stage('Staging') {
             steps {
-               sh ""
+               sh "echo 'not ready ' "
             }
         }
     }
