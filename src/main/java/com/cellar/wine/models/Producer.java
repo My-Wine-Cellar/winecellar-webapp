@@ -8,8 +8,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.cellar.wine.utils.Regex.*;
 
 @Setter
 @Getter
@@ -28,22 +31,23 @@ public class Producer extends BaseEntity {
         }
     }
 
-    private static final String REGEXP_STRING_PATTERN = "[a-zA-Z]+";
-    private static final String REGEXP_MESSAGE = "This field cannot be empty and must be an English alphabet character";
-
-    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
+    @Size(min = 1, max = 20)
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_MESSAGE)
     @Column(name = "name")
     private String name;
 
-    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
+    @Size(min = 1, max = 20)
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_MESSAGE)
     @Column(name = "country")
     private String country;
 
-    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
+    @Size(min = 1, max = 20)
+    @Pattern(regexp = STRING_NO_SPACES_PATTERN, message = STRING_NO_SPACES_MESSAGE)
     @Column(name = "appellation")
     private String appellation;
 
-    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
+    @Size(min = 1, max = 20)
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_MESSAGE)
     @Column(name = "province")
     private String province;
 

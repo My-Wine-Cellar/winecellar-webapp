@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import static com.cellar.wine.utils.Regex.*;
 
 @Getter
 @Setter
@@ -24,22 +27,22 @@ public class Wine extends BaseEntity {
         this.varietal = varietal;
     }
 
-    private static final String REGEXP_STRING_PATTERN = "[a-zA-Z]+";
-    private static final String REGEXP_MESSAGE = "This field cannot be empty and must be an English alphabet character";
+    @ManyToOne
+    @JoinColumn(name = "producer_id", referencedColumnName = "id")
+    private Producer producer;
 
-    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
+    @Size(min = 1, max = 20)
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_MESSAGE)
     @Column(name = "label")
     private String label;
 
-    @ManyToOne
-    @JoinColumn(name = REGEXP_STRING_PATTERN, referencedColumnName = "id")
-    private Producer producer;
-
-    @Pattern(regexp = "[0-9]+", message = "Must be valid digits 0-9")
+    @Size(min = 1, max = 4, message = "Needs to be in YYYY format")
+    @Pattern(regexp = NUMERIC_PATTERN, message = NUMERIC_MESSAGE)
     @Column(name = "vintage")
     private String vintage;
 
-    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
+    @Size(min = 1, max = 15)
+    @Pattern(regexp = STRING_SPACES_PATTERN, message = STRING_SPACES_MESSAGE)
     @Column(name = "varietal")
     private String varietal;
 
