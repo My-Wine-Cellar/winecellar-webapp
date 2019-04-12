@@ -8,11 +8,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.cellar.wine.utils.Regex.*;
+import static com.cellar.wine.utils.Regex.ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE;
+import static com.cellar.wine.utils.Regex.ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN;
 
 @Setter
 @Getter
@@ -31,32 +31,28 @@ public class Producer extends BaseEntity {
         }
     }
 
-    @Size(min = 1, max = 20)
-    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_MESSAGE)
-    @Column(name = "name")
-    private String name;
-
-    @Size(min = 1, max = 20)
-    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_MESSAGE)
-    @Column(name = "country")
-    private String country;
-
-    @Size(min = 1, max = 20)
-    @Pattern(regexp = STRING_NO_SPACES_PATTERN, message = STRING_NO_SPACES_MESSAGE)
-    @Column(name = "appellation")
-    private String appellation;
-
-    @Size(min = 1, max = 20)
-    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_MESSAGE)
-    @Column(name = "province")
-    private String province;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private Set<Wine> wines = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
+    @Column(name = "name")
+    private String name;
+
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
+    @Column(name = "country")
+    private String country;
+
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
+    @Column(name = "appellation")
+    private String appellation;
+
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
+    @Column(name = "province")
+    private String province;
 
     public Wine getWine(String label) {
         return getWine(label, false);

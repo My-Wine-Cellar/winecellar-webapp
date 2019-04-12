@@ -31,18 +31,16 @@ public class Wine extends BaseEntity {
     @JoinColumn(name = "producer_id", referencedColumnName = "id")
     private Producer producer;
 
-    @Size(min = 1, max = 20)
-    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_MESSAGE)
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
     @Column(name = "label")
     private String label;
 
-    @Size(min = 1, max = 4, message = "Needs to be in YYYY format")
+    @Size(min = 4, max = 4, message = "Needs to be in YYYY format")
     @Pattern(regexp = NUMERIC_PATTERN, message = NUMERIC_MESSAGE)
     @Column(name = "vintage")
     private String vintage;
 
-    @Size(min = 1, max = 15)
-    @Pattern(regexp = STRING_SPACES_PATTERN, message = STRING_SPACES_MESSAGE)
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
     @Column(name = "varietal")
     private String varietal;
 
