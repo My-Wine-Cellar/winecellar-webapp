@@ -21,6 +21,8 @@
 * Thymeleaf
 * Hibernate
 * MySQL
+* AWS
+* Linux
 
 ## Setup
 ```
@@ -34,7 +36,7 @@ $ ./gradlew bootRun
 > Feel free!  I'm trying to setup issues and project boards as best I can as it helps me remain focused when I'm working.  Contact info is below.
 
 ## Status
-> *Project will be deployed here:*
+> *Project is deployed on AWS EC2 RHEL-7.6 AMI here:*
 [My Wine Cellar](http://www.mywinecellar.info)
 
 ## Inspiration
