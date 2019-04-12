@@ -11,6 +11,9 @@ import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.cellar.wine.utils.Regex.ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE;
+import static com.cellar.wine.utils.Regex.ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -28,31 +31,28 @@ public class Producer extends BaseEntity {
         }
     }
 
-    private static final String REGEXP_STRING_PATTERN = "[a-zA-Z]+";
-    private static final String REGEXP_MESSAGE = "This field cannot be empty and must be an English alphabet character";
-
-    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
-    @Column(name = "name")
-    private String name;
-
-    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
-    @Column(name = "country")
-    private String country;
-
-    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
-    @Column(name = "appellation")
-    private String appellation;
-
-    @Pattern(regexp = REGEXP_STRING_PATTERN, message = REGEXP_MESSAGE)
-    @Column(name = "province")
-    private String province;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private Set<Wine> wines = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
+    @Column(name = "name")
+    private String name;
+
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
+    @Column(name = "country")
+    private String country;
+
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
+    @Column(name = "appellation")
+    private String appellation;
+
+    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
+    @Column(name = "province")
+    private String province;
 
     public Wine getWine(String label) {
         return getWine(label, false);

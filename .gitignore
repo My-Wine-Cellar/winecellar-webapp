@@ -1,6 +1,5 @@
 .gradle
 build
-utils
 
 ### STS ###
 .apt_generated
