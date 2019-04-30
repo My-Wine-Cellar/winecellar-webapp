@@ -6,8 +6,8 @@ import com.cellar.wine.services.ProducerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -53,7 +53,7 @@ public class ProducerJpa implements ProducerService {
     }
 
     @Override
-    public List<Producer> findAllByName(String name) {
-        return producerRepository.findAllByName(name);
+    public Collection<Producer> searchProducersByName(String search) {
+        return producerRepository.searchProducersByName(search);
     }
 }
