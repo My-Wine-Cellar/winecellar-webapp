@@ -95,6 +95,22 @@ public class ProducerController {
     @GetMapping
     public String processFindForm(Producer producer, BindingResult result, Model model) {
 
+//        //build up the list of producers
+//        Collection<Producer> producers = this.findAll();
+//        //Producer producer = Producer.builder().build();
+//
+//        //setup search string to lower case and remove whitespace
+//        search = search.toLowerCase().trim();
+//
+//        //go through producer list for search string
+//        for(Producer list : producers) {
+//            if(list.getName().startsWith(search)) {
+//                return producers;
+//            } else {
+//                return null;
+//            }
+//        }
+
         Producer find = producerService.findByName(producer.getName());
 
         if(find == null) {
