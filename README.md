@@ -21,6 +21,7 @@
 * Thymeleaf
 * Hibernate
 * MySQL
+* PostgreSQL
 * AWS
 * Linux
 
