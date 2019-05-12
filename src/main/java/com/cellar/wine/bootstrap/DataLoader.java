@@ -6,12 +6,9 @@ import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
 import lombok.extern.java.Log;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
 @Log
-@Component
-@Profile({"mysql-dev", "postgresql-dev"})
+//@Component
 public class DataLoader implements CommandLineRunner {
 
     private final WineService wineService;
