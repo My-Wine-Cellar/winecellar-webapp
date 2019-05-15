@@ -33,7 +33,7 @@ $ git clone https://github.com/pauldpearson/winecellar-webapp.git
 $ cd winecellarwebapp
 $ ./gradlew bootRun
 ```
-> Access here: http://localhost:8080/ <br/> You can then login as user or admin, both use password for...password
+> Access here: http://localhost:8080/ <br/> You can then login as user1, user2, or admin; both use password for...password
 
 ## Docker setup
 
