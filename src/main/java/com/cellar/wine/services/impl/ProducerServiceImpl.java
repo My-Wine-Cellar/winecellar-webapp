@@ -1,21 +1,19 @@
-package com.cellar.wine.services.springdatajpa;
+package com.cellar.wine.services.impl;
 
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.repositories.ProducerRepository;
 import com.cellar.wine.services.ProducerService;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@Profile("springdatajpa")
-public class ProducerJpa implements ProducerService {
+public class ProducerServiceImpl implements ProducerService {
 
     private final ProducerRepository producerRepository;
 
-    public ProducerJpa(ProducerRepository producerRepository) {
+    public ProducerServiceImpl(ProducerRepository producerRepository) {
         this.producerRepository = producerRepository;
     }
 

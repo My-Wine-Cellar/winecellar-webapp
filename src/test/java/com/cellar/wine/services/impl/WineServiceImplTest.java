@@ -1,4 +1,4 @@
-package com.cellar.wine.services.springdatajpa;
+package com.cellar.wine.services.impl;
 
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.repositories.WineRepository;
@@ -13,13 +13,13 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-class WineJpaTest {
+class WineServiceImplTest {
 
     @Mock
     WineRepository wineRepository;
 
     @InjectMocks
-    WineJpa wineJpa;
+    WineServiceImpl wineServiceImpl;
 
     private Wine returnWine;
 

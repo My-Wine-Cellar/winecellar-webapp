@@ -1,10 +1,9 @@
-package com.cellar.wine.services.springdatajpa;
+package com.cellar.wine.services.impl;
 
 
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.repositories.WineRepository;
 import com.cellar.wine.services.WineService;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -12,12 +11,11 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Profile("springdatajpa")
-public class WineJpa implements WineService {
+public class WineServiceImpl implements WineService {
 
     private final WineRepository wineRepository;
 
-    public WineJpa(WineRepository wineRepository) {
+    public WineServiceImpl(WineRepository wineRepository) {
         this.wineRepository = wineRepository;
     }
 
