@@ -4,6 +4,7 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Docker setup](#docker-setup)
 * [Contribution](#contribution)
 * [Status](#status)
 * [Inspiration](#inspiration)
@@ -11,6 +12,7 @@
 
 ## General info
 > This is my first real project built and deployed as a means to learn and grow as a junior developer.
+> All development is run on MacBook Pro (Retina, 13-inch, Early 2015) macOS High Sierra
 
 ## Technologies
 * Spring Boot
@@ -21,7 +23,6 @@
 * Thymeleaf
 * Hibernate
 * Docker
-* MySQL
 * PostgreSQL
 * AWS
 * Linux
@@ -33,6 +34,13 @@ $ cd winecellarwebapp
 $ ./gradlew bootRun
 ```
 > Access here: http://localhost:8080/ <br/> You can then login as user or admin, both use password for...password
+
+## Docker setup
+
+```
+$ docker run --name postgres-dev -p 27017:27017 -d -e POSTGRES_PASSWORD=password postgres
+```
+> This has been the simplest way I found to work on my Mac for local development and the application.properties file will refelct the connection.
 
 ## Contribution
 > Feel free!  I'm trying to setup issues and project boards as best I can as it helps me remain focused when I'm working.  Contact info is below.
