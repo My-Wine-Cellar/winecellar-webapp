@@ -34,8 +34,6 @@ dependencies {
     compile('com.github.ulisesbocchio:jasypt-spring-boot-starter:2.1.0')
     
     runtime('org.springframework.boot:spring-boot-devtools')
-    runtime('com.h2database:h2')
-    runtime('mysql:mysql-connector-java')
     runtime('org.postgresql:postgresql:42.2.5')
     compileOnly('org.projectlombok:lombok:1.18.6')
 
