@@ -1,4 +1,4 @@
-package com.cellar.wine.services.springdatajpa;
+package com.cellar.wine.services.impl;
 
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.repositories.ProducerRepository;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-class ProducerJpaTest {
+class ProducerServiceImplTest {
 
     private static final String PRODUCER = "Producer";
 
@@ -28,7 +28,7 @@ class ProducerJpaTest {
     ProducerRepository producerRepository;
 
     @InjectMocks
-    ProducerJpa producerJpa;
+    ProducerServiceImpl producerServiceImpl;
 
     private Producer returnProducer;
 
@@ -46,7 +46,7 @@ class ProducerJpaTest {
 
         when(producerRepository.findAll()).thenReturn(producerSet);
 
-        Set<Producer> producers = producerJpa.findAll();
+        Set<Producer> producers = producerServiceImpl.findAll();
         assertNotNull(producers);
         assertEquals(2, producers.size());
     }
@@ -54,7 +54,7 @@ class ProducerJpaTest {
     @Test
     void findById() {
         when(producerRepository.findById(1L)).thenReturn(Optional.of(returnProducer));
-        Producer producer = producerJpa.findById(1L);
+        Producer producer = producerServiceImpl.findById(1L);
         assertNotNull(producer);
     }
 
@@ -62,20 +62,20 @@ class ProducerJpaTest {
     void save() {
         Producer producer = Producer.builder().id(1L).build();
         when(producerRepository.save(producer)).thenReturn(returnProducer);
-        Producer savedProducer = producerJpa.save(producer);
+        Producer savedProducer = producerServiceImpl.save(producer);
         assertNotNull(savedProducer);
         verify(producerRepository).save(any());
     }
 
     @Test
     void delete() {
-        producerJpa.delete(returnProducer);
+        producerServiceImpl.delete(returnProducer);
         verify(producerRepository, times(1)).delete(any());
     }
 
     @Test
     void deleteById() {
-        producerJpa.deleteById(1L);
+        producerServiceImpl.deleteById(1L);
         verify(producerRepository).deleteById(anyLong());
     }
 }
