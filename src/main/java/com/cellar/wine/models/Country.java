@@ -2,11 +2,10 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,6 +27,6 @@ public class Country extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-   @OneToMany
+    @OneToMany
     private Set<Region> regions;
 }
