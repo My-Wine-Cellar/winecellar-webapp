@@ -33,12 +33,12 @@ $ git clone https://github.com/pauldpearson/winecellar-webapp.git
 $ cd winecellarwebapp
 $ ./gradlew bootRun
 ```
-> Access here: http://localhost:8080/ <br/> You can then login as user or admin, both use password for...password
+> Access here: http://localhost:8080/ <br/> You can then login as user1, user2, or admin; both use password for...password
 
 ## Docker setup
 
 ```
-$ docker run --name postgres-dev -p 27017:27017 -d -e POSTGRES_PASSWORD=password postgres
+$ docker run --name postgres-dev -p 5432:5432 -d -e POSTGRES_PASSWORD=password postgres
 ```
 > This has been the simplest way I found to work on my Mac for local development and the application.properties file will refelct the connection.
 
