@@ -16,17 +16,21 @@ import javax.persistence.ManyToMany;
 public class Area extends BaseEntity {
 
     @Builder
-    public Area(Long id, String name, String description) {
+    public Area(Long id, String name, String description, String weblink) {
         super(id);
         this.name = name;
         this.description = description;
+        this.weblink = weblink;
     }
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 8192)
     private String description;
+
+    @Column(name = "weblink")
+    private String weblink;
 
     @ManyToMany(mappedBy="areas")
     public Set<Region> regions;
