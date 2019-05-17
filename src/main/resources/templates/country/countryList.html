@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/layout :: head}"/>
+
+<body>
+
+<nav th:insert="~{fragments/layout :: nav}"/>
+
+<br/>
+<h2 align="center">Countries</h2>
+<br/>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 150px;">Name</th>
+            <th style="width: 200px;">Description</th>
+<!--            <th style="width: 120px">Regions</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="country : ${countries}">
+            <td>
+                <a th:href="@{/country/__${country.id}__}" th:text="${country.name}"></a>
+            </td>
+            <td th:text="${country.description}"></td>
+<!--            <td><span th:each="region : ${country.regions}" th:utext="${region.name} + '<br/>'"></span></td>-->
+<!--            <td><a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Update</a></td>-->
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <a th:href="@{/country/new}" class="btn btn-default">Add Country</a><br/><br/><br/>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
+</body>
+</html>
