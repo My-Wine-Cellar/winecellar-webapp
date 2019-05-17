@@ -30,4 +30,7 @@ public class Area extends BaseEntity {
 
     @ManyToMany(mappedBy="areas")
     public Set<Region> regions;
+
+    @ManyToMany(mappedBy="areas")
+    public Set<Grape> primaryGrapes;
 }
