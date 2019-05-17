@@ -20,7 +20,7 @@ public class RegionServiceImpl implements RegionService {
     @Override
     public Set<Region> findAll() {
         Set<Region> regions = new HashSet<>();
-        regionRepository.findAll().addAll(regions);
+        regionRepository.findAll().forEach(regions::add);
         return regions;
     }
 

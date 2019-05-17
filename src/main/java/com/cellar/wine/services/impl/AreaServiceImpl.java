@@ -20,7 +20,7 @@ public class AreaServiceImpl implements AreaService {
     @Override
     public Set<Area> findAll() {
         Set<Area> areas = new HashSet<>();
-        areaRepository.findAll().addAll(areas);
+        areaRepository.findAll().forEach(areas::add);
         return areas;
     }
 
