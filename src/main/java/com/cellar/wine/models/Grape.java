@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Getter
 @Setter
@@ -18,12 +19,11 @@ import javax.persistence.ManyToMany;
 public class Grape extends BaseEntity {
 
     @Builder
-    public Grape(Long id, String name, String color, String description, String alternativeNames, String weblink) {
+    public Grape(Long id, String name, String color, String description, String weblink) {
         super(id);
         this.name = name;
         this.color = color;
         this.description = description;
-        this.alternativeNames = alternativeNames;
         this.weblink = weblink;
     }
 
@@ -36,11 +36,11 @@ public class Grape extends BaseEntity {
     @Column(name = "description", length = 8192)
     private String description;
 
-    @Column(name = "alternative_names", length = 8192)
-    private String alternativeNames;
-
     @Column(name = "weblink")
     private String weblink;
+
+    @OneToMany
+    private Set<Grape> alternativeNames;
 
     @ManyToMany
     @JoinTable(name="grape_area",
