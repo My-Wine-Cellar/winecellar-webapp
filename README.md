@@ -40,7 +40,7 @@ $ ./gradlew bootRun
 ```
 $ docker run --name postgres-dev -p 5432:5432 -d -e POSTGRES_PASSWORD=password postgres
 ```
-> This has been the simplest way I found to work on my Mac for local development and the application.properties file will refelct the connection.
+> This has been the simplest way I found to work on my Mac for local development and the application.properties file will reflect the connection.
 
 ## Contribution
 > Feel free!  I'm trying to setup issues and project boards as best I can as it helps me remain focused when I'm working.  Contact info is below.
