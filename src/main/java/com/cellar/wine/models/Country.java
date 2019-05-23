@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@NamedNativeQuery(name = "getRegions", query = "")
 public class Country extends BaseEntity {
 
     @Builder
@@ -33,4 +35,8 @@ public class Country extends BaseEntity {
 
     @OneToMany
     private Set<Region> regions;
+
+    public boolean hasRegions() {
+        return !this.getRegions().isEmpty();
+    }
 }

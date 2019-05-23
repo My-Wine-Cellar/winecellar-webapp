@@ -48,4 +48,14 @@ public class CountryServiceImpl implements CountryService {
     public Country findByName(String name) {
         return countryRepository.findByName(name);
     }
+
+    @Override
+    public Set<Country> findWithRegions() {
+//        Set<Country> countries = this.findAll();
+//        if(countries.iterator().next().hasRegions()) {
+//            return countryRepository.findWithRegions();
+//        }
+//        return Collections.emptySet();
+        return countryRepository.findWithRegions();
+    }
 }
