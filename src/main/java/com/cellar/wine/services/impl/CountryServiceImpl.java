@@ -48,4 +48,11 @@ public class CountryServiceImpl implements CountryService {
     public Country findByName(String name) {
         return countryRepository.findByName(name);
     }
+
+    @Override
+    public Set<Country> findWithRegions() {
+        Set<Country> countries = new HashSet<>();
+        countryRepository.findWithRegions().forEach(countries::add);
+        return countries;
+    }
 }

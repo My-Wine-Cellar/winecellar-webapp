@@ -4,6 +4,7 @@ import com.cellar.wine.services.RegionService;
 import com.cellar.wine.services.impl.CountryServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -18,9 +19,9 @@ public class CountryController {
         this.regionService = regionService;
     }
 
-    @RequestMapping("/list")
-    public String getAllCountriesWithRegions(Model model) {
-        model.addAttribute("countries", countryService.findAll());
+    @GetMapping("/list")
+    public String getCountriesWithRegions(Model model) {
+        model.addAttribute("countries", countryService.findWithRegions());
         return "country/countryList";
     }
 }

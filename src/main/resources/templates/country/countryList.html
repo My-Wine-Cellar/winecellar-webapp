@@ -17,7 +17,7 @@
         <tr>
             <th style="width: 150px;">Name</th>
             <th style="width: 200px;">Description</th>
-<!--            <th style="width: 120px">Regions</th>-->
+            <th style="width: 120px">Regions</th>
         </tr>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@
                 <a th:href="@{/country/__${country.id}__}" th:text="${country.name}"></a>
             </td>
             <td th:text="${country.description}"></td>
-<!--            <td><span th:each="region : ${country.regions}" th:utext="${region.name} + '<br/>'"></span></td>-->
+            <td><span th:each="region : ${country.regions}" th:utext="${region.name} + '<br/>'"></span></td>
 <!--            <td><a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Update</a></td>-->
         </tr>
         </tbody>
