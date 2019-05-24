@@ -51,16 +51,8 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public Set<Country> findWithRegions() {
-//        Set<Country> countries = this.findAll();
-//        if(countries.iterator().next().hasRegions()) {
-//            return countryRepository.findWithRegions();
-//        }
-//        return Collections.emptySet();
-
-//        Set<Country> countries = new HashSet<>();
-//        countryRepository.findWithRegions().forEach(countries::add);
-//        return countries;
-
-        return countryRepository.findWithRegions();
+        Set<Country> countries = new HashSet<>();
+        countryRepository.findWithRegions().forEach(countries::add);
+        return countries;
     }
 }

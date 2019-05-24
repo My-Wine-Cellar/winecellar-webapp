@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -13,7 +12,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@NamedNativeQuery(name = "getRegions", query = "select * from country c join country_regions cr on c.id = cr.country_id")
 public class Country extends BaseEntity {
 
     @Builder

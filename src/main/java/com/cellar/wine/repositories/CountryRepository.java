@@ -10,6 +10,6 @@ public interface CountryRepository extends JpaRepository<Country, Long> {
 
     Country findByName(String name);
 
-    @Query(name = "getRegions")
+    @Query(nativeQuery = true, value = "select * from country c join country_regions cr on c.id = cr.country_id")
     Set<Country> findWithRegions();
 }
