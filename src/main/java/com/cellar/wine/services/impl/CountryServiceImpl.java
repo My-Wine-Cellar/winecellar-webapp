@@ -56,6 +56,11 @@ public class CountryServiceImpl implements CountryService {
 //            return countryRepository.findWithRegions();
 //        }
 //        return Collections.emptySet();
+
+//        Set<Country> countries = new HashSet<>();
+//        countryRepository.findWithRegions().forEach(countries::add);
+//        return countries;
+
         return countryRepository.findWithRegions();
     }
 }

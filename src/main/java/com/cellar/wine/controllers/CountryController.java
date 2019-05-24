@@ -19,7 +19,7 @@ public class CountryController {
     }
 
     @RequestMapping("/list")
-    public String getAllCountriesWithRegions(Model model) {
+    public String getCountriesWithRegions(Model model) {
         model.addAttribute("countries", countryService.findWithRegions());
         return "country/countryList";
     }

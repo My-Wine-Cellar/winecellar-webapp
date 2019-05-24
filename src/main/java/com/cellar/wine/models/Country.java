@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@NamedNativeQuery(name = "getRegions", query = "")
+@NamedNativeQuery(name = "getRegions", query = "select * from country c join country_regions cr on c.id = cr.country_id")
 public class Country extends BaseEntity {
 
     @Builder
@@ -36,7 +36,4 @@ public class Country extends BaseEntity {
     @OneToMany
     private Set<Region> regions;
 
-    public boolean hasRegions() {
-        return !this.getRegions().isEmpty();
-    }
 }
