@@ -2,7 +2,7 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +15,7 @@ import javax.persistence.ManyToMany;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Region extends BaseEntity {
+public class Region extends BaseEntity implements Comparable<Region> {
 
     @Builder
     public Region(Long id, String name, String description, String weblink) {
@@ -41,5 +41,11 @@ public class Region extends BaseEntity {
                inverseJoinColumns=
                @JoinColumn(name="area_id", referencedColumnName="id")
         )
-    private Set<Area> areas;
+    private List<Area> areas;
+
+    @Override
+    public int compareTo(Region r)
+    {
+        return name.compareTo(r.getName());
+    }
 }
