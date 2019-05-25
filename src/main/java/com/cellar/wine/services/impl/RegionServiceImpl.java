@@ -5,8 +5,8 @@ import com.cellar.wine.repositories.RegionRepository;
 import com.cellar.wine.services.RegionService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class RegionServiceImpl implements RegionService {
@@ -19,7 +19,7 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public Set<Region> findAll() {
-        Set<Region> regions = new HashSet<>();
+        Set<Region> regions = new TreeSet<>();
         regionRepository.findAll().forEach(regions::add);
         return regions;
     }

@@ -5,14 +5,14 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Country extends BaseEntity {
+public class Country extends BaseEntity implements Comparable<Country> {
 
     @Builder
     public Country(Long id, String name, String description, String weblink) {
@@ -32,6 +32,11 @@ public class Country extends BaseEntity {
     private String weblink;
 
     @OneToMany
-    private Set<Region> regions;
+    private List<Region> regions;
 
+    @Override
+    public int compareTo(Country c)
+    {
+        return name.compareTo(c.getName());
+    }
 }
