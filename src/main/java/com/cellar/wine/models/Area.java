@@ -2,11 +2,10 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,9 +31,9 @@ public class Area extends BaseEntity {
     @Column(name = "weblink")
     private String weblink;
 
-    @ManyToMany(mappedBy="areas")
+    @ManyToMany(mappedBy = "areas")
     public Set<Region> regions;
 
-    @ManyToMany(mappedBy="areas")
+    @ManyToMany(mappedBy = "areas")
     public Set<Grape> primaryGrapes;
 }

@@ -2,13 +2,8 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 
 @Getter
 @Setter
@@ -35,11 +30,11 @@ public class Region extends BaseEntity {
     private String weblink;
 
     @ManyToMany
-    @JoinTable(name="region_area",
-               joinColumns=
-               @JoinColumn(name="region_id", referencedColumnName="id"),
-               inverseJoinColumns=
-               @JoinColumn(name="area_id", referencedColumnName="id")
-        )
+    @JoinTable(name = "region_area",
+            joinColumns =
+            @JoinColumn(name = "region_id", referencedColumnName = "id"),
+            inverseJoinColumns =
+            @JoinColumn(name = "area_id", referencedColumnName = "id")
+    )
     private Set<Area> areas;
 }

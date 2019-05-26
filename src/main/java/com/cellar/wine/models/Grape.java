@@ -2,14 +2,8 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 @Getter
 @Setter
@@ -43,11 +37,11 @@ public class Grape extends BaseEntity {
     private Set<Grape> alternativeNames;
 
     @ManyToMany
-    @JoinTable(name="grape_area",
-               joinColumns=
-               @JoinColumn(name="grape_id", referencedColumnName="id"),
-               inverseJoinColumns=
-               @JoinColumn(name="area_id", referencedColumnName="id")
-        )
+    @JoinTable(name = "grape_area",
+            joinColumns =
+            @JoinColumn(name = "grape_id", referencedColumnName = "id"),
+            inverseJoinColumns =
+            @JoinColumn(name = "area_id", referencedColumnName = "id")
+    )
     private Set<Area> areas;
 }

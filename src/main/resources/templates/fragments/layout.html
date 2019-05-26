@@ -37,10 +37,17 @@
                 <a class="nav-link" th:href="@{/country/list}">Countries<span class="fa fa-list"
                                                                                 aria-hidden="true"></span></a>
             </li>
-<!--            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">-->
-<!--                <a class="nav-link" th:href="@{/producers/find}">Find<span class="fa fa-search"-->
-<!--                                                                           aria-hidden="true"></span></a>-->
-<!--            </li>-->
+            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                <a class="nav-link" th:href="@{/region/list}">Regions<span class="fa fa-list"
+                                                                              aria-hidden="true"></span></a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                <a class="nav-link" th:href="@{/area/list}">Areas<span class="fa fa-list"
+                                                                           aria-hidden="true"></span></a>
+            </li>
+
+            <!-- Security specific nav items -->
+
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" th:href="@{/registeruser}">Register User<span class="fa fa-user-plus" aria-hidden="true"></span></a>
             </li>
