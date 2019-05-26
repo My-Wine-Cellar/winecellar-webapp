@@ -2,13 +2,14 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,10 +35,10 @@ public class Area extends BaseEntity implements Comparable<Area> {
     @Column(name = "weblink")
     private String weblink;
 
-    @ManyToMany(mappedBy="areas")
+    @ManyToMany(mappedBy = "areas")
     public List<Region> regions;
 
-    @ManyToMany(mappedBy="areas")
+    @ManyToMany(mappedBy = "areas")
     public List<Grape> primaryGrapes;
 
     @ManyToMany
