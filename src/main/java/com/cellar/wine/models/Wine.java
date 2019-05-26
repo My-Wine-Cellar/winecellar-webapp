@@ -2,46 +2,73 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import static com.cellar.wine.utils.Regex.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Wine extends BaseEntity {
+public class Wine extends BaseEntity implements Comparable<Wine> {
 
     @Builder
-    public Wine(Long id, String label, Producer producer, String vintage, String varietal) {
+    public Wine(Long id, String name, Integer vintage, Double alcohol, Double size, String description, Producer producer) {
         super(id);
-        this.producer = producer;
-        this.label = label;
+        this.name = name;
         this.vintage = vintage;
-        this.varietal = varietal;
+        this.alcohol = alcohol;
+        this.size = size;
+        this.description = description;
+        this.producer = producer;
     }
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "vintage")
+    private Integer vintage;
+
+    @Column(name = "alcohol")
+    private Double alcohol;
+
+    @Column(name = "size")
+    private Double size;
+
+    @Column(name = "description", length = 8192)
+    private String description;
+
+    //@Column(name = "skin_contact")
+    //private String skinContact;
+
+    //@Column(name = "aging")
+    //private String aging;
+
+    //@Column(name = "barrel_aging")
+    //private String barrelAging;
 
     @ManyToOne
     @JoinColumn(name = "producer_id", referencedColumnName = "id")
     private Producer producer;
 
-    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
-    @Column(name = "label")
-    private String label;
+    @OneToMany(mappedBy = "wine")
+    private List<GrapeComponent> grapes;
 
-    @Size(min = 4, max = 4, message = "Needs to be in YYYY format")
-    @Pattern(regexp = NUMERIC_PATTERN, message = NUMERIC_MESSAGE)
-    @Column(name = "vintage")
-    private String vintage;
+    @OneToMany(mappedBy = "wine")
+    private List<Bottle> bottles;
 
-    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
-    @Column(name = "varietal")
-    private String varietal;
-
+    @Override
+    public int compareTo(Wine w)
+    {
+        return name.compareTo(w.getName());
+    }
 }

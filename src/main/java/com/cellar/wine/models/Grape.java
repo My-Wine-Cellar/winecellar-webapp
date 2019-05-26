@@ -2,7 +2,7 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Grape extends BaseEntity {
+public class Grape extends BaseEntity implements Comparable<Grape> {
 
     @Builder
     public Grape(Long id, String name, String color, String description, String weblink) {
@@ -40,7 +40,7 @@ public class Grape extends BaseEntity {
     private String weblink;
 
     @OneToMany
-    private Set<Grape> alternativeNames;
+    private List<Grape> alternativeNames;
 
     @ManyToMany
     @JoinTable(name="grape_area",
@@ -49,5 +49,14 @@ public class Grape extends BaseEntity {
                inverseJoinColumns=
                @JoinColumn(name="area_id", referencedColumnName="id")
         )
-    private Set<Area> areas;
+    private List<Area> areas;
+
+    @OneToMany(mappedBy = "grape")
+    private List<GrapeComponent> grapeComponents;
+
+    @Override
+    public int compareTo(Grape g)
+    {
+        return name.compareTo(g.getName());
+    }
 }

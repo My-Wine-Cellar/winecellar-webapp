@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Getter
@@ -37,6 +39,15 @@ public class Area extends BaseEntity implements Comparable<Area> {
 
     @ManyToMany(mappedBy="areas")
     public List<Grape> primaryGrapes;
+
+    @ManyToMany
+    @JoinTable(name="area_producer",
+               joinColumns=
+               @JoinColumn(name="area_id", referencedColumnName="id"),
+               inverseJoinColumns=
+               @JoinColumn(name="producer_id", referencedColumnName="id")
+        )
+    private List<Producer> producers;
 
     @Override
     public int compareTo(Area a)

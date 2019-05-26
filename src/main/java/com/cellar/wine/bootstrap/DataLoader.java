@@ -21,7 +21,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        /*
         Producer markWest = new Producer();
         markWest.setName("Mark West");
         markWest.setCountry("USA");
@@ -72,6 +72,6 @@ public class DataLoader implements CommandLineRunner {
         bigBoi.getWines().add(acrobat);
 
         log.info("Loaded wines...");
-
+        */
     }
 }

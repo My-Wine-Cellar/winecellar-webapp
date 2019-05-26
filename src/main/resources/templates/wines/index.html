@@ -15,17 +15,17 @@
         <tr>
             <th>Name</th>
             <th>Vintage</th>
-            <th>Appellation</th>
-            <th>Varietal</th>
-            <th>Country</th>
+            <!-- <th>Appellation</th> -->
+            <!-- <th>Varietal</th> -->
+            <!-- <th>Country</th> -->
             <th></th>
         </tr>
         <tr th:each="wine : ${wines}">
             <td th:text="${wine.name}">Name</td>
             <td th:text="${wine.vintage}">Vintage</td>
-            <td th:text="${wine.appellation}">Appellation</td>
-            <td th:text="${wine.varietal}">Varietal</td>
-            <td th:text="${wine.country}">Country</td>
+            <!-- <td th:text="${wine.appellation}">Appellation</td> -->
+            <!-- <td th:text="${wine.varietal}">Varietal</td> -->
+            <!-- <td th:text="${wine.country}">Country</td> -->
             <td><a th:href="@{/wines/{id}/edit(id=${wine.id})}" class="btn btn-default">Update</a></td>
         </tr>
         </thead>

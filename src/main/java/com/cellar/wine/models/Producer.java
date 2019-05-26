@@ -1,6 +1,5 @@
 package com.cellar.wine.models;
 
-import com.cellar.wine.security.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,67 +7,48 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.util.HashSet;
-import java.util.Set;
-
-import static com.cellar.wine.utils.Regex.ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE;
-import static com.cellar.wine.utils.Regex.ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN;
+import java.util.List;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
-public class Producer extends BaseEntity {
+public class Producer extends BaseEntity implements Comparable<Producer> {
 
     @Builder
-    public Producer(Long id, String name, String country, String appellation, Set<Wine> wines) {
+    public Producer(Long id, String name, String description, String phone, String fax, String website) {
         super(id);
         this.name = name;
-        this.country = country;
-        this.appellation = appellation;
-        if(wines != null) {
-            this.wines = wines;
-        }
+        this.description = description;
+        this.phone = phone;
+        this.fax = fax;
+        this.website = website;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
-    private Set<Wine> wines = new HashSet<>();
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
     @Column(name = "name")
     private String name;
 
-    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
-    @Column(name = "country")
-    private String country;
+    @Column(name = "description", length = 8192)
+    private String description;
 
-    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
-    @Column(name = "appellation")
-    private String appellation;
+    @Column(name = "phone")
+    private String phone;
 
-    @Pattern(regexp = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_PATTERN, message = ALPHANUMERIC_SPACES_HYPHEN_PERIOD_MESSAGE)
-    @Column(name = "province")
-    private String province;
+    @Column(name = "fax")
+    private String fax;
 
-    public Wine getWine(String label) {
-        return getWine(label, false);
-    }
+    @Column(name = "website")
+    private String website;
 
-    public Wine getWine(String label, boolean ignoreNew) {
-        label = label.toLowerCase();
-        for (Wine wine : wines) {
-            if (!ignoreNew || !wine.isNew()) {
-                String compName = wine.getLabel();
-                compName = compName.toLowerCase();
-                if(compName.equals(label)) {
-                    return wine;
-                }
-            }
-        }
-        return null;
+    @ManyToMany(mappedBy="producers")
+    public List<Area> areas;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
+    private List<Wine> wines;
+
+    @Override
+    public int compareTo(Producer p)
+    {
+        return name.compareTo(p.getName());
     }
 }

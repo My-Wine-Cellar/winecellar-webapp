@@ -61,7 +61,7 @@ public class ProducerController {
             return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
         } else {
             User user = userService.findByUsername(principal.getName());
-            producer.setUser(user);
+            //producer.setUser(user);
             Producer savedProducer = producerService.save(producer);
             return "redirect:/producers/" + savedProducer.getId();
         }
@@ -80,7 +80,7 @@ public class ProducerController {
         } else {
             User user = userService.findByUsername(principal.getName());
             producer.setId(producerId);
-            producer.setUser(user);
+            //producer.setUser(user);
             Producer savedProducer = producerService.save(producer);
             return "redirect:/producers/" + savedProducer.getId();
         }
