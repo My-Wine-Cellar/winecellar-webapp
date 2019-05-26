@@ -47,12 +47,12 @@ public class WineServiceImpl implements WineService {
     }
 
     @Override
-    public Wine findByLabel(String label) {
-        return wineRepository.findByLabel(label);
+    public Wine findByName(String name) {
+        return wineRepository.findByName(name);
     }
 
     @Override
-    public List<Wine> findAllByLabel(String label) {
-        return wineRepository.findAllByLabel(label);
+    public List<Wine> findAllByName(String name) {
+        return wineRepository.findAllByName(name);
     }
 }

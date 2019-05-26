@@ -49,7 +49,8 @@ public class WineController {
 
     @PostMapping("/wines/new")
     public String processCreationForm(Producer producer, @Valid Wine wine, BindingResult result, ModelMap model) {
-        if (StringUtils.hasLength(wine.getLabel()) && wine.isNew() && producer.getWine(wine.getLabel(), true) != null) {
+        /*
+        if (StringUtils.hasLength(wine.getName()) && wine.isNew() && producer.getWine(wine.getName(), true) != null) {
             result.rejectValue("name", "duplicate", "already exists");
         }
         wine.setProducer(producer);
@@ -61,6 +62,8 @@ public class WineController {
             wineService.save(wine);
             return "redirect:/producers/" + producer.getId();
         }
+        */
+        return CREATE_OR_UPDATE_WINE_TEMPLATE;
     }
 
     @GetMapping("/wines/{wineId}/edit")
