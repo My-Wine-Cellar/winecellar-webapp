@@ -33,21 +33,17 @@
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link" th:href="@{/}">Home<span class="fa fa-home" aria-hidden="true"></span></a>
             </li>
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/country/list}">Countries<span class="fa fa-list"
-                                                                                aria-hidden="true"></span></a>
-            </li>
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/region/list}">Regions<span class="fa fa-list"
-                                                                              aria-hidden="true"></span></a>
-            </li>
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/area/list}">Areas<span class="fa fa-list"
-                                                                           aria-hidden="true"></span></a>
-            </li>
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/grape/list}">Grapes<span class="fa fa-list"
-                                                                       aria-hidden="true"></span></a>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Items
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" th:href="@{/country/list}">Country</a>
+                    <a class="dropdown-item" th:href="@{/region/list}">Region</a>
+                    <a class="dropdown-item" th:href="@{/area/list}">Area</a>
+                    <a class="dropdown-item" th:href="@{/grape/list}">Grape</a>
+                </div>
             </li>
 
             <!-- Security specific nav items -->
@@ -81,6 +77,12 @@
             <a href="https://www.linkedin.com/in/pauldpearson/" target="_blank"><i class="fa fa-linkedin"></i></a>
         </div>
     </footer>
+</div>
+
+<div th:fragment="scripts" th:remove="tag">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </div>
 
 </body>
