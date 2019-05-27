@@ -47,6 +47,9 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @Column(name = "description", length = 8192)
     private String description;
 
+    @Column(name = "subarea")
+    private String subarea;
+
     //@Column(name = "skin_contact")
     //private String skinContact;
 
