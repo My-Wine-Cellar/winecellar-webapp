@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Setter
@@ -40,15 +39,14 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
     @Column(name = "website")
     private String website;
 
-    @ManyToMany(mappedBy="producers")
+    @ManyToMany(mappedBy = "producers")
     public List<Area> areas;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private List<Wine> wines;
 
     @Override
-    public int compareTo(Producer p)
-    {
+    public int compareTo(Producer p) {
         return name.compareTo(p.getName());
     }
 }

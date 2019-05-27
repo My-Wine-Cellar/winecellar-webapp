@@ -2,17 +2,7 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -42,10 +32,9 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
     private Wine wine;
 
     @Override
-    public int compareTo(GrapeComponent gc)
-    {
+    public int compareTo(GrapeComponent gc) {
         int result = percentage.compareTo(gc.getPercentage());
-        
+
         if (result == 0)
             return grape.getName().compareTo(gc.getGrape().getName());
 

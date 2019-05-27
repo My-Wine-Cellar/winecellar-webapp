@@ -35,8 +35,7 @@ public class Country extends BaseEntity implements Comparable<Country> {
     private List<Region> regions;
 
     @Override
-    public int compareTo(Country c)
-    {
+    public int compareTo(Country c) {
         return name.compareTo(c.getName());
     }
 }

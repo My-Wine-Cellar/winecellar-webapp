@@ -49,8 +49,7 @@ public class Grape extends BaseEntity implements Comparable<Grape> {
     private List<GrapeComponent> grapeComponents;
 
     @Override
-    public int compareTo(Grape g)
-    {
+    public int compareTo(Grape g) {
         return name.compareTo(g.getName());
     }
 }

@@ -2,17 +2,8 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -70,8 +61,7 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     private List<Bottle> bottles;
 
     @Override
-    public int compareTo(Wine w)
-    {
+    public int compareTo(Wine w) {
         return name.compareTo(w.getName());
     }
 }

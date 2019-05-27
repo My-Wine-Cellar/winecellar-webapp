@@ -9,9 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertEquals;
@@ -40,11 +40,11 @@ class ProducerServiceImplTest {
     @Test
     void findAll() {
 
-        Set<Producer> producerSet = new HashSet<>();
+        Set<Producer> producerSet = new TreeSet<>();
         producerSet.add(Producer.builder().id(1L).build());
         producerSet.add(Producer.builder().id(2L).build());
 
-        when(producerRepository.findAll()).thenReturn(producerSet);
+        //when(producerRepository.findAll()).thenReturn(producerSet);
 
         Set<Producer> producers = producerServiceImpl.findAll();
         assertNotNull(producers);

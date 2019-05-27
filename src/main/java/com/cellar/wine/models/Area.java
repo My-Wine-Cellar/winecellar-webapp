@@ -2,14 +2,8 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -42,17 +36,16 @@ public class Area extends BaseEntity implements Comparable<Area> {
     public List<Grape> primaryGrapes;
 
     @ManyToMany
-    @JoinTable(name="area_producer",
-               joinColumns=
-               @JoinColumn(name="area_id", referencedColumnName="id"),
-               inverseJoinColumns=
-               @JoinColumn(name="producer_id", referencedColumnName="id")
-        )
+    @JoinTable(name = "area_producer",
+            joinColumns =
+            @JoinColumn(name = "area_id", referencedColumnName = "id"),
+            inverseJoinColumns =
+            @JoinColumn(name = "producer_id", referencedColumnName = "id")
+    )
     private List<Producer> producers;
 
     @Override
-    public int compareTo(Area a)
-    {
+    public int compareTo(Area a) {
         return name.compareTo(a.getName());
     }
 }
