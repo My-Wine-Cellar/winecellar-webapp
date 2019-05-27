@@ -3,6 +3,8 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.services.RegionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -15,9 +17,15 @@ public class RegionController {
         this.regionService = regionService;
     }
 
-    @RequestMapping("/list")
+    @GetMapping("/list")
     public String showAllRegions(Model model) {
         model.addAttribute("regions", regionService.findAll());
         return "region/regionList";
+    }
+
+    @GetMapping("{regionId}")
+    public String regionDetails(@PathVariable Long regionId, Model model) {
+        model.addAttribute("region", regionService.findById(regionId));
+        return "region/regionDetails";
     }
 }

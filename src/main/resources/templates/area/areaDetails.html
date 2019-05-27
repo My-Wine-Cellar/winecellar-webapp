@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/layout :: head}"/>
+
+
+<body>
+
+<nav th:insert="~{fragments/layout :: nav}"/>
+
+<br/>
+
+<h2 align="center">Area Information</h2>
+
+<br/>
+
+<div class="table">
+    <div class="container">
+        <table class="table table-striped" th:object="${area}">
+            <tr>
+                <th>Name</th>
+                <td th:text="*{name}"></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td th:text="*{description}">
+                </td>
+            </tr>
+            <tr>
+                <th>Weblink</th>
+                <td th:text="*{weblink}">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<br/>
+
+<h2 align="center">Grapes</h2>
+<br/>
+<div class="container">
+    <table class="table table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Weblink</th>
+        </tr>
+        <tr th:each="grape : ${area.primaryGrapes}">
+            <td><a th:href="@{/grape/__${grape.id}__}" th:text="${grape.name}"></a></td>
+            <td th:text="${grape.description}">Vintage</td>
+            <td th:text="${grape.weblink}">Appellation</td>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

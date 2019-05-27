@@ -1,10 +1,10 @@
 package com.cellar.wine.controllers;
 
-import com.cellar.wine.services.RegionService;
 import com.cellar.wine.services.impl.CountryServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -12,16 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CountryController {
 
     private CountryServiceImpl countryService;
-    private RegionService regionService;
 
-    public CountryController(CountryServiceImpl countryService, RegionService regionService) {
+    public CountryController(CountryServiceImpl countryService) {
         this.countryService = countryService;
-        this.regionService = regionService;
     }
 
     @GetMapping("/list")
     public String getCountriesWithRegions(Model model) {
         model.addAttribute("countries", countryService.findWithRegions());
         return "country/countryList";
+    }
+
+    @GetMapping("/{countryId}")
+    public String countryDetails(@PathVariable Long countryId, Model model) {
+        model.addAttribute("country", countryService.findById(countryId));
+        return "country/countryDetails";
     }
 }

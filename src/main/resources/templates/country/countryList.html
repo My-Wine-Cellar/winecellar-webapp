@@ -27,7 +27,6 @@
             </td>
             <td th:text="${country.description}"></td>
             <td><span th:each="region : ${country.regions}" th:utext="${region.name} + '<br/>'"></span></td>
-<!--            <td><a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Update</a></td>-->
         </tr>
         </tbody>
     </table>

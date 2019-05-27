@@ -9,24 +9,24 @@
 <nav th:insert="~{fragments/layout :: nav}"/>
 
 <br/>
-<h2 align="center">Regions</h2>
+<h2 align="center">Grape</h2>
 <br/>
 <div class="container">
     <table class="table table-striped">
         <thead>
         <tr>
             <th style="width: 150px;">Name</th>
+            <th style="width: 200px;">Color</th>
             <th style="width: 200px;">Description</th>
-            <th style="width: 200px">Areas | AVA </th>
+            <th style="width: 200px">Weblink</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="region : ${regions}">
-            <td>
-                <a th:href="@{/region/__${region.id}__}" th:text="${region.name}"></a>
-            </td>
-            <td th:text="${region.description}"></td>
-            <td><span th:each="areas : ${region.areas}" th:utext="${areas.name} + '<br/>'"></span></td>
+        <tr th:each="grape : ${grapes}">
+            <td><a th:href="@{/grape/__${grape.id}__}" th:text="${grape.name}"></a></td>
+            <td th:text="${grape.color}"></td>
+            <td th:text="${grape.description}"></td>
+            <td th:text="${grape.weblink}"></td>
         </tr>
         </tbody>
     </table>
