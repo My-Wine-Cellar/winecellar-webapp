@@ -2,7 +2,7 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
