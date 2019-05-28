@@ -8,15 +8,28 @@
 <nav th:insert="~{fragments/layout :: nav}"/>
 
 <br/>
-<h2 align="center">Region Information</h2>
+<h2 align="center">Producer Information</h2>
 <br/>
 
 <div class="container justify-content-center">
     <div class="card text-center">
-        <div class="card-body" th:object="${region}">
+        <div class="card-body" th:object="${producer}">
             <h4 class="card-header" th:text="*{name}"></h4>
             <p class="card-text" th:text="*{description}"></p>
-            <p class="card-text" th:text="*{weblink}"></p>
+        </div>
+    </div>
+</div>
+<br/><br/>
+
+<br/>
+<h2 align="center">Wines</h2>
+<br/>
+
+<div class="container justify-content-center">
+    <div class="card text-center">
+        <div class="card-body" th:each="wine : ${producer.wines}">
+            <h4 class="card-header"><a th:href="@{/wine/__${wine.id}__}" th:text="${wine.name}"></a></h4>
+            <p class="card-text" th:text="${wine.description}">Description</p>
         </div>
     </div>
 </div>
@@ -28,7 +41,7 @@
 
 <div class="container justify-content-center">
     <div class="card text-center">
-        <div class="card-body" th:each="area : ${region.areas}">
+        <div class="card-body" th:each="area : ${producer.areas}">
             <h4 class="card-header"><a th:href="@{/area/__${area.id}__}" th:text="${area.name}"></a></h4>
             <p class="card-text" th:text="${area.description}">Description</p>
         </div>
@@ -37,6 +50,7 @@
 <br/><br/>
 
 <div th:replace="~{fragments/layout :: scripts}"/>
+
 
 </body>
 </html>

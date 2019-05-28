@@ -8,14 +8,14 @@
 <nav th:insert="~{fragments/layout :: nav}"/>
 
 <br/>
-<h2 align="center">Area | AVA | Appellation</h2>
+<h2 align="center">Wine</h2>
 <br/>
 
 <div class="container justify-content-center">
     <div class="card text-center">
-        <div class="card-body" th:each="area : ${areas}">
-            <h4 class="card-header"><a th:href="@{/area/__${area.id}__}" th:text="${area.name}"></a></h4>
-            <p class="card-text" th:text="${area.description}">Description</p>
+        <div class="card-body" th:each="wine : ${wines}">
+            <h4 class="card-header"><a th:href="@{/wine/__${wine.id}__}" th:text="${wine.name}"></a></h4>
+            <p class="card-text" th:text="${wine.description}">Description</p>
             <!--            <a th:text="${country.weblink}" th:href="@{http://(${country.weblink})}" target="_blank" class="btn">Weblink</a>-->
         </div>
     </div>

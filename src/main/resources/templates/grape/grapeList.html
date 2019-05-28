@@ -10,27 +10,17 @@
 <br/>
 <h2 align="center">Grape</h2>
 <br/>
-<div class="container">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Color</th>
-            <th style="width: 200px;">Description</th>
-            <th style="width: 200px">Weblink</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="grape : ${grapes}">
-            <td><a th:href="@{/grape/__${grape.id}__}" th:text="${grape.name}"></a></td>
-            <td th:text="${grape.color}"></td>
-            <td th:text="${grape.description}"></td>
-            <td th:text="${grape.weblink}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
+
+<div class="container justify-content-center">
+    <div class="card text-center">
+        <div class="card-body" th:each="grape : ${grapes}">
+            <h4 class="card-header"><a th:href="@{/grape/__${grape.id}__}" th:text="${grape.name}"></a></h4>
+            <p class="card-text" th:text="${grape.description}">Description</p>
+            <!--            <a th:text="${country.weblink}" th:href="@{http://(${country.weblink})}" target="_blank" class="btn">Weblink</a>-->
+        </div>
+    </div>
 </div>
+<br/><br/>
 
 <div th:replace="~{fragments/layout :: scripts}"/>
 

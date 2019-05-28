@@ -16,10 +16,11 @@
         <div class="card-body" th:each="country : ${countries}">
             <h4 class="card-header"><a th:href="@{/country/__${country.id}__}" th:text="${country.name}"></a></h4>
             <p class="card-text" th:text="${country.description}">Description</p>
-            <a th:text="${country.weblink}" th:href="@{(${country.weblink})}" target="_blank" class="btn">Weblink</a>
+            <!--            <a th:text="${country.weblink}" th:href="@{http://(${country.weblink})}" target="_blank" class="btn">Weblink</a>-->
         </div>
     </div>
 </div>
+<br/><br/>
 
 <div th:replace="~{fragments/layout :: scripts}"/>
 

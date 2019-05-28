@@ -8,15 +8,27 @@
 <nav th:insert="~{fragments/layout :: nav}"/>
 
 <br/>
-<h2 align="center">Grape Information</h2>
+<h2 align="center">Wine Information</h2>
 <br/>
 
 <div class="container justify-content-center">
     <div class="card text-center">
-        <div class="card-body" th:object="${grape}">
+        <div class="card-body" th:object="${wine}">
             <h4 class="card-header" th:text="*{name}"></h4>
             <p class="card-text" th:text="*{description}"></p>
-            <p class="card-text" th:text="*{weblink}"></p>
+        </div>
+    </div>
+</div>
+<br/><br/>
+
+<br/>
+<h2 align="center">Bottles</h2>
+<br/>
+
+<div class="container justify-content-center">
+    <div class="card text-center">
+        <div class="card-body" th:each="bottle : ${wine.bottles}">
+            <p class="card-text" th:text="${bottle.location}">Location</p>
         </div>
     </div>
 </div>
@@ -25,4 +37,5 @@
 <div th:replace="~{fragments/layout :: scripts}"/>
 
 </body>
+
 </html>
