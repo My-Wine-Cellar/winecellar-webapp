@@ -5,8 +5,8 @@ import com.cellar.wine.repositories.GrapeRepository;
 import com.cellar.wine.services.GrapeService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class GrapeServiceImpl implements GrapeService {
@@ -18,13 +18,13 @@ public class GrapeServiceImpl implements GrapeService {
     }
 
     @Override
-    public Grape findGrapeByName(String name) {
-        return grapeRepository.findGrapeByName(name);
+    public Grape findByName(String name) {
+        return grapeRepository.findByName(name);
     }
 
     @Override
     public Set<Grape> findAll() {
-        Set<Grape> grapes = new HashSet<>();
+        Set<Grape> grapes = new TreeSet<>();
         grapeRepository.findAll().forEach(grapes::add);
         return grapes;
     }
@@ -47,5 +47,19 @@ public class GrapeServiceImpl implements GrapeService {
     @Override
     public void deleteById(Long aLong) {
         grapeRepository.deleteById(aLong);
+    }
+
+    @Override
+    public Set<Grape> getWhiteGrapes() {
+        Set<Grape> grapes = new TreeSet<>();
+        grapeRepository.getWhiteGrapes().forEach(grapes::add);
+        return grapes;
+    }
+
+    @Override
+    public Set<Grape> getRedGrapes() {
+        Set<Grape> grapes = new TreeSet<>();
+        grapeRepository.getRedGrapes().forEach(grapes::add);
+        return grapes;
     }
 }
