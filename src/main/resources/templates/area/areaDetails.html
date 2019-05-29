@@ -8,7 +8,11 @@
 <nav th:insert="~{fragments/layout :: nav}"/>
 
 <br/>
-<h2 align="center">Area Information</h2>
+<h2 align="center" th:switch="${area.name}">
+    <span th:case="'United States'">States</span>
+    <span th:case="*">Regions</span>
+    <span th:case="''"></span>
+</h2>
 <br/>
 
 <div class="container justify-content-center">

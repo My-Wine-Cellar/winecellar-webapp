@@ -8,7 +8,7 @@
 <nav th:insert="~{fragments/layout :: nav}"/>
 
 <br/>
-<h2 align="center">Producer</h2>
+<h2 align="center">Producers</h2>
 <br/>
 
 <div class="container justify-content-center">
@@ -16,7 +16,6 @@
         <div class="card-body" th:each="producer : ${producers}">
             <h4 class="card-header"><a th:href="@{/producer/__${producer.id}__}" th:text="${producer.name}"></a></h4>
             <p class="card-text" th:text="${producer.description}">Description</p>
-            <!--            <a th:text="${country.weblink}" th:href="@{http://(${country.weblink})}" target="_blank" class="btn">Weblink</a>-->
         </div>
     </div>
 </div>

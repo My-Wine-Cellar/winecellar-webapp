@@ -8,7 +8,7 @@
 <nav th:insert="~{fragments/layout :: nav}"/>
 
 <br/>
-<h2 align="center">Country Information</h2>
+<h2 align="center">Country Details</h2>
 <br/>
 
 <div class="container justify-content-center">
@@ -23,7 +23,10 @@
 <br/><br/>
 
 <br/>
-<h2 align="center">Regions</h2>
+<h2 align="center" th:switch="${country.name}">
+    <span th:case="'United States'">States</span>
+    <span th:case="*">Regions</span>
+</h2>
 <br/>
 
 <div class="container justify-content-center">
