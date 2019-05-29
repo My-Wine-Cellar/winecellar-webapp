@@ -16,7 +16,6 @@
         <div class="card-body" th:each="area : ${areas}">
             <h4 class="card-header"><a th:href="@{/area/__${area.id}__}" th:text="${area.name}"></a></h4>
             <p class="card-text" th:text="${area.description}">Description</p>
-            <!--            <a th:text="${country.weblink}" th:href="@{http://(${country.weblink})}" target="_blank" class="btn">Weblink</a>-->
         </div>
     </div>
 </div>

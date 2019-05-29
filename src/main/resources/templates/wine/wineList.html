@@ -16,7 +16,6 @@
         <div class="card-body" th:each="wine : ${wines}">
             <h4 class="card-header"><a th:href="@{/wine/__${wine.id}__}" th:text="${wine.name}"></a></h4>
             <p class="card-text" th:text="${wine.description}">Description</p>
-            <!--            <a th:text="${country.weblink}" th:href="@{http://(${country.weblink})}" target="_blank" class="btn">Weblink</a>-->
         </div>
     </div>
 </div>
