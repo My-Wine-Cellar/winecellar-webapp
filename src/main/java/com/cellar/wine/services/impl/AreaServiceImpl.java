@@ -5,8 +5,8 @@ import com.cellar.wine.repositories.AreaRepository;
 import com.cellar.wine.services.AreaService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class AreaServiceImpl implements AreaService {
@@ -19,7 +19,7 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public Set<Area> findAll() {
-        Set<Area> areas = new HashSet<>();
+        Set<Area> areas = new TreeSet<>();
         areaRepository.findAll().forEach(areas::add);
         return areas;
     }

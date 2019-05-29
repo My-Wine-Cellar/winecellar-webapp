@@ -5,8 +5,8 @@ import com.cellar.wine.repositories.ProducerRepository;
 import com.cellar.wine.services.ProducerService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class ProducerServiceImpl implements ProducerService {
@@ -19,7 +19,7 @@ public class ProducerServiceImpl implements ProducerService {
 
     @Override
     public Set<Producer> findAll() {
-        Set<Producer> producers = new HashSet<>();
+        Set<Producer> producers = new TreeSet<>();
         producerRepository.findAll().forEach(producers::add);
         return producers;
     }

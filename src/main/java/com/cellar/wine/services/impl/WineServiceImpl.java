@@ -6,9 +6,9 @@ import com.cellar.wine.repositories.WineRepository;
 import com.cellar.wine.services.WineService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class WineServiceImpl implements WineService {
@@ -21,7 +21,7 @@ public class WineServiceImpl implements WineService {
 
     @Override
     public Set<Wine> findAll() {
-        Set<Wine> wines = new HashSet<>();
+        Set<Wine> wines = new TreeSet<>();
         wineRepository.findAll().forEach(wines::add);
         return wines;
     }
