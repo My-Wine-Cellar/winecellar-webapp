@@ -7,7 +7,6 @@
 * [Docker setup](#docker-setup)
 * [Contribution](#contribution)
 * [Status](#status)
-* [Inspiration](#inspiration)
 * [Contact](#contact)
 
 ## General info
@@ -38,7 +37,7 @@ $ ./gradlew bootRun
 ## Docker setup
 
 ```
-$ docker run --name postgres-dev -p 5432:5432 -d -e POSTGRES_PASSWORD=password postgres
+$ docker run --name postgres-dev -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
 ```
 > This has been the simplest way I found to work on my Mac for local development and the application.properties file will reflect the connection.
 
@@ -48,16 +47,6 @@ $ docker run --name postgres-dev -p 5432:5432 -d -e POSTGRES_PASSWORD=password p
 ## Status
 > *Project is deployed on AWS EC2 RHEL-7.6 AMI here:*
 [My Wine Cellar](http://www.mywinecellar.info)
-
-## Inspiration
-
-[Spring Pet Clinic](https://github.com/spring-projects/spring-petclinic)
-
-[Springframework Guru Pet Clinic](https://github.com/springframeworkguru/sfg-pet-clinic)
-
-[]()
-
-[]()
 
 ## License 
 Wincellar is released under version 2.0 of the Apache License  
