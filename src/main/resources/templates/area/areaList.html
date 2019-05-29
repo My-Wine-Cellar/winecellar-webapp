@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:insert="~{fragments/layout :: head}"/>
 
@@ -11,34 +10,18 @@
 <br/>
 <h2 align="center">Area | AVA | Appellation</h2>
 <br/>
-<div class="container">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th style="width: 220px;">Name</th>
-            <th style="width: 200px;">Description</th>
-            <th style="width: 200px">Grapes</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="area : ${areas}">
-            <td>
-                <a th:href="@{/area/__${area.id}__}" th:text="${area.name}"></a>
-            </td>
-            <td th:text="${area.description}"></td>
-            <td><span th:each="grapes : ${area.primaryGrapes}" th:utext="${grapes.name} + '<br/>'"></span></td>
-            <!--            <td><a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Update</a></td>-->
-        </tr>
-        </tbody>
-    </table>
-    <br/>
-    <!--    <a th:href="@{/regions/new}" class="btn btn-default">Add Region</a><br/><br/><br/>-->
+
+<div class="container justify-content-center">
+    <div class="card text-center">
+        <div class="card-body" th:each="area : ${areas}">
+            <h4 class="card-header"><a th:href="@{/area/__${area.id}__}" th:text="${area.name}"></a></h4>
+            <p class="card-text" th:text="${area.description}">Description</p>
+        </div>
+    </div>
 </div>
+<br/><br/>
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
+<div th:replace="~{fragments/layout :: scripts}"/>
 
 </body>
 </html>

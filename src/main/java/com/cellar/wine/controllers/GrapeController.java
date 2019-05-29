@@ -19,7 +19,8 @@ public class GrapeController {
 
     @GetMapping("/list")
     public String showAllGrapes(Model model) {
-        model.addAttribute("grapes", grapeService.findAll());
+        model.addAttribute("whiteGrapes", grapeService.getWhiteGrapes());
+        model.addAttribute("redGrapes", grapeService.getRedGrapes());
         return "grape/grapeList";
     }
 

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:insert="~{fragments/layout :: head}"/>
 
@@ -8,35 +7,33 @@
 
 <nav th:insert="~{fragments/layout :: nav}"/>
 
-<br/>
-<h2 align="center">Grape</h2>
-<br/>
-<div class="container">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Color</th>
-            <th style="width: 200px;">Description</th>
-            <th style="width: 200px">Weblink</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="grape : ${grapes}">
-            <td><a th:href="@{/grape/__${grape.id}__}" th:text="${grape.name}"></a></td>
-            <td th:text="${grape.color}"></td>
-            <td th:text="${grape.description}"></td>
-            <td th:text="${grape.weblink}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
+<div class="row">
+    <div class="col-sm-6">
+        <br/>
+        <h2 align="center">Red Grapes</h2>
+        <br/>
+        <div class="card">
+            <div class="card-body" th:each="grape : ${redGrapes}">
+                <h4 class="card-header"><a th:href="@{/grape/__${grape.id}__}" th:text="${grape.name}"></a></h4>
+                <p class="card-text" th:text="${grape.description}">Description</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <br/>
+        <h2 align="center">White Grapes</h2>
+        <br/>
+        <div class="card">
+            <div class="card-body" th:each="grape : ${whiteGrapes}">
+                <h4 class="card-header"><a th:href="@{/grape/__${grape.id}__}" th:text="${grape.name}"></a></h4>
+                <p class="card-text" th:text="${grape.description}">Description</p>
+            </div>
+        </div>
+    </div>
 </div>
+<br/><br/>
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
+<div th:replace="~{fragments/layout :: scripts}"/>
 
 </body>
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:insert="~{fragments/layout :: head}"/>
 
@@ -11,33 +10,18 @@
 <br/>
 <h2 align="center">Countries</h2>
 <br/>
-<div class="container">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Description</th>
-            <th style="width: 120px">Regions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="country : ${countries}">
-            <td>
-                <a th:href="@{/country/__${country.id}__}" th:text="${country.name}"></a>
-            </td>
-            <td th:text="${country.description}"></td>
-            <td><span th:each="region : ${country.regions}" th:utext="${region.name} + '<br/>'"></span></td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
-    <a th:href="@{/country/new}" class="btn btn-default">Add Country</a><br/><br/><br/>
+
+<div class="container justify-content-center">
+    <div class="card text-center">
+        <div class="card-body" th:each="country : ${countries}">
+            <h4 class="card-header"><a th:href="@{/country/__${country.id}__}" th:text="${country.name}"></a></h4>
+            <p class="card-text" th:text="${country.description}">Description</p>
+        </div>
+    </div>
 </div>
+<br/><br/>
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
+<div th:replace="~{fragments/layout :: scripts}"/>
 
 </body>
 </html>

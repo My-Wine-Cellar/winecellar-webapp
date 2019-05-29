@@ -1,108 +1,31 @@
 package com.cellar.wine.controllers;
 
-import com.cellar.wine.models.Producer;
-import com.cellar.wine.security.User;
-import com.cellar.wine.security.UserService;
-import com.cellar.wine.services.ProducerService;
+import com.cellar.wine.services.impl.ProducerServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-import java.security.Principal;
-
-@RequestMapping("/producers")
 @Controller
+@RequestMapping("/producer")
 public class ProducerController {
 
-    private static final String CREATE_OR_UPDATE_PRODUCER_TEMPLATE = "producers/createOrUpdateProducer";
+    private ProducerServiceImpl producerService;
 
-    private static final String MODEL_ATTRIBUTE_PRODUCER = "producer";
-
-    private final ProducerService producerService;
-    private final UserService userService;
-
-    public ProducerController(ProducerService producerService, UserService userService) {
+    public ProducerController(ProducerServiceImpl producerService) {
         this.producerService = producerService;
-        this.userService = userService;
     }
 
-    @InitBinder
-    public void setAllowedFields(WebDataBinder dataBinder) {
-        dataBinder.setDisallowedFields("id");
-    }
-
-    @RequestMapping("/list")
-    public String producer(Model model, Principal principal) {
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
+    @GetMapping("/list")
+    public String showAllProducers(Model model) {
         model.addAttribute("producers", producerService.findAll());
-        return "producers/producersList";
+        return "producer/producerList";
     }
 
     @GetMapping("/{producerId}")
-    public ModelAndView showProducer(@PathVariable Long producerId) {
-        ModelAndView mav = new ModelAndView("producers/producerDetails");
-        mav.addObject(producerService.findById(producerId));
-        return mav;
-    }
-
-    @GetMapping("/new")
-    public String initCreateForm(Model model) {
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, Producer.builder().build());
-        return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
-    }
-
-    @PostMapping("/new")
-    public String processCreateForm(@Valid Producer producer, BindingResult result, Principal principal) {
-        if (result.hasErrors()) {
-            return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
-        } else {
-            User user = userService.findByUsername(principal.getName());
-            //producer.setUser(user);
-            Producer savedProducer = producerService.save(producer);
-            return "redirect:/producers/" + savedProducer.getId();
-        }
-    }
-
-    @GetMapping("/{producerId}/edit")
-    public String initUpdateProducerForm(@PathVariable Long producerId, Model model) {
-        model.addAttribute(producerService.findById(producerId));
-        return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
-    }
-
-    @PostMapping("/{producerId}/edit")
-    public String processUpdateProducerForm(@Valid Producer producer, BindingResult result, @PathVariable Long producerId, Principal principal) {
-        if(result.hasErrors()) {
-            return CREATE_OR_UPDATE_PRODUCER_TEMPLATE;
-        } else {
-            User user = userService.findByUsername(principal.getName());
-            producer.setId(producerId);
-            //producer.setUser(user);
-            Producer savedProducer = producerService.save(producer);
-            return "redirect:/producers/" + savedProducer.getId();
-        }
-    }
-
-    @RequestMapping("/find")
-    public String findProducers(Model model) {
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, Producer.builder().build());
-        return "producers/findProducers";
-    }
-
-    @GetMapping
-    public String processFindForm(Producer producer, BindingResult result, Model model) {
-
-        Producer find = producerService.findByName(producer.getName());
-
-        if(find == null) {
-            result.rejectValue("name", "notFound", "Not found, try again, this searches exact names only");
-            return "producers/findProducers";
-        } else {
-            model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, find);
-            return "producers/producerDetails";
-        }
+    public String producerDetails(@PathVariable Long producerId, Model model) {
+        model.addAttribute("producer", producerService.findById(producerId));
+        return "producer/producerDetails";
     }
 }
