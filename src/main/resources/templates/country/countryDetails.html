@@ -24,14 +24,14 @@
 
 <br/>
 <h2 align="center" th:switch="${country.name}">
-    <span th:case="'United States'">States</span>
+    <span th:case="'United States'">States with Wine producing AVA's</span>
     <span th:case="*">Regions</span>
 </h2>
 <br/>
 
 <div class="container justify-content-center">
     <div class="card text-center">
-        <div class="card-body" th:each="region : ${country.regions}">
+        <div class="card-body" th:each="region : ${country.regions}" th:if="${region.areas.size() > 1}">
             <h4 class="card-header"><a th:href="@{/region/__${region.id}__}" th:text="${region.name}"></a></h4>
             <p class="card-text" th:text="${region.description}">Description</p>
         </div>
