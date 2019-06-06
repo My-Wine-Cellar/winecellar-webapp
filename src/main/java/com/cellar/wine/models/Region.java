@@ -3,6 +3,7 @@ package com.cellar.wine.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -37,6 +38,16 @@ public class Region extends BaseEntity implements Comparable<Region> {
             @JoinColumn(name = "area_id", referencedColumnName = "id")
     )
     private List<Area> areas;
+
+    //Washington is test case
+    public List<Area> getAreas() {
+        areas.forEach(area -> {
+            if (area.getName().equals(this.name)) {
+                Collections.swap(areas, 0, areas.indexOf(area));
+            }
+        });
+        return areas;
+    }
 
     @Override
     public int compareTo(Region r) {
