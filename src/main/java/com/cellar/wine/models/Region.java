@@ -39,11 +39,10 @@ public class Region extends BaseEntity implements Comparable<Region> {
     )
     private List<Area> areas;
 
-    //Washington is test case
     public List<Area> getAreas() {
         areas.forEach(area -> {
             if (area.getName().equals(this.name)) {
-                Collections.swap(areas, 0, areas.indexOf(area));
+                Collections.swap(areas, areas.indexOf(area), 0);
             }
         });
         return areas;
