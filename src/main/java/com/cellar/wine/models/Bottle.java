@@ -16,10 +16,11 @@ import javax.persistence.ManyToOne;
 public class Bottle extends BaseEntity implements Comparable<Bottle> {
 
     @Builder
-    public Bottle(Long id, Integer number, String location, User user, Wine wine) {
+    public Bottle(Long id, Integer number, String location, Boolean show, User user, Wine wine) {
         super(id);
         this.number = number;
         this.location = location;
+        this.show = show;
         this.user = user;
         this.wine = wine;
     }
@@ -29,6 +30,9 @@ public class Bottle extends BaseEntity implements Comparable<Bottle> {
 
     @Column(name = "location", length = 512)
     private String location;
+
+    @Column(name = "show")
+    private Boolean show;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
