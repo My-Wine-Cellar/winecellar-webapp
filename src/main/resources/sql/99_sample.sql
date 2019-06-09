@@ -32,6 +32,6 @@ INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barre
 INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barrel_id) VALUES (100, 540, 500, 8, 1);
 
 -- Bottles for users
-INSERT INTO bottle (number, user_id, wine_id) VALUES (1, 888888, 1);
-INSERT INTO bottle (number, user_id, wine_id) VALUES (6, 777777, 2);
-INSERT INTO bottle (number, user_id, wine_id) VALUES (12, 777777, 3);
+INSERT INTO bottle (number, show, user_id, wine_id) VALUES (1, false, 888888, 1);
+INSERT INTO bottle (number, show, user_id, wine_id) VALUES (6, true, 777777, 2);
+INSERT INTO bottle (number, show, user_id, wine_id) VALUES (12, true, 777777, 3);
