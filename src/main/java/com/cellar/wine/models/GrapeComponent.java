@@ -2,6 +2,7 @@ package com.cellar.wine.models;
 
 import lombok.*;
 
+import java.util.List;
 import javax.persistence.*;
 
 @Getter
@@ -30,6 +31,17 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
     @ManyToOne
     @JoinColumn(name = "wine_id", referencedColumnName = "id")
     private Wine wine;
+
+    @ManyToOne
+    @JoinColumn(name = "maceration_id", referencedColumnName = "id")
+    private Maceration maceration;
+
+    @ManyToOne
+    @JoinColumn(name = "fermentation_id", referencedColumnName = "id")
+    private Fermentation fermentation;
+
+    @OneToMany(mappedBy = "barrel")
+    private List<BarrelComponent> barrelComponents;
 
     @Override
     public int compareTo(GrapeComponent gc) {
