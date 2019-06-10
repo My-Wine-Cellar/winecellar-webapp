@@ -17,6 +17,9 @@
             <h4 class="card-header"><a th:href="@{/producer/__${producer.id}__}" th:text="${producer.name}"></a></h4>
             <p class="card-text" th:text="${producer.description}">Description</p>
         </div>
+    </div><br/>
+    <div class="text-center">
+        <a th:href="@{/producer/new}" class="btn btn-default">Add Producer</a>
     </div>
 </div>
 <br/><br/>

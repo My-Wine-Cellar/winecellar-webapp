@@ -18,6 +18,11 @@
             <p class="card-text" th:text="*{description}"></p>
         </div>
     </div>
+    <br/>
+    <div class="text-center">
+        <a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit
+            Producer</a>
+    </div>
 </div>
 <br/><br/>
 
@@ -50,7 +55,6 @@
 <br/><br/>
 
 <div th:replace="~{fragments/layout :: scripts}"/>
-
 
 </body>
 </html>
