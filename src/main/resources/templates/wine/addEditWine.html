@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/layout :: head}"/>
+<body>
+<nav th:insert="~{fragments/layout :: nav}"/>
+<br/>
+<br/>
+<div class="container justify-content-center">
+    <h3 class="col-sm-10">
+        <th:block th:with="text=${wine['new']} ? 'Add Wine' : 'Update Wine'" th:text="${text}"/>
+    </h3>
+    <form th:object="${wine}" method="post">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
+            </div>
+            <div class="form-group col-md-6">
+                <input th:replace="~{fragments/inputField :: input ('Vintage', 'vintage', 'number')}"/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input th:replace="~{fragments/inputField :: input ('Alcohol', 'alcohol', 'number')}"/>
+            </div>
+            <div class="form-group col-md-6">
+                <input th:replace="~{fragments/inputField :: input ('Size', 'size', 'text')}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <textarea th:replace="~{fragments/inputField :: textarea ('Description', 'description', 'text')}"></textarea>
+        </div>
+        <br/>
+        <div class="text-center">
+            <button th:with="text=${wine['new']} ? 'Add Wine' : 'Update Wine'" type="submit"
+                    class="btn btn-default" th:text="${text}">
+            </button>
+        </div>
+    </form>
+</div>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>

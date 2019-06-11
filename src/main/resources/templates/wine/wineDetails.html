@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:insert="~{fragments/layout :: head}"/>
-
 <body>
-
 <nav th:insert="~{fragments/layout :: nav}"/>
-
 <br/>
 <h2 align="center">Wine Information</h2>
 <br/>
-
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:object="${wine}">
             <h4 class="card-header" th:text="*{name}"></h4>
+            <br/>
             <p class="card-text" th:text="*{description}"></p>
         </div>
     </div>
+    <br/>
+    <div class="text-center">
+        <a th:href="@{{id}/edit(id=${wine.id})}" class="btn btn-default">Edit Wine</a>
+    </div>
 </div>
-<br/><br/>
-
+<br/>
 <br/>
 <h2 align="center">Bottles</h2>
 <br/>
-
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:each="bottle : ${wine.bottles}">
@@ -32,10 +30,8 @@
         </div>
     </div>
 </div>
-<br/><br/>
-
+<br/>
+<br/>
 <div th:replace="~{fragments/layout :: scripts}"/>
-
 </body>
-
 </html>
