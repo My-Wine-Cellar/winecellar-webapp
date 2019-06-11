@@ -53,7 +53,7 @@ public class ProducerController {
             return ADD_OR_EDIT_PRODUCER_TEMPLATE;
         } else {
             Producer savedProducer = producerService.save(producer);
-            return "redirect:/producers/" + savedProducer.getId();
+            return "redirect:/producer/" + savedProducer.getId();
         }
     }
 
@@ -70,7 +70,7 @@ public class ProducerController {
         } else {
             producer.setId(producerId);
             Producer savedProducer = producerService.save(producer);
-            return "redirect:/producers/" + savedProducer.getId();
+            return "redirect:/producer/" + savedProducer.getId();
         }
     }
 }
