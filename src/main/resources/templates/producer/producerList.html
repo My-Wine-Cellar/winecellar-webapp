@@ -14,7 +14,7 @@
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:each="producer : ${producers}">
-            <h4 class="card-header"><a th:href="@{/producer/__${producer.id}__}" th:text="${producer.name}"></a></h4>
+            <h4 class="card-header"><a th:href="@{/producer/__${producer.id}__}" th:text="${producer.name}"></a></h4><br/>
             <p class="card-text" th:text="${producer.description}">Description</p>
         </div>
     </div><br/>

@@ -14,7 +14,7 @@
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:object="${producer}">
-            <h4 class="card-header" th:text="*{name}"></h4>
+            <h4 class="card-header" th:text="*{name}"></h4><br/>
             <p class="card-text" th:text="*{description}"></p>
         </div>
     </div>
@@ -33,7 +33,7 @@
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:each="wine : ${producer.wines}">
-            <h4 class="card-header"><a th:href="@{/wine/__${wine.id}__}" th:text="${wine.name}"></a></h4>
+            <h4 class="card-header"><a th:href="@{/wine/__${wine.id}__}" th:text="${wine.name}"></a></h4><br/>
             <p class="card-text" th:text="${wine.description}">Description</p>
         </div>
     </div>
@@ -47,7 +47,7 @@
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:each="area : ${producer.areas}">
-            <h4 class="card-header"><a th:href="@{/area/__${area.id}__}" th:text="${area.name}"></a></h4>
+            <h4 class="card-header"><a th:href="@{/area/__${area.id}__}" th:text="${area.name}"></a></h4><br/>
             <p class="card-text" th:text="${area.description}">Description</p>
         </div>
     </div>
