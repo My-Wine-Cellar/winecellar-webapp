@@ -6,12 +6,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/wine.png}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.ico}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
-
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/all.css}">
     <title>Wine Cellar</title>
 
 </head>
@@ -20,18 +18,21 @@
 
 <nav th:fragment="nav" class="navbar navbar-custom navbar-expand-md" role="navigation">
     <div class="navbar-brand">Wine
-        <img th:src="@{/images/wine.png}" src="../../static/images/wine.png" alt="" style="height: 60px"/>
+        <img th:src="@{/images/wine.png}" alt="wine bottle" style="height: 60px"/>
         Cellar
     </div>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" sec:authorize="isAuthenticated()">
-        <span class="navbar-toggler-icon"><i class="fa fa-navicon"></i></span>
+        <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
     </button>
 
     <div class="collapse navbar-collapse " id="navbarSupportedContent" sec:authorize="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/}">Home<span class="fa fa-home" aria-hidden="true"></span></a>
+                <a class="nav-link" th:href="@{/}">Home<span class="fas fa-home" aria-hidden="true"></span></a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                <a class="nav-link" th:href="@{/bottle}">Bottle<span class="fas fa-wine-bottle"></span></a>
             </li>
 
             <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER')">
@@ -51,32 +52,24 @@
             <!-- Security specific nav items -->
 
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link" th:href="@{/registeruser}">Register User<span class="fa fa-user-plus" aria-hidden="true"></span></a>
+                <a class="nav-link" th:href="@{/registeruser}">Register User<span class="fas fa-user-plus" aria-hidden="true"></span></a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a class="nav-link" th:href="@{/userlist}">User List<span class="fa fa-users" aria-hidden="true"></span></a>
+                <a class="nav-link" th:href="@{/userlist}">User List<span class="fas fa-users" aria-hidden="true"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/logout}">Logout<span class="fa fa-sign-out" aria-hidden="true"></span></a>
+                <a class="nav-link" th:href="@{/logout}">Logout<span class="fas fa-sign-out-alt" aria-hidden="true"></span></a>
             </li>
         </ul>
-
-        <!-- Save this for v2.0.0 -->
-        <!--Try and make this work with a named query on the wine and producer tables-->
-        <!--<form class="form-inline my-2 my-lg-0 ml-auto">-->
-        <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-        <!--<button class="btn btn-default my-2 my-sm-0" type="submit">Search</button>-->
-        <!--</form>-->
-
     </div>
 </nav>
 
 <div th:fragment="footer" class="container">
     <footer class="footer">
         <div class="container text-center">
-            <a href="https://github.com/pauldpearson/winecellar-webapp" target="_blank"><i class="fa fa-github"></i></a>
+            <a href="https://github.com/pauldpearson/winecellar-webapp" target="_blank"><i class="fab fa-github"></i></a>
             |
-            <a href="https://www.linkedin.com/in/pauldpearson/" target="_blank"><i class="fa fa-linkedin"></i></a>
+            <a href="https://www.linkedin.com/in/pauldpearson/" target="_blank"><i class="fab fa-linkedin"></i></a>
         </div>
     </footer>
 </div>
@@ -88,5 +81,4 @@
 </div>
 
 </body>
-
 </html>
