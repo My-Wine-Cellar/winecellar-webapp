@@ -49,8 +49,8 @@ $ docker run --name postgres-dev -p 5432:5432 -d -e POSTGRES_USER=winecellar -e 
 [My Wine Cellar](http://www.mywinecellar.info)
 
 ## License 
-Wincellar is released under version 2.0 of the Eclipse Public License
-[![License](https://img.shields.io/badge/License-EPL%202.0-red.svg)] (https://www.eclipse.org/legal/epl-2.0/)
+Wincellar is released under version 2.0 of the Eclipse Public License 
+[![License](https://img.shields.io/badge/License-EPL%202.0-red.svg)](https://www.eclipse.org/legal/epl-2.0/)
 
 ## Contact
 > Created by [Paul Pearson](mailto:paul.darlington.pearson@gmail.com) - feel free to contact me!
