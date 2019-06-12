@@ -25,7 +25,7 @@
     color: #ffffff;
 }
 
-.fa.fa-navicon {
+.fas.fa-bars {
     color:#d4d4dc;
 }
 
@@ -53,22 +53,13 @@
     background-color: #f7cb5b;
 }
 
-.img-responsive {
-    background-size: cover;
-}
-
-/*THIS REMOVES THE ABILITY TO SCROLL*/
-/*body {*/
-    /*overflow: hidden;*/
-/*}*/
-
 .nav-item {
     text-align: center;
     padding: auto;
     font-size: 17px;
 }
 
-.fa {
+.fas {
     margin: 4px;
 }
 
