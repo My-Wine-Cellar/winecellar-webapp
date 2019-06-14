@@ -33,8 +33,8 @@
             <th>Alcohol</th>
             <th>Size</th>
             <th>Bottle Aging</th>
-            <th>Grapes</th>
-            <th></th>
+<!--            <th>Grapes</th>-->
+            <th class="text-center"></th>
         </tr>
         </thead>
         <tbody>
@@ -44,8 +44,8 @@
             <td th:text="${wine.alcohol}">Alcohol</td>
             <td th:text="${wine.size}">Size</td>
             <td th:text="${wine.bottleAging}">Bottle Aging</td>
-            <td><span th:each="grape : ${wine.grapes}" th:utext="${grape.grape.name} + '<br/>'"></span></td>
-            <td><a th:href="@{{producerId}/wines/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}"
+<!--            <td><span th:each="grape : ${wine.grapes}" th:utext="${grape.grape.name} + '<br/>'"></span></td>-->
+            <td><a th:href="@{{producerId}/wine/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}"
                    class="btn btn-default">Update</a></td>
         </tr>
         </tbody>

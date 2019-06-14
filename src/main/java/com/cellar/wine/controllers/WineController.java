@@ -1,35 +1,43 @@
 package com.cellar.wine.controllers;
 
+import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/wine")
+@RequestMapping("/producer/{producerId}/wine")
 public class WineController {
 
     private final WineService wineService;
+    private final ProducerService producerService;
 
-    public WineController(WineService wineService) {
+    public WineController(WineService wineService, ProducerService producerService) {
         this.wineService = wineService;
+        this.producerService = producerService;
     }
 
     private static final String MODEL_ATTRIBUTE_WINE = "wine";
-
     private static final String ADD_OR_EDIT_WINE_TEMPLATE = "wine/addEditWine";
 
-    @GetMapping("/list")
-    public String showAllWines(Model model) {
-        model.addAttribute("wines", wineService.findAll());
-        return "wine/wineList";
+
+    @ModelAttribute("producer")
+    public Producer findProducer(@PathVariable Long producerId) {
+        return producerService.findById(producerId);
+    }
+
+    @InitBinder("producer")
+    public void initProducerBinder(WebDataBinder dataBinder) {
+        dataBinder.setDisallowedFields("id", "description", "name");
     }
 
     @GetMapping("/{wineId}")
@@ -39,18 +47,27 @@ public class WineController {
     }
 
     @GetMapping("/new")
-    public String initForm(Model model) {
-        model.addAttribute(MODEL_ATTRIBUTE_WINE, Wine.builder().build());
+    public String initNewWineForm(Producer producer, Model model) {
+        Wine wine = new Wine();
+        producer.getWines().add(wine);
+        wine.setProducer(producer);
+        model.addAttribute(MODEL_ATTRIBUTE_WINE, wine);
         return ADD_OR_EDIT_WINE_TEMPLATE;
     }
 
     @PostMapping("/new")
-    public String processForm(@Valid Wine wine, BindingResult result) {
+    public String processNewWineForm(Producer producer, @Valid Wine wine, BindingResult result, ModelMap model) {
+        if (StringUtils.hasLength(wine.getName()) && wine.isNew() && producer.getWine(wine.getName(), true) != null) {
+            result.rejectValue("name", "duplicate", "This wine already exists");
+        }
+        wine.setProducer(producer);
+        producer.getWines().add(wine);
         if (result.hasErrors()) {
+            model.put(MODEL_ATTRIBUTE_WINE, wine);
             return ADD_OR_EDIT_WINE_TEMPLATE;
         } else {
-            Wine savedWine = wineService.save(wine);
-            return "redirect:/wine/" + savedWine.getId();
+            wineService.save(wine);
+            return "redirect:/producer/" + producer.getId();
         }
     }
 
@@ -61,13 +78,15 @@ public class WineController {
     }
 
     @PostMapping("{wineId}/edit")
-    public String processEditWineForm(@Valid Wine wine, BindingResult result, @PathVariable Long wineId) {
-        if(result.hasErrors()) {
+    public String processEditWineForm(@Valid Wine wine, BindingResult result, Producer producer, Model model) {
+        wine.setProducer(producer);
+        if (result.hasErrors()) {
+            model.addAttribute(MODEL_ATTRIBUTE_WINE, wine);
             return ADD_OR_EDIT_WINE_TEMPLATE;
         } else {
-            wine.setId(wineId);
             Wine savedWine = wineService.save(wine);
-            return "redirect:/wine/" + savedWine.getId();
+            producer.getWines().add(savedWine);
+            return "redirect:/producer/" + producer.getId();
         }
     }
 

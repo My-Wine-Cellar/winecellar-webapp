@@ -9,7 +9,7 @@
     <h3 class="col-sm-10">
         <th:block th:with="text=${wine['new']} ? 'Add Wine to:' : 'Update Wine for:'" th:text="${text}"/>
     </h3>
-    <h4 th:text="${wine.producer.name}">Producer Name</h4>
+    <h4 class="col-sm-10" th:text="${wine.producer.name}">Producer Name</h4>
     <form th:object="${wine}" method="post">
         <input type="hidden" name="id" th:value="*{id}"/>
         <div class="form-row">
@@ -26,6 +26,14 @@
             </div>
             <div class="form-group col-md-6">
                 <input th:replace="~{fragments/inputField :: input ('Size', 'size', 'text')}"/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input th:replace="~{fragments/inputField :: input ('Aging', 'bottleAging', 'number')}"/>
+            </div>
+            <div class="form-group col-md-6">
+                <input th:replace="~{fragments/inputField :: input ('Subarea', 'subarea', 'text')}"/>
             </div>
         </div>
         <div class="form-group">
