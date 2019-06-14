@@ -39,7 +39,7 @@
         </thead>
         <tbody>
         <tr th:each="wine : ${producer.wines}">
-            <td th:text="${wine.name}">Name</td>
+            <td><a th:href="@{/producer/__${producer.id}__/wine/__${wine.id}__}" th:text="${wine.name}"></a></td>
             <td th:text="${wine.vintage}">Vintage</td>
             <td th:text="${wine.alcohol}">Alcohol</td>
             <td th:text="${wine.size}">Size</td>
