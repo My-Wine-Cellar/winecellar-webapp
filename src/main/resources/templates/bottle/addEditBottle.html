@@ -10,6 +10,7 @@
         <th:block th:with="text=${bottle['new']} ? 'Add Bottle:' : 'Update Bottle'" th:text="${text}"/>
     </h3>
     <form th:object="${bottle}" method="post">
+        <input type="hidden" name="id" th:value="*{id}"/>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <input th:replace="~{fragments/inputField :: input ('Number', 'number', 'number')}"/>
