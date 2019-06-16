@@ -14,12 +14,13 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
 
     @Builder
     public Wine(Long id, String name, Integer vintage, Double alcohol, Double size,
-                Integer bottleAging, String description, Producer producer) {
+                Float acid, Integer bottleAging, String description, Producer producer) {
         super(id);
         this.name = name;
         this.vintage = vintage;
         this.alcohol = alcohol;
         this.size = size;
+        this.acid = acid;
         this.bottleAging = bottleAging;
         this.description = description;
         this.producer = producer;
@@ -36,6 +37,9 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
 
     @Column(name = "size")
     private Double size;
+
+    @Column(name = "acid")
+    private Float acid;
 
     @Column(name = "bottle_aging")
     private Integer bottleAging;
