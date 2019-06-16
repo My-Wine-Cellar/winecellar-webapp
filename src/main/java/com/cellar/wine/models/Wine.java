@@ -14,7 +14,8 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
 
     @Builder
     public Wine(Long id, String name, Integer vintage, Double alcohol, Double size,
-                Float acid, Float pH, Integer bottleAging, String description, Producer producer) {
+                Float acid, Float pH, Integer bottleAging, String description,
+                Producer producer, Closure closure) {
         super(id);
         this.name = name;
         this.vintage = vintage;
@@ -25,6 +26,7 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
         this.bottleAging = bottleAging;
         this.description = description;
         this.producer = producer;
+        this.closure = closure;
     }
 
     @Column(name = "name")
@@ -63,6 +65,10 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
 
     @OneToMany(mappedBy = "wine")
     private List<Bottle> bottles;
+
+    @ManyToOne
+    @JoinColumn(name = "closure_id", referencedColumnName = "id")
+    private Closure closure;
 
     @Override
     public int compareTo(Wine w) {
