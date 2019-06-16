@@ -14,7 +14,7 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
 
     @Builder
     public Wine(Long id, String name, Integer vintage, Double alcohol, Double size,
-                Float acid, Float pH, Integer bottleAging, String description,
+                Float acid, Float pH, Integer bottleAging, String description, String weblink,
                 Producer producer, Closure closure) {
         super(id);
         this.name = name;
@@ -25,6 +25,7 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
         this.pH = pH;
         this.bottleAging = bottleAging;
         this.description = description;
+        this.weblink = weblink;
         this.producer = producer;
         this.closure = closure;
     }
@@ -52,6 +53,9 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
 
     @Column(name = "description", length = 8192)
     private String description;
+
+    @Column(name = "weblink")
+    private String weblink;
 
     @Column(name = "subarea")
     private String subarea;
