@@ -32,7 +32,7 @@
                 <a class="nav-link" th:href="@{/}">Home<span class="fas fa-home" aria-hidden="true"></span></a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/bottle}">Bottle<span class="fas fa-wine-bottle"></span></a>
+                <a class="nav-link" th:href="@{/bottle/list}">Bottle<span class="fas fa-wine-bottle"></span></a>
             </li>
 
             <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER')">

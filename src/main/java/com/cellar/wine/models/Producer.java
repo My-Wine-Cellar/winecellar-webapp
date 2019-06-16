@@ -49,4 +49,18 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
     public int compareTo(Producer p) {
         return name.compareTo(p.getName());
     }
+
+    public Wine getWine(String label, boolean ignoreNew) {
+        label = label.toLowerCase();
+        for (Wine wine : wines) {
+            if (!ignoreNew || !wine.isNew()) {
+                String compName = wine.getName();
+                compName = compName.toLowerCase();
+                if (compName.equals(label)) {
+                    return wine;
+                }
+            }
+        }
+        return null;
+    }
 }

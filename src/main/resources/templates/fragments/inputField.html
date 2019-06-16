@@ -36,9 +36,9 @@
              th:class="${'form-group' + (valid ? '' : ' has-error')}"
              class="form-group">
             <label class="col-sm-2 control-label" th:text="${label}">Label</label>
-            <div class="col-sm-10">
+            <div class="col-sm-11">
                 <div th:switch="${type}">
-                    <textarea th:case="'text'" class="form-control" type="text" th:field="*{__${name}__}"></textarea>
+                    <textarea rows="10" th:case="'text'" class="form-control" type="text" th:field="*{__${name}__}"></textarea>
                 </div>
                 <span th:if="${valid}"
                       class="fa fa-ok form-control-feedback"
