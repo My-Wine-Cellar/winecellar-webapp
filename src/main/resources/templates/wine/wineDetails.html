@@ -23,15 +23,29 @@
 <br/>
 <h2 align="center">Bottles</h2>
 <br/>
-<div class="container justify-content-center">
-    <div class="card text-center">
-        <div class="card-body" th:each="bottle : ${wine.bottles}">
-            <p class="card-text" th:text="${bottle.location}">Location</p>
-        </div>
-    </div>
+<div class="container">
+    <table class="table table-hover table-sm">
+        <thead>
+        <tr>
+            <th>Bottle #</th>
+            <th>Location</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bottle : ${wine.bottles}">
+            <td th:text="${bottle.number}">Bottle #</td>
+            <td th:text="${bottle.location}">Location</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <br/>
-<br/>
+<div class="text-center">
+    <a th:href="@{/producer/{producerId}/wine/{wineId}/bottle/new(producerId=${producer.id},wineId=${wine.id})}" class="btn btn-default">Add Bottle</a>
+</div>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>
 </html>
