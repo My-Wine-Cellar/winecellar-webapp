@@ -29,7 +29,6 @@ public class WineController {
     private static final String MODEL_ATTRIBUTE_WINE = "wine";
     private static final String ADD_OR_EDIT_WINE_TEMPLATE = "wine/addEditWine";
 
-
     @ModelAttribute("producer")
     public Producer findProducer(@PathVariable Long producerId) {
         return producerService.findById(producerId);
@@ -71,13 +70,13 @@ public class WineController {
         }
     }
 
-    @GetMapping("{wineId}/edit")
+    @GetMapping("/{wineId}/edit")
     public String initEditWineForm(@PathVariable Long wineId, Model model) {
         model.addAttribute(wineService.findById(wineId));
         return ADD_OR_EDIT_WINE_TEMPLATE;
     }
 
-    @PostMapping("{wineId}/edit")
+    @PostMapping("/{wineId}/edit")
     public String processEditWineForm(@Valid Wine wine, BindingResult result, Producer producer, Model model) {
         wine.setProducer(producer);
         if (result.hasErrors()) {
