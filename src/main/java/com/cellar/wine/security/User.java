@@ -1,6 +1,7 @@
 package com.cellar.wine.security;
 
 import com.cellar.wine.models.Bottle;
+import com.cellar.wine.models.GenericTastingNotes;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,6 +45,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Bottle> bottles;
+
+    @OneToMany(mappedBy = "user")
+    private List<GenericTastingNotes> genericTastingNotes;
 
     @Override
     public boolean isAccountNonExpired() {

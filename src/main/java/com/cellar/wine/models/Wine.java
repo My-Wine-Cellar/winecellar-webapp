@@ -70,6 +70,9 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @OneToMany(mappedBy = "wine")
     private List<Bottle> bottles;
 
+    @OneToMany(mappedBy = "wine")
+    private List<GenericTastingNotes> genericTastingNotes;
+
     @ManyToOne
     @JoinColumn(name = "closure_id", referencedColumnName = "id")
     private Closure closure;
