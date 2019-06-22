@@ -4,6 +4,7 @@ import com.cellar.wine.security.User;
 
 import lombok.*;
 import org.hibernate.annotations.Type;
+import com.github.cliftonlabs.json_simple.JsonObject;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -69,10 +70,10 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
         this.data = new HashMap<String, Serializable>();
 
         // Do we need com.github.cliftonlabs.json_simple.JsonArray here for the values ?
-        this.data.put(SIGHT, sight);
-        this.data.put(NOSE, nose);
-        this.data.put(PALETTE, palette);
-        this.data.put(CONCLUSION, conclusion);
+        this.data.put(SIGHT, new JsonObject(sight).toJson());
+        this.data.put(NOSE, new JsonObject(nose).toJson());
+        this.data.put(PALETTE, new JsonObject(palette).toJson());
+        this.data.put(CONCLUSION, new JsonObject(conclusion).toJson());
 
         this.show = show;
         this.user = user;
