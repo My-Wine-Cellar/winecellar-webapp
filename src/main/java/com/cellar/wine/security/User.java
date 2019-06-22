@@ -2,6 +2,7 @@ package com.cellar.wine.security;
 
 import com.cellar.wine.models.Bottle;
 import com.cellar.wine.models.GenericTastingNotes;
+import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Tasted;
 
 import lombok.AllArgsConstructor;
@@ -49,6 +50,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<GenericTastingNotes> genericTastingNotes;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
 
     @OneToMany(mappedBy = "user")
     private List<Tasted> tasted;
