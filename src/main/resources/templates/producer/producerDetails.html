@@ -4,14 +4,19 @@
 <body>
 <nav th:insert="~{fragments/layout :: nav}"/>
 <br/>
-<h2 align="center">Producer Information</h2>
+<div class="card text-center">
+  <div class="card-body" th:object="${producer}">
+    <h2 class="card-header" th:text="*{name}"></h2>
+  </div>
+</div>
 <br/>
-<div class="container justify-content-center">
-    <div class="card text-center">
+<div class="container justify-content-left">
+    <div class="card text-left">
         <div class="card-body" th:object="${producer}">
-            <h4 class="card-header" th:text="*{name}"></h4>
-            <br/>
             <p class="card-text" th:text="*{description}"></p>
+            <p class="card-text" th:text="*{phone}"></p>
+            <p class="card-text" th:text="*{fax}"></p>
+            <p class="card-text" th:text="*{website}"></p>
         </div>
     </div>
     <br/>
@@ -22,7 +27,7 @@
 </div>
 <br/>
 <br/>
-<h2 align="center">Wines</h2>
+<h3 align="center">Wines</h3>
 <br/>
 <div class="container">
     <table class="table table-hover table-sm">
@@ -30,10 +35,7 @@
         <tr>
             <th>Name</th>
             <th>Vintage</th>
-            <th>Alcohol</th>
             <th>Size</th>
-            <th>Bottle Aging</th>
-<!--            <th>Grapes</th>-->
             <th class="text-center"></th>
         </tr>
         </thead>
@@ -41,10 +43,7 @@
         <tr th:each="wine : ${producer.wines}">
             <td><a th:href="@{/producer/__${producer.id}__/wine/__${wine.id}__}" th:text="${wine.name}"></a></td>
             <td th:text="${wine.vintage}">Vintage</td>
-            <td th:text="${wine.alcohol}">Alcohol</td>
             <td th:text="${wine.size}">Size</td>
-            <td th:text="${wine.bottleAging}">Bottle Aging</td>
-<!--            <td><span th:each="grape : ${wine.grapes}" th:utext="${grape.grape.name} + '<br/>'"></span></td>-->
             <td><a th:href="@{{producerId}/wine/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}"
                    class="btn btn-default">Update</a></td>
         </tr>
