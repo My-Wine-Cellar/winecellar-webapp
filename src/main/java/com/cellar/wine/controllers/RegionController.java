@@ -17,12 +17,6 @@ public class RegionController {
         this.regionService = regionService;
     }
 
-    @GetMapping("/list")
-    public String showAllRegions(Model model) {
-        model.addAttribute("regions", regionService.findAll());
-        return "region/regionList";
-    }
-
     @GetMapping("{regionId}")
     public String regionDetails(@PathVariable Long regionId, Model model) {
         model.addAttribute("region", regionService.findById(regionId));

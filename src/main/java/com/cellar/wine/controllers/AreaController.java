@@ -17,12 +17,6 @@ public class AreaController {
         this.areaService = areaService;
     }
 
-    @GetMapping("/list")
-    public String showAllAreas(Model model) {
-        model.addAttribute("areas", areaService.findAll());
-        return "area/areaList";
-    }
-
     @GetMapping("/{areaId}")
     public String areaDetails(@PathVariable Long areaId, Model model) {
         model.addAttribute("area", areaService.findById(areaId));
