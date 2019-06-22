@@ -21,8 +21,7 @@
     </div>
     <br/>
     <div class="text-center">
-        <a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit
-            Producer</a>
+        <a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit</a>
     </div>
 </div>
 <br/>
@@ -36,7 +35,6 @@
             <th>Name</th>
             <th>Vintage</th>
             <th>Size</th>
-            <th class="text-center"></th>
         </tr>
         </thead>
         <tbody>
@@ -44,14 +42,12 @@
             <td><a th:href="@{/producer/__${producer.id}__/wine/__${wine.id}__}" th:text="${wine.name}"></a></td>
             <td th:text="${wine.vintage}">Vintage</td>
             <td th:text="${wine.size}">Size</td>
-            <td><a th:href="@{{producerId}/wine/{wineId}/edit(producerId=${producer.id},wineId=${wine.id})}"
-                   class="btn btn-default">Update</a></td>
         </tr>
         </tbody>
     </table>
     <br/>
     <div class="text-center">
-        <a th:href="@{{id}/wine/new(id=${producer.id})}" class="btn btn-default">Add Wine</a>
+        <a th:href="@{{id}/wine/new(id=${producer.id})}" class="btn btn-default">Add</a>
     </div>
 </div>
 <br/>
