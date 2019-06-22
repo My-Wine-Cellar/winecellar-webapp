@@ -8,13 +8,16 @@
 <nav th:insert="~{fragments/layout :: nav}"/>
 
 <br/>
-<h2 align="center">Country Details</h2>
+<div class="card text-center">
+  <div class="card-body" th:object="${country}">
+    <h2 class="card-header" th:text="*{name}"></h2>
+  </div>
+</div>
 <br/>
 
-<div class="container justify-content-center">
-    <div class="card text-center">
+<div class="container justify-content-left">
+    <div class="card text-left">
         <div class="card-body" th:object="${country}">
-            <h4 class="card-header" th:text="*{name}"></h4>
             <p class="card-text" th:text="*{description}"></p>
             <p class="card-text" th:text="*{weblink}"></p>
         </div>
@@ -23,17 +26,16 @@
 <br/><br/>
 
 <br/>
-<h2 align="center" th:switch="${country.name}">
-    <span th:case="'United States'">States with Wine producing AVA's</span>
+<h3 align="center" th:switch="${country.name}">
+    <span th:case="'United States'">States</span>
     <span th:case="*">Regions</span>
-</h2>
+</h3>
 <br/>
 
 <div class="container justify-content-center">
     <div class="card text-center">
-        <div class="card-body" th:each="region : ${country.regions}" th:if="${region.areas.size() > 1}">
+        <div class="card-body" th:each="region : ${country.regions}">
             <h4 class="card-header"><a th:href="@{/region/__${region.id}__}" th:text="${region.name}"></a></h4>
-            <p class="card-text" th:text="${region.description}">Description</p>
         </div>
     </div>
 </div>
