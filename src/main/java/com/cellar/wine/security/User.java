@@ -4,6 +4,7 @@ import com.cellar.wine.models.Bottle;
 import com.cellar.wine.models.GenericTastingNotes;
 import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Tasted;
+import com.cellar.wine.models.Wishlist;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -56,6 +57,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Tasted> tasted;
+
+    @OneToMany(mappedBy = "user")
+    private List<Wishlist> wishlist;
 
     @Override
     public boolean isAccountNonExpired() {
