@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,6 +39,21 @@ public class User implements UserDetails {
     @Column(name = "username")
     @NotEmpty(message = "*Please provide your name")
     private String username;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "middle_name")
+    private String middleName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "last_login")
+    private Date lastLogin;
 
     @Column(name = "enabled")
     private boolean enabled;
