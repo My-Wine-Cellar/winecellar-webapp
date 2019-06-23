@@ -1,6 +1,11 @@
 package com.cellar.wine.security;
 
 import com.cellar.wine.models.Bottle;
+import com.cellar.wine.models.GenericTastingNotes;
+import com.cellar.wine.models.Review;
+import com.cellar.wine.models.Tasted;
+import com.cellar.wine.models.Wishlist;
+import com.cellar.wine.utils.BottleSorter;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +16,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.sql.Date;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -35,6 +42,21 @@ public class User implements UserDetails {
     @NotEmpty(message = "*Please provide your name")
     private String username;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "middle_name")
+    private String middleName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "last_login")
+    private Date lastLogin;
+
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -44,6 +66,23 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Bottle> bottles;
+
+    @OneToMany(mappedBy = "user")
+    private List<GenericTastingNotes> genericTastingNotes;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "user")
+    private List<Tasted> tasted;
+
+    @OneToMany(mappedBy = "user")
+    private List<Wishlist> wishlist;
+
+    public List<Bottle> getBottles() {
+        Collections.sort(bottles, new BottleSorter());
+        return bottles;
+    }
 
     @Override
     public boolean isAccountNonExpired() {

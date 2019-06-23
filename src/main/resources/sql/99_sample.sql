@@ -14,7 +14,7 @@ INSERT INTO grape_component (percentage, grape_id, wine_id) VALUES (2, 157, 1);
 INSERT INTO barrel_component (percentage, aging, grape_component_id, barrel_id) VALUES (100, 548, 1, 1);
 
 -- Poggio Antico
-INSERT INTO producer (name, website) VALUES ('Poggio Antico', 'https://www.poggioantico.com/');
+INSERT INTO producer (name, phone, fax, email, description, website) VALUES ('Poggio Antico', '+39 0577-848044', '+39 0577-846563', 'mail@poggioantico.com', 'Poggio Antico, Tuscany', 'https://www.poggioantico.com/');
 INSERT INTO area_producer (area_id, producer_id) VALUES (704, 2);
 -- Brunello di Montalcino
 INSERT INTO wine (name, vintage, size, alcohol, acid, bottle_aging, weblink, producer_id, closure_id) VALUES ('Brunello di Montalcino', 2013, 0.75, 14.0, 5.6, 240, 'https://www.poggioantico.com/product/brunello-di-montalcino/', 2, 1);

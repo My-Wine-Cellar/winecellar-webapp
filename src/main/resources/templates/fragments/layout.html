@@ -27,20 +27,21 @@
     <div class="collapse navbar-collapse " id="navbarSupportedContent" sec:authorize="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/bottle/list}">Bottle<span class="fas fa-wine-bottle"></span></a>
+                <a class="nav-link" th:href="@{/bottle/list}">My Cellar<span class="fas fa-wine-bottle"></span></a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                <a class="nav-link" th:href="@{/country/list}">Countries<span class="fas fa-globe"></span></a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                <a class="nav-link" th:href="@{/grape/list}">Grapes<span class="fas fa-wine-glass"></span></a>
             </li>
 
             <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Cellar Items
+                    Data<span class="fas fa-database">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" th:href="@{/producer/list}">Producers</a>
-                    <a class="dropdown-item" th:href="@{/wine/list}">Wines</a>
-                    <a class="dropdown-item" th:href="@{/country/list}">Countries</a>
-<!--                    <a class="dropdown-item" th:href="@{/region/list}">Regions</a>-->
-<!--                    <a class="dropdown-item" th:href="@{/area/list}">Areas</a>-->
-                    <a class="dropdown-item" th:href="@{/grape/list}">Grapes</a>
                 </div>
             </li>
 

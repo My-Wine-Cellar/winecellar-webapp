@@ -6,9 +6,30 @@
 <br/>
 <br/>
 <div class="container justify-content-center">
-    <h3 class="col-sm-10">
-        <th:block th:with="text=${bottle['new']} ? 'Add Bottle:' : 'Update Bottle'" th:text="${text}"/>
-    </h3>
+    <div class="card text-center">
+        <div class="card-body" th:object="${bottle.wine}">
+            <h3 class="card-header" th:text="*{name}"></h3>
+        </div>
+    </div>
+    <div class="container justify-content-left" th:object="${bottle.wine}">
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <td><b>Producer</b></td>
+            <td th:text="${bottle.wine.producer.name}"></td>
+          </tr>
+          <tr>
+            <td><b>Vintage</b></td>
+            <td th:text="*{vintage}"></td>
+          </tr>
+          <tr>
+            <td><b>Size</b></td>
+            <td th:text="*{size}"></td>
+          </tr>
+        </tbody>
+      </table>
+      <br/>
+    </div>
     <form th:object="${bottle}" method="post">
         <input type="hidden" name="id" th:value="*{id}"/>
         <div class="form-row">
@@ -20,7 +41,7 @@
             </div>
         </div>
         <div class="text-center">
-            <button th:with="text=${bottle['new']} ? 'Add Bottle' : 'Update Bottle'" type="submit"
+            <button th:with="text=${bottle['new']} ? 'Add' : 'Update'" type="submit"
                     class="btn btn-default" th:text="${text}">
             </button>
         </div>

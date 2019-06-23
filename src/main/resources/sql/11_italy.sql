@@ -1,26 +1,24 @@
 -- Italy/Region
-INSERT INTO region (name, description, weblink) VALUES ('Abruzzo', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Basilicata', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Calabria', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Campania', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Emilia Romagna', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Friuli-Venezia Giulia', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Lazio', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Liguria', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Lombardy', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Marche', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Molise', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Piedmont', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Puglia', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Sardinia', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Sicily', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Tuscany', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Trentino-Alto Adige', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Umbria', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Valle d’Aosta', '', '');
-INSERT INTO region (name, description, weblink) VALUES ('Veneto', '', '');
-
-INSERT INTO country_regions (SELECT 83, i FROM generate_series(51, 70) as i);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Abruzzo', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Basilicata', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Calabria', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Campania', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Emilia Romagna', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Friuli-Venezia Giulia', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Lazio', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Liguria', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Lombardy', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Marche', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Molise', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Piedmont', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Puglia', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Sardinia', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Sicily', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Tuscany', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Trentino-Alto Adige', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Umbria', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Valle d’Aosta', '', '', 83);
+INSERT INTO region (name, description, weblink, country_id) VALUES ('Veneto', '', '', 83);
 
 -- Italy/Abruzzo
 INSERT INTO area (name, description, weblink) VALUES ('Abruzzo', '', '');

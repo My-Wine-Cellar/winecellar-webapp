@@ -4,7 +4,7 @@
 <body>
 <nav th:insert="~{fragments/layout :: nav}"/>
 <br/>
-<h2 align="center">My Bottles</h2>
+<h2 align="center">My Cellar</h2>
 <br/>
 <div class="container justify-content-center">
     <table class="table table-hover">
@@ -13,6 +13,8 @@
             <th>Bottle #</th>
             <th>Producer</th>
             <th>Wine</th>
+            <th>Vintage</th>
+            <th>Size</th>
             <th>Location</th>
             <th></th>
         </tr>
@@ -22,15 +24,14 @@
             <td th:text="${bottle.number}"></td>
             <td><a th:href="@{/producer/__${bottle.wine.producer.id}__}" th:text="${bottle.wine.producer.name}"></a></td>
             <td><a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__}" th:text="${bottle.wine.name}"></a></td>
+            <td th:text="${bottle.wine.vintage}"></td>
+            <td th:text="${bottle.wine.size}"></td>
             <td th:text="${bottle.location}"></td>
             <td><a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__/bottle/__${bottle.id}__/edit}" class="btn btn-default">Update</a></td>
         </tr>
         </tbody>
     </table>
     <br/>
-<!--    <div class="text-center" th:each="bottle : ${user.bottles}">-->
-<!--        <a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__/bottle/new}" class="btn btn-default">Add Bottle</a>-->
-<!--    </div>-->
 </div>
 <br/>
 <br/>
