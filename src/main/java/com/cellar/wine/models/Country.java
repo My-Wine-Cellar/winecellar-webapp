@@ -31,7 +31,7 @@ public class Country extends BaseEntity implements Comparable<Country> {
     @Column(name = "weblink")
     private String weblink;
 
-    @OneToMany
+    @OneToMany(mappedBy = "country")
     private List<Region> regions;
 
     @Override

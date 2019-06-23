@@ -14,11 +14,12 @@ import java.util.List;
 public class Region extends BaseEntity implements Comparable<Region> {
 
     @Builder
-    public Region(Long id, String name, String description, String weblink) {
+    public Region(Long id, String name, String description, String weblink, Country country) {
         super(id);
         this.name = name;
         this.description = description;
         this.weblink = weblink;
+        this.country = country;
     }
 
     @Column(name = "name")
@@ -29,6 +30,10 @@ public class Region extends BaseEntity implements Comparable<Region> {
 
     @Column(name = "weblink")
     private String weblink;
+
+    @ManyToOne
+    @JoinColumn(name = "country_id", referencedColumnName = "id")
+    private Country country;
 
     @ManyToMany
     @JoinTable(name = "region_area",
