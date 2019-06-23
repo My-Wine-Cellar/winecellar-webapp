@@ -12,12 +12,29 @@
 <br/>
 <div class="container justify-content-left">
     <div class="card text-left">
-        <div class="card-body" th:object="${producer}">
-            <p class="card-text" th:text="*{description}"></p>
-            <p class="card-text" th:text="*{phone}"></p>
-            <p class="card-text" th:text="*{fax}"></p>
-            <p class="card-text" th:text="*{website}"></p>
-        </div>
+      <div class="card-body" th:object="${producer}">
+        <p class="card-text" th:text="*{description}"></p>
+        <table class="table table-hover">
+          <tbody>
+            <tr>
+              <td><b>Phone</b></td>
+              <td th:text="*{phone}"></td>
+            </tr>
+            <tr>
+              <td><b>Fax</b></td>
+              <td th:text="*{fax}"></td>
+            </tr>
+            <tr>
+              <td><b>Email</b></td>
+              <td th:text="*{email}"></td>
+            </tr>
+            <tr>
+              <td><b>Website</b></td>
+              <td th:text="*{website}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <br/>
     <div class="text-center">

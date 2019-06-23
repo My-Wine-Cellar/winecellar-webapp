@@ -18,12 +18,13 @@ import java.util.List;
 public class Producer extends BaseEntity implements Comparable<Producer> {
 
     @Builder
-    public Producer(Long id, String name, String description, String phone, String fax, String website) {
+    public Producer(Long id, String name, String description, String phone, String fax, String email, String website) {
         super(id);
         this.name = name;
         this.description = description;
         this.phone = phone;
         this.fax = fax;
+        this.email = email;
         this.website = website;
     }
 
@@ -38,6 +39,9 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
 
     @Column(name = "fax")
     private String fax;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "website")
     private String website;
