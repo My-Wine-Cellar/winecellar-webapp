@@ -5,6 +5,7 @@ import com.cellar.wine.models.GenericTastingNotes;
 import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Tasted;
 import com.cellar.wine.models.Wishlist;
+import com.cellar.wine.utils.BottleSorter;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +18,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -76,6 +78,11 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Wishlist> wishlist;
+
+    public List<Bottle> getBottles() {
+        Collections.sort(bottles, new BottleSorter());
+        return bottles;
+    }
 
     @Override
     public boolean isAccountNonExpired() {

@@ -1,11 +1,14 @@
 package com.cellar.wine.models;
 
+import com.cellar.wine.utils.WineSorter;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 @Setter
@@ -44,6 +47,11 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private List<Wine> wines;
+
+    public List<Wine> getWines() {
+        Collections.sort(wines, new WineSorter());
+        return wines;
+    }
 
     @Override
     public int compareTo(Producer p) {
