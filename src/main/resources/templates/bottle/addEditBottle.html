@@ -11,6 +11,25 @@
             <h3 class="card-header" th:text="*{name}"></h3>
         </div>
     </div>
+    <div class="container justify-content-left" th:object="${bottle.wine}">
+      <table class="table table-hover">
+        <tbody>
+          <tr>
+            <td><b>Producer</b></td>
+            <td th:text="${bottle.wine.producer.name}"></td>
+          </tr>
+          <tr>
+            <td><b>Vintage</b></td>
+            <td th:text="*{vintage}"></td>
+          </tr>
+          <tr>
+            <td><b>Size</b></td>
+            <td th:text="*{size}"></td>
+          </tr>
+        </tbody>
+      </table>
+      <br/>
+    </div>
     <form th:object="${bottle}" method="post">
         <input type="hidden" name="id" th:value="*{id}"/>
         <div class="form-row">

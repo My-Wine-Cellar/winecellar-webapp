@@ -11,18 +11,50 @@
 </div>
 <br/>
 <div class="container justify-content-center">
-    <div class="card text-center">
-        <div class="card-body" th:object="${wine}">
-            <p class="card-text" th:text="*{description}"></p>
-            <p class="card-text" th:text="*{vintage}"></p>
-            <p class="card-text" th:text="*{size}"></p>
-            <p class="card-text" th:text="*{subarea}"></p>
-            <p class="card-text" th:text="*{alcohol}"></p>
-            <p class="card-text" th:text="*{acid}"></p>
-            <p class="card-text" th:text="*{pH}"></p>
-            <p class="card-text" th:text="*{bottleAging}"></p>
-            <p class="card-text" th:text="*{weblink}"></p>
-        </div>
+    <div class="card text-left">
+      <div class="card-body" th:object="${wine}">
+        <table class="table table-hover">
+          <tbody>
+            <tr>
+              <td><b>Producer</b></td>
+              <td><a th:href="@{/producer/__${wine.producer.id}__}" th:text="${wine.producer.name}"></a></td>
+            </tr>
+            <tr>
+              <td><b>Subarea</b></td>
+              <td th:text="*{subarea}"></td>
+            </tr>
+            <tr>
+              <td><b>Vintage</b></td>
+              <td th:text="*{vintage}"></td>
+            </tr>
+            <tr>
+              <td><b>Size</b></td>
+              <td th:text="*{size}"></td>
+            </tr>
+            <tr>
+              <td><b>Alcohol</b></td>
+              <td th:text="*{alcohol}"></td>
+            </tr>
+            <tr>
+              <td><b>Acid</b></td>
+              <td th:text="*{acid}"></td>
+            </tr>
+            <tr>
+              <td><b>pH</b></td>
+              <td th:text="*{pH}"></td>
+            </tr>
+            <tr>
+              <td><b>Bottle aging</b></td>
+              <td th:text="*{bottleAging}"></td>
+            </tr>
+            <tr>
+              <td><b>Web</b></td>
+              <td th:text="*{weblink}"></td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="card-text" th:text="*{description}"></p>
+      </div>
     </div>
     <br/>
     <div class="text-center">
