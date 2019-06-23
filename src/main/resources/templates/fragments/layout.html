@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head">
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -11,16 +10,15 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/all.css}">
     <title>Wine Cellar</title>
-
 </head>
 
 <body>
 
 <nav th:fragment="nav" class="navbar navbar-custom navbar-expand-md" role="navigation">
-    <div class="navbar-brand">Wine
+    <a class="navbar-brand" th:href="@{/}">Wine
         <img th:src="@{/images/wine.png}" alt="wine bottle" style="height: 60px"/>
         Cellar
-    </div>
+    </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" sec:authorize="isAuthenticated()">
         <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
@@ -28,9 +26,6 @@
 
     <div class="collapse navbar-collapse " id="navbarSupportedContent" sec:authorize="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/}">Home<span class="fas fa-home" aria-hidden="true"></span></a>
-            </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link" th:href="@{/bottle/list}">Bottle<span class="fas fa-wine-bottle"></span></a>
             </li>
