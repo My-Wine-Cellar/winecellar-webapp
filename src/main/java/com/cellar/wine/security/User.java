@@ -6,6 +6,10 @@ import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Tasted;
 import com.cellar.wine.models.Wishlist;
 import com.cellar.wine.utils.BottleSorter;
+import com.cellar.wine.utils.GenericTastingNotesSorter;
+import com.cellar.wine.utils.ReviewSorter;
+import com.cellar.wine.utils.TastedSorter;
+import com.cellar.wine.utils.WishlistSorter;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -82,6 +86,26 @@ public class User implements UserDetails {
     public List<Bottle> getBottles() {
         Collections.sort(bottles, new BottleSorter());
         return bottles;
+    }
+
+    public List<GenericTastingNotes> getGenericTastingNotes() {
+        Collections.sort(genericTastingNotes, new GenericTastingNotesSorter());
+        return genericTastingNotes;
+    }
+
+    public List<Review> getReviews() {
+        Collections.sort(reviews, new ReviewSorter());
+        return reviews;
+    }
+
+    public List<Tasted> getTasted() {
+        Collections.sort(tasted, new TastedSorter());
+        return tasted;
+    }
+
+    public List<Wishlist> getWishlist() {
+        Collections.sort(wishlist, new WishlistSorter());
+        return wishlist;
     }
 
     @Override
