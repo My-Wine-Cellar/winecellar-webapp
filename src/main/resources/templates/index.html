@@ -9,18 +9,34 @@
 
 <div class="jumbotron jumbotron-fluid" sec:authorize="isAuthenticated()">
     <div class="container text-center">
-        <h1 th:text="#{welcome}"></h1>
-        <h4 sec:authentication="principal.username"></h4>
-        <p sec:authorize="hasRole('ROLE_USER')">Thanks for coming! Please mess around and let me know what you think.<br/> Email me any suggestions or notes on
-            the app <a href="mailto:paul.darlington.pearson@gmail.com">paul.darlington.pearson@gmail.com</a></p>
+      <h1 th:text="#{welcome}"></h1>
+      <!-- <h4 sec:authentication="principal.user.firstName"></h4> -->
     </div>
 </div>
+<div class="container justify-content-left">
+    <div class="card text-left">
+      <div class="card-body">
+        <p class="card-text">
+          <a th:href="@{/bottle/list}">My Cellar <span class="fas fa-wine-bottle"></span></a>
+        </p>
+        <p class="card-text">
+          <a th:href="@{/review/list}">My Reviews <span class="far fa-star"></span></a>
+        </p>
+        <p class="card-text">
+          <a th:href="@{/wishlist/list}">My Wishlist <span class="fas fa-gift"></span></a>
+        </p>
+        <p class="card-text">
+          <a th:href="@{/tastingnotes/list}">My Tasting Notes <span class="far fa-clipboard"></span></a>
+        </p>
+        <p class="card-text">
+          <a th:href="@{/tasted/list}">My Tasted Wines <span class="fas fa-archive"></span></a>
+        </p>
+      </div>
+    </div>
+</div>
+<br/><br/>
 
-<footer th:insert="~{fragments/layout :: footer}"/>
-
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
+<div th:insert="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
 </body>
 </html>

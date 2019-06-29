@@ -10,14 +10,13 @@
 <div class="jumbotron jumbotron-fluid">
     <div class="container text-center">
         <h1 th:text="#{error}">Error:</h1>
-        <p>You have made a mistake or my app is broken. Either way, try to <a th:href="@{/}">start from the
+        <p>An error occurred, try to <a th:href="@{/}">start from the
             beginning</a></p>
     </div>
 </div>
+<br/><br/>
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
+<div th:insert="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
 </body>
 </html>
