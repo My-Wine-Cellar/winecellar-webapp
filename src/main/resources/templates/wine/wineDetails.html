@@ -88,6 +88,10 @@
 <div class="text-center">
     <a th:href="@{/producer/{producerId}/wine/{wineId}/bottle/new(producerId=${producer.id},wineId=${wine.id})}" class="btn btn-default">Add</a>
 </div>
+<br/>
+<br/>
+
+<div th:insert="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>
 </html>

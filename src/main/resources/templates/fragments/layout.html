@@ -26,19 +26,31 @@
 
     <div class="collapse navbar-collapse " id="navbarSupportedContent" sec:authorize="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/bottle/list}">My Cellar<span class="fas fa-wine-bottle"></span></a>
+            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER')">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Home <span class="fas fa-home"></span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" th:href="@{/bottle/list}">My Cellar <span class="fas fa-wine-bottle"></span></a>
+                    <a class="dropdown-item" th:href="@{/review/list}">My Reviews <span class="far fa-star"></a>
+                    <a class="dropdown-item" th:href="@{/wishlist/list}">My Wishlist <span class="fas fa-gift"></a>
+                    <a class="dropdown-item" th:href="@{/tastingnotes/list}">My Tasting Notes <span class="far fa-clipboard"></a>
+                    <a class="dropdown-item" th:href="@{/tasted/list}">My Tasted Wines <span class="fas fa-archive"></a>
+                </div>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/country/list}">Countries<span class="fas fa-globe"></span></a>
+                <a class="nav-link" th:href="@{/bottle/list}">My Cellar <span class="fas fa-wine-bottle"></span></a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link" th:href="@{/grape/list}">Grapes<span class="fas fa-wine-glass"></span></a>
+                <a class="nav-link" th:href="@{/country/list}">Countries <span class="fas fa-globe"></span></a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+                <a class="nav-link" th:href="@{/grape/list}">Grapes <span class="fas fa-wine-glass"></span></a>
             </li>
 
             <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Data<span class="fas fa-database">
+                    Data <span class="fas fa-database"></span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" th:href="@{/producer/list}">Producers</a>
@@ -64,8 +76,6 @@
     <footer class="footer">
         <div class="container text-center">
             <a href="https://github.com/pauldpearson/winecellar-webapp" target="_blank"><i class="fab fa-github"></i></a>
-            |
-            <a href="https://www.linkedin.com/in/pauldpearson/" target="_blank"><i class="fab fa-linkedin"></i></a>
         </div>
     </footer>
 </div>
