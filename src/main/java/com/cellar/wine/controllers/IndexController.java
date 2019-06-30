@@ -24,7 +24,10 @@ public class IndexController {
     private UserService userService;
 
     @RequestMapping({"", "/", "index", "index.html"})
-    public String index() {
+    public String index(Model model, Principal principal) {
+        if (model != null && principal != null)
+            model.addAttribute("user", userService.findByUsername(principal.getName()));
+
         return "index";
     }
 

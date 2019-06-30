@@ -9,15 +9,14 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/all.css}">
-    <title>Wine Cellar</title>
+    <title>MyWineCellar.info</title>
 </head>
 
 <body>
 
 <nav th:fragment="nav" class="navbar navbar-custom navbar-expand-md" role="navigation">
-    <a class="navbar-brand" th:href="@{/}">Wine
-        <img th:src="@{/images/wine.png}" alt="wine bottle" style="height: 60px"/>
-        Cellar
+    <a class="navbar-brand" th:href="@{/}">
+        MyWine<img th:src="@{/images/wine.png}" alt="wine bottle" style="height: 60px"/>Cellar.info
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" sec:authorize="isAuthenticated()">

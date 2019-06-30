@@ -9,8 +9,7 @@
 
 <div class="jumbotron jumbotron-fluid" sec:authorize="isAuthenticated()">
     <div class="container text-center">
-      <h1 th:text="#{welcome}"></h1>
-      <!-- <h4 sec:authentication="principal.user.firstName"></h4> -->
+      <h1 th:text="|#{welcome}, ${user.firstName}|"></h1>
     </div>
 </div>
 <div class="container justify-content-left">
