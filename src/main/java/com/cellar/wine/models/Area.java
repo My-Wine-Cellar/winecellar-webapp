@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,7 +36,7 @@ public class Area extends BaseEntity implements Comparable<Area> {
     @ManyToMany(mappedBy = "areas")
     public List<Grape> primaryGrapes;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "area_producer",
             joinColumns =
             @JoinColumn(name = "area_id", referencedColumnName = "id"),
@@ -47,5 +48,10 @@ public class Area extends BaseEntity implements Comparable<Area> {
     @Override
     public int compareTo(Area a) {
         return name.compareTo(a.getName());
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

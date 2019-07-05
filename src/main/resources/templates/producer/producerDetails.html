@@ -4,73 +4,78 @@
 <body>
 <nav th:insert="~{fragments/layout :: nav}"/>
 <br/>
-<div class="card text-center">
-  <div class="card-body" th:object="${producer}">
-    <h2 class="card-header" th:text="*{name}"></h2>
-  </div>
-</div>
-<br/>
-<div class="container justify-content-left">
-    <div class="card text-left">
-      <div class="card-body" th:object="${producer}">
-        <p class="card-text" th:text="*{description}"></p>
-        <table class="table table-hover">
-          <tbody>
+<div class="container justify-content-center">
+    <div class="card text-center">
+        <div class="card-body" th:object="${producer}">
+            <h2 class="card-header" th:text="*{name}"></h2>
+        </div>
+    </div>
+    <br/>
+    <div class="container justify-content-left">
+        <div class="card text-left">
+            <div class="card-body" th:object="${producer}">
+                <p class="card-text" th:text="*{description}"></p>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><b>Phone</b></td>
+                        <td th:text="*{phone}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Fax</b></td>
+                        <td th:text="*{fax}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Email</b></td>
+                        <td th:text="*{email}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Website</b></td>
+                        <td th:text="*{website}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Areas</b></td>
+                        <td th:text="*{areas}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <div class="text-center">
+            <a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit Producer</a>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <h3 align="center">Wines</h3>
+    <br/>
+    <div class="container">
+        <table class="table table-hover table-sm">
+            <thead>
             <tr>
-              <td><b>Phone</b></td>
-              <td th:text="*{phone}"></td>
+                <th>Name</th>
+                <th>Vintage</th>
+                <th>Size</th>
             </tr>
-            <tr>
-              <td><b>Fax</b></td>
-              <td th:text="*{fax}"></td>
+            </thead>
+            <tbody>
+            <tr th:each="wine : ${producer.wines}">
+                <td><a th:href="@{/producer/__${producer.id}__/wine/__${wine.id}__}" th:text="${wine.name}"></a></td>
+                <td th:text="${wine.vintage}">Vintage</td>
+                <td th:text="${wine.size}">Size</td>
             </tr>
-            <tr>
-              <td><b>Email</b></td>
-              <td th:text="*{email}"></td>
-            </tr>
-            <tr>
-              <td><b>Website</b></td>
-              <td th:text="*{website}"></td>
-            </tr>
-          </tbody>
+            </tbody>
         </table>
-      </div>
-    </div>
-    <br/>
-    <div class="text-center">
-        <a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit</a>
-    </div>
-</div>
-<br/>
-<br/>
-<h3 align="center">Wines</h3>
-<br/>
-<div class="container">
-    <table class="table table-hover table-sm">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Vintage</th>
-            <th>Size</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="wine : ${producer.wines}">
-            <td><a th:href="@{/producer/__${producer.id}__/wine/__${wine.id}__}" th:text="${wine.name}"></a></td>
-            <td th:text="${wine.vintage}">Vintage</td>
-            <td th:text="${wine.size}">Size</td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
-    <div class="text-center">
-        <a th:href="@{{id}/wine/new(id=${producer.id})}" class="btn btn-default">Add</a>
+        <br/>
+        <div class="text-center">
+            <a th:href="@{{id}/wine/new(id=${producer.id})}" class="btn btn-default">Add Wine</a>
+        </div>
     </div>
 </div>
 <br/>
 <br/>
-
 <div th:insert="~{fragments/layout :: footer}"/>
-<div th:replace="~{fragments/layout :: scripts}"/>
+<div th:insert="~{fragments/layout :: scripts}"/>
 </body>
 </html>

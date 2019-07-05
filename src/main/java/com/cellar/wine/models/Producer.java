@@ -1,16 +1,13 @@
 package com.cellar.wine.models;
 
 import com.cellar.wine.utils.WineSorter;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = false)
 @Setter
 @Getter
 @NoArgsConstructor
@@ -47,7 +44,7 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
     private String website;
 
     @ManyToMany(mappedBy = "producers")
-    public List<Area> areas;
+    private List<Area> areas;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private List<Wine> wines;

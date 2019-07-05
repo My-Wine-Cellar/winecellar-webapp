@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:insert="~{fragments/layout :: head}"/>
-
 <body>
-
 <nav th:insert="~{fragments/layout :: nav}"/>
-
 <div class="row justify-content-between">
     <div class="col-sm-6" style="padding-left: 40px">
         <br/>
@@ -31,9 +27,9 @@
         </div>
     </div>
 </div>
-<br/><br/>
-
+<br/>
+<br/>
 <div th:insert="~{fragments/layout :: footer}"/>
-<div th:replace="~{fragments/layout :: scripts}"/>
+<div th:insert="~{fragments/layout :: scripts}"/>
 </body>
 </html>

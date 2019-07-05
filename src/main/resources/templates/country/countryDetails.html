@@ -1,47 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:insert="~{fragments/layout :: head}"/>
-
 <body>
-
 <nav th:insert="~{fragments/layout :: nav}"/>
-
 <br/>
-<div class="card text-center">
-  <div class="card-body" th:object="${country}">
-    <h2 class="card-header" th:text="*{name}"></h2>
-  </div>
-</div>
-<br/>
-
-<div class="container justify-content-left">
-    <div class="card text-left">
-        <div class="card-body" th:object="${country}">
-            <p class="card-text" th:text="*{description}"></p>
-            <p class="card-text" th:text="*{weblink}"></p>
-        </div>
-    </div>
-</div>
-<br/><br/>
-
-<br/>
-<h3 align="center" th:switch="${country.name}">
-    <span th:case="'United States'">States</span>
-    <span th:case="*">Regions</span>
-</h3>
-<br/>
-
 <div class="container justify-content-center">
     <div class="card text-center">
-        <div class="card-body" th:each="region : ${country.regions}">
-            <h4 class="card-header"><a th:href="@{/region/__${region.id}__}" th:text="${region.name}"></a></h4>
+        <div class="card-body" th:object="${country}">
+            <h2 class="card-header" th:text="*{name}"></h2>
+        </div>
+    </div>
+    <br/>
+    <div class="container justify-content-left">
+        <div class="card text-left">
+            <div class="card-body" th:object="${country}">
+                <p class="card-text" th:text="*{description}"></p>
+                <p class="card-text" th:text="*{weblink}"></p>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <h3 align="center" th:switch="${country.name}">
+        <span th:case="'United States'">States</span>
+        <span th:case="*">Regions</span>
+    </h3>
+    <br/>
+    <div class="container justify-content-center">
+        <div class="card text-center">
+            <div class="card-body" th:each="region : ${country.regions}">
+                <h4 class="card-header"><a th:href="@{/region/__${region.id}__}" th:text="${region.name}"></a></h4>
+            </div>
         </div>
     </div>
 </div>
-<br/><br/>
-
+<br/>
+<br/>
 <div th:insert="~{fragments/layout :: footer}"/>
-<div th:replace="~{fragments/layout :: scripts}"/>
+<div th:insert="~{fragments/layout :: scripts}"/>
 </body>
 </html>
