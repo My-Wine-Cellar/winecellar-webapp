@@ -1,7 +1,6 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Producer;
-import com.cellar.wine.services.impl.AreaServiceImpl;
 import com.cellar.wine.services.impl.ProducerServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +15,9 @@ import javax.validation.Valid;
 public class ProducerController {
 
     private ProducerServiceImpl producerService;
-    private AreaServiceImpl areaService;
 
-    public ProducerController(ProducerServiceImpl producerService, AreaServiceImpl areaService) {
+    public ProducerController(ProducerServiceImpl producerService) {
         this.producerService = producerService;
-        this.areaService = areaService;
     }
 
     private static final String ADD_OR_EDIT_PRODUCER_TEMPLATE = "producer/addEditProducer";
@@ -47,7 +44,6 @@ public class ProducerController {
     @GetMapping("/new")
     public String initCreateForm(Model model) {
         model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, Producer.builder().build());
-        model.addAttribute("allAreas", areaService.findAll());
         return ADD_OR_EDIT_PRODUCER_TEMPLATE;
     }
 
@@ -64,7 +60,6 @@ public class ProducerController {
     @GetMapping("/{producerId}/edit")
     public String initAddEditProducerForm(@PathVariable Long producerId, Model model) {
         model.addAttribute(producerService.findById(producerId));
-        model.addAttribute("allAreas", areaService.findAll());
         return ADD_OR_EDIT_PRODUCER_TEMPLATE;
     }
 

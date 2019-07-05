@@ -46,17 +46,6 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
     @ManyToMany(mappedBy = "producers")
     private List<Area> areas;
 
-    // todo may need this in service to add area to producer
-    public void addArea(Area area) {
-        this.areas.add(area);
-        area.getProducers().add(this);
-    }
-
-    public void removeArea(Area area) {
-        this.areas.remove(area);
-        area.getProducers().remove(this);
-    }
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private List<Wine> wines;
 

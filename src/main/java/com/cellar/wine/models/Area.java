@@ -45,16 +45,6 @@ public class Area extends BaseEntity implements Comparable<Area> {
     )
     private List<Producer> producers;
 
-    public void addProducer(Producer producer) {
-        producers.add(producer);
-        producer.getAreas().add(this);
-    }
-
-    public void removeProducer(Producer producer) {
-        producers.remove(producer);
-        producer.getAreas().remove(this);
-    }
-
     @Override
     public int compareTo(Area a) {
         return name.compareTo(a.getName());
