@@ -4,53 +4,54 @@
 <body>
 <nav th:insert="~{fragments/layout :: nav}"/>
 <br/>
-<div class="card text-center">
-    <div class="card-body" th:object="${area}">
-        <h2 class="card-header" th:text="*{name}"></h2>
-    </div>
-</div>
-<br/>
-<div class="container justify-content-left">
-    <div class="card text-left">
+<div class="container justify-content-center">
+    <div class="card text-center">
         <div class="card-body" th:object="${area}">
-            <p class="card-text" th:text="*{description}"></p>
-            <p class="card-text" th:text="*{weblink}"></p>
+            <h2 class="card-header" th:text="*{name}"></h2>
         </div>
     </div>
     <br/>
-    <div class="text-center">
-        <a th:href="@{{id}/edit(id=${area.id})}" class="btn btn-default">Edit</a>
-    </div>
-</div>
-<br/>
-<br/>
-<br/>
-<h3 align="center">Producers</h3>
-<br/>
-
-<div class="container justify-content-center">
-    <div class="card text-center">
-        <div class="card-body" th:each="producer : ${area.producers}">
-            <h4 class="card-header"><a th:href="@{/producer/__${producer.id}__}" th:text="${producer.name}"></a></h4>
+    <div class="container justify-content-left">
+        <div class="card text-left">
+            <div class="card-body" th:object="${area}">
+                <p class="card-text" th:text="*{description}"></p>
+                <p class="card-text" th:text="*{weblink}"></p>
+            </div>
+        </div>
+        <br/>
+        <div class="text-center">
+            <a th:href="@{{id}/edit(id=${area.id})}" class="btn btn-default">Edit Area</a>
         </div>
     </div>
-</div>
-<br/>
-<br/>
-<br/>
-<h3 align="center">Grapes</h3>
-<br/>
-
-<div class="container justify-content-center">
-    <div class="card text-center">
-        <div class="card-body" th:each="grape : ${area.primaryGrapes}">
-            <h4 class="card-header"><a th:href="@{/grape/__${grape.id}__}" th:text="${grape.name}"></a></h4>
+    <br/>
+    <br/>
+    <br/>
+    <h3 align="center">Producers</h3>
+    <br/>
+    <div class="container justify-content-center">
+        <div class="card text-center">
+            <div class="card-body" th:each="producer : ${area.producers}">
+                <h4 class="card-header"><a th:href="@{/producer/__${producer.id}__}" th:text="${producer.name}"></a>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <h3 align="center">Grapes</h3>
+    <br/>
+    <div class="container justify-content-center">
+        <div class="card text-center">
+            <div class="card-body" th:each="grape : ${area.primaryGrapes}">
+                <h4 class="card-header"><a th:href="@{/grape/__${grape.id}__}" th:text="${grape.name}"></a></h4>
+            </div>
         </div>
     </div>
 </div>
 <br/>
 <br/>
 <div th:insert="~{fragments/layout :: footer}"/>
-<div th:replace="~{fragments/layout :: scripts}"/>
+<div th:insert="~{fragments/layout :: scripts}"/>
 </body>
 </html>

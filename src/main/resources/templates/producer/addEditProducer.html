@@ -28,18 +28,18 @@
                 <input th:replace="~{fragments/inputField :: input ('Email', 'email', 'text')}"/>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <select multiple class="form-control" th:field="*{areas}">
-                    <option class="form-control" th:each="area : ${allAreas}" th:text="${area.name}" th:value="${area.id}">Areas</option>
-                </select>
-            </div>
-            <div th:if="${producer.areas} != null" class="form-group col-md-6">
-                <ul>Currently Assigned Areas
-                    <li th:each="areas : ${producer.areas}" th:text="${areas}"></li>
-                </ul>
-            </div>
-        </div>
+<!--        <div class="form-row">-->
+<!--            <div class="form-group col-md-6">-->
+<!--                <select multiple class="form-control" th:field="*{areas}">-->
+<!--                    <option class="form-control" th:each="area : ${allAreas}" th:text="${area.name}" th:value="${area.id}">Areas</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div th:if="${producer.areas} != null" class="form-group col-md-6">-->
+<!--                <ul>Currently Assigned Areas-->
+<!--                    <li th:each="areas : ${producer.areas}" th:text="${areas}"></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="form-group">
             <textarea th:replace="~{fragments/inputField :: textarea ('Description', 'description', 'text')}"></textarea>
         </div>

@@ -4,94 +4,96 @@
 <body>
 <nav th:insert="~{fragments/layout :: nav}"/>
 <br/>
-<div class="card text-center">
-  <div class="card-body" th:object="${wine}">
-    <h2 class="card-header" th:text="*{name}"></h2>
-  </div>
-</div>
-<br/>
 <div class="container justify-content-center">
-    <div class="card text-left">
-      <div class="card-body" th:object="${wine}">
-        <p class="card-text" th:text="*{description}"></p>
-        <table class="table table-hover">
-          <tbody>
+    <div class="card text-center">
+        <div class="card-body" th:object="${wine}">
+            <h2 class="card-header" th:text="*{name}"></h2>
+        </div>
+    </div>
+    <br/>
+    <div class="container justify-content-center">
+        <div class="card text-left">
+            <div class="card-body" th:object="${wine}">
+                <p class="card-text" th:text="*{description}"></p>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><b>Producer</b></td>
+                        <td><a th:href="@{/producer/__${wine.producer.id}__}" th:text="${wine.producer.name}"></a></td>
+                    </tr>
+                    <tr>
+                        <td><b>Subarea</b></td>
+                        <td th:text="*{subarea}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Vintage</b></td>
+                        <td th:text="*{vintage}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Size</b></td>
+                        <td th:text="*{size}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Alcohol</b></td>
+                        <td th:text="*{alcohol}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Acid</b></td>
+                        <td th:text="*{acid}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>pH</b></td>
+                        <td th:text="*{pH}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Bottle aging</b></td>
+                        <td th:text="*{bottleAging}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Web</b></td>
+                        <td th:text="*{weblink}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <div class="text-center">
+            <a th:href="@{{id}/edit(id=${wine.id})}" class="btn btn-default">Edit Wine</a>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <h3 align="center">Bottles</h3>
+    <br/>
+    <div class="container">
+        <table class="table table-hover table-sm">
+            <thead>
             <tr>
-              <td><b>Producer</b></td>
-              <td><a th:href="@{/producer/__${wine.producer.id}__}" th:text="${wine.producer.name}"></a></td>
+                <th>Bottle #</th>
+                <th>Location</th>
+                <th></th>
+                <th></th>
             </tr>
-            <tr>
-              <td><b>Subarea</b></td>
-              <td th:text="*{subarea}"></td>
+            </thead>
+            <tbody>
+            <tr th:each="bottle : ${wine.bottles}">
+                <td th:text="${bottle.number}">Bottle #</td>
+                <td th:text="${bottle.location}">Location</td>
+                <td></td>
             </tr>
-            <tr>
-              <td><b>Vintage</b></td>
-              <td th:text="*{vintage}"></td>
-            </tr>
-            <tr>
-              <td><b>Size</b></td>
-              <td th:text="*{size}"></td>
-            </tr>
-            <tr>
-              <td><b>Alcohol</b></td>
-              <td th:text="*{alcohol}"></td>
-            </tr>
-            <tr>
-              <td><b>Acid</b></td>
-              <td th:text="*{acid}"></td>
-            </tr>
-            <tr>
-              <td><b>pH</b></td>
-              <td th:text="*{pH}"></td>
-            </tr>
-            <tr>
-              <td><b>Bottle aging</b></td>
-              <td th:text="*{bottleAging}"></td>
-            </tr>
-            <tr>
-              <td><b>Web</b></td>
-              <td th:text="*{weblink}"></td>
-            </tr>
-          </tbody>
+            </tbody>
         </table>
-      </div>
     </div>
     <br/>
     <div class="text-center">
-        <a th:href="@{{id}/edit(id=${wine.id})}" class="btn btn-default">Edit</a>
+        <a th:href="@{/producer/{producerId}/wine/{wineId}/bottle/new(producerId=${producer.id},wineId=${wine.id})}"
+           class="btn btn-default">Add Bottle</a>
     </div>
 </div>
 <br/>
 <br/>
-<h3 align="center">Bottles</h3>
-<br/>
-<div class="container">
-    <table class="table table-hover table-sm">
-        <thead>
-        <tr>
-            <th>Bottle #</th>
-            <th>Location</th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="bottle : ${wine.bottles}">
-            <td th:text="${bottle.number}">Bottle #</td>
-            <td th:text="${bottle.location}">Location</td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<br/>
-<div class="text-center">
-    <a th:href="@{/producer/{producerId}/wine/{wineId}/bottle/new(producerId=${producer.id},wineId=${wine.id})}" class="btn btn-default">Add</a>
-</div>
-<br/>
-<br/>
-
 <div th:insert="~{fragments/layout :: footer}"/>
-<div th:replace="~{fragments/layout :: scripts}"/>
+<div th:insert="~{fragments/layout :: scripts}"/>
 </body>
 </html>
