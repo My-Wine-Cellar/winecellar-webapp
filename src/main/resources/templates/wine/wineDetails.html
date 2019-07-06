@@ -51,7 +51,7 @@
                     </tr>
                     <tr>
                         <td><b>Web</b></td>
-                        <td th:text="*{weblink}"></td>
+                        <td><a th:href="*{weblink}"><div th:text="*{weblink}"/></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -59,7 +59,7 @@
         </div>
         <br/>
         <div class="text-center">
-            <a th:href="@{{id}/edit(id=${wine.id})}" class="btn btn-default">Edit Wine</a>
+            <a th:href="@{{id}/edit(id=${wine.id})}" class="btn btn-default">Edit</a>
         </div>
     </div>
     <br/>
@@ -88,7 +88,7 @@
     <br/>
     <div class="text-center">
         <a th:href="@{/producer/{producerId}/wine/{wineId}/bottle/new(producerId=${producer.id},wineId=${wine.id})}"
-           class="btn btn-default">Add Bottle</a>
+           class="btn btn-default">Add</a>
     </div>
 </div>
 <br/>

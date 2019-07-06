@@ -27,11 +27,11 @@
                     </tr>
                     <tr>
                         <td><b>Email</b></td>
-                        <td th:text="*{email}"></td>
+                        <td><a th:href="|mailto:*{email}|"><div th:text="*{email}"/></a></td>
                     </tr>
                     <tr>
                         <td><b>Website</b></td>
-                        <td th:text="*{website}"></td>
+                        <td><a th:href="*{website}"><div th:text="*{website}"/></a></td>
                     </tr>
 <!--
                     <tr>
