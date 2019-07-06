@@ -11,9 +11,6 @@
             <div class="form-group col-md-6">
                 <input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
             </div>
-            <div class="form-group col-md-6">
-                <input th:replace="~{fragments/inputField :: input ('Website', 'website', 'url')}"/>
-            </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -24,6 +21,9 @@
             </div>
         </div>
         <div class="form-row">
+            <div class="form-group col-md-6">
+                <input th:replace="~{fragments/inputField :: input ('Website', 'website', 'url')}"/>
+            </div>
             <div class="form-group col-md-6">
                 <input th:replace="~{fragments/inputField :: input ('Email', 'email', 'text')}"/>
             </div>
