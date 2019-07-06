@@ -33,17 +33,19 @@
                         <td><b>Website</b></td>
                         <td th:text="*{website}"></td>
                     </tr>
+<!--
                     <tr>
                         <td><b>Areas</b></td>
                         <td th:text="*{areas}"></td>
                     </tr>
+-->
                     </tbody>
                 </table>
             </div>
         </div>
         <br/>
         <div class="text-center">
-            <a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit Producer</a>
+            <a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit</a>
         </div>
     </div>
     <br/>
@@ -69,7 +71,7 @@
         </table>
         <br/>
         <div class="text-center">
-            <a th:href="@{{id}/wine/new(id=${producer.id})}" class="btn btn-default">Add Wine</a>
+            <a th:href="@{{id}/wine/new(id=${producer.id})}" class="btn btn-default">Add</a>
         </div>
     </div>
 </div>
