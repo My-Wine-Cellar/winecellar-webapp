@@ -35,3 +35,9 @@ INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barre
 INSERT INTO bottle (number, show, user_id, wine_id) VALUES (1, false, 888888, 1);
 INSERT INTO bottle (number, show, user_id, wine_id) VALUES (6, true, 777777, 2);
 INSERT INTO bottle (number, show, user_id, wine_id) VALUES (12, true, 777777, 3);
+
+-- Reviews for users
+INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (4.0, 'Very good', now()::date, 888888, 1);
+INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (5.0, 'Excellent', now()::date, 777777, 2);
+INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (4.0, 'Very good', now()::date, 777777, 3);
+

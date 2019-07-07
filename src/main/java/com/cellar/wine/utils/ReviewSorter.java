@@ -26,7 +26,7 @@ public class ReviewSorter implements Comparator<Review> {
 
         result = r1.getStars().compareTo(r2.getStars());
         if (result != 0)
-            return result;
+            return -result;
 
         return wineSorter.compare(r1.getWine(), r2.getWine());
     }
