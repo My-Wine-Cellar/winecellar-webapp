@@ -64,4 +64,10 @@ public class IndexController {
         model.addAttribute("user", userService.findByUsername(principal.getName()));
         return "wishlist/wishlistList";
     }
+
+    @GetMapping("/tasted/list")
+    public String showUsersTasted(Model model, Principal principal) {
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
+        return "tasted/tastedList";
+    }
 }

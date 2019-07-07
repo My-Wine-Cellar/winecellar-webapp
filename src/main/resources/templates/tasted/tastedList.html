@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/layout :: head}"/>
+<body>
+<nav th:insert="~{fragments/layout :: nav}"/>
+<br/>
+<h2 align="center">Tasted</h2>
+<br/>
+<div class="container justify-content-center">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Producer</th>
+            <th>Wine</th>
+            <th>Vintage</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${user.tasted}">
+            <td><a th:href="@{/producer/__${t.wine.producer.id}__}" th:text="${t.wine.producer.name}"></a></td>
+            <td><a th:href="@{/producer/__${t.wine.producer.id}__/wine/__${t.wine.id}__}" th:text="${t.wine.name}"></a></td>
+            <td th:text="${t.wine.vintage}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+</div>
+<br/>
+<br/>
+<div th:insert="~{fragments/layout :: footer}"/>
+<div th:insert="~{fragments/layout :: scripts}"/>
+</body>
+</html>
