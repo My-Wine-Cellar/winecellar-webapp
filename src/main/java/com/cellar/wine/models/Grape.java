@@ -13,8 +13,8 @@ import java.util.List;
 public class Grape extends BaseEntity implements Comparable<Grape> {
 
     @Builder
-    public Grape(Long id, String name, String color, String description, String weblink) {
-        super(id);
+    public Grape(String name, String color, String description, String weblink) {
+        super();
         this.name = name;
         this.color = color;
         this.description = description;

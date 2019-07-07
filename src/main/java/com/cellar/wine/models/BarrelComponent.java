@@ -7,15 +7,14 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "barrel_component")
 public class BarrelComponent extends BaseEntity implements Comparable<BarrelComponent> {
 
     @Builder
-    public BarrelComponent(Long id, Byte percentage, Integer size, Integer aging,
+    public BarrelComponent(Byte percentage, Integer size, Integer aging,
                            GrapeComponent grapeComponent, Barrel barrel) {
-        super(id);
+        super();
         this.percentage = percentage;
         this.size = size;
         this.aging = aging;

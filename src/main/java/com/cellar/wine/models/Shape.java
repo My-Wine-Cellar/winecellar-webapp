@@ -13,8 +13,8 @@ import java.util.List;
 public class Shape extends BaseEntity implements Comparable<Shape> {
 
     @Builder
-    public Shape(Long id, String name, String description, String weblink) {
-        super(id);
+    public Shape(String name, String description, String weblink) {
+        super();
         this.name = name;
         this.description = description;
         this.weblink = weblink;

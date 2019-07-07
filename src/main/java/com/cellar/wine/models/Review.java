@@ -13,13 +13,12 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Review extends BaseEntity implements Comparable<Review> {
 
     @Builder
-    public Review(Long id, Float stars, String comment, Date date, User user, Wine wine) {
-        super(id);
+    public Review(Float stars, String comment, Date date, User user, Wine wine) {
+        super();
         this.stars = stars;
         this.comment = comment;
         this.date = date;

@@ -13,8 +13,8 @@ import java.util.List;
 public class Barrel extends BaseEntity implements Comparable<Barrel> {
 
     @Builder
-    public Barrel(Long id, String name, String description, String weblink) {
-        super(id);
+    public Barrel(String name, String description, String weblink) {
+        super();
         this.name = name;
         this.description = description;
         this.weblink = weblink;

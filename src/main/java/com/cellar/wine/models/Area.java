@@ -14,8 +14,8 @@ import java.util.List;
 public class Area extends BaseEntity implements Comparable<Area> {
 
     @Builder
-    public Area(Long id, String name, String description, String weblink) {
-        super(id);
+    public Area(String name, String description, String weblink) {
+        super();
         this.name = name;
         this.description = description;
         this.weblink = weblink;

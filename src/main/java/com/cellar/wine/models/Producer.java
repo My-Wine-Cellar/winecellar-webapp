@@ -15,8 +15,8 @@ import java.util.List;
 public class Producer extends BaseEntity implements Comparable<Producer> {
 
     @Builder
-    public Producer(Long id, String name, String description, String phone, String fax, String email, String website) {
-        super(id);
+    public Producer(String name, String description, String phone, String fax, String email, String website) {
+        super();
         this.name = name;
         this.description = description;
         this.phone = phone;

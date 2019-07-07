@@ -13,8 +13,8 @@ import java.util.List;
 public class Maceration extends BaseEntity implements Comparable<Maceration> {
 
     @Builder
-    public Maceration(Long id, Byte days, Float temperature) {
-        super(id);
+    public Maceration(Byte days, Float temperature) {
+        super();
         this.days = days;
         this.temperature = temperature;
     }
