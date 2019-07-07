@@ -53,4 +53,9 @@ public class IndexController {
         return "bottle/bottleList";
     }
 
+    @GetMapping("/review/list")
+    public String showUsersReviews(Model model, Principal principal) {
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
+        return "review/reviewList";
+    }
 }
