@@ -13,10 +13,10 @@ import java.util.List;
 public class Wine extends BaseEntity implements Comparable<Wine> {
 
     @Builder
-    public Wine(Long id, String name, Integer vintage, Float alcohol, Float size,
+    public Wine(String name, Integer vintage, Float alcohol, Float size,
                 Float acid, Float pH, Integer bottleAging, String description, String weblink,
                 Producer producer, Closure closure, Shape shape) {
-        super(id);
+        super();
         this.name = name;
         this.vintage = vintage;
         this.alcohol = alcohol;

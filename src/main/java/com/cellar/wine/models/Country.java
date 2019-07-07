@@ -15,8 +15,8 @@ import java.util.List;
 public class Country extends BaseEntity implements Comparable<Country> {
 
     @Builder
-    public Country(Long id, String name, String description, String weblink) {
-        super(id);
+    public Country(String name, String description, String weblink) {
+        super();
         this.name = name;
         this.description = description;
         this.weblink = weblink;

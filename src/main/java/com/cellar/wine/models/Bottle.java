@@ -11,13 +11,12 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Bottle extends BaseEntity implements Comparable<Bottle> {
 
     @Builder
-    public Bottle(Long id, Integer number, String location, Boolean show, User user, Wine wine) {
-        super(id);
+    public Bottle(Integer number, String location, Boolean show, User user, Wine wine) {
+        super();
         this.number = number;
         this.location = location;
         this.show = show;

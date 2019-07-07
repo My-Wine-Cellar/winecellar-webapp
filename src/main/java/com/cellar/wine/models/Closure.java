@@ -13,8 +13,8 @@ import java.util.List;
 public class Closure extends BaseEntity implements Comparable<Closure> {
 
     @Builder
-    public Closure(Long id, String name, String description, String weblink) {
-        super(id);
+    public Closure(String name, String description, String weblink) {
+        super();
         this.name = name;
         this.description = description;
         this.weblink = weblink;

@@ -15,8 +15,8 @@ import javax.persistence.*;
 public class GrapeComponent extends BaseEntity implements Comparable<GrapeComponent> {
 
     @Builder
-    public GrapeComponent(Long id, Byte percentage, Date harvestBegin, Date harvestEnd, Grape grape, Wine wine) {
-        super(id);
+    public GrapeComponent(Byte percentage, Date harvestBegin, Date harvestEnd, Grape grape, Wine wine) {
+        super();
         this.percentage = percentage;
         this.harvestBegin = harvestBegin;
         this.harvestEnd = harvestEnd;

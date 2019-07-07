@@ -63,10 +63,10 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
     public static final String CONCLUSION_OTHER = "other";
     
     @Builder
-    public GenericTastingNotes(Long id, Map<String, Set<String>> sight, Map<String, Set<String>> nose,
+    public GenericTastingNotes(Map<String, Set<String>> sight, Map<String, Set<String>> nose,
                                Map<String, Set<String>> palette, Map<String, Set<String>> conclusion,
                                Boolean show, User user, Wine wine) {
-        super(id);
+        super();
         this.data = new HashMap<String, Serializable>();
 
         // Do we need com.github.cliftonlabs.json_simple.JsonArray here for the values ?
