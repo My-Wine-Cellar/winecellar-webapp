@@ -41,3 +41,7 @@ INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (4.0, 'Very g
 INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (5.0, 'Excellent', now()::date, 777777, 2);
 INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (4.0, 'Very good', now()::date, 777777, 3);
 
+-- Wishlist for users
+INSERT INTO wishlist (date, user_id, wine_id) VALUES (now()::date, 888888, 2);
+INSERT INTO wishlist (date, user_id, wine_id) VALUES (now()::date, 777777, 1);
+
