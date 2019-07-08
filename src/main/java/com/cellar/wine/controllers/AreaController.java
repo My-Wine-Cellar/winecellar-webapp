@@ -1,20 +1,19 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Area;
+import com.cellar.wine.models.Producer;
 import com.cellar.wine.services.AreaService;
 import com.cellar.wine.services.ProducerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/area")
+@RequestMapping("/area/{areaId}")
 public class AreaController {
 
     private AreaService areaService;
@@ -25,27 +24,54 @@ public class AreaController {
         this.producerService = producerService;
     }
 
-    @GetMapping("/{areaId}")
+    @InitBinder("area")
+    public void setAllowedFields(WebDataBinder dataBinder) {
+        dataBinder.setDisallowedFields("name");
+    }
+
+    @ModelAttribute("area")
+    public Area areaModel(@PathVariable Long areaId) {
+        return areaService.findById(areaId);
+    }
+
+    @GetMapping("/areaDetails")
     public String areaDetails(@PathVariable Long areaId, Model model) {
         model.addAttribute("area", areaService.findById(areaId));
         return "area/areaDetails";
     }
 
-    @GetMapping("/{areaId}/edit")
+    @GetMapping("/edit")
     public String initAddEditAreaForm(@PathVariable Long areaId, Model model) {
         model.addAttribute("area", areaService.findById(areaId));
-        model.addAttribute("producer", producerService.findAll());
         return "area/editArea";
     }
 
-    @PostMapping("/{areaId}/edit")
+    @PostMapping("/edit")
     public String processAddEditAreaForm(@Valid Area area, BindingResult result, @PathVariable Long areaId) {
         if(result.hasErrors()) {
             return "area/editArea";
         } else {
             area.setId(areaId);
             Area savedArea = areaService.save(area);
-            return "redirect:/area/" + savedArea.getId();
+            return "redirect:/area/" + savedArea.getId() + "/areaDetails";
+        }
+    }
+
+    @GetMapping("/addProducer")
+    public String initAddProducerForm(Model model, @PathVariable Long areaId) {
+        model.addAttribute("area", areaService.findById(areaId));
+        model.addAttribute("producer", Producer.builder().build());
+        return "producer/addEditProducer";
+    }
+
+    @PostMapping("/addProducer")
+    public String processAddProducerForm(@Valid Area area, BindingResult result, Producer producer, @PathVariable Long areaId) {
+        if(result.hasErrors()) {
+            return "producer/addEditProducer";
+        } else {
+            area.getProducers().add(producer);
+            producerService.save(producer);
+            return "redirect:/area/" + areaId + "/areaDetails";
         }
     }
 }

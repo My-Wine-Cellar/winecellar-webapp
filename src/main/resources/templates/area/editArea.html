@@ -10,6 +10,7 @@
     <br/>
     <form th:object="${area}" method="post">
         <input type="hidden" name="area" th:value="*{id}"/>
+        <!--
         <div class="form-group col-sm-6">
             <label th:for="*{producers}">Producers</label>
             <select multiple class="form-control" th:field="*{producers}">
@@ -17,6 +18,12 @@
                         th:value="${addProducer.id}">Areas
                 </option>
             </select>
+        </div>
+        -->
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input th:replace="~{fragments/inputField :: input ('Weblink', 'weblink', 'url')}"/>
+            </div>
         </div>
         <div class="form-group">
             <textarea th:replace="~{fragments/inputField :: textarea ('Description', 'description', 'text')}"></textarea>
