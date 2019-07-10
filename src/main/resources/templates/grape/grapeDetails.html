@@ -15,10 +15,36 @@
         <div class="card text-left">
             <div class="card-body" th:object="${grape}">
                 <p class="card-text" th:text="*{description}"></p>
-                <p class="card-text" th:text="*{color}"></p>
-                <p class="card-text" th:text="*{weblink}"></p>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><b>Color</b></td>
+                        <td th:text="*{color}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Weblink</b></td>
+                        <td><a th:text="*{weblink}"><div th:text="*{weblink}"/></a></td>
+                    </tr>
+                    <tr>
+                        <td><b>Areas</b></td>
+                        <td th:text="*{areas}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Alternative Names</b></td>
+                        <td th:text="*{alternativeNames}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Grape Components</b></td>
+                        <td th:text="*{grapeComponents}"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
+    <br/>
+    <div class="text-center">
+        <a th:href="@{/grape/{id}/edit(id=${grape.id})}" class="btn btn-default">Edit</a>
     </div>
 </div>
 <br/>
