@@ -5,20 +5,21 @@
 <nav th:insert="~{fragments/layout :: nav}"/>
 <br/>
 <div class="container justify-content-center">
-<div class="card text-center">
-  <div class="card-body" th:object="${grape}">
-    <h2 class="card-header" th:text="*{name}"></h2>
-  </div>
-</div>
-<br/>
-    <div class="container justify-content-left">
-    <div class="card text-left">
+    <div class="card text-center">
         <div class="card-body" th:object="${grape}">
-            <p class="card-text" th:text="*{description}"></p>
-            <p class="card-text" th:text="*{weblink}"></p>
+            <h2 class="card-header" th:text="*{name}"></h2>
         </div>
     </div>
-</div>
+    <br/>
+    <div class="container justify-content-left">
+        <div class="card text-left">
+            <div class="card-body" th:object="${grape}">
+                <p class="card-text" th:text="*{description}"></p>
+                <p class="card-text" th:text="*{color}"></p>
+                <p class="card-text" th:text="*{weblink}"></p>
+            </div>
+        </div>
+    </div>
 </div>
 <br/>
 <br/>
