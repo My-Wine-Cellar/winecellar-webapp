@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,7 +37,7 @@ public class Grape extends BaseEntity implements Comparable<Grape> {
     @OneToMany
     private List<Grape> alternativeNames;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "grape_area",
             joinColumns =
             @JoinColumn(name = "grape_id", referencedColumnName = "id"),
