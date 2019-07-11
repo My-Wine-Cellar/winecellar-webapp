@@ -18,8 +18,11 @@
                 <p class="card-text" th:text="*{weblink}"></p>
             </div>
         </div>
+        <br/>
+        <div class="text-center">
+            <a th:href="@{/country/{id}/edit(id=${country.id})}" class="btn btn-default">Edit</a>
+        </div>
     </div>
-    <br/>
     <br/>
     <br/>
     <h3 align="center" th:switch="${country.name}">
@@ -30,7 +33,7 @@
     <div class="container justify-content-center">
         <div class="card text-center">
             <div class="card-body" th:each="region : ${country.regions}">
-                <h4 class="card-header"><a th:href="@{/region/__${region.id}__}" th:text="${region.name}"></a></h4>
+                <h5 class="card-header"><a th:href="@{/region/__${region.id}__}" th:text="${region.name}"></a></h5>
             </div>
         </div>
     </div>
