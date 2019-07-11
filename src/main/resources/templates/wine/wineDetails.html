@@ -21,37 +21,37 @@
                         <td><b>Producer</b></td>
                         <td><a th:href="@{/producer/__${wine.producer.id}__}" th:text="${wine.producer.name}"></a></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${!wine.subarea.isEmpty()}">
                         <td><b>Subarea</b></td>
                         <td th:text="*{subarea}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${wine.vintage}">
                         <td><b>Vintage</b></td>
                         <td th:text="*{vintage}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${wine.size}">
                         <td><b>Size</b></td>
                         <td th:text="*{size}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${wine.alcohol}">
                         <td><b>Alcohol</b></td>
                         <td th:text="*{alcohol}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${wine.acid}">
                         <td><b>Acid</b></td>
                         <td th:text="*{acid}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${wine.getPH()}">
                         <td><b>pH</b></td>
                         <td th:text="*{pH}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${wine.bottleAging}">
                         <td><b>Bottle aging</b></td>
                         <td th:text="*{bottleAging}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${!wine.weblink.isEmpty()}">
                         <td><b>Web</b></td>
-                        <td><a th:href="*{weblink}"><div th:text="*{weblink}"/></a></td>
+                        <td><a th:href="*{weblink}" target="_blank"><div th:text="*{weblink}"/></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -67,12 +67,11 @@
     <h3 align="center">Bottles</h3>
     <br/>
     <div class="container">
-        <table class="table table-hover table-sm">
+        <table class="table table-hover table-sm text-center">
             <thead>
             <tr>
                 <th>Bottle #</th>
                 <th>Location</th>
-                <th></th>
                 <th></th>
             </tr>
             </thead>
@@ -80,7 +79,7 @@
             <tr th:each="bottle : ${wine.bottles}">
                 <td th:text="${bottle.number}">Bottle #</td>
                 <td th:text="${bottle.location}">Location</td>
-                <td></td>
+                <td><a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__/bottle/__${bottle.id}__/edit}" class="btn btn-default btn-sm">Update</a></td>
             </tr>
             </tbody>
         </table>
