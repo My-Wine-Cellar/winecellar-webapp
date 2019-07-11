@@ -77,7 +77,7 @@ public class WineController {
     }
 
     @PostMapping("/{wineId}/edit")
-    public String processEditWineForm(@Valid Wine wine, BindingResult result, Producer producer, Model model) {
+    public String processEditWineForm(@Valid Wine wine, BindingResult result, Producer producer, Model model, @PathVariable Long wineId) {
         wine.setProducer(producer);
         if (result.hasErrors()) {
             model.addAttribute(MODEL_ATTRIBUTE_WINE, wine);
@@ -85,7 +85,7 @@ public class WineController {
         } else {
             Wine savedWine = wineService.save(wine);
             producer.getWines().add(savedWine);
-            return "redirect:/producer/" + producer.getId();
+            return "redirect:/producer/" + producer.getId() + "/wine/" + wineId;
         }
     }
 
