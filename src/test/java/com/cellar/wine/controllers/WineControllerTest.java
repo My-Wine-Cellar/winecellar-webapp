@@ -13,6 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.lang.reflect.Field;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
@@ -39,12 +41,14 @@ public class WineControllerTest {
     Wine wine;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
+        Field field = Producer.class.getDeclaredField("id");
+
         producer = new Producer();
-        producer.setId(1L);
+        field.set(producer, new Long(1L));
         mockMvc = MockMvcBuilders
-                .standaloneSetup(wineController)
-                .build();
+            .standaloneSetup(wineController)
+            .build();
     }
 
     @Test
