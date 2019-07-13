@@ -21,22 +21,20 @@
                         <td><b>Color</b></td>
                         <td th:text="*{color}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Weblink</b></td>
-                        <td><a th:text="*{weblink}"><div th:text="*{weblink}"/></a></td>
+                    <tr th:if="${grape.alternativeNames != null && !grape.alternativeNames.isEmpty()}">
+                        <td><b>Alternative Names</b></td>
+                        <td th:text="*{alternativeNames}"></td>
                     </tr>
+                    <tr th:if="${grape.weblink != null && !grape.weblink.isEmpty()}">
+                        <td><b>Web</b></td>
+                        <td><a th:href="*{weblink}" target="_blank"><div th:text="*{weblink}"/></a></td>
+                    </tr>
+                    <!--
                     <tr>
                         <td><b>Areas</b></td>
                         <td th:text="*{areas}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Alternative Names</b></td>
-                        <td th:text="*{alternativeNames}"></td>
-                    </tr>
-                    <tr>
-                        <td><b>Grape Components</b></td>
-                        <td th:text="*{grapeComponents}"></td>
-                    </tr>
+                    -->
                     </tbody>
                 </table>
             </div>
