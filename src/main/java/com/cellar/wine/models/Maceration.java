@@ -7,12 +7,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Maceration extends BaseEntity implements Comparable<Maceration> {
 
-    @Builder
+    public Maceration() {
+        super();
+    }
+
     public Maceration(Byte days, Float temperature) {
         super();
         this.days = days;

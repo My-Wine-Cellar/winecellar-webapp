@@ -9,12 +9,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Country extends BaseEntity implements Comparable<Country> {
 
-    @Builder
+    public Country() {
+        super();
+    }
+
     public Country(String name, String description, String weblink) {
         super();
         this.name = name;

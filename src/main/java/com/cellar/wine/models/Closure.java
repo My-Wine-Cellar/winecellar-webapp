@@ -7,12 +7,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Closure extends BaseEntity implements Comparable<Closure> {
 
-    @Builder
+    public Closure() {
+        super();
+    }
+
     public Closure(String name, String description, String weblink) {
         super();
         this.name = name;
@@ -29,7 +30,7 @@ public class Closure extends BaseEntity implements Comparable<Closure> {
     @Column(name = "weblink")
     private String weblink;
 
-    @OneToMany(mappedBy = "closure")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "closure")
     private List<Wine> wines;
 
     @Override

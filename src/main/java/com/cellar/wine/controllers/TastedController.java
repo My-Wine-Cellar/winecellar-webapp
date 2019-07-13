@@ -51,9 +51,7 @@ public class TastedController {
     @GetMapping("/new")
     public String initAddTastedForm(Wine wine, Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
-        Tasted tasted = new Tasted();
-        user.getTasted().add(tasted);
-        tasted.setWine(wine);
+        Tasted tasted = new Tasted(user, wine);
         model.addAttribute("tasted", tasted);
         return "tasted/addEditTasted";
     }

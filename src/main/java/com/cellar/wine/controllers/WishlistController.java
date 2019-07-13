@@ -52,9 +52,7 @@ public class WishlistController {
     @GetMapping("/new")
     public String initAddWishlistForm(Wine wine, Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
-        Wishlist wishlist = new Wishlist();
-        user.getWishlist().add(wishlist);
-        wishlist.setWine(wine);
+        Wishlist wishlist = new Wishlist(new Date(System.currentTimeMillis()), user, wine);
         model.addAttribute("wishlist", wishlist);
         return "wishlist/addEditWishlist";
     }

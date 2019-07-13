@@ -7,12 +7,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Shape extends BaseEntity implements Comparable<Shape> {
 
-    @Builder
+    public Shape() {
+        super();
+    }
+
     public Shape(String name, String description, String weblink) {
         super();
         this.name = name;
@@ -29,7 +30,7 @@ public class Shape extends BaseEntity implements Comparable<Shape> {
     @Column(name = "weblink")
     private String weblink;
 
-    @OneToMany(mappedBy = "shape")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shape")
     private List<Wine> wines;
 
     @Override

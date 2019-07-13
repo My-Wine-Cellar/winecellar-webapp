@@ -5,15 +5,15 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Grape extends BaseEntity implements Comparable<Grape> {
 
-    @Builder
+    public Grape() {
+        super();
+    }
+
     public Grape(String name, String color, String description, String weblink) {
         super();
         this.name = name;
@@ -46,7 +46,7 @@ public class Grape extends BaseEntity implements Comparable<Grape> {
     )
     private List<Area> areas;
 
-    @OneToMany(mappedBy = "grape")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "grape")
     private List<GrapeComponent> grapeComponents;
 
     @Override

@@ -7,12 +7,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Fermentation extends BaseEntity implements Comparable<Fermentation> {
 
-    @Builder
+    public Fermentation() {
+        super();
+    }
+
     public Fermentation(Byte days, Float temperature) {
         super();
         this.days = days;

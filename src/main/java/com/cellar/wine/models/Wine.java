@@ -7,12 +7,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Wine extends BaseEntity implements Comparable<Wine> {
 
-    @Builder
+    public Wine() {
+        super();
+    }
+
     public Wine(String name, Integer vintage, Float alcohol, Float size,
                 Float acid, Float pH, Integer bottleAging, String description, String weblink,
                 Producer producer, Closure closure, Shape shape) {
@@ -61,33 +62,33 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @Column(name = "subarea")
     private String subarea;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producer_id", referencedColumnName = "id")
     private Producer producer;
 
-    @OneToMany(mappedBy = "wine")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<GrapeComponent> grapes;
 
-    @OneToMany(mappedBy = "wine")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<Bottle> bottles;
 
-    @OneToMany(mappedBy = "wine")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<GenericTastingNotes> genericTastingNotes;
 
-    @OneToMany(mappedBy = "wine")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<Tasted> tasted;
 
-    @OneToMany(mappedBy = "wine")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "wine")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<Wishlist> wishlists;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "closure_id", referencedColumnName = "id")
     private Closure closure;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shape_id", referencedColumnName = "id")
     private Shape shape;
 

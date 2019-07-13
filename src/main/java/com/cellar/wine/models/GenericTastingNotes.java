@@ -14,8 +14,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class GenericTastingNotes extends BaseEntity implements Comparable<GenericTastingNotes> {
 
@@ -62,7 +60,10 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
     public static final String CONCLUSION_NOTES = "notes";
     public static final String CONCLUSION_OTHER = "other";
     
-    @Builder
+    public GenericTastingNotes() {
+        super();
+    }
+
     public GenericTastingNotes(Map<String, Set<String>> sight, Map<String, Set<String>> nose,
                                Map<String, Set<String>> palette, Map<String, Set<String>> conclusion,
                                Boolean show, User user, Wine wine) {

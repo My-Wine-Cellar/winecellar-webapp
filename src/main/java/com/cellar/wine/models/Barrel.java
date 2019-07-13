@@ -7,12 +7,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Barrel extends BaseEntity implements Comparable<Barrel> {
 
-    @Builder
+    public Barrel() {
+        super();
+    }
+
     public Barrel(String name, String description, String weblink) {
         super();
         this.name = name;
@@ -29,7 +30,7 @@ public class Barrel extends BaseEntity implements Comparable<Barrel> {
     @Column(name = "weblink")
     private String weblink;
 
-    @OneToMany(mappedBy = "barrel")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "barrel")
     private List<BarrelComponent> barrelComponents;
 
     @Override
