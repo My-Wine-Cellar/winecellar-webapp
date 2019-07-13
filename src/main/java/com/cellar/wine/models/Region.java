@@ -8,12 +8,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Region extends BaseEntity implements Comparable<Region> {
 
-    @Builder
+    public Region() {
+        super();
+    }
+
     public Region(String name, String description, String weblink, Country country) {
         super();
         this.name = name;

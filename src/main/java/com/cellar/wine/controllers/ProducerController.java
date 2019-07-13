@@ -43,7 +43,7 @@ public class ProducerController {
 
     @GetMapping("/new")
     public String initCreateForm(Model model) {
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, Producer.builder().build());
+        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, new Producer());
         return ADD_OR_EDIT_PRODUCER_TEMPLATE;
     }
 
@@ -68,7 +68,6 @@ public class ProducerController {
         if(result.hasErrors()) {
             return ADD_OR_EDIT_PRODUCER_TEMPLATE;
         } else {
-            producer.setId(producerId);
             Producer savedProducer = producerService.save(producer);
             return "redirect:/producer/" + savedProducer.getId();
         }

@@ -12,11 +12,13 @@ import java.sql.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 public class Wishlist extends BaseEntity implements Comparable<Wishlist> {
 
-    @Builder
+    public Wishlist() {
+        super();
+    }
+
     public Wishlist(Date date, User user, Wine wine) {
         super();
         this.date = date;

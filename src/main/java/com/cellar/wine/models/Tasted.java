@@ -10,11 +10,13 @@ import javax.persistence.ManyToOne;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 public class Tasted extends BaseEntity implements Comparable<Tasted> {
 
-    @Builder
+    public Tasted() {
+        super();
+    }
+
     public Tasted(User user, Wine wine) {
         super();
         this.user = user;

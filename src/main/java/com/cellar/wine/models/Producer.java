@@ -7,14 +7,15 @@ import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = false)
 @Setter
 @Getter
-@NoArgsConstructor
 @Entity
 public class Producer extends BaseEntity implements Comparable<Producer> {
 
-    @Builder
+    public Producer() {
+        super();
+    }
+
     public Producer(String name, String description, String phone, String fax, String email, String website) {
         super();
         this.name = name;

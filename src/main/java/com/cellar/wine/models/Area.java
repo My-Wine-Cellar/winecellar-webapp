@@ -5,15 +5,15 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Area extends BaseEntity implements Comparable<Area> {
 
-    @Builder
+    public Area() {
+        super();
+    }
+
     public Area(String name, String description, String weblink) {
         super();
         this.name = name;
@@ -30,7 +30,7 @@ public class Area extends BaseEntity implements Comparable<Area> {
     @Column(name = "weblink")
     private String weblink;
 
-    @ManyToMany(mappedBy = "areas")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "areas")
     public List<Region> regions;
 
     @ManyToMany(mappedBy = "areas")
@@ -38,10 +38,10 @@ public class Area extends BaseEntity implements Comparable<Area> {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "area_producer",
-            joinColumns =
-            @JoinColumn(name = "area_id", referencedColumnName = "id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "producer_id", referencedColumnName = "id")
+               joinColumns =
+               @JoinColumn(name = "area_id", referencedColumnName = "id"),
+               inverseJoinColumns =
+               @JoinColumn(name = "producer_id", referencedColumnName = "id")
     )
     private List<Producer> producers;
 

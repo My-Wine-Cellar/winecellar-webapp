@@ -58,7 +58,6 @@ public class AreaController {
         if(result.hasErrors()) {
             return "area/editArea";
         } else {
-            area.setId(areaId);
             Area savedArea = areaService.save(area);
             return "redirect:/area/" + savedArea.getId() + "/areaDetails";
         }
@@ -67,7 +66,7 @@ public class AreaController {
     @GetMapping("/addProducer")
     public String initAddProducerForm(Model model, @PathVariable Long areaId) {
         model.addAttribute("area", areaService.findById(areaId));
-        model.addAttribute("producer", Producer.builder().build());
+        model.addAttribute("producer", new Producer());
         return "producer/addEditProducer";
     }
 
