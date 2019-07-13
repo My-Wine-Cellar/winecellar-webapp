@@ -15,7 +15,14 @@
         <div class="card text-left">
             <div class="card-body" th:object="${country}">
                 <p class="card-text" th:text="*{description}"></p>
-                <p class="card-text" th:text="*{weblink}"></p>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr th:if="${country.weblink != null && !country.weblink.isEmpty()}">
+                        <td><b>Web</b></td>
+                        <td><a th:href="*{weblink}" target="_blank"><div th:text="*{weblink}"/></a></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <br/>
