@@ -29,12 +29,6 @@ public class ProducerController {
         dataBinder.setDisallowedFields("id");
     }
 
-    @GetMapping("/list")
-    public String showAllProducers(Model model) {
-        model.addAttribute("producers", producerService.findAll());
-        return "producer/producerList";
-    }
-
     @GetMapping("/{producerId}")
     public String producerDetails(@PathVariable Long producerId, Model model) {
         model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, producerService.findById(producerId));
