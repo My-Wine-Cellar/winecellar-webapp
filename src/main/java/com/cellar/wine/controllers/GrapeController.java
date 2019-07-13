@@ -49,6 +49,7 @@ public class GrapeController {
         if(result.hasErrors()) {
             return "grape/editGrape";
         } else {
+            grape.setId(grapeId);
             Grape savedGrape = grapeService.save(grape);
             return "redirect:/grape/" + savedGrape.getId();
         }

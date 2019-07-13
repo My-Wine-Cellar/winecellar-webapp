@@ -45,6 +45,7 @@ public class CountryController {
         if(result.hasErrors()) {
             return "country/editCountry";
         } else {
+            country.setId(countryId);
             Country savedCountry = countryService.save(country);
             return "redirect:/country/" + savedCountry.getId();
         }

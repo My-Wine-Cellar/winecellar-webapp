@@ -39,6 +39,7 @@ public class RegionController {
         if(result.hasErrors()) {
             return "region/editRegion";
         } else {
+            region.setId(regionId);
             Region savedRegion = regionService.save(region);
             return "redirect:/region/" + savedRegion.getId();
         }
