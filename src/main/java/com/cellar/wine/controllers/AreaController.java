@@ -58,6 +58,7 @@ public class AreaController {
         if(result.hasErrors()) {
             return "area/editArea";
         } else {
+            area.setId(areaId);
             Area savedArea = areaService.save(area);
             return "redirect:/area/" + savedArea.getId() + "/areaDetails";
         }

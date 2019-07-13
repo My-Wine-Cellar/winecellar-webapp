@@ -53,7 +53,7 @@ public class ProducerController {
 
     @GetMapping("/{producerId}/edit")
     public String initAddEditProducerForm(@PathVariable Long producerId, Model model) {
-        model.addAttribute(producerService.findById(producerId));
+        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, producerService.findById(producerId));
         return ADD_OR_EDIT_PRODUCER_TEMPLATE;
     }
 
@@ -62,6 +62,7 @@ public class ProducerController {
         if(result.hasErrors()) {
             return ADD_OR_EDIT_PRODUCER_TEMPLATE;
         } else {
+            producer.setId(producerId);
             Producer savedProducer = producerService.save(producer);
             return "redirect:/producer/" + savedProducer.getId();
         }
