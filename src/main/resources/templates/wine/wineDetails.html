@@ -58,14 +58,15 @@
             </div>
         </div>
         <br/>
-        <div class="text-center">
-            <a th:href="@{{id}/edit(id=${wine.id})}" class="btn btn-default">Edit</a>
+        <div class="text-right">
+            <a th:href="@{{id}/edit(id=${wine.id})}"><span class="fas fa-edit"/></a>
         </div>
     </div>
     <br/>
     <br/>
     <h3 align="center">Bottles</h3>
     <br/>
+    <!--
     <div class="container">
         <table class="table table-hover table-sm text-center">
             <thead>
@@ -79,15 +80,17 @@
             <tr th:each="bottle : ${wine.bottles}">
                 <td th:text="${bottle.number}">Bottle #</td>
                 <td th:text="${bottle.location}">Location</td>
-                <td><a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__/bottle/__${bottle.id}__/edit}" class="btn btn-default btn-sm">Update</a></td>
+                <td><a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__/bottle/__${bottle.id}__/edit}">
+                    <span class="fas fa-edit"/></a></td>
             </tr>
             </tbody>
         </table>
     </div>
     <br/>
-    <div class="text-center">
-        <a th:href="@{/producer/{producerId}/wine/{wineId}/bottle/new(producerId=${producer.id},wineId=${wine.id})}"
-           class="btn btn-default">Add</a>
+    -->
+    <div class="text-right">
+        <a th:href="@{/producer/{producerId}/wine/{wineId}/bottle/new(producerId=${producer.id},wineId=${wine.id})}">
+           <span class="fas fa-plus-square"/></a>
     </div>
 </div>
 <br/>
