@@ -21,7 +21,7 @@
                         <td><b>Producer</b></td>
                         <td><a th:href="@{/producer/__${wine.producer.id}__}" th:text="${wine.producer.name}"></a></td>
                     </tr>
-                    <tr th:if="${!wine.subarea.isEmpty()}">
+                    <tr th:if="${wine.subarea != null && !wine.subarea.isEmpty()}">
                         <td><b>Subarea</b></td>
                         <td th:text="*{subarea}"></td>
                     </tr>
@@ -49,7 +49,7 @@
                         <td><b>Bottle aging</b></td>
                         <td th:text="*{bottleAging}"></td>
                     </tr>
-                    <tr th:if="${!wine.weblink.isEmpty()}">
+                    <tr th:if="${wine.weblink != null && !wine.weblink.isEmpty()}">
                         <td><b>Web</b></td>
                         <td><a th:href="*{weblink}" target="_blank"><div th:text="*{weblink}"/></a></td>
                     </tr>
