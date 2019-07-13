@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity

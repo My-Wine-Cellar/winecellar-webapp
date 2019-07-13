@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,11 +41,9 @@ public class ProducerControllerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        Field field = Producer.class.getDeclaredField("id");
-
         producers = new HashSet<>();
+        producer1.setId(1L);
         producers.add(producer1);
-        field.set(producer1, new Long(1L));
         producers.add(producer2);
 
         mockMvc = MockMvcBuilders

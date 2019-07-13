@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.util.List;
 import javax.persistence.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
