@@ -30,7 +30,7 @@
                         <td><a th:href="|mailto:*{email}|"><div th:text="*{email}"/></a></td>
                     </tr>
                     <tr>
-                        <td><b>Website</b></td>
+                        <td><b>Web</b></td>
                         <td><a th:href="*{website}"><div th:text="*{website}"/></a></td>
                     </tr>
 <!--
@@ -44,8 +44,8 @@
             </div>
         </div>
         <br/>
-        <div class="text-center">
-            <a th:href="@{{id}/edit(id=${producer.id})}" class="btn btn-default">Edit</a>
+        <div class="text-right">
+            <a th:href="@{{id}/edit(id=${producer.id})}"><span class="fas fa-edit"/></a>
         </div>
     </div>
     <br/>
@@ -70,8 +70,8 @@
             </tbody>
         </table>
         <br/>
-        <div class="text-center">
-            <a th:href="@{{id}/wine/new(id=${producer.id})}" class="btn btn-default">Add</a>
+        <div class="text-right">
+            <a th:href="@{{id}/wine/new(id=${producer.id})}"><span class="fas fa-plus-square"/></a>
         </div>
     </div>
 </div>
