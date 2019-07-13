@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity

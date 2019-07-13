@@ -74,7 +74,8 @@ public class BottleController {
 
     @GetMapping("/{bottleId}/edit")
     public String initEditBottleForm(@PathVariable Long bottleId, Model model) {
-        model.addAttribute(bottleService.findById(bottleId));
+        Bottle bottle = bottleService.findById(bottleId);
+        model.addAttribute("bottle", bottle);
         return "bottle/addEditBottle";
     }
 

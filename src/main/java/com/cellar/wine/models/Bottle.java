@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
