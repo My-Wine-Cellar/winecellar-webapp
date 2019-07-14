@@ -37,7 +37,7 @@
     <div class="container justify-content-center">
         <div class="card text-center">
             <div class="card-body" th:each="area : ${region.areas}">
-                <h5 class="card-header"><a th:href="@{/area/__${area.id}__/areaDetails}" th:text="${area.name}"></a></h5>
+                <h5 class="card-header"><a th:href="@{/area/__${area.id}__}" th:text="${area.name}"></a></h5>
             </div>
         </div>
     </div>

@@ -41,7 +41,7 @@ public class AreaController {
         return areaService.findById(areaId);
     }
 
-    @GetMapping("/areaDetails")
+    @GetMapping
     public String areaDetails(@PathVariable Long areaId, Model model) {
         model.addAttribute("area", areaService.findById(areaId));
         return "area/areaDetails";
@@ -60,7 +60,7 @@ public class AreaController {
         } else {
             area.setId(areaId);
             Area savedArea = areaService.save(area);
-            return "redirect:/area/" + savedArea.getId() + "/areaDetails";
+            return "redirect:/area/" + savedArea.getId();
         }
     }
 
@@ -78,7 +78,7 @@ public class AreaController {
         } else {
             area.getProducers().add(producer);
             producerService.save(producer);
-            return "redirect:/area/" + areaId + "/areaDetails";
+            return "redirect:/area/" + areaId;
         }
     }
 
@@ -98,7 +98,7 @@ public class AreaController {
             List<Grape> grapes = area.getPrimaryGrapes();
             grapes.forEach(grape -> grape.getAreas().add(area));
             areaService.save(area);
-            return "redirect:/area/" + areaId + "/areaDetails";
+            return "redirect:/area/" + areaId;
         }
     }
 }
