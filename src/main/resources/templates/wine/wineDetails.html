@@ -66,8 +66,7 @@
     <br/>
     <h3 align="center">Bottles</h3>
     <br/>
-    <!--
-    <div class="container">
+    <div th:if="${owned != null}" class="container">
         <table class="table table-hover table-sm text-center">
             <thead>
             <tr>
@@ -77,18 +76,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="bottle : ${wine.bottles}">
-                <td th:text="${bottle.number}">Bottle #</td>
-                <td th:text="${bottle.location}">Location</td>
-                <td><a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__/bottle/__${bottle.id}__/edit}">
+            <tr>
+                <td th:text="${owned.number}">Bottle #</td>
+                <td th:text="${owned.location}">Location</td>
+                <td><a th:href="@{/producer/__${owned.wine.producer.id}__/wine/__${owned.wine.id}__/bottle/__${owned.id}__/edit}">
                     <span class="fas fa-edit"/></a></td>
             </tr>
             </tbody>
         </table>
     </div>
     <br/>
-    -->
-    <div class="text-right">
+    <div th:if="${owned == null}" class="text-right">
         <a th:href="@{/producer/{producerId}/wine/{wineId}/bottle/new(producerId=${producer.id},wineId=${wine.id})}">
            <span class="fas fa-plus-square"/></a>
     </div>
