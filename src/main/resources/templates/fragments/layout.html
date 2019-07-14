@@ -14,7 +14,7 @@
 
 <body>
 
-<nav th:fragment="nav" class="navbar navbar-custom navbar-expand-md" role="navigation">
+<nav th:fragment="nav" class="navbar navbar-custom navbar-expand-md">
     <a class="navbar-brand" th:href="@{/}">
         MyWine<img th:src="@{/images/wine.png}" alt="wine bottle" style="height: 60px"/>Cellar.info
     </a>
@@ -31,10 +31,10 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" th:href="@{/bottle/list}">My Cellar <span class="fas fa-wine-bottle"></span></a>
-                    <a class="dropdown-item" th:href="@{/review/list}">My Reviews <span class="far fa-star"></a>
-                    <a class="dropdown-item" th:href="@{/wishlist/list}">My Wishlist <span class="fas fa-gift"></a>
-                    <a class="dropdown-item" th:href="@{/tastingnotes/list}">My Tasting Notes <span class="far fa-clipboard"></a>
-                    <a class="dropdown-item" th:href="@{/tasted/list}">My Tasted Wines <span class="fas fa-archive"></a>
+                    <a class="dropdown-item" th:href="@{/review/list}">My Reviews <span class="far fa-star"></span></a>
+                    <a class="dropdown-item" th:href="@{/wishlist/list}">My Wishlist <span class="fas fa-gift"></span></a>
+                    <a class="dropdown-item" th:href="@{/tastingnotes/list}">My Tasting Notes <span class="far fa-clipboard"></span></a>
+                    <a class="dropdown-item" th:href="@{/tasted/list}">My Tasted Wines <span class="fas fa-archive"></span></a>
                 </div>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
