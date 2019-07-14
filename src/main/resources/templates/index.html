@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head th:include="~{fragments/layout :: head}"/>
-
 <body>
-
 <div th:replace="~{fragments/layout :: nav}"/>
-
 <div class="jumbotron jumbotron-fluid" sec:authorize="isAuthenticated()">
     <div class="container text-center">
       <h1 th:text="|#{welcome}, ${user.firstName}|"></h1>
@@ -15,26 +11,26 @@
 <div class="container justify-content-left">
     <div class="card text-left">
       <div class="card-body">
-        <p class="card-text">
+        <h5 class="card-text">
           <a th:href="@{/bottle/list}">My Cellar <span class="fas fa-wine-bottle"></span></a>
-        </p>
-        <p class="card-text">
+        </h5>
+        <h5 class="card-text">
           <a th:href="@{/review/list}">My Reviews <span class="far fa-star"></span></a>
-        </p>
-        <p class="card-text">
+        </h5>
+        <h5 class="card-text">
           <a th:href="@{/wishlist/list}">My Wishlist <span class="fas fa-gift"></span></a>
-        </p>
-        <p class="card-text">
+        </h5>
+        <h5 class="card-text">
           <a th:href="@{/tastingnotes/list}">My Tasting Notes <span class="far fa-clipboard"></span></a>
-        </p>
-        <p class="card-text">
+        </h5>
+        <h5 class="card-text">
           <a th:href="@{/tasted/list}">My Tasted Wines <span class="fas fa-archive"></span></a>
-        </p>
+        </h5>
       </div>
     </div>
 </div>
-<br/><br/>
-
+<br/>
+<br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

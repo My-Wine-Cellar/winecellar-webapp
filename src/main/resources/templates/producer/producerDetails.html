@@ -17,21 +17,21 @@
                 <p class="card-text" th:text="*{description}"></p>
                 <table class="table table-hover">
                     <tbody>
-                    <tr>
+                    <tr th:if="${producer.phone != null && !producer.phone.isEmpty()}">
                         <td><b>Phone</b></td>
                         <td th:text="*{phone}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${producer.fax != null && !producer.fax.isEmpty()}">
                         <td><b>Fax</b></td>
                         <td th:text="*{fax}"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${producer.email != null && !producer.email.isEmpty()}">
                         <td><b>Email</b></td>
                         <td><a th:href="|mailto:*{email}|"><div th:text="*{email}"/></a></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${producer.website != null && !producer.website.isEmpty()}">
                         <td><b>Web</b></td>
-                        <td><a th:href="*{website}"><div th:text="*{website}"/></a></td>
+                        <td><a th:href="*{website}" target="_blank"><div th:text="*{website}"/></a></td>
                     </tr>
 <!--
                     <tr>
