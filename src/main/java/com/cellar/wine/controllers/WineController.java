@@ -1,7 +1,10 @@
 package com.cellar.wine.controllers;
 
+import com.cellar.wine.models.Bottle;
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.security.User;
+import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import javax.validation.Valid;
 
 @Controller
@@ -20,13 +24,16 @@ public class WineController {
 
     private final WineService wineService;
     private final ProducerService producerService;
+    private final UserService userService;
 
-    public WineController(WineService wineService, ProducerService producerService) {
+    public WineController(WineService wineService, ProducerService producerService, UserService userService) {
         this.wineService = wineService;
         this.producerService = producerService;
+        this.userService = userService;
     }
 
     private static final String MODEL_ATTRIBUTE_WINE = "wine";
+    private static final String MODEL_ATTRIBUTE_WINE_OWNED = "owned";
     private static final String ADD_OR_EDIT_WINE_TEMPLATE = "wine/addEditWine";
 
     @ModelAttribute("producer")
@@ -40,8 +47,19 @@ public class WineController {
     }
 
     @GetMapping("/{wineId}")
-    public String wineDetails(@PathVariable Long wineId, Model model) {
-        model.addAttribute(MODEL_ATTRIBUTE_WINE, wineService.findById(wineId));
+    public String wineDetails(@PathVariable Long wineId, Model model, Principal principal) {
+        Wine wine = wineService.findById(wineId);
+        User user = userService.findByUsername(principal.getName());
+        Bottle bottle = null;
+
+        for (Bottle b : user.getBottles())
+        {
+            if (b.getWine().getId().equals(wine.getId()))
+                bottle = b;
+        }
+
+        model.addAttribute(MODEL_ATTRIBUTE_WINE, wine);
+        model.addAttribute(MODEL_ATTRIBUTE_WINE_OWNED, bottle);
         return "wine/wineDetails";
     }
 
