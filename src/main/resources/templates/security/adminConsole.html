@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:insert="~{fragments/layout :: head}"/>
+<head th:include="~{fragments/layout :: head}"/>
 
 <body>
-<nav th:insert="~{fragments/layout :: nav}"/>
+<div th:replace="~{fragments/layout :: nav}"/>
 <br/><br/>
 <br/>
 <div class="container" sec:authorize="hasRole('ROLE_ADMIN')">
@@ -23,10 +23,9 @@
         </thead>
     </table>
 </div>
+<br/><br/>
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
 </body>
 </html>

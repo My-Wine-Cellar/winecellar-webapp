@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:insert="~{fragments/layout :: head}"/>
+<head th:include="~{fragments/layout :: head}"/>
 
 <body>
-<nav th:insert="~{fragments/layout :: nav}"/>
+<div th:replace="~{fragments/layout :: nav}"/>
 <br/><br/><br/>
 
 <div class="container" align="center" sec:authorize="hasRole('ADMIN')">
@@ -41,7 +41,7 @@
 
 <br/><br/>
 
-<div th:insert="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>
 </html>
