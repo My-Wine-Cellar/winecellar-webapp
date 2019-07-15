@@ -4,6 +4,20 @@
 <body>
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
+<div class="container text-left">
+    <nav aria-label="breadcrumb" th:each="area : ${wine.producer.areas}">
+        <ol class="breadcrumb" th:each="region : ${area.regions}">
+            <!-- Country -->
+            <li class="breadcrumb-item"><a th:href="@{/country/{id}(id=${region.country.id})}" th:text="${region.country.name}"></a></li>
+            <!-- Region -->
+            <li class="breadcrumb-item"><a th:href="@{/region/{id}(id=${region.id})}" th:text="${region.name}"></a></li>
+            <!-- Area -->
+            <li class="breadcrumb-item"><a th:href="@{/area/{id}(id=${area.id})}" th:text="${area.name}"></a></li>
+            <!-- Producer -->
+            <li class="breadcrumb-item"><a th:href="@{/producer/__${wine.producer.id}__}" th:text="${wine.producer.name}"></a></li>
+        </ol>
+    </nav>
+</div>
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:object="${wine}">
