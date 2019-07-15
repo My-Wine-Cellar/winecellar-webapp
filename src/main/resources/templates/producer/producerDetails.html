@@ -4,6 +4,15 @@
 <body>
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
+<div class="container text-left">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" th:each="area : ${producer.areas}">
+            <li class="breadcrumb-item" th:each="region : ${area.regions}"><a th:href="@{/country/{id}(id=${region.country.id})}" th:text="${region.country.name}"></a></li>
+            <li class="breadcrumb-item" th:each="region : ${area.regions}"><a th:href="@{/region/{id}(id=${region.id})}" th:text="${region.name}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/area/{id}(id=${area.id})}" th:text="${area.name}"></a></li>
+        </ol>
+    </nav>
+</div>
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:object="${producer}">

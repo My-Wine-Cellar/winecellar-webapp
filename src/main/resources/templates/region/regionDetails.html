@@ -4,6 +4,14 @@
 <body>
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
+<div class="container text-left">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+<!--            <li class="breadcrumb-item"><a th:href="@{/country/list}">Countries</a></li>-->
+            <li class="breadcrumb-item"><a th:href="@{/country/{id}(id=${region.country.id})}" th:text="${region.country.name}"></a></li>
+        </ol>
+    </nav>
+</div>
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:object="${region}">
