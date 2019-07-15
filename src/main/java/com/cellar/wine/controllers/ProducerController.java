@@ -35,22 +35,6 @@ public class ProducerController {
         return "producer/producerDetails";
     }
 
-    @GetMapping("/new")
-    public String initCreateForm(Model model) {
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, new Producer());
-        return ADD_OR_EDIT_PRODUCER_TEMPLATE;
-    }
-
-    @PostMapping("/new")
-    public String processCreateForm(@Valid Producer producer, BindingResult result) {
-        if (result.hasErrors()) {
-            return ADD_OR_EDIT_PRODUCER_TEMPLATE;
-        } else {
-            Producer savedProducer = producerService.save(producer);
-            return "redirect:/producer/" + savedProducer.getId();
-        }
-    }
-
     @GetMapping("/{producerId}/edit")
     public String initAddEditProducerForm(@PathVariable Long producerId, Model model) {
         model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, producerService.findById(producerId));
