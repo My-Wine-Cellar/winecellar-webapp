@@ -72,12 +72,13 @@ public class AreaController {
     }
 
     @PostMapping("/addProducer")
-    public String processAddProducerForm(@Valid Area area, BindingResult result, Producer producer, @PathVariable Long areaId) {
+    public String processAddProducerForm(@Valid Producer producer, BindingResult result, @PathVariable Long areaId) {
         if(result.hasErrors()) {
             return "producer/addEditProducer";
         } else {
+            Area area = areaService.findById(areaId);
             area.getProducers().add(producer);
-            producerService.save(producer);
+            Producer savedProducer = producerService.save(producer);
             return "redirect:/area/" + areaId;
         }
     }
