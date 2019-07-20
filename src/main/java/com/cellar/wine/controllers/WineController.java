@@ -8,8 +8,8 @@ import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
-import com.cellar.wine.utils.WineGrape;
-import com.cellar.wine.utils.WineGrapeSorter;
+import com.cellar.wine.ui.WineGrapeUI;
+import com.cellar.wine.ui.WineGrapeUISorter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -65,11 +65,11 @@ public class WineController {
                 bottle = b;
         }
 
-        List<WineGrape> winegrapes = new ArrayList<>();
+        List<WineGrapeUI> winegrapes = new ArrayList<>();
         for (GrapeComponent gc : wine.getGrapes()) {
-            winegrapes.add(new WineGrape(gc.getPercentage(), gc.getGrape().getName(), gc.getGrape().getId()));
+            winegrapes.add(new WineGrapeUI(gc.getPercentage(), gc.getGrape().getName(), gc.getGrape().getId()));
         }
-        Collections.sort(winegrapes, new WineGrapeSorter());
+        Collections.sort(winegrapes, new WineGrapeUISorter());
 
         model.addAttribute(MODEL_ATTRIBUTE_WINE, wine);
         model.addAttribute(MODEL_ATTRIBUTE_WINE_BOTTLE, bottle);
