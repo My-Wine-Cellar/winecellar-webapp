@@ -8,6 +8,7 @@ import com.github.cliftonlabs.json_simple.JsonObject;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -67,7 +68,7 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
 
     public GenericTastingNotes(Map<String, Set<String>> sight, Map<String, Set<String>> nose,
                                Map<String, Set<String>> palette, Map<String, Set<String>> conclusion,
-                               Boolean show, User user, Wine wine) {
+                               Boolean show, Date date, User user, Wine wine) {
         super();
         this.data = new HashMap<String, Serializable>();
 
@@ -78,12 +79,16 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
         this.data.put(CONCLUSION, new JsonObject(conclusion).toJson());
 
         this.show = show;
+        this.date = date;
         this.user = user;
         this.wine = wine;
     }
 
     @Column(name = "show")
     private Boolean show;
+
+    @Column(name = "date")
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

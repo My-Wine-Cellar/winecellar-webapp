@@ -1,12 +1,15 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Bottle;
+import com.cellar.wine.models.GrapeComponent;
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
+import com.cellar.wine.utils.WineGrape;
+import com.cellar.wine.utils.WineGrapeSorter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,6 +19,9 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.validation.Valid;
 
 @Controller
@@ -33,7 +39,8 @@ public class WineController {
     }
 
     private static final String MODEL_ATTRIBUTE_WINE = "wine";
-    private static final String MODEL_ATTRIBUTE_WINE_OWNED = "owned";
+    private static final String MODEL_ATTRIBUTE_WINE_BOTTLE = "bottle";
+    private static final String MODEL_ATTRIBUTE_WINE_WINEGRAPES = "winegrapes";
     private static final String ADD_OR_EDIT_WINE_TEMPLATE = "wine/addEditWine";
 
     @ModelAttribute("producer")
@@ -58,8 +65,15 @@ public class WineController {
                 bottle = b;
         }
 
+        List<WineGrape> winegrapes = new ArrayList<>();
+        for (GrapeComponent gc : wine.getGrapes()) {
+            winegrapes.add(new WineGrape(gc.getPercentage(), gc.getGrape().getName(), gc.getGrape().getId()));
+        }
+        Collections.sort(winegrapes, new WineGrapeSorter());
+
         model.addAttribute(MODEL_ATTRIBUTE_WINE, wine);
-        model.addAttribute(MODEL_ATTRIBUTE_WINE_OWNED, bottle);
+        model.addAttribute(MODEL_ATTRIBUTE_WINE_BOTTLE, bottle);
+        model.addAttribute(MODEL_ATTRIBUTE_WINE_WINEGRAPES, winegrapes);
         return "wine/wineDetails";
     }
 
