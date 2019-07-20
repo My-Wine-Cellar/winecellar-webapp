@@ -1,4 +1,4 @@
-package com.cellar.wine.utils;
+package com.cellar.wine.ui;
 
 import lombok.*;
 
@@ -9,12 +9,12 @@ import java.io.Serializable;
  */
 @EqualsAndHashCode(callSuper = false)
 @Getter
-public class WineGrape implements Serializable {
+public class WineGrapeUI implements Serializable {
     private Byte percentage;
     private String name;
     private Long id;
     
-    public WineGrape(Byte percentage, String name, Long id) {
+    public WineGrapeUI(Byte percentage, String name, Long id) {
         this.percentage = percentage;
         this.name = name;
         this.id = id;

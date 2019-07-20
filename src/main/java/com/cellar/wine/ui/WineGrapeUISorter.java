@@ -1,16 +1,16 @@
-package com.cellar.wine.utils;
+package com.cellar.wine.ui;
 
 import java.util.Comparator;
 
 /**
- * Sorter for WineGrape beans
+ * Sorter for WineGrapeUI beans
  */
-public class WineGrapeSorter implements Comparator<WineGrape> {
+public class WineGrapeUISorter implements Comparator<WineGrapeUI> {
 
-    public WineGrapeSorter() {
+    public WineGrapeUISorter() {
     }
 
-    public int compare(WineGrape wg1, WineGrape wg2) {
+    public int compare(WineGrapeUI wg1, WineGrapeUI wg2) {
         int result;
 
         result = wg1.getPercentage().compareTo(wg2.getPercentage());
