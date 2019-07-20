@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import java.sql.Date;
 
 @EqualsAndHashCode(callSuper = true)
+@ToString
 @Getter
 @Setter
 @Entity

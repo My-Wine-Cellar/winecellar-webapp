@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
+@ToString
 @Getter
 @Setter
 @Entity
