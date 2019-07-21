@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = true)
+@ToString
 @Getter
 @Setter
 @Entity
@@ -51,7 +52,7 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
     @JoinColumn(name = "fermentation_id", referencedColumnName = "id")
     private Fermentation fermentation;
 
-    @OneToMany(mappedBy = "barrel")
+    @OneToMany(mappedBy = "grapeComponent")
     private List<BarrelComponent> barrelComponents;
 
     @Override

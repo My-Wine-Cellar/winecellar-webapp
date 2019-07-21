@@ -17,6 +17,10 @@ public class BottleServiceImpl implements BottleService {
         this.bottleRepository = bottleRepository;
     }
 
+    public Bottle findByUser(Long wineId, Integer userId) {
+        return bottleRepository.findByUser(wineId, userId);
+    }
+
     @Override
     public Set<Bottle> findAll() {
         Set<Bottle> bottles = new TreeSet<>();

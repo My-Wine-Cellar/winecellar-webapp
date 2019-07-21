@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
+@ToString
 @Getter
 @Setter
 @Entity
@@ -25,9 +26,11 @@ public class Barrel extends BaseEntity implements Comparable<Barrel> {
     @Column(name = "name")
     private String name;
 
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "description", length = 8192)
     private String description;
 
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "weblink")
     private String weblink;
 

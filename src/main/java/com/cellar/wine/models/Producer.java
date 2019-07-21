@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
+@ToString
 @Setter
 @Getter
 @Entity

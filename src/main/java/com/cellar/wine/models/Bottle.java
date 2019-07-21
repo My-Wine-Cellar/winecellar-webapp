@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @EqualsAndHashCode(callSuper = true)
+@ToString
 @Getter
 @Setter
 @Entity

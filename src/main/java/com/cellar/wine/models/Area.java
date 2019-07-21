@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
+@ToString
 @Getter
 @Setter
 @Entity
@@ -49,10 +50,5 @@ public class Area extends BaseEntity implements Comparable<Area> {
     @Override
     public int compareTo(Area a) {
         return name.compareTo(a.getName());
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
     }
 }
