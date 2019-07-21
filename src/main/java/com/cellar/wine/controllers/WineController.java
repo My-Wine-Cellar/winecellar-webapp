@@ -15,6 +15,7 @@ import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.ReviewService;
 import com.cellar.wine.services.WineService;
 import com.cellar.wine.services.WishlistService;
+import com.cellar.wine.ui.AgingUI;
 import com.cellar.wine.ui.BarrelUI;
 import com.cellar.wine.ui.BarrelUISorter;
 import com.cellar.wine.ui.GrapeUI;
@@ -90,7 +91,7 @@ public class WineController {
                 for (BarrelComponent bc : gc.getBarrelComponents()) {
                     barrels.add(new BarrelUI(bc.getPercentage(),
                                              bc.getBarrel().getName(), bc.getBarrel().getId(),
-                                             bc.getSize(), bc.getAging()
+                                             bc.getSize(), new AgingUI(bc.getAging())
                                              ));
                 }
             }
