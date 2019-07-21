@@ -6,12 +6,12 @@ INSERT INTO producer (name, website) VALUES ('Opus One Winery', 'https://www.opu
 INSERT INTO area_producer (area_id, producer_id) VALUES (80, 1);
 INSERT INTO wine (name, vintage, size, weblink, producer_id, closure_id, shape_id) VALUES ('Opus One', 2015, 0.75, 'https://www.opusonewinery.com/wine/', 1, 1, 4);
 INSERT INTO maceration (days) VALUES (21);
-INSERT INTO grape_component (percentage, grape_id, wine_id, maceration_id) VALUES (81, 116, 1, 1);
+INSERT INTO grape_component (percentage, harvest_begin, harvest_end, grape_id, wine_id, maceration_id) VALUES (81, '2015-09-01'::date, '2015-10-8'::date, 116, 1, 1);
 INSERT INTO grape_component (percentage, grape_id, wine_id) VALUES (7, 115, 1);
 INSERT INTO grape_component (percentage, grape_id, wine_id) VALUES (6, 162, 1);
 INSERT INTO grape_component (percentage, grape_id, wine_id) VALUES (4, 184, 1);
 INSERT INTO grape_component (percentage, grape_id, wine_id) VALUES (2, 157, 1);
-INSERT INTO barrel_component (percentage, aging, grape_component_id, barrel_id) VALUES (100, 548, 1, 1);
+INSERT INTO barrel_component (percentage, aging, grape_component_id, barrel_id) VALUES (100, 545, 1, 1);
 
 -- Poggio Antico
 INSERT INTO producer (name, phone, fax, email, description, website) VALUES ('Poggio Antico', '+39 0577-848044', '+39 0577-846563', 'mail@poggioantico.com', 'Poggio Antico, Tuscany', 'https://www.poggioantico.com/');
@@ -28,8 +28,8 @@ INSERT INTO fermentation (days, temperature) VALUES (10, 30);
 INSERT INTO fermentation (days, temperature) VALUES (9, 28);
 INSERT INTO grape_component (percentage, harvest_begin, harvest_end, grape_id, wine_id, fermentation_id) VALUES (50, '2016-09-22'::date, '2016-10-07'::date, 201, 3, 2);
 INSERT INTO grape_component (percentage, harvest_begin, harvest_end, grape_id, wine_id, fermentation_id) VALUES (50, '2016-09-22'::date, '2016-10-07'::date, 116, 3, 3);
-INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barrel_id) VALUES (100, 540, 500, 7, 1);
-INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barrel_id) VALUES (100, 540, 500, 8, 1);
+INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barrel_id) VALUES (100, 545, 500, 7, 1);
+INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barrel_id) VALUES (100, 545, 500, 8, 1);
 
 -- Bottles for users
 INSERT INTO bottle (number, show, user_id, wine_id) VALUES (1, false, 888888, 1);

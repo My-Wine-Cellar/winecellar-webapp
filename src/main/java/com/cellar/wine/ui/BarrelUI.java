@@ -3,8 +3,6 @@ package com.cellar.wine.ui;
 import lombok.*;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.List;
 
 /**
  * Barrel bean
@@ -17,11 +15,11 @@ public class BarrelUI implements Serializable {
     private String name;
     private Long id;
     private Integer size;
-    private Integer aging;
+    private AgingUI aging;
     
     public BarrelUI(Byte percentage,
                     String name, Long id,
-                    Integer size, Integer aging) {
+                    Integer size, AgingUI aging) {
         this.percentage = percentage;
         this.name = name;
         this.id = id;
