@@ -45,11 +45,11 @@
                     </tr>
                     <tr th:if="${wine.size}">
                         <td><b>Size</b></td>
-                        <td th:text="*{size}"></td>
+                        <td th:text="|*{size}L|"></td>
                     </tr>
                     <tr th:if="${wine.alcohol}">
                         <td><b>Alcohol</b></td>
-                        <td th:text="*{alcohol}"></td>
+                        <td th:text="|*{alcohol}%|"></td>
                     </tr>
                     <tr th:if="${wine.weblink != null && !wine.weblink.isEmpty()}">
                         <td><b>Web</b></td>
@@ -79,22 +79,22 @@
 
 <!-- Add buttons -->
 <div class="container">
-  <div th:if="${bottle == null}" class="text-right">
+  <div th:if="${mybottle == null}" class="text-right">
     <a th:href="@{/producer/{producerId}/wine/{wineId}/bottle/new(producerId=${producer.id},wineId=${wine.id})}">
       <span class="fas fa-wine-bottle"></span>
     </a>
   </div>
-  <div class="text-right">
+  <div th:if="${myreview == null}" class="text-right">
     <a th:href="@{/review/new(wineId=${wine.id})}">
       <span class="far fa-star"></span>
     </a>
   </div>
-  <div class="text-right">
+  <div th:if="${mybottle == null && mywishlist == null}" class="text-right">
     <a th:href="@{/wishlist/new(wineId=${wine.id})}">
       <span class="fas fa-gift"></span>
     </a>
   </div>
-  <div class="text-right">
+  <div th:if="${mytastingnotes == null}" class="text-right">
     <a th:href="@{/tastingnotes/new(wineId=${wine.id})}">
       <span class="far fa-clipboard"></span>
     </a>
@@ -104,13 +104,13 @@
 <!-- Tabs -->
 <div class="container">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
+        <li th:if="${! #lists.isEmpty(wine.reviews)}" class="nav-item">
             <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="true">Reviews</a>
         </li>
-        <li class="nav-item">
+        <li th:if="${! #lists.isEmpty(wine.genericTastingNotes)}" class="nav-item">
             <a class="nav-link" id="tastingnotes-tab" data-toggle="tab" href="#tastingnotes" role="tab" aria-controls="tastingnotes" aria-selected="false">Tasting Notes</a>
         </li>
-        <li class="nav-item">
+        <li th:if="${mybottle != null}" class="nav-item">
             <a class="nav-link" id="cellar-tab" data-toggle="tab" href="#cellar" role="tab" aria-controls="cellar" aria-selected="false">Cellar</a>
         </li>
         <li class="nav-item">
@@ -135,7 +135,7 @@
                           <tr th:each="review : ${wine.reviews}">
                             <td th:text="${review.stars}"></td>
                             <td th:text="${review.comment}"></td>
-                            <td th:text="${review.date}"></td>
+                            <td th:text="${#dates.format(review.date, 'MMM dd, yyyy')}"></td>
                             <td>
                               <a th:href="@{/users/__${review.user.id}__}" th:text="${review.user.username}"></a>
                             </td>
@@ -161,7 +161,7 @@
                         <tbody>
                           <tr th:each="tn : ${wine.genericTastingNotes}">
                             <td th:if="${tn.show}" th:text="${tn.id}"></td>
-                            <td th:if="${tn.show}" th:text="${tn.date}"></td>
+                            <td th:if="${tn.show}" th:text="${#dates.format(tn.date, 'MMM dd, yyyy')}"></td>
                             <td th:if="${tn.show}">
                               <a th:href="@{/users/__${tn.user.id}__}" th:text="${tn.user.username}"></a>
                             </td>
@@ -175,7 +175,7 @@
         <!-- Cellar -->
         <div class="tab-pane fade" id="cellar" role="tabpanel" aria-labelledby="cellar-tab">
             <div class="card-body">
-                <div th:if="${bottle != null}" class="container">
+                <div th:if="${mybottle != null}" class="container">
                     <table class="table table-hover table-sm text-center">
                         <thead>
                         <tr>
@@ -186,10 +186,10 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td th:text="${bottle.number}">Bottle #</td>
-                            <td th:text="${bottle.location}">Location</td>
+                            <td th:text="${mybottle.number}">Bottle #</td>
+                            <td th:text="${mybottle.location}">Location</td>
                             <td>
-                                <a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__/bottle/__${bottle.id}__/edit}">
+                                <a th:href="@{/producer/__${mybottle.wine.producer.id}__/wine/__${mybottle.wine.id}__/bottle/__${mybottle.id}__/edit}">
                                   <span class="fas fa-edit"></span>
                                 </a>
                             </td>
@@ -206,11 +206,11 @@
               <table class="table table-hover">
                 <tbody>
                   <tr th:if="${wine.shape}">
-                    <td><b>Shape</b></td>
+                    <td width="25%"><b>Shape</b></td>
                     <td th:text="*{shape.name}"></td>
                   </tr>
                   <tr th:if="${wine.closure}">
-                    <td><b>Closure</b></td>
+                    <td width="25%"><b>Closure</b></td>
                     <td th:text="*{closure.name}"></td>
                   </tr>
                 </tbody>
@@ -220,28 +220,84 @@
               <table class="table table-hover">
                 <tbody>
                   <tr th:if="${wine.acid}">
-                    <td><b>Acid</b></td>
-                    <td th:text="*{acid}"></td>
+                    <td width="25%"><b>Acid</b></td>
+                    <td th:text="|*{acid} g/L|"></td>
                   </tr>
                   <tr th:if="${wine.getPH()}">
-                    <td><b>pH</b></td>
+                    <td width="25%"><b>pH</b></td>
                     <td th:text="*{pH}"></td>
                   </tr>
                   <tr th:if="${wine.bottleAging}">
-                    <td><b>Bottle aging</b></td>
-                    <td th:text="*{bottleAging}"></td>
-                    </tr>
-                  <tr>
-                    <td><b>Grapes</b></td>
-                    <td>
-                      <div th:each="winegrape : ${winegrapes}">
-                        <a th:href="@{/grape/__${winegrape.id}__}" th:text="${winegrape.name}"></a>
-                        <div th:text="| (${winegrape.percentage}%)|"/>
-                      </div>
-                    </td>
+                    <td width="25%"><b>Bottle aging</b></td>
+                    <td th:text="|*{bottleAging} days|"></td>
                   </tr>
                 </tbody>
               </table>
+              <br/>
+              <br/>
+              <h4>Grapes</h4>
+              <div th:each="winegrape : ${winegrapes}">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th><a th:href="@{/grape/__${winegrape.id}__}" th:text="${winegrape.name}"></a></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:if="${winegrape.percentage}">
+                      <td width="25%"><b>Percentage</b></td>
+                      <td th:text="|${winegrape.percentage}%|"/>
+                    </tr>
+                    <tr th:if="${winegrape.harvestBegin}">
+                      <td width="25%"><b>Harvest start</b></td>
+                      <td th:text="${#dates.format(winegrape.harvestBegin, 'MMM dd, yyyy')}"/>
+                    </tr>
+                    <tr th:if="${winegrape.harvestEnd}">
+                      <td width="25%"><b>Harvest end</b></td>
+                      <td th:text="${#dates.format(winegrape.harvestEnd, 'MMM dd, yyyy')}"/>
+                    </tr>
+                    <tr th:if="${winegrape.macerationDays}">
+                      <td width="25%"><b>Maceration</b></td>
+                      <td th:text="${winegrape.macerationDays} + ' days' + (${winegrape.macerationTemperature} != null ? ' at ' + ${winegrape.macerationTemperature} + 'C' : '')"/>
+                    </tr>
+                    <tr th:if="${winegrape.fermentationDays}">
+                      <td width="25%"><b>Fermentation</b></td>
+                      <td th:text="${winegrape.fermentationDays} + ' days' + (${winegrape.fermentationTemperature} != null ? ' at ' + ${winegrape.fermentationTemperature} + 'C' : '')"/>
+                    </tr>
+                    <tr th:if="${! #lists.isEmpty(winegrape.barrels)}">
+                      <td width="25%"><b>Barrels</b></td>
+                      <td>
+                        <div th:each="barrel : ${winegrape.barrels}">
+                          <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th><a th:href="@{/barrel/__${barrel.id}__}" th:text="${barrel.name}"></a></th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:if="${barrel.percentage}">
+                                <td width="25%">Percentage</td>
+                                <td th:text="|${barrel.percentage}%|"/>
+                              </tr>
+                              <tr th:if="${barrel.size}">
+                                <td width="25%">Size</td>
+                                <td th:text="|${barrel.size}L|"/>
+                              </tr>
+                              <tr th:if="${barrel.aging}">
+                                <td width="25%">Aging</td>
+                                <td th:text="|${barrel.aging} days|"/>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br/>
+              </div>
             </div>
         </div>
      </div>

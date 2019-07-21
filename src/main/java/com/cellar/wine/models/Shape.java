@@ -26,9 +26,11 @@ public class Shape extends BaseEntity implements Comparable<Shape> {
     @Column(name = "name")
     private String name;
 
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "description", length = 8192)
     private String description;
 
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "weblink")
     private String weblink;
 

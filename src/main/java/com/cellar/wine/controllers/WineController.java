@@ -1,15 +1,24 @@
 package com.cellar.wine.controllers;
 
+import com.cellar.wine.models.BarrelComponent;
 import com.cellar.wine.models.Bottle;
+import com.cellar.wine.models.GenericTastingNotes;
 import com.cellar.wine.models.GrapeComponent;
 import com.cellar.wine.models.Producer;
+import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.models.Wishlist;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
+import com.cellar.wine.services.BottleService;
 import com.cellar.wine.services.ProducerService;
+import com.cellar.wine.services.ReviewService;
 import com.cellar.wine.services.WineService;
-import com.cellar.wine.ui.WineGrapeUI;
-import com.cellar.wine.ui.WineGrapeUISorter;
+import com.cellar.wine.services.WishlistService;
+import com.cellar.wine.ui.BarrelUI;
+import com.cellar.wine.ui.BarrelUISorter;
+import com.cellar.wine.ui.GrapeUI;
+import com.cellar.wine.ui.GrapeUISorter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -31,16 +40,27 @@ public class WineController {
     private final WineService wineService;
     private final ProducerService producerService;
     private final UserService userService;
+    private final BottleService bottleService;
+    private final ReviewService reviewService;
+    private final WishlistService wishlistService;
 
-    public WineController(WineService wineService, ProducerService producerService, UserService userService) {
+    public WineController(WineService wineService, ProducerService producerService,
+                          UserService userService, BottleService bottleService,
+                          ReviewService reviewService, WishlistService wishlistService) {
         this.wineService = wineService;
         this.producerService = producerService;
         this.userService = userService;
+        this.bottleService = bottleService;
+        this.reviewService = reviewService;
+        this.wishlistService = wishlistService;
     }
 
     private static final String MODEL_ATTRIBUTE_WINE = "wine";
-    private static final String MODEL_ATTRIBUTE_WINE_BOTTLE = "bottle";
     private static final String MODEL_ATTRIBUTE_WINE_WINEGRAPES = "winegrapes";
+    private static final String MODEL_ATTRIBUTE_WINE_BOTTLE = "mybottle";
+    private static final String MODEL_ATTRIBUTE_WINE_REVIEW = "myreview";
+    private static final String MODEL_ATTRIBUTE_WINE_TASTINGNOTES = "mytastingnotes";
+    private static final String MODEL_ATTRIBUTE_WINE_WISHLIST = "mywishlist";
     private static final String ADD_OR_EDIT_WINE_TEMPLATE = "wine/addEditWine";
 
     @ModelAttribute("producer")
@@ -57,23 +77,44 @@ public class WineController {
     public String wineDetails(@PathVariable Long wineId, Model model, Principal principal) {
         Wine wine = wineService.findById(wineId);
         User user = userService.findByUsername(principal.getName());
-        Bottle bottle = null;
+        Bottle bottle = bottleService.findByUser(wine.getId(), user.getId());
+        Review review = reviewService.findByUser(wine.getId(), user.getId());
+        GenericTastingNotes tastingnotes = null;
+        Wishlist wishlist = wishlistService.findByUser(wine.getId(), user.getId());
 
-        for (Bottle b : user.getBottles())
-        {
-            if (b.getWine().getId().equals(wine.getId()))
-                bottle = b;
-        }
-
-        List<WineGrapeUI> winegrapes = new ArrayList<>();
+        List<GrapeUI> winegrapes = new ArrayList<>();
         for (GrapeComponent gc : wine.getGrapes()) {
-            winegrapes.add(new WineGrapeUI(gc.getPercentage(), gc.getGrape().getName(), gc.getGrape().getId()));
+            List<BarrelUI> barrels = new ArrayList<>();
+
+            if (gc.getBarrelComponents() != null) {
+                for (BarrelComponent bc : gc.getBarrelComponents()) {
+                    barrels.add(new BarrelUI(bc.getPercentage(),
+                                             bc.getBarrel().getName(), bc.getBarrel().getId(),
+                                             bc.getSize(), bc.getAging()
+                                             ));
+                }
+            }
+
+            Collections.sort(barrels, new BarrelUISorter());
+
+            winegrapes.add(new GrapeUI(gc.getPercentage(),
+                                       gc.getGrape().getName(), gc.getGrape().getId(),
+                                       gc.getHarvestBegin(), gc.getHarvestEnd(),
+                                       gc.getMaceration() != null ? gc.getMaceration().getDays() : null,
+                                       gc.getMaceration() != null ? gc.getMaceration().getTemperature() : null,
+                                       gc.getFermentation() != null ? gc.getFermentation().getDays() : null,
+                                       gc.getFermentation() != null ? gc.getFermentation().getTemperature() : null,
+                                       barrels
+                                       ));
         }
-        Collections.sort(winegrapes, new WineGrapeUISorter());
+        Collections.sort(winegrapes, new GrapeUISorter());
 
         model.addAttribute(MODEL_ATTRIBUTE_WINE, wine);
-        model.addAttribute(MODEL_ATTRIBUTE_WINE_BOTTLE, bottle);
         model.addAttribute(MODEL_ATTRIBUTE_WINE_WINEGRAPES, winegrapes);
+        model.addAttribute(MODEL_ATTRIBUTE_WINE_BOTTLE, bottle);
+        model.addAttribute(MODEL_ATTRIBUTE_WINE_REVIEW, review);
+        model.addAttribute(MODEL_ATTRIBUTE_WINE_TASTINGNOTES, tastingnotes);
+        model.addAttribute(MODEL_ATTRIBUTE_WINE_WISHLIST, wishlist);
         return "wine/wineDetails";
     }
 

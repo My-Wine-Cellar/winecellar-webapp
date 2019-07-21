@@ -17,6 +17,10 @@ public class ReviewServiceImpl implements ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
+    public Review findByUser(Long wineId, Integer userId) {
+        return reviewRepository.findByUser(wineId, userId);
+    }
+
     @Override
     public Set<Review> findAll() {
         Set<Review> reviews = new TreeSet<>();
