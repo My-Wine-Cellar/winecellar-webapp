@@ -17,6 +17,10 @@ public class TastedServiceImpl implements TastedService {
         this.tastedRepository = tastedRepository;
     }
 
+    public Tasted findByUser(Long wineId, Integer userId) {
+        return tastedRepository.findByUser(wineId, userId);
+    }
+
     @Override
     public Set<Tasted> findAll() {
         Set<Tasted> tasteds = new TreeSet<>();

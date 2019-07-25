@@ -27,7 +27,7 @@
             <td th:text="${bottle.wine.vintage}"></td>
             <td th:text="${bottle.wine.size}"></td>
             <td th:text="${bottle.location}"></td>
-            <td><a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__/bottle/__${bottle.id}__/edit}"><span class="fas fa-edit"/></a></td>
+            <td><a th:href="@{/bottle/__${bottle.id}__/edit}"><span class="fas fa-edit"/></a></td>
         </tr>
         </tbody>
     </table>

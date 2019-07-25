@@ -80,7 +80,7 @@
 <!-- Add buttons -->
 <div class="container">
   <div th:if="${mybottle == null}" class="text-right">
-    <a th:href="@{/producer/{producerId}/wine/{wineId}/bottle/new(producerId=${producer.id},wineId=${wine.id})}">
+    <a th:href="@{/bottle/new(wineId=${wine.id})}">
       <span class="fas fa-wine-bottle"></span>
     </a>
   </div>
@@ -189,7 +189,7 @@
                             <td th:text="${mybottle.number}">Bottle #</td>
                             <td th:text="${mybottle.location}">Location</td>
                             <td>
-                                <a th:href="@{/producer/__${mybottle.wine.producer.id}__/wine/__${mybottle.wine.id}__/bottle/__${mybottle.id}__/edit}">
+                                <a th:href="@{/bottle/__${mybottle.id}__/edit}">
                                   <span class="fas fa-edit"></span>
                                 </a>
                             </td>
