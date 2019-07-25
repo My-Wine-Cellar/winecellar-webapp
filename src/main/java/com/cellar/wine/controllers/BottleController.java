@@ -1,12 +1,12 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Bottle;
-import com.cellar.wine.models.Producer;
+import com.cellar.wine.models.Tasted;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.BottleService;
-import com.cellar.wine.services.ProducerService;
+import com.cellar.wine.services.TastedService;
 import com.cellar.wine.services.WineService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,56 +18,55 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/producer/{producerId}/wine/{wineId}/bottle")
+@RequestMapping("/bottle")
 public class BottleController {
 
     private BottleService bottleService;
     private UserService userService;
     private WineService wineService;
-    private ProducerService producerService;
+    private TastedService tastedService;
 
-    public BottleController(BottleService bottleService, UserService userService, WineService wineService, ProducerService producerService) {
+    public BottleController(BottleService bottleService, UserService userService,
+                            WineService wineService, TastedService tastedService) {
         this.bottleService = bottleService;
         this.userService = userService;
         this.wineService = wineService;
-        this.producerService = producerService;
+        this.tastedService = tastedService;
     }
 
-    @ModelAttribute("wine")
-    public Wine findWine(@PathVariable Long wineId) {
-        return wineService.findById(wineId);
-    }
-
-    @ModelAttribute("producer")
-    public Producer findProducer(@PathVariable Long producerId) {
-        return producerService.findById(producerId);
-    }
-
-    @InitBinder("wine")
+    @InitBinder("bottle")
     public void initWineBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
     @GetMapping("/new")
-    public String initAddBottleForm(Wine wine, Model model) {
+    public String initAddBottleForm(@RequestParam Long wineId, Model model) {
         Bottle bottle = new Bottle();
-        wine.getBottles().add(bottle);
+        Wine wine = wineService.findById(wineId);
         bottle.setWine(wine);
         model.addAttribute("bottle", bottle);
         return "bottle/addEditBottle";
     }
 
     @PostMapping("/new")
-    public String processAddForm(@Valid Bottle bottle, BindingResult result, Wine wine, Principal principal) {
-        bottle.setWine(wine);
-        wine.getBottles().add(bottle);
+    public String processAddForm(@Valid Bottle bottle, BindingResult result,
+                                 @RequestParam Long wineId, Principal principal) {
         if (result.hasErrors()) {
             return "bottle/addEditBottle";
         } else {
             User user = userService.findByUsername(principal.getName());
+            Wine wine = wineService.findById(wineId);
+            Tasted tasted = tastedService.findByUser(wine.getId(), user.getId());
+
+            bottle.setWine(wine);
             bottle.setShow(true);
             bottle.setUser(user);
+            wine.getBottles().add(bottle);
             bottleService.save(bottle);
+
+            if (tasted != null)
+                tastedService.delete(tasted);
+
             return "redirect:/bottle/list";
         }
     }
@@ -80,17 +79,35 @@ public class BottleController {
     }
 
     @PostMapping("/{bottleId}/edit")
-    public String processEditBottleForm(@Valid Bottle bottle, BindingResult result, Wine wine, Model model, Principal principal) {
-        bottle.setWine(wine);
+    public String processEditBottleForm(@Valid Bottle bottle, BindingResult result, Model model,
+                                        @PathVariable Long bottleId, @RequestParam Long wineId, Principal principal) {
         if (result.hasErrors()) {
             model.addAttribute("bottle", bottle);
             return "bottle/addEditBottle";
         } else {
             User user = userService.findByUsername(principal.getName());
+            Wine wine = wineService.findById(wineId);
+            bottle.setId(bottleId);
             bottle.setUser(user);
-            Bottle savedBottle = bottleService.save(bottle);
-            wine.getBottles().add(savedBottle);
-            return "redirect:/bottle/list";
+            bottle.setWine(wine);
+
+            if (bottle.getNumber() > 0) {
+                bottleService.save(bottle);
+                return "redirect:/bottle/list";
+            } else {
+                user.getBottles().remove(bottle);
+                bottleService.delete(bottle);
+                Tasted tasted = new Tasted(user, wine);
+                user.getTasted().add(tasted);
+                Tasted savedTasted = tastedService.save(tasted);
+                return "redirect:/tasted/list";
+            }
         }
+    }
+
+    @GetMapping("/list")
+    public String bottleList(Model model, Principal principal) {
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
+        return "bottle/bottleList";
     }
 }
