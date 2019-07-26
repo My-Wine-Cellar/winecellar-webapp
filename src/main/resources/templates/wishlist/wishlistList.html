@@ -13,7 +13,9 @@
             <th>Producer</th>
             <th>Wine</th>
             <th>Vintage</th>
+            <th>Size</th>
             <th>Date</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -21,7 +23,9 @@
             <td><a th:href="@{/producer/__${wish.wine.producer.id}__}" th:text="${wish.wine.producer.name}"></a></td>
             <td><a th:href="@{/producer/__${wish.wine.producer.id}__/wine/__${wish.wine.id}__}" th:text="${wish.wine.name}"></a></td>
             <td th:text="${wish.wine.vintage}"></td>
-            <td th:text="${wish.date}"></td>
+            <td th:text="|${wish.wine.size}L|"></td>
+            <td th:text="${#dates.format(wish.date, 'MMM dd, yyyy')}"></td>
+            <td><a th:href="@{/wishlist/__${wish.id}__/delete}"><span class="fas fa-trash"></span></a></td>
         </tr>
         </tbody>
     </table>

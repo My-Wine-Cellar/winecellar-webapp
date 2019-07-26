@@ -38,10 +38,4 @@ public class IndexController {
         model.addAttribute("user", userService.findByUsername(principal.getName()));
         return "review/reviewList";
     }
-
-    @GetMapping("/wishlist/list")
-    public String showUsersWishlist(Model model, Principal principal) {
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
-        return "wishlist/wishlistList";
-    }
 }
