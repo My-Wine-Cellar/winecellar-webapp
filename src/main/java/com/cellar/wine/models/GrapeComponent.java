@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -63,5 +62,10 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
             return grape.getName().compareTo(gc.getGrape().getName());
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "GrapeComponent(" + id + ")";
     }
 }

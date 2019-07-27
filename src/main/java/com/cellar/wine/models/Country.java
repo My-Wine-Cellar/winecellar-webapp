@@ -8,7 +8,6 @@ import javax.persistence.OneToMany;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -40,5 +39,10 @@ public class Country extends BaseEntity implements Comparable<Country> {
     @Override
     public int compareTo(Country c) {
         return name.compareTo(c.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Country(" + id + ")";
     }
 }

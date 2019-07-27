@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -39,5 +38,10 @@ public class Fermentation extends BaseEntity implements Comparable<Fermentation>
             return temperature.compareTo(m.getTemperature());
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Fermentation(" + id + ")";
     }
 }

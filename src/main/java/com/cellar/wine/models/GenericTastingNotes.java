@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -106,5 +105,10 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
     @Override
     public int compareTo(GenericTastingNotes gtn) {
         return getId().compareTo(gtn.getId());
+    }
+
+    @Override
+    public String toString() {
+        return "GenericTastingNotes(" + id + ")";
     }
 }

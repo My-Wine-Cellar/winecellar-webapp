@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -54,5 +53,10 @@ public class Grape extends BaseEntity implements Comparable<Grape> {
     @Override
     public int compareTo(Grape g) {
         return name.compareTo(g.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Grape(" + id + ")";
     }
 }

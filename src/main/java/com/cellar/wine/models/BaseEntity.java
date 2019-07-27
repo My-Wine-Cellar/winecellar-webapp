@@ -1,7 +1,6 @@
 package com.cellar.wine.models;
 
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,13 +9,12 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @EqualsAndHashCode
-@ToString
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
     public BaseEntity() {
     }
