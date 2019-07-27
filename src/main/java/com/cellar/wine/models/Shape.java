@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -40,5 +39,10 @@ public class Shape extends BaseEntity implements Comparable<Shape> {
     @Override
     public int compareTo(Shape s) {
         return name.compareTo(s.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Shape(" + id + ")";
     }
 }

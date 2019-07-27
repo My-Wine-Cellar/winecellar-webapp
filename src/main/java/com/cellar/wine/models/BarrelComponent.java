@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -51,5 +50,10 @@ public class BarrelComponent extends BaseEntity implements Comparable<BarrelComp
             return barrel.getName().compareTo(bc.getBarrel().getName());
 
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "BarrelComponent(" + id + ")";
     }
 }

@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -48,5 +47,10 @@ public class Bottle extends BaseEntity implements Comparable<Bottle> {
     @Override
     public int compareTo(Bottle b) {
         return wine.getName().compareTo(b.getWine().getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Bottle(" + id + ")";
     }
 }

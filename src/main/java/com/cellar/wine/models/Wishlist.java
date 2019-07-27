@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import java.sql.Date;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -42,5 +41,10 @@ public class Wishlist extends BaseEntity implements Comparable<Wishlist> {
     @Override
     public int compareTo(Wishlist w) {
         return wine.getName().compareTo(w.getWine().getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Wishlist(" + id + ")";
     }
 }

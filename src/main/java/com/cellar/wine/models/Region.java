@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -59,5 +58,10 @@ public class Region extends BaseEntity implements Comparable<Region> {
     @Override
     public int compareTo(Region r) {
         return name.compareTo(r.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Region(" + id + ")";
     }
 }

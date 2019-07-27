@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -97,5 +96,10 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @Override
     public int compareTo(Wine w) {
         return name.compareTo(w.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Wine(" + id + ")";
     }
 }

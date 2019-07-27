@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -40,5 +39,10 @@ public class Barrel extends BaseEntity implements Comparable<Barrel> {
     @Override
     public int compareTo(Barrel b) {
         return name.compareTo(b.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Barrel(" + id + ")";
     }
 }

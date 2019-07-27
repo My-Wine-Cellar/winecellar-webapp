@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -36,5 +35,10 @@ public class Tasted extends BaseEntity implements Comparable<Tasted> {
     @Override
     public int compareTo(Tasted t) {
         return wine.getName().compareTo(t.getWine().getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Tasted(" + id + ")";
     }
 }

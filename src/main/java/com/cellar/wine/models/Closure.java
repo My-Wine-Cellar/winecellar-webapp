@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Getter
 @Setter
 @Entity
@@ -40,5 +39,10 @@ public class Closure extends BaseEntity implements Comparable<Closure> {
     @Override
     public int compareTo(Closure c) {
         return name.compareTo(c.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Closure(" + id + ")";
     }
 }

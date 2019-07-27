@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@ToString
 @Setter
 @Getter
 @Entity
@@ -74,5 +73,10 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
             }
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "Producer(" + id + ")";
     }
 }
