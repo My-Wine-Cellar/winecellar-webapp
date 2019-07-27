@@ -7,7 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface TastedRepository extends JpaRepository<Tasted, Long> {
 
-    @Query("SELECT t FROM Tasted t WHERE t.wine.id = :wineid AND t.user.id = :userid")
-    Tasted findByUser(@Param("wineid") Long wineId, @Param("userid") Integer userId);
+    @Query("SELECT t FROM Tasted t WHERE t.user.id = :userid AND t.id = :id")
+    Tasted findByUser(@Param("userid") Integer userId, @Param("id") Long id);
+
+    @Query("SELECT t FROM Tasted t WHERE t.user.id = :userid AND t.wine.id = :wineid")
+    Tasted findByWine(@Param("userid") Integer userId, @Param("wineid") Long wineId);
 
 }

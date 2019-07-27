@@ -17,8 +17,12 @@ public class WishlistServiceImpl implements WishlistService {
         this.wishlistRepository = wishlistRepository;
     }
 
-    public Wishlist findByUser(Long wineId, Integer userId) {
-        return wishlistRepository.findByUser(wineId, userId);
+    public Wishlist findByUser(Integer userId, Long id) {
+        return wishlistRepository.findByUser(userId, id);
+    }
+
+    public Wishlist findByWine(Integer userId, Long wineId) {
+        return wishlistRepository.findByWine(userId, wineId);
     }
 
     @Override

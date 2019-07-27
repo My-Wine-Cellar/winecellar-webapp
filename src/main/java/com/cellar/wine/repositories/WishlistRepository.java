@@ -7,7 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
 
-    @Query("SELECT w FROM Wishlist w WHERE w.wine.id = :wineid AND w.user.id = :userid")
-    Wishlist findByUser(@Param("wineid") Long wineId, @Param("userid") Integer userId);
+    @Query("SELECT w FROM Wishlist w WHERE w.user.id = :userid AND w.id = :id")
+    Wishlist findByUser(@Param("userid") Integer userId, @Param("id") Long id);
+
+    @Query("SELECT w FROM Wishlist w WHERE w.user.id = :userid AND w.wine.id = :wineid")
+    Wishlist findByWine(@Param("userid") Integer userId, @Param("wineid") Long wineId);
 
 }
