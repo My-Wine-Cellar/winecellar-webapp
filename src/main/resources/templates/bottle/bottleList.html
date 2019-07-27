@@ -25,7 +25,7 @@
             <td><a th:href="@{/producer/__${bottle.wine.producer.id}__}" th:text="${bottle.wine.producer.name}"></a></td>
             <td><a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__}" th:text="${bottle.wine.name}"></a></td>
             <td th:text="${bottle.wine.vintage}"></td>
-            <td th:text="${bottle.wine.size}"></td>
+            <td th:text="|${bottle.wine.size}L|"></td>
             <td th:text="${bottle.location}"></td>
             <td><a th:href="@{/bottle/__${bottle.id}__/edit}"><span class="fas fa-edit"/></a></td>
         </tr>
