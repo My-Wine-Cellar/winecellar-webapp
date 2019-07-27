@@ -79,7 +79,7 @@ public class WineController {
         Wine wine = wineService.findById(wineId);
         User user = userService.findByUsername(principal.getName());
         Bottle bottle = bottleService.findByUser(wine.getId(), user.getId());
-        Review review = reviewService.findByUser(wine.getId(), user.getId());
+        Review review = reviewService.findByWine(user.getId(), wine.getId());
         GenericTastingNotes tastingnotes = null;
         Wishlist wishlist = wishlistService.findByUser(wine.getId(), user.getId());
 

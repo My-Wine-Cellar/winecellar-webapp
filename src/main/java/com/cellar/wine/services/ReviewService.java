@@ -4,6 +4,7 @@ import com.cellar.wine.models.Review;
 
 public interface ReviewService extends CrudService<Review, Long> {
 
-    Review findByUser(Long wineId, Integer userId);
+    Review findByUser(Integer userId, Long id);
+    Review findByWine(Integer userId, Long wineId);
 
 }
