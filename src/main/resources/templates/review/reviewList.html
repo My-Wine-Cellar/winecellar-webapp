@@ -16,6 +16,7 @@
             <th>Vintage</th>
             <th>Date</th>
             <th>Comment</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -24,8 +25,12 @@
             <td><a th:href="@{/producer/__${review.wine.producer.id}__}" th:text="${review.wine.producer.name}"></a></td>
             <td><a th:href="@{/producer/__${review.wine.producer.id}__/wine/__${review.wine.id}__}" th:text="${review.wine.name}"></a></td>
             <td th:text="${review.wine.vintage}"></td>
-            <td th:text="${review.date}"></td>
+            <td th:text="${#dates.format(review.date, 'MMM dd, yyyy')}"></td>
             <td th:text="${review.comment}"></td>
+            <td>
+              <a th:href="@{/review/__${review.id}__/edit}"><span class="fas fa-edit"></span></a>
+              <a th:href="@{/review/__${review.id}__/delete}"><span class="fas fa-trash"></span></a>
+            </td>
         </tr>
         </tbody>
     </table>

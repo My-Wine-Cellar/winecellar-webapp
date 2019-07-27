@@ -17,8 +17,12 @@ public class ReviewServiceImpl implements ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    public Review findByUser(Long wineId, Integer userId) {
-        return reviewRepository.findByUser(wineId, userId);
+    public Review findByUser(Integer userId, Long id) {
+        return reviewRepository.findByUser(userId, id);
+    }
+
+    public Review findByWine(Integer userId, Long wineId) {
+        return reviewRepository.findByWine(userId, wineId);
     }
 
     @Override
