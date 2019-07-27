@@ -17,8 +17,12 @@ public class TastedServiceImpl implements TastedService {
         this.tastedRepository = tastedRepository;
     }
 
-    public Tasted findByUser(Long wineId, Integer userId) {
-        return tastedRepository.findByUser(wineId, userId);
+    public Tasted findByUser(Integer userId, Long id) {
+        return tastedRepository.findByUser(userId, id);
+    }
+
+    public Tasted findByWine(Integer userId, Long wineId) {
+        return tastedRepository.findByWine(userId, wineId);
     }
 
     @Override

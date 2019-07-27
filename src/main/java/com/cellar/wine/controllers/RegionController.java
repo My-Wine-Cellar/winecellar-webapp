@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/region")
@@ -29,13 +30,22 @@ public class RegionController {
     }
 
     @GetMapping("/{regionId}/edit")
-    public String initEditRegionForm(@PathVariable Long regionId, Model model) {
+    public String regionEditGet(@PathVariable Long regionId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("region", regionService.findById(regionId));
         return "region/editRegion";
     }
 
     @PostMapping("/{regionId}/edit")
-    public String processEditRegionForm(@Valid Region region, BindingResult result, @PathVariable Long regionId) {
+    public String processEditRegionForm(@Valid Region region, BindingResult result,
+                                        @PathVariable Long regionId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         if(result.hasErrors()) {
             return "region/editRegion";
         } else {

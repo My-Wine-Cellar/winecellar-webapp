@@ -14,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Log
@@ -32,7 +33,7 @@ public class AreaController {
     }
 
     @InitBinder("area")
-    public void initBinderArea(WebDataBinder dataBinder) {
+    public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("name");
     }
 
@@ -48,13 +49,21 @@ public class AreaController {
     }
 
     @GetMapping("/edit")
-    public String initEditAreaForm(@PathVariable Long areaId, Model model) {
+    public String areaEditGet(@PathVariable Long areaId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("area", areaService.findById(areaId));
         return "area/editArea";
     }
 
     @PostMapping("/edit")
-    public String processEditAreaForm(@Valid Area area, BindingResult result, @PathVariable Long areaId) {
+    public String areaEditPost(@Valid Area area, BindingResult result, @PathVariable Long areaId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         if(result.hasErrors()) {
             return "area/editArea";
         } else {
@@ -65,14 +74,23 @@ public class AreaController {
     }
 
     @GetMapping("/addProducer")
-    public String initAddProducerForm(Model model, @PathVariable Long areaId) {
+    public String areaAddProducerGet(Model model, @PathVariable Long areaId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("area", areaService.findById(areaId));
         model.addAttribute("producer", new Producer());
         return "producer/addEditProducer";
     }
 
     @PostMapping("/addProducer")
-    public String processAddProducerForm(@Valid Producer producer, BindingResult result, @PathVariable Long areaId) {
+    public String areaAddProducerPost(@Valid Producer producer, BindingResult result,
+                                      @PathVariable Long areaId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         if(result.hasErrors()) {
             return "producer/addEditProducer";
         } else {
@@ -84,7 +102,11 @@ public class AreaController {
     }
 
     @RequestMapping("/addGrape")
-    public String initAddGrapeForm(Model model, @PathVariable Long areaId) {
+    public String areaAddGrapeGet(Model model, @PathVariable Long areaId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("area", areaService.findById(areaId));
         model.addAttribute("redGrapes", grapeService.getRedGrapes());
         model.addAttribute("whiteGrapes", grapeService.getWhiteGrapes());
@@ -92,7 +114,12 @@ public class AreaController {
     }
 
     @PostMapping("/addGrape")
-    public String processAddGrapeForm(@Valid Area area, BindingResult result, @PathVariable Long areaId) {
+    public String areaAddGrapePost(@Valid Area area, BindingResult result,
+                                   @PathVariable Long areaId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         if (result.hasErrors()) {
             return "grape/addGrapeToArea";
         } else {

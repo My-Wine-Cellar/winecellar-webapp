@@ -75,13 +75,21 @@ public class WineController {
     }
 
     @GetMapping("/{wineId}")
-    public String wineDetails(@PathVariable Long wineId, Model model, Principal principal) {
+    public String wineDetailsGet(@PathVariable Long wineId, Model model, Principal principal) {
         Wine wine = wineService.findById(wineId);
-        User user = userService.findByUsername(principal.getName());
-        Bottle bottle = bottleService.findByUser(wine.getId(), user.getId());
-        Review review = reviewService.findByWine(user.getId(), wine.getId());
+        User user = null;
+        Bottle bottle = null;
+        Review review = null;
         GenericTastingNotes tastingnotes = null;
-        Wishlist wishlist = wishlistService.findByUser(wine.getId(), user.getId());
+        Wishlist wishlist = null;
+
+        if (principal != null) {
+            user = userService.findByUsername(principal.getName());
+            bottle = bottleService.findByWine(user.getId(), wine.getId());
+            review = reviewService.findByWine(user.getId(), wine.getId());
+            tastingnotes = null;
+            wishlist = wishlistService.findByWine(user.getId(), wine.getId());
+        }
 
         List<GrapeUI> winegrapes = new ArrayList<>();
         for (GrapeComponent gc : wine.getGrapes()) {
@@ -120,7 +128,11 @@ public class WineController {
     }
 
     @GetMapping("/new")
-    public String initNewWineForm(Producer producer, Model model) {
+    public String wineNewGet(Producer producer, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         Wine wine = new Wine();
         producer.getWines().add(wine);
         wine.setProducer(producer);
@@ -129,7 +141,11 @@ public class WineController {
     }
 
     @PostMapping("/new")
-    public String processNewWineForm(Producer producer, @Valid Wine wine, BindingResult result, ModelMap model) {
+    public String wineNewPost(Producer producer, @Valid Wine wine, BindingResult result, ModelMap model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         if (StringUtils.hasLength(wine.getName()) && wine.isNew() && producer.getWine(wine.getName(), true) != null) {
             result.rejectValue("name", "duplicate", "This wine already exists");
         }
@@ -145,13 +161,22 @@ public class WineController {
     }
 
     @GetMapping("/{wineId}/edit")
-    public String initEditWineForm(@PathVariable Long wineId, Model model) {
+    public String wineEditGet(@PathVariable Long wineId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute(wineService.findById(wineId));
         return ADD_OR_EDIT_WINE_TEMPLATE;
     }
 
     @PostMapping("/{wineId}/edit")
-    public String processEditWineForm(@Valid Wine wine, BindingResult result, Producer producer, Model model, @PathVariable Long wineId) {
+    public String wineEditPost(@Valid Wine wine, BindingResult result, Producer producer,
+                               Model model, @PathVariable Long wineId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         wine.setProducer(producer);
         if (result.hasErrors()) {
             model.addAttribute(MODEL_ATTRIBUTE_WINE, wine);
@@ -162,5 +187,4 @@ public class WineController {
             return "redirect:/producer/" + producer.getId() + "/wine/" + wineId;
         }
     }
-
 }

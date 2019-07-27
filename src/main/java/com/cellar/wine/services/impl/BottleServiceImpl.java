@@ -17,8 +17,12 @@ public class BottleServiceImpl implements BottleService {
         this.bottleRepository = bottleRepository;
     }
 
-    public Bottle findByUser(Long wineId, Integer userId) {
-        return bottleRepository.findByUser(wineId, userId);
+    public Bottle findByUser(Integer userId, Long id) {
+        return bottleRepository.findByUser(userId, id);
+    }
+
+    public Bottle findByWine(Integer userId, Long wineId) {
+        return bottleRepository.findByWine(userId, wineId);
     }
 
     @Override

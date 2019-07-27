@@ -7,6 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface BottleRepository extends JpaRepository<Bottle, Long> {
 
-    @Query("SELECT b FROM Bottle b WHERE b.wine.id = :wineid AND b.user.id = :userid")
-    Bottle findByUser(@Param("wineid") Long wineId, @Param("userid") Integer userId);
+    @Query("SELECT b FROM Bottle b WHERE b.user.id = :userid AND b.id = :id")
+    Bottle findByUser(@Param("userid") Integer userId, @Param("id") Long id);
+
+    @Query("SELECT b FROM Bottle b WHERE b.user.id = :userid AND b.wine.id = :wineid")
+    Bottle findByWine(@Param("userid") Integer userId, @Param("wineid") Long wineId);
 }

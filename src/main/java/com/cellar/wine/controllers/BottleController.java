@@ -26,6 +26,9 @@ public class BottleController {
     private WineService wineService;
     private TastedService tastedService;
 
+    private static final String MODEL_ATTRIBUTE_BOTTLE = "bottle";
+    private static final String MODEL_ATTRIBUTE_USER = "user";
+
     public BottleController(BottleService bottleService, UserService userService,
                             WineService wineService, TastedService tastedService) {
         this.bottleService = bottleService;
@@ -35,79 +38,124 @@ public class BottleController {
     }
 
     @InitBinder("bottle")
-    public void initWineBinder(WebDataBinder dataBinder) {
+    public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
     @GetMapping("/new")
-    public String initAddBottleForm(@RequestParam Long wineId, Model model) {
+    public String bottleNewGet(@RequestParam Long wineId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         Bottle bottle = new Bottle();
         Wine wine = wineService.findById(wineId);
         bottle.setWine(wine);
-        model.addAttribute("bottle", bottle);
+        model.addAttribute(MODEL_ATTRIBUTE_BOTTLE, bottle);
         return "bottle/addEditBottle";
     }
 
     @PostMapping("/new")
-    public String processAddForm(@Valid Bottle bottle, BindingResult result,
-                                 @RequestParam Long wineId, Principal principal) {
+    public String bottleNewPost(@Valid Bottle bottle, BindingResult result, Model model,
+                                @RequestParam Long wineId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         if (result.hasErrors()) {
             return "bottle/addEditBottle";
         } else {
             User user = userService.findByUsername(principal.getName());
-            Wine wine = wineService.findById(wineId);
-            Tasted tasted = tastedService.findByUser(wine.getId(), user.getId());
+            Bottle b = bottleService.findByWine(user.getId(), wineId);
+            Tasted tasted = tastedService.findByWine(user.getId(), wineId);
 
-            bottle.setWine(wine);
-            bottle.setShow(true);
-            bottle.setUser(user);
-            wine.getBottles().add(bottle);
-            bottleService.save(bottle);
+            if (b == null) {
+                Wine wine = wineService.findById(wineId);
+                bottle.setWine(wine);
+                bottle.setShow(true);
+                bottle.setUser(user);
+                user.getBottles().add(bottle);
+                bottleService.save(bottle);
+            } else {
+                b.setNumber(bottle.getNumber());
+                b.setLocation(bottle.getLocation());
+                b.setShow(bottle.getShow());
+                bottleService.save(b);
+            }
 
             if (tasted != null)
                 tastedService.delete(tasted);
 
+            model.addAttribute(MODEL_ATTRIBUTE_USER, user);
             return "redirect:/bottle/list";
         }
     }
 
     @GetMapping("/{bottleId}/edit")
-    public String initEditBottleForm(@PathVariable Long bottleId, Model model) {
-        Bottle bottle = bottleService.findById(bottleId);
-        model.addAttribute("bottle", bottle);
+    public String bottleEditGet(@PathVariable Long bottleId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
+        User user = userService.findByUsername(principal.getName());
+        Bottle bottle = bottleService.findByUser(user.getId(), bottleId);
+
+        if (bottle == null)
+            return "redirect:/";
+
+        model.addAttribute(MODEL_ATTRIBUTE_BOTTLE, bottle);
         return "bottle/addEditBottle";
     }
 
     @PostMapping("/{bottleId}/edit")
-    public String processEditBottleForm(@Valid Bottle bottle, BindingResult result, Model model,
-                                        @PathVariable Long bottleId, @RequestParam Long wineId, Principal principal) {
+    public String bottleEditPost(@Valid Bottle bottle, BindingResult result, Model model,
+                                 @PathVariable Long bottleId, @RequestParam Long wineId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         if (result.hasErrors()) {
-            model.addAttribute("bottle", bottle);
+            model.addAttribute(MODEL_ATTRIBUTE_BOTTLE, bottle);
             return "bottle/addEditBottle";
         } else {
             User user = userService.findByUsername(principal.getName());
-            Wine wine = wineService.findById(wineId);
-            bottle.setId(bottleId);
-            bottle.setUser(user);
-            bottle.setWine(wine);
+            Bottle b = bottleService.findByUser(user.getId(), bottleId);
 
-            if (bottle.getNumber() > 0) {
-                bottleService.save(bottle);
-                return "redirect:/bottle/list";
-            } else {
-                user.getBottles().remove(bottle);
-                bottleService.delete(bottle);
-                Tasted tasted = new Tasted(user, wine);
-                user.getTasted().add(tasted);
-                Tasted savedTasted = tastedService.save(tasted);
-                return "redirect:/tasted/list";
+            if (b != null) {
+                if (bottle.getNumber() > 0) {
+                    b.setNumber(bottle.getNumber());
+                    b.setLocation(bottle.getLocation());
+                    b.setShow(bottle.getShow());
+
+                    bottleService.save(b);
+
+                    model.addAttribute(MODEL_ATTRIBUTE_USER, user);
+                    return "redirect:/bottle/list";
+                } else {
+                    user.getBottles().remove(b);
+                    bottleService.delete(b);
+
+                    Wine wine = wineService.findById(wineId);
+                    Tasted tasted = new Tasted(user, wine);
+                    user.getTasted().add(tasted);
+                    Tasted savedTasted = tastedService.save(tasted);
+
+                    model.addAttribute(MODEL_ATTRIBUTE_USER, user);
+                    return "redirect:/tasted/list";
+                }
             }
+            return "redirect:/";
         }
     }
 
     @GetMapping("/list")
-    public String bottleList(Model model, Principal principal) {
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
+    public String bottleListGet(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
         return "bottle/bottleList";
     }
 }

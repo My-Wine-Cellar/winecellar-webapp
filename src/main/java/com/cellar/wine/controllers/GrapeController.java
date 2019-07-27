@@ -9,6 +9,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/grape")
@@ -26,7 +27,7 @@ public class GrapeController {
     }
 
     @GetMapping("/list")
-    public String showAllGrapes(Model model) {
+    public String grapeListGet(Model model) {
         model.addAttribute("whiteGrapes", grapeService.getWhiteGrapes());
         model.addAttribute("redGrapes", grapeService.getRedGrapes());
         return "grape/grapeList";
@@ -39,13 +40,21 @@ public class GrapeController {
     }
 
     @GetMapping("/{grapeId}/edit")
-    public String initEditGrapeForm(@PathVariable Long grapeId, Model model) {
+    public String grapeEditGet(@PathVariable Long grapeId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("grape", grapeService.findById(grapeId));
         return "grape/editGrape";
     }
 
     @PostMapping("/{grapeId}/edit")
-    public String processEditGrapeForm(@Valid Grape grape, BindingResult result, @PathVariable Long grapeId) {
+    public String grapeEditPost(@Valid Grape grape, BindingResult result, @PathVariable Long grapeId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         if(result.hasErrors()) {
             return "grape/editGrape";
         } else {
