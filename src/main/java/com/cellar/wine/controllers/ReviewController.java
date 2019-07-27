@@ -95,6 +95,23 @@ public class ReviewController {
         }
     }
 
+    @GetMapping("/{reviewId}")
+    public String reviewDetailsGet(@PathVariable Long reviewId, Model model, Principal principal) {
+        Review review = reviewService.findById(reviewId);
+
+        if (review == null) {
+            return "redirect:/";
+        }
+
+        User user = userService.findByUsername(principal.getName());
+
+        model.addAttribute(MODEL_ATTRIBUTE_REVIEW, review);
+        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
+        model.addAttribute(MODEL_ATTRIBUTE_WINE, review.getWine());
+
+        return "review/reviewView";
+    }
+
     @GetMapping("/{reviewId}/edit")
     public String reviewEditGet(@PathVariable Long reviewId, Model model, Principal principal) {
         if (principal == null) {

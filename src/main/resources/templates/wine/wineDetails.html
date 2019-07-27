@@ -133,7 +133,9 @@
                         </thead>
                         <tbody>
                           <tr th:each="review : ${wine.reviews}">
-                            <td th:text="${review.stars}"></td>
+                            <td>
+                              <a th:href="@{/review/__${review.id}__}" th:text="${review.stars}"></a>
+                            </td>
                             <td th:text="${review.comment}"></td>
                             <td th:text="${#dates.format(review.date, 'MMM dd, yyyy')}"></td>
                             <td>
