@@ -13,6 +13,8 @@
             <th>Producer</th>
             <th>Wine</th>
             <th>Vintage</th>
+            <th>Size</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -20,6 +22,11 @@
             <td><a th:href="@{/producer/__${t.wine.producer.id}__}" th:text="${t.wine.producer.name}"></a></td>
             <td><a th:href="@{/producer/__${t.wine.producer.id}__/wine/__${t.wine.id}__}" th:text="${t.wine.name}"></a></td>
             <td th:text="${t.wine.vintage}"></td>
+            <td th:text="|${t.wine.size}L|"></td>
+            <td>
+              <a th:href="@{/bottle/new(wineId=${t.wine.id})}"><span class="fas fa-wine-bottle"></span></a>
+              <a th:href="@{/tasted/__${t.id}__/delete}"><span class="fas fa-trash"></span></a>
+            </td>
         </tr>
         </tbody>
     </table>
