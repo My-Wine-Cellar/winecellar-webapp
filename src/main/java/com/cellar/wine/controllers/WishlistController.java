@@ -24,6 +24,8 @@ public class WishlistController {
     private UserService userService;
     private WineService wineService;
 
+    private static final String MODEL_ATTRIBUTE_USER = "user";
+
     public WishlistController(WishlistService wishlistService, UserService userService, WineService wineService) {
         this.wishlistService = wishlistService;
         this.userService = userService;
@@ -31,37 +33,57 @@ public class WishlistController {
     }
 
     @InitBinder("wishlist")
-    public void initWineBinder(WebDataBinder dataBinder) {
+    public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
     @GetMapping("/new")
-    public String initAddWishlistForm(@RequestParam Long wineId, Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        Wine wine = wineService.findById(wineId);
-        Wishlist wishlist = new Wishlist(new Date(System.currentTimeMillis()), user, wine);
-        wishlistService.save(wishlist);
+    public String wishlistNewGet(@RequestParam Long wineId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
 
-        model.addAttribute("user", user);
+        User user = userService.findByUsername(principal.getName());
+        Wishlist wishlist = wishlistService.findByWine(user.getId(), wineId);
+
+        if (wishlist == null) {
+            Wine wine = wineService.findById(wineId);
+            wishlist = new Wishlist(new Date(System.currentTimeMillis()), user, wine);
+            wishlistService.save(wishlist);
+        } else {
+            wishlist.setDate(new Date(System.currentTimeMillis()));
+            wishlistService.save(wishlist);
+        }
+
+        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
         return "redirect:/wishlist/list";
     }
 
     @GetMapping("/{wishlistId}/delete")
-    public String initEditWishlistForm(@PathVariable Long wishlistId, Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        Wishlist wishlist = wishlistService.findById(wishlistId);
+    public String wishlistDeleteGet(@PathVariable Long wishlistId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
 
-        if (wishlist.getUser().getId() == user.getId()) {
+        User user = userService.findByUsername(principal.getName());
+        Wishlist wishlist = wishlistService.findByUser(user.getId(), wishlistId);
+
+        if (wishlist != null) {
             wishlistService.delete(wishlist);
         }
 
-        model.addAttribute("user", user);
+        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
         return "wishlist/wishlistList";
     }
 
     @GetMapping("/list")
     public String wishlistList(Model model, Principal principal) {
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
+        if (principal == null) {
+            return "redirect:/";
+        }
+
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
         return "wishlist/wishlistList";
     }
 }

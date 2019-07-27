@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/country")
@@ -23,7 +24,7 @@ public class CountryController {
     }
 
     @GetMapping("/list")
-    public String getCountriesWithRegions(Model model) {
+    public String countryListGet(Model model) {
         model.addAttribute("countries", countryService.findWithRegions());
         return "country/countryList";
     }
@@ -35,13 +36,21 @@ public class CountryController {
     }
 
     @GetMapping("/{countryId}/edit")
-    public String initEditCountryForm(@PathVariable Long countryId, Model model) {
+    public String countryEditGet(@PathVariable Long countryId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("country", countryService.findById(countryId));
         return "country/editCountry";
     }
 
     @PostMapping("/{countryId}/edit")
-    public String processEditCountryForm(@Valid Country country, BindingResult result, @PathVariable Long countryId) {
+    public String countryEditPost(@Valid Country country, BindingResult result, @PathVariable Long countryId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         if(result.hasErrors()) {
             return "country/editCountry";
         } else {

@@ -19,6 +19,10 @@ public class TastedController {
 
     @GetMapping("/list")
     public String tastedList(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute("user", userService.findByUsername(principal.getName()));
         return "tasted/tastedList";
     }

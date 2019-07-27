@@ -9,6 +9,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/producer")
@@ -36,13 +37,22 @@ public class ProducerController {
     }
 
     @GetMapping("/{producerId}/edit")
-    public String initAddEditProducerForm(@PathVariable Long producerId, Model model) {
+    public String producerEditGet(@PathVariable Long producerId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, producerService.findById(producerId));
         return ADD_OR_EDIT_PRODUCER_TEMPLATE;
     }
 
     @PostMapping("/{producerId}/edit")
-    public String processAddEditProducerForm(@Valid Producer producer, BindingResult result, @PathVariable Long producerId) {
+    public String producerEditPost(@Valid Producer producer, BindingResult result,
+                                   @PathVariable Long producerId, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
         if(result.hasErrors()) {
             return ADD_OR_EDIT_PRODUCER_TEMPLATE;
         } else {
