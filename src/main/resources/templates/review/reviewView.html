@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body>
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/>
+<br/>
+<div class="container justify-content-center">
+    <h2 class="col-sm-10" th:text="Review"/>
+    <p/>
+    <div class="card text-left">
+      <div class="card-body" th:object="${review}">
+        <table class="table table-hover">
+          <tbody>
+            <tr>
+              <td><b>Producer</b></td>
+              <td><a th:href="@{/producer/__${wine.producer.id}__}" th:text="${wine.producer.name}"></a></td>
+            </tr>
+            <tr>
+              <td><b>Wine</b></td>
+              <td><a th:href="@{/producer/__${wine.producer.id}__/wine/__${wine.id}__}" th:text="${wine.name}"></a></td>
+            </tr>
+            <tr>
+              <td><b>Vintage</b></td>
+              <td th:text="${wine.vintage}"></td>
+            </tr>
+            <tr>
+              <td><b>Size</b></td>
+              <td th:text="|${wine.size}L|"></td>
+            </tr>
+            <tr>
+              <td><b>User</b></td>
+              <td><a th:href="@{/users/__${review.user.id}__}" th:text="${review.user.username}"></a></td>
+            </tr>
+            <tr>
+              <td><b>Stars</b></td>
+              <td th:text="*{stars}"></td>
+            </tr>
+            <tr>
+              <td><b>Comment</b></td>
+              <td th:text="*{comment}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br/>
+      <div th:if="${review.user.id == user.id}" class="text-right">
+        <a th:href="@{/review/__${review.id}__/edit}"><span class="fas fa-edit"></span></a>
+      </div>
+    </div>
+</div>
+<br/>
+<br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>
