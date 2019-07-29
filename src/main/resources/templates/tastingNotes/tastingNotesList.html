@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body>
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/>
+<h2 align="center">My Tasting Notes</h2>
+<br/>
+<div class="container justify-content-center">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Producer</th>
+            <th>Wine</th>
+            <th>Vintage</th>
+            <th>Tasted</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="notes : ${user.genericTastingNotes}">
+            <td><a th:href="@{/producer/__${notes.wine.producer.id}__}" th:text="${notes.wine.producer.name}"></a></td>
+            <td><a th:href="@{/producer/__${notes.wine.producer.id}__/wine/__${notes.wine.id}__}" th:text="${notes.wine.name}"></a></td>
+            <td th:text="${notes.wine.vintage}"></td>
+            <td th:text="${#dates.format(notes.date, 'MMM dd, yyyy')}"></td>
+            <td><a th:href="@{__${notes.id}__}"><span class="fas fa-eye"></span></a></td>
+            <td><a th:href="@{__${notes.id}__/edit}"><span class="fas fa-edit"></span></a></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+</div>
+<br/>
+<br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>
