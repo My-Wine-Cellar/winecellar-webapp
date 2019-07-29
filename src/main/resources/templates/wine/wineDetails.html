@@ -5,16 +5,12 @@
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
 <div class="container text-left">
-    <nav aria-label="breadcrumb" th:each="area : ${wine.producer.areas}">
-        <ol class="breadcrumb" th:each="region : ${area.regions}">
-            <!-- Country -->
-            <li class="breadcrumb-item"><a th:href="@{/country/{id}(id=${region.country.id})}" th:text="${region.country.name}"></a></li>
-            <!-- Region -->
-            <li class="breadcrumb-item"><a th:href="@{/region/{id}(id=${region.id})}" th:text="${region.name}"></a></li>
-            <!-- Area -->
-            <li class="breadcrumb-item"><a th:href="@{/area/{id}(id=${area.id})}" th:text="${area.name}"></a></li>
-            <!-- Producer -->
-            <li class="breadcrumb-item"><a th:href="@{/producer/__${wine.producer.id}__}" th:text="${wine.producer.name}"></a></li>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/}" th:text="${region.name}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/}" th:text="${area.name}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/__${producer.key}__}" th:text="${producer.name}"></a></li>
         </ol>
     </nav>
 </div>
@@ -33,7 +29,9 @@
                     <tbody>
                     <tr>
                         <td><b>Producer</b></td>
-                        <td><a th:href="@{/producer/__${wine.producer.id}__}" th:text="${wine.producer.name}"></a></td>
+                        <td>
+                          <a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/__${producer.key}__}" th:text="${producer.name}"></a>
+                        </td>
                     </tr>
                     <tr th:if="${wine.subarea != null && !wine.subarea.isEmpty()}">
                         <td><b>Subarea</b></td>
@@ -69,7 +67,7 @@
         </div>
         <br/>
         <div class="text-right">
-            <a th:href="@{{id}/edit(id=${wine.id})}">
+            <a th:href="@{/wine/__${wine.id}__/edit}">
                 <span data-toggle="tooltip" data-placement="top" title="Edit wine" class="fas fa-edit"></span>
             </a>
         </div>
@@ -161,7 +159,9 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="tn : ${wine.genericTastingNotes}">
-                                    <td th:if="${tn.show}" th:text="${tn.id}"></td>
+                                    <td th:if="${tn.show}">
+                                        <a th:href="@{/tastingnotes/__${tn.id}__}"><span class="fas fa-eye"></span></a>
+                                    </td>
                                     <td th:if="${tn.show}" th:text="${#dates.format(tn.date, 'MMM dd, yyyy')}"></td>
                                     <td th:if="${tn.show}">
                                         <a th:href="@{/users/__${tn.user.id}__}" th:text="${tn.user.username}"></a>

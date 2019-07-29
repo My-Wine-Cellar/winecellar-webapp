@@ -6,6 +6,7 @@ import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.WishlistService;
 import com.cellar.wine.services.WineService;
+import com.cellar.wine.ui.WishlistUI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/wishlist")
@@ -25,6 +28,7 @@ public class WishlistController {
     private WineService wineService;
 
     private static final String MODEL_ATTRIBUTE_USER = "user";
+    private static final String MODEL_ATTRIBUTE_WISHLIST = "wishlist";
 
     public WishlistController(WishlistService wishlistService, UserService userService, WineService wineService) {
         this.wishlistService = wishlistService;
@@ -55,7 +59,6 @@ public class WishlistController {
             wishlistService.save(wishlist);
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
         return "redirect:/wishlist/list";
     }
 
@@ -72,8 +75,7 @@ public class WishlistController {
             wishlistService.delete(wishlist);
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
-        return "wishlist/wishlistList";
+        return "redirect:/wishlist/list";
     }
 
     @GetMapping("/list")
@@ -83,7 +85,21 @@ public class WishlistController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
+        model.addAttribute(MODEL_ATTRIBUTE_WISHLIST, getWishlistUIs(user.getWishlist()));
         return "wishlist/wishlistList";
+    }
+
+    private List<WishlistUI> getWishlistUIs(List<Wishlist> wishlist) {
+        List<WishlistUI> result = new ArrayList<>();
+        if (wishlist != null) {
+            for (Wishlist w : wishlist) {
+                result.add(getWishlistUI(w));
+            }
+        }
+        return result;
+    }
+
+    private WishlistUI getWishlistUI(Wishlist w) {
+        return new WishlistUI(w);
     }
 }

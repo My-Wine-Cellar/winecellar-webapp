@@ -13,19 +13,20 @@
             <th>Producer</th>
             <th>Wine</th>
             <th>Vintage</th>
-            <th>Tasted</th>
-            <th></th>
+            <th>Date</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="notes : ${user.genericTastingNotes}">
-            <td><a th:href="@{/producer/__${notes.wine.producer.id}__}" th:text="${notes.wine.producer.name}"></a></td>
-            <td><a th:href="@{/producer/__${notes.wine.producer.id}__/wine/__${notes.wine.id}__}" th:text="${notes.wine.name}"></a></td>
-            <td th:text="${notes.wine.vintage}"></td>
-            <td th:text="${#dates.format(notes.date, 'MMM dd, yyyy')}"></td>
-            <td><a th:href="@{__${notes.id}__}"><span class="fas fa-eye"></span></a></td>
-            <td><a th:href="@{__${notes.id}__/edit}"><span class="fas fa-edit"></span></a></td>
+        <tr th:each="n : ${notes}">
+            <td><a th:href="@{/d/__${n.country.key}__/__${n.region.key}__/__${n.area.key}__/__${n.producer.key}__/}" th:text="${n.producer.name}"></a></td>
+            <td><a th:href="@{/d/__${n.country.key}__/__${n.region.key}__/__${n.area.key}__/__${n.producer.key}__/__${n.wine.key}__/__${n.wine.vintage}__/__${n.wine.size}__}" th:text="${n.wine.name}"></a></td>
+            <td th:text="${n.wine.vintage}"></td>
+            <td th:text="${#dates.format(n.date, 'MMM dd, yyyy')}"></td>
+            <td>
+              <a th:href="@{__${n.id}__}"><span class="fas fa-eye"></span></a>
+              <a th:href="@{__${n.id}__/edit}"><span class="fas fa-edit"></span></a>
+            </td>
         </tr>
         </tbody>
     </table>

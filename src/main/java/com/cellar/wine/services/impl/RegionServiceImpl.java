@@ -45,7 +45,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public Region findByName(String name) {
-        return regionRepository.findByName(name);
+    public Region findByLowerCaseName(String lcName, Long countryId) {
+        return regionRepository.findByLowerCaseName(lcName, countryId);
     }
 }

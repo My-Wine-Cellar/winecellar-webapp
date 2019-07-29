@@ -19,9 +19,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="wish : ${user.wishlist}">
-            <td><a th:href="@{/producer/__${wish.wine.producer.id}__}" th:text="${wish.wine.producer.name}"></a></td>
-            <td><a th:href="@{/producer/__${wish.wine.producer.id}__/wine/__${wish.wine.id}__}" th:text="${wish.wine.name}"></a></td>
+        <tr th:each="wish : ${wishlist}">
+            <td><a th:href="@{/d/__${wish.country.key}__/__${wish.region.key}__/__${wish.area.key}__/__${wish.producer.key}__/}" th:text="${wish.producer.name}"></a></td>
+            <td><a th:href="@{/d/__${wish.country.key}__/__${wish.region.key}__/__${wish.area.key}__/__${wish.producer.key}__/__${wish.wine.key}__/__${wish.wine.vintage}__/__${wish.wine.size}__}" th:text="${wish.wine.name}"></a></td>
             <td th:text="${wish.wine.vintage}"></td>
             <td th:text="|${wish.wine.size}L|"></td>
             <td th:text="${#dates.format(wish.date, 'MMM dd, yyyy')}"></td>

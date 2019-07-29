@@ -8,6 +8,7 @@ import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.BottleService;
 import com.cellar.wine.services.TastedService;
 import com.cellar.wine.services.WineService;
+import com.cellar.wine.ui.BottleUI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/bottle")
@@ -26,6 +29,7 @@ public class BottleController {
     private WineService wineService;
     private TastedService tastedService;
 
+    private static final String MODEL_ATTRIBUTE_BOTTLES = "bottles";
     private static final String MODEL_ATTRIBUTE_BOTTLE = "bottle";
     private static final String MODEL_ATTRIBUTE_USER = "user";
 
@@ -155,7 +159,19 @@ public class BottleController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
+        model.addAttribute(MODEL_ATTRIBUTE_BOTTLES, getBottleUIs(user.getBottles()));
         return "bottle/bottleList";
+    }
+
+    private List<BottleUI> getBottleUIs(List<Bottle> bottles) {
+        List<BottleUI> result = new ArrayList<>();
+        for (Bottle b : bottles) {
+            result.add(getBottleUI(b));
+        }
+        return result;
+    }
+
+    private BottleUI getBottleUI(Bottle b) {
+        return new BottleUI(b);
     }
 }

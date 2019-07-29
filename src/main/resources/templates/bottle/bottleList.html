@@ -20,10 +20,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="bottle : ${user.bottles}">
+        <tr th:each="bottle : ${bottles}">
             <td th:text="${bottle.number}"></td>
-            <td><a th:href="@{/producer/__${bottle.wine.producer.id}__}" th:text="${bottle.wine.producer.name}"></a></td>
-            <td><a th:href="@{/producer/__${bottle.wine.producer.id}__/wine/__${bottle.wine.id}__}" th:text="${bottle.wine.name}"></a></td>
+            <td><a th:href="@{/d/__${bottle.country.key}__/__${bottle.region.key}__/__${bottle.area.key}__/__${bottle.producer.key}__/}" th:text="${bottle.producer.name}"></a></td>
+            <td><a th:href="@{/d/__${bottle.country.key}__/__${bottle.region.key}__/__${bottle.area.key}__/__${bottle.producer.key}__/__${bottle.wine.key}__/__${bottle.wine.vintage}__/__${bottle.wine.size}__}" th:text="${bottle.wine.name}"></a></td>
             <td th:text="${bottle.wine.vintage}"></td>
             <td th:text="|${bottle.wine.size}L|"></td>
             <td th:text="${bottle.location}"></td>

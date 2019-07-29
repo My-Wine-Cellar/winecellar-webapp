@@ -2,6 +2,8 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Region;
 import com.cellar.wine.services.RegionService;
+import com.cellar.wine.ui.CountryUI;
+import com.cellar.wine.ui.RegionUI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,16 +19,12 @@ import java.security.Principal;
 @RequestMapping("/region")
 public class RegionController {
 
+    private static final String MODEL_ATTRIBUTE_REGION = "region";
+
     private RegionService regionService;
 
     public RegionController(RegionService regionService) {
         this.regionService = regionService;
-    }
-
-    @GetMapping("/{regionId}")
-    public String regionDetails(@PathVariable Long regionId, Model model) {
-        model.addAttribute("region", regionService.findById(regionId));
-        return "region/regionDetails";
     }
 
     @GetMapping("/{regionId}/edit")
@@ -35,7 +33,7 @@ public class RegionController {
             return "redirect:/";
         }
 
-        model.addAttribute("region", regionService.findById(regionId));
+        model.addAttribute(MODEL_ATTRIBUTE_REGION, regionService.findById(regionId));
         return "region/editRegion";
     }
 
@@ -51,7 +49,10 @@ public class RegionController {
         } else {
             region.setId(regionId);
             Region savedRegion = regionService.save(region);
-            return "redirect:/region/" + savedRegion.getId();
+            CountryUI cui = new CountryUI(savedRegion.getCountry());
+            RegionUI rui = new RegionUI(savedRegion);
+
+            return "redirect:/d/" + cui.getKey() + "/" + rui.getKey();
         }
     }
 }

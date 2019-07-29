@@ -5,11 +5,11 @@
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
 <div class="container text-left">
-    <nav aria-label="breadcrumb" th:each="area : ${producer.areas}">
-        <ol class="breadcrumb" th:each="region : ${area.regions}">
-            <li class="breadcrumb-item"><a th:href="@{/country/{id}(id=${region.country.id})}" th:text="${region.country.name}"></a></li>
-            <li class="breadcrumb-item"><a th:href="@{/region/{id}(id=${region.id})}" th:text="${region.name}"></a></li>
-            <li class="breadcrumb-item"><a th:href="@{/area/{id}(id=${area.id})}" th:text="${area.name}"></a></li>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/}" th:text="${region.name}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/}" th:text="${area.name}"></a></li>
         </ol>
     </nav>
 </div>
@@ -42,19 +42,13 @@
                         <td><b>Web</b></td>
                         <td><a th:href="*{website}" target="_blank"><div th:text="*{website}"/></a></td>
                     </tr>
-<!--
-                    <tr>
-                        <td><b>Areas</b></td>
-                        <td th:text="*{areas}"></td>
-                    </tr>
--->
                     </tbody>
                 </table>
             </div>
         </div>
         <br/>
         <div class="text-right">
-            <a th:href="@{{id}/edit(id=${producer.id})}"><span class="fas fa-edit"/></a>
+            <a th:href="@{/producer/__${producer.id}__/edit}"><span class="fas fa-edit"/></a>
         </div>
     </div>
     <br/>
@@ -71,16 +65,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="wine : ${producer.wines}">
-                <td><a th:href="@{/producer/__${producer.id}__/wine/__${wine.id}__}" th:text="${wine.name}"></a></td>
+            <tr th:each="wine : ${wines}">
+                <td><a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/__${producer.key}__/__${wine.key}__/__${wine.vintage}__/__${wine.size}__}" th:text="${wine.name}"></a></td>
                 <td th:text="${wine.vintage}">Vintage</td>
-                <td th:text="${wine.size}">Size</td>
+                <td th:text="|${wine.size}L|">Size</td>
             </tr>
             </tbody>
         </table>
         <br/>
         <div class="text-right">
-            <a th:href="@{{id}/wine/new(id=${producer.id})}"><span class="fas fa-plus-square"/></a>
+            <a th:href="@{/wine/new(id=${producer.id})}"><span class="fas fa-plus-square"/></a>
         </div>
     </div>
 </div>

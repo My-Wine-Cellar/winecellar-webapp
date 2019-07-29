@@ -45,8 +45,8 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Country findByName(String name) {
-        return countryRepository.findByName(name);
+    public Country findByLowerCaseName(String lcName) {
+        return countryRepository.findByLowerCaseName(lcName);
     }
 
     @Override

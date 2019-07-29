@@ -1,5 +1,7 @@
 package com.cellar.wine.ui;
 
+import com.cellar.wine.models.Tasted;
+
 import lombok.*;
 
 import java.io.Serializable;
@@ -12,25 +14,20 @@ import java.io.Serializable;
 @Getter
 public class TastedUI implements Serializable {
     private Long id;
-    private Long producerId;
-    private String producerName;
-    private Long wineId;
-    private String wineName;
-    private Integer wineVintage;
-    private Float wineSize;
+    private CountryUI country;
+    private RegionUI region;
+    private AreaUI area;
+    private ProducerUI producer;
+    private WineUI wine;
     private Long reviewId;
     
-    public TastedUI(Long id,
-                    Long producerId, String producerName,
-                    Long wineId, String wineName, Integer wineVintage, Float wineSize,
-                    Long reviewId) {
-        this.id = id;
-        this.producerId = producerId;
-        this.producerName = producerName;
-        this.wineId = wineId;
-        this.wineName = wineName;
-        this.wineVintage = wineVintage;
-        this.wineSize = wineSize;
+    public TastedUI(Tasted t, Long reviewId) {
+        this.id = t.getId();
+        this.country = new CountryUI(t.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());
+        this.region = new RegionUI(t.getWine().getProducer().getAreas().get(0).getRegions().get(0));
+        this.area = new AreaUI(t.getWine().getProducer().getAreas().get(0));
+        this.producer = new ProducerUI(t.getWine().getProducer());
+        this.wine = new WineUI(t.getWine());
         this.reviewId = reviewId;
     }
 }

@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface CountryService extends CrudService<Country, Long> {
 
-    Country findByName(String name);
+    Country findByLowerCaseName(String lcName);
 
     Set<Country> findWithRegions();
 

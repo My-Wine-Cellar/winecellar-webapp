@@ -15,10 +15,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/tastingnotes")
 public class TastingNotesController {
+
+    private static final String MODEL_ATTRIBUTE_TASTING_NOTES_UI = "tastingNotesUI";
+    private static final String MODEL_ATTRIBUTE_NOTES = "notes";
+    private static final String MODEL_ATTRIBUTE_NOTE = "note";
+    private static final String MODEL_ATTRIBUTE_WINE = "wine";
+    private static final String MODEL_ATTRIBUTE_USER = "user";
+    private static final String REDIRECT = "redirect:/";
 
     private TastingNotesService tastingNotesService;
     private UserService userService;
@@ -31,18 +40,14 @@ public class TastingNotesController {
         this.wineService = wineService;
     }
 
-    private static final String MODEL_ATTRIBUTE_GENERIC_TASTING_NOTES = "gtn";
-    private static final String MODEL_ATTRIBUTE_TASTING_NOTES_UI = "tastingNotesUI";
-    private static final String MODEL_ATTRIBUTE_WINE = "wine";
-    private static final String MODEL_ATTRIBUTE_USER = "user";
-    private static final String REDIRECT = "redirect:/";
-
     @GetMapping("/list")
     public String tastingNotesListGet(Model model, Principal principal) {
         if (principal == null) {
             return REDIRECT;
         }
-        model.addAttribute(MODEL_ATTRIBUTE_USER, userService.findByUsername(principal.getName()));
+
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute(MODEL_ATTRIBUTE_NOTES, getTastingNotesUIs(user.getGenericTastingNotes()));
         return "tastingNotes/tastingNotesList";
     }
 
@@ -76,14 +81,27 @@ public class TastingNotesController {
 
     @GetMapping("/{tastedId}")
     public String tastingNotesDetailsGet(@PathVariable Long tastedId, Model model, Principal principal) {
-        if (principal == null) {
+        User user = null;
+        
+        if (principal != null) {
+            user = userService.findByUsername(principal.getName());
+        }
+
+        GenericTastingNotes gtn = tastingNotesService.findById(tastedId);
+        if (gtn == null) {
             return REDIRECT;
         }
-        User user = userService.findByUsername(principal.getName());
-        GenericTastingNotes gtn = tastingNotesService.findByUser(user.getId(), tastedId);
-        model.addAttribute(MODEL_ATTRIBUTE_GENERIC_TASTING_NOTES, gtn);
-        TastingNotesUI tastingNotesUI = new TastingNotesUI(gtn);
-        model.addAttribute(MODEL_ATTRIBUTE_TASTING_NOTES_UI, tastingNotesUI);
+
+        if (!gtn.getShow()) {
+           if (user == null) {
+               return REDIRECT;
+           }
+           if (gtn.getUser().getId() != user.getId()) {
+               return REDIRECT;
+           }
+        }
+
+        model.addAttribute(MODEL_ATTRIBUTE_NOTE, getTastingNotesUI(gtn));
         return "tastingNotes/tastingNotesView";
     }
 
@@ -126,7 +144,21 @@ public class TastingNotesController {
                 tastingNotesUI.mapNoseNotes(),
                 tastingNotesUI.mapPalleteNotes(),
                 tastingNotesUI.mapConclusionNotes(),
-                tastingNotesUI.isShow(),
+                tastingNotesUI.getShow(),
                 date, user, wine);
+    }
+
+    private List<TastingNotesUI> getTastingNotesUIs(List<GenericTastingNotes> gtns) {
+        List<TastingNotesUI> result = new ArrayList<>();
+        if (gtns != null) {
+            for (GenericTastingNotes g : gtns) {
+                result.add(getTastingNotesUI(g));
+            }
+        }
+        return result;
+    }
+
+    private TastingNotesUI getTastingNotesUI(GenericTastingNotes g) {
+        return new TastingNotesUI(g);
     }
 }
