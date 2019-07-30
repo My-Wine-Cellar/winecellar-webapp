@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body>
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/>
+<br/>
+<div class="container justify-content-center" th:object="${gtn}">
+    <h3 class="col-sm-10"
+        th:text="|${gtn.wine.name},  ${gtn.wine.vintage} tasted on ${#dates.format(gtn.date, 'MMM dd, yyyy')}|"></h3>
+    <br/>
+    <div class="container" th:object="${tastingNotesUI}">
+        <h3 class="text-left">Sight</h3>
+        <div class="card text-left">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><b>Clarity</b></td>
+                        <td th:text="*{sightClarity}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Color</b></td>
+                        <td th:text="*{sightColor}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Intensity</b></td>
+                        <td th:text="*{sightIntensity}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Rim variation</b></td>
+                        <td th:text="*{sightRimvariation}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Other</b></td>
+                        <td th:text="*{sightOther}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <h3 class="text-left">Nose</h3>
+        <div class="card text-left">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><b>Condition</b></td>
+                        <td th:text="*{noseCondition}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Earth</b></td>
+                        <td th:text="*{noseEarth}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Fruit</b></td>
+                        <td th:text="*{noseFruit}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Intensity</b></td>
+                        <td th:text="*{noseIntensity}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Mineral</b></td>
+                        <td th:text="*{noseMineral}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Non fruit</b></td>
+                        <td th:text="*{noseNonFruit}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Wood</b></td>
+                        <td th:text="*{noseWood}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Other</b></td>
+                        <td th:text="*{noseOther}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <h3 class="text-left">Palette</h3>
+        <div class="card text-left">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><b>Acid</b></td>
+                        <td th:text="*{paletteAcid}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Alcohol</b></td>
+                        <td th:text="*{paletteAlcohol}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Body</b></td>
+                        <td th:text="*{paletteBody}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Complexity</b></td>
+                        <td th:text="*{paletteComplexity}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Earth</b></td>
+                        <td th:text="*{paletteEarth}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Finish</b></td>
+                        <td th:text="*{paletteFinish}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Fruit</b></td>
+                        <td th:text="*{paletteFruit}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Intensity</b></td>
+                        <td th:text="*{paletteIntensity}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Mineral</b></td>
+                        <td th:text="*{paletteMineral}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Non fruit</b></td>
+                        <td th:text="*{paletteNonFruit}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Sweetness</b></td>
+                        <td th:text="*{paletteSweetness}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Tannin</b></td>
+                        <td th:text="*{paletteTannin}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Wood</b></td>
+                        <td th:text="*{paletteWood}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Other</b></td>
+                        <td th:text="*{paletteOther}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <h3 class="text-left">Conclusion</h3>
+        <div class="card text-left">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><b>Age</b></td>
+                        <td th:text="*{conclusionAge}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Climate</b></td>
+                        <td th:text="*{conclusionClimate}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Countries</b></td>
+                        <td th:text="*{conclusionCountries}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Development</b></td>
+                        <td th:text="*{conclusionDevelopment}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Grapes</b></td>
+                        <td th:text="*{conclusionGrapes}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Notes</b></td>
+                        <td th:text="*{conclusionNotes}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>World</b></td>
+                        <td th:text="*{conclusionWorld}"></td>
+                    </tr>
+                    <tr>
+                        <td><b>Other</b></td>
+                        <td th:text="*{conclusionOther}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>

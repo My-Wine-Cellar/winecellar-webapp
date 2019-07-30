@@ -1,17 +1,21 @@
 package com.cellar.wine.models;
 
 import com.cellar.wine.security.User;
-
-import lombok.*;
-import org.hibernate.annotations.Type;
 import com.github.cliftonlabs.json_simple.JsonObject;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -66,17 +70,17 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
         super();
     }
 
-    public GenericTastingNotes(Map<String, Set<String>> sight, Map<String, Set<String>> nose,
-                               Map<String, Set<String>> palette, Map<String, Set<String>> conclusion,
+    public GenericTastingNotes(Map<String, List<String>> sight, Map<String, List<String>> nose,
+                               Map<String, List<String>> palette, Map<String, List<String>> conclusion,
                                Boolean show, Date date, User user, Wine wine) {
         super();
         this.data = new HashMap<String, Serializable>();
 
         // Do we need com.github.cliftonlabs.json_simple.JsonArray here for the values ?
-        this.data.put(SIGHT, new JsonObject(sight).toJson());
-        this.data.put(NOSE, new JsonObject(nose).toJson());
-        this.data.put(PALETTE, new JsonObject(palette).toJson());
-        this.data.put(CONCLUSION, new JsonObject(conclusion).toJson());
+        this.data.put(SIGHT, new JsonObject(sight));
+        this.data.put(NOSE, new JsonObject(nose));
+        this.data.put(PALETTE, new JsonObject(palette));
+        this.data.put(CONCLUSION, new JsonObject(conclusion));
 
         this.show = show;
         this.date = date;
