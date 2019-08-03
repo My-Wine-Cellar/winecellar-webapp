@@ -42,6 +42,16 @@
                 <input th:replace="~{fragments/inputField :: input ('Location', 'location', 'text')}"/>
             </div>
         </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="form-check-label" for="showBottle">Allow people to see these bottles</label>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="checkbox" class="form-check-input showBottle" th:field="*{show}" id="showBottle">
+            </div>
+        </div>
+        <br/>
+        <br/>
         <div class="text-center">
             <button th:with="text=${bottle['new']} ? 'Add' : 'Update'" type="submit"
                     class="btn btn-default" th:text="${text}">
