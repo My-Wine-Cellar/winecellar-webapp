@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body>
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/>
+<div class="container justify-content-center">
+    <div class="card text-center">
+        <div class="card-body" th:object="${barrel}">
+            <h2 class="card-header" th:text="*{shortname}"></h2>
+        </div>
+    </div>
+    <br/>
+    <div class="container justify-content-left">
+        <div class="card text-left">
+            <div class="card-body" th:object="${barrel}">
+                <p class="card-text" th:text="*{description}"></p>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr th:if="${barrel.weblink != null && !barrel.weblink.isEmpty()}">
+                        <td><b>Web</b></td>
+                        <td><a th:href="*{weblink}" target="_blank"><div th:text="*{weblink}"/></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="text-right">
+        <a th:href="@{/barrel/__${barrel.id}__/edit}"><span class="fas fa-edit"/></a>
+    </div>
+</div>
+<br/>
+<br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>

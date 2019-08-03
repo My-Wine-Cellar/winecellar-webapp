@@ -1,3 +1,6 @@
+-- barrel
+CREATE INDEX idx_barrel_lc_name ON barrel (lower(name));
+
 -- bottle
 CREATE INDEX idx_bottle_user_wine ON bottle (user_id, wine_id);
 
