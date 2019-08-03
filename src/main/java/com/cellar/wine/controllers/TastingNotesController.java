@@ -136,6 +136,22 @@ public class TastingNotesController {
         return "redirect:/tastingnotes/list";
     }
 
+    @GetMapping("/{tastedId}/delete")
+    public String wishlistDeleteGet(@PathVariable Long tastedId, Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+
+        User user = userService.findByUsername(principal.getName());
+        GenericTastingNotes gtn = tastingNotesService.findByUser(user.getId(), tastedId);
+
+        if (gtn != null) {
+            tastingNotesService.delete(gtn);
+        }
+
+        return "redirect:/tastingnotes/list";
+    }
+
     private GenericTastingNotes prepForSave(Principal principal, TastingNotesUI tastingNotesUI) {
         Date date = new Date(System.currentTimeMillis());
         User user = userService.findByUsername(principal.getName());
