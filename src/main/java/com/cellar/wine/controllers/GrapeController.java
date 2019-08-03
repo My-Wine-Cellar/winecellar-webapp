@@ -2,6 +2,9 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Grape;
 import com.cellar.wine.services.GrapeService;
+import com.cellar.wine.ui.AbstractKeyUI;
+import com.cellar.wine.ui.GrapeUI;
+import com.cellar.wine.ui.GrapeUISorter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,10 +13,18 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/grape")
 public class GrapeController {
+
+    private static final String MODEL_ATTRIBUTE_WHITE_GRAPES = "whiteGrapes";
+    private static final String MODEL_ATTRIBUTE_RED_GRAPES = "redGrapes";
+    private static final String MODEL_ATTRIBUTE_GRAPE = "grape";
 
     private GrapeService grapeService;
 
@@ -28,14 +39,19 @@ public class GrapeController {
 
     @GetMapping("/list")
     public String grapeListGet(Model model) {
-        model.addAttribute("whiteGrapes", grapeService.getWhiteGrapes());
-        model.addAttribute("redGrapes", grapeService.getRedGrapes());
+        model.addAttribute(MODEL_ATTRIBUTE_WHITE_GRAPES, getGrapeUIs(grapeService.getWhiteGrapes()));
+        model.addAttribute(MODEL_ATTRIBUTE_RED_GRAPES, getGrapeUIs(grapeService.getRedGrapes()));
         return "grape/grapeList";
     }
 
-    @GetMapping("/{grapeId}")
-    public String grapeDetails(@PathVariable Long grapeId, Model model) {
-        model.addAttribute("grape", grapeService.findById(grapeId));
+    @GetMapping("/{grape}")
+    public String grapeDetails(@PathVariable String grape, Model model) {
+        Grape g = grapeService.findByLowerCaseName(AbstractKeyUI.fromKey(grape));
+
+        if (g == null)
+            return "redirect:/";
+
+        model.addAttribute(MODEL_ATTRIBUTE_GRAPE, getGrapeUI(g));
         return "grape/grapeDetails";
     }
 
@@ -45,7 +61,12 @@ public class GrapeController {
             return "redirect:/";
         }
 
-        model.addAttribute("grape", grapeService.findById(grapeId));
+        Grape grape = grapeService.findById(grapeId);
+
+        if (grape == null)
+            return "redirect:/";
+
+        model.addAttribute(MODEL_ATTRIBUTE_GRAPE, grape);
         return "grape/editGrape";
     }
 
@@ -60,7 +81,21 @@ public class GrapeController {
         } else {
             grape.setId(grapeId);
             Grape savedGrape = grapeService.save(grape);
-            return "redirect:/grape/" + savedGrape.getId();
+            GrapeUI ui = new GrapeUI(savedGrape);
+            return "redirect:/grape/" + ui.getKey();
         }
+    }
+
+    private List<GrapeUI> getGrapeUIs(Set<Grape> grapes) {
+        List<GrapeUI> result = new ArrayList<>();
+        for (Grape g : grapes) {
+            result.add(getGrapeUI(g));
+        }
+        Collections.sort(result, new GrapeUISorter());
+        return result;
+    }
+
+    private GrapeUI getGrapeUI(Grape g) {
+        return new GrapeUI(g);
     }
 }

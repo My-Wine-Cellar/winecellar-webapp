@@ -14,12 +14,13 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @Getter
-public class GrapeUI implements Serializable {
+public class GrapeUI extends AbstractKeyUI {
     private Long id;
     private String name;
     private String color;
     private String description;
     private String weblink;
+    private String alternativeNames;
 
     private Byte percentage;
     private Date harvestBegin;
@@ -36,6 +37,8 @@ public class GrapeUI implements Serializable {
                    Byte macerationDays, Float macerationTemperature,
                    Byte fermentationDays, Float fermentationTemperature,
                    List<BarrelUI> barrels) {
+        super(toKey(name));
+
         this.percentage = percentage;
         this.name = name;
         this.id = id;
@@ -53,6 +56,8 @@ public class GrapeUI implements Serializable {
     }
 
     public GrapeUI(Grape g) {
+        super(toKey(g.getName()));
+
         this.id = g.getId();
         this.name = g.getName();
         this.color = g.getColor();
