@@ -57,7 +57,7 @@
                         <td><b>Grapes</b></td>
                         <td>
                           <div th:each="winegrape : ${winegrapes}">
-                            <a th:href="@{/grape/__${winegrape.id}__}" th:text="${winegrape.name}"></a>
+                            <a th:href="@{/grape/__${winegrape.key}__}" th:text="${winegrape.name}"></a>
                           </div>
                         </td>
                     </tr>
@@ -241,7 +241,7 @@
                             <table class="table table-hover table-sm text-left">
                                 <thead>
                                 <tr>
-                                    <th><a th:href="@{/grape/__${winegrape.id}__}" th:text="${winegrape.name}"></a></th>
+                                    <th><a th:href="@{/grape/__${winegrape.key}__}" th:text="${winegrape.name}"></a></th>
                                     <th></th>
                                 </tr>
                                 </thead>

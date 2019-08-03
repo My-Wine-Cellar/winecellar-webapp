@@ -4,6 +4,9 @@ CREATE INDEX idx_bottle_user_wine ON bottle (user_id, wine_id);
 -- country
 CREATE INDEX idx_country_lc_name ON country (lower(name));
 
+-- grape
+CREATE INDEX idx_grape_lc_name ON grape (lower(name));
+
 -- region
 CREATE INDEX idx_region_lc_name_country_id ON region (lower(name), country_id);
 

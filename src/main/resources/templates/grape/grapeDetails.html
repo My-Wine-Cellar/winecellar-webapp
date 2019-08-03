@@ -21,7 +21,7 @@
                         <td><b>Color</b></td>
                         <td th:text="*{color}"></td>
                     </tr>
-                    <tr th:if="${grape.alternativeNames != null && !grape.alternativeNames.isEmpty()}">
+                    <tr th:if="*{! #strings.isEmpty(alternativeNames)}">
                         <td><b>Alternative Names</b></td>
                         <td th:text="*{alternativeNames}"></td>
                     </tr>
@@ -42,7 +42,7 @@
     </div>
     <br/>
     <div class="text-right">
-        <a th:href="@{/grape/{id}/edit(id=${grape.id})}"><span class="fas fa-edit"/></a>
+        <a th:href="@{/grape/__${grape.id}__/edit}"><span class="fas fa-edit"/></a>
     </div>
 </div>
 <br/>

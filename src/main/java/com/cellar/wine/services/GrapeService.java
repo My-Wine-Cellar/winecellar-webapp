@@ -11,4 +11,6 @@ public interface GrapeService extends CrudService<Grape, Long> {
     Set<Grape> getWhiteGrapes();
 
     Set<Grape> getRedGrapes();
+
+    Grape findByLowerCaseName(String lcName);
 }

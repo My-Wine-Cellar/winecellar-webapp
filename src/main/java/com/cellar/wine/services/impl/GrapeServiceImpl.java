@@ -62,4 +62,9 @@ public class GrapeServiceImpl implements GrapeService {
         grapeRepository.getRedGrapes().forEach(grapes::add);
         return grapes;
     }
+
+    @Override
+    public Grape findByLowerCaseName(String lcName) {
+        return grapeRepository.findByLowerCaseName(lcName);
+    }
 }
