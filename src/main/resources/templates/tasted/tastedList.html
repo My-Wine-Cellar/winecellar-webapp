@@ -24,13 +24,21 @@
             <td th:text="${t.wine.vintage}"></td>
             <td th:text="|${t.wine.size}L|"></td>
             <td>
-              <div th:if="${t.reviewId != null}">
-                <a th:href="@{/review/__${t.reviewId}__}">
-                  <span class="far fa-star"></span>
-                </a>
+              <div class="text-left">
+                <ul class="list-inline">
+                  <li class="list-inline-item" th:if="${t.reviewId != null}">
+                    <a th:href="@{/review/__${t.reviewId}__}">
+                      <span class="far fa-star"></span>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a th:href="@{/bottle/new(wineId=${t.wine.id})}"><span class="fas fa-wine-bottle"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a th:href="@{/tasted/__${t.id}__/delete}"><span class="fas fa-trash"></span></a>
+                  </li>
+                </ul>
               </div>
-              <a th:href="@{/bottle/new(wineId=${t.wine.id})}"><span class="fas fa-wine-bottle"></span></a>
-              <a th:href="@{/tasted/__${t.id}__/delete}"><span class="fas fa-trash"></span></a>
             </td>
         </tr>
         </tbody>
