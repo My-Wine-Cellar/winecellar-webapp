@@ -14,19 +14,19 @@
           <tbody>
             <tr>
               <td><b>Producer</b></td>
-              <td><a th:href="@{/producer/__${wine.producer.id}__}" th:text="${wine.producer.name}"></a></td>
+              <td><a th:href="@{/d/__${review.country.key}__/__${review.region.key}__/__${review.area.key}__/__${review.producer.key}__/}" th:text="${review.producer.name}"></a></td>
             </tr>
             <tr>
               <td><b>Wine</b></td>
-              <td><a th:href="@{/producer/__${wine.producer.id}__/wine/__${wine.id}__}" th:text="${wine.name}"></a></td>
+              <td><a th:href="@{/d/__${review.country.key}__/__${review.region.key}__/__${review.area.key}__/__${review.producer.key}__/__${review.wine.key}__/__${review.wine.vintage}__/__${review.wine.size}__}" th:text="${review.wine.name}"></a></td>
             </tr>
             <tr>
               <td><b>Vintage</b></td>
-              <td th:text="${wine.vintage}"></td>
+              <td th:text="${review.wine.vintage}"></td>
             </tr>
             <tr>
               <td><b>Size</b></td>
-              <td th:text="|${wine.size}L|"></td>
+              <td th:text="|${review.wine.size}L|"></td>
             </tr>
             <tr>
               <td><b>User</b></td>

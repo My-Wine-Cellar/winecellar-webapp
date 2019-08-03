@@ -6,9 +6,9 @@
 <br/>
 <div class="container text-left">
     <nav aria-label="breadcrumb">
-        <ol class="breadcrumb" th:each="region : ${area.regions}">
-            <li class="breadcrumb-item"><a th:href="@{/country/{id}(id=${region.country.id})}" th:text="${region.country.name}"></a></li>
-            <li class="breadcrumb-item"><a th:href="@{/region/{id}(id=${region.id})}" th:text="${region.name}"></a></li>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/}" th:text="${region.name}"></a></li>
         </ol>
     </nav>
 </div>
@@ -35,7 +35,7 @@
         </div>
         <br/>
         <div class="text-right">
-            <a th:href="@{/area/{id}/edit(id=${area.id})}"><span class="fas fa-edit"/></a>
+            <a th:href="@{/area/__${area.id}__/edit}"><span class="fas fa-edit"/></a>
         </div>
     </div>
     <br/>
@@ -45,9 +45,10 @@
     <br/>
     <div class="container justify-content-center">
         <div class="card text-center">
-            <div class="card-body" th:each="producer : ${area.producers}">
-                <h5 class="card-header"><a th:href="@{/producer/__${producer.id}__}" th:text="${producer.name}"></a>
-                </h5>
+            <div class="card-body" th:each="producer : ${producers}">
+              <h5 class="card-header">
+                <a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/__${producer.key}__}" th:text="${producer.name}"></a>
+              </h5>
             </div>
         </div>
         <br/>
@@ -62,7 +63,7 @@
     <br/>
     <div class="container justify-content-center">
         <div class="card text-center">
-            <div class="card-body" th:each="grape : ${area.primaryGrapes}">
+            <div class="card-body" th:each="grape : ${primaryGrapes}">
                 <h5 class="card-header"><a th:href="@{/grape/__${grape.id}__}" th:text="${grape.name}"></a></h5>
             </div>
         </div>

@@ -19,17 +19,17 @@
         </thead>
         <tbody>
         <tr th:each="t : ${tasted}">
-            <td><a th:href="@{/producer/__${t.producerId}__}" th:text="${t.producerName}"></a></td>
-            <td><a th:href="@{/producer/__${t.producerId}__/wine/__${t.wineId}__}" th:text="${t.wineName}"></a></td>
-            <td th:text="${t.wineVintage}"></td>
-            <td th:text="|${t.wineSize}L|"></td>
+            <td><a th:href="@{/d/__${t.country.key}__/__${t.region.key}__/__${t.area.key}__/__${t.producer.key}__/}" th:text="${t.producer.name}"></a></td>
+            <td><a th:href="@{/d/__${t.country.key}__/__${t.region.key}__/__${t.area.key}__/__${t.producer.key}__/__${t.wine.key}__/__${t.wine.vintage}__/__${t.wine.size}__}" th:text="${t.wine.name}"></a></td>
+            <td th:text="${t.wine.vintage}"></td>
+            <td th:text="|${t.wine.size}L|"></td>
             <td>
               <div th:if="${t.reviewId != null}">
                 <a th:href="@{/review/__${t.reviewId}__}">
                   <span class="far fa-star"></span>
                 </a>
               </div>
-              <a th:href="@{/bottle/new(wineId=${t.wineId})}"><span class="fas fa-wine-bottle"></span></a>
+              <a th:href="@{/bottle/new(wineId=${t.wine.id})}"><span class="fas fa-wine-bottle"></span></a>
               <a th:href="@{/tasted/__${t.id}__/delete}"><span class="fas fa-trash"></span></a>
             </td>
         </tr>

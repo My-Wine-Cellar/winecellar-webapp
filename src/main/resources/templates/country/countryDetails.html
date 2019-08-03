@@ -4,13 +4,6 @@
 <body>
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
-<!--<div class="container text-left">-->
-<!--    <nav aria-label="breadcrumb">-->
-<!--        <ol class="breadcrumb">-->
-<!--            <li class="breadcrumb-item"><a th:href="@{/country/list}">Countries</a></li>-->
-<!--        </ol>-->
-<!--    </nav>-->
-<!--</div>-->
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:object="${country}">
@@ -34,7 +27,7 @@
         </div>
         <br/>
         <div class="text-right">
-            <a th:href="@{/country/{id}/edit(id=${country.id})}"><span class="fas fa-edit"/></a>
+            <a th:href="@{/country/__${country.id}__/edit}"><span class="fas fa-edit"/></a>
         </div>
     </div>
     <br/>
@@ -46,8 +39,8 @@
     <br/>
     <div class="container justify-content-center">
         <div class="card text-center">
-            <div class="card-body" th:each="region : ${country.regions}">
-                <h5 class="card-header"><a th:href="@{/region/__${region.id}__}" th:text="${region.name}"></a></h5>
+            <div class="card-body" th:each="region : ${regions}">
+                <h5 class="card-header"><a th:href="@{/d/__${country.key}__/__${region.key}__}" th:text="${region.name}"></a></h5>
             </div>
         </div>
     </div>

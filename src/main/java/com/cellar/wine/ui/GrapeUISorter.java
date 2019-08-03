@@ -13,9 +13,11 @@ public class GrapeUISorter implements Comparator<GrapeUI> {
     public int compare(GrapeUI wg1, GrapeUI wg2) {
         int result;
 
-        result = wg1.getPercentage().compareTo(wg2.getPercentage());
-        if (result != 0)
-            return -result;
+        if (wg1.getPercentage() != null && wg2.getPercentage() != null) {
+            result = wg1.getPercentage().compareTo(wg2.getPercentage());
+            if (result != 0)
+                return -result;
+        }
 
         return wg1.getName().compareTo(wg2.getName());
     }

@@ -7,7 +7,7 @@
 <div class="container text-left">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a th:href="@{/country/{id}(id=${region.country.id})}" th:text="${region.country.name}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a></li>
         </ol>
     </nav>
 </div>
@@ -34,7 +34,7 @@
         </div>
         <br/>
         <div class="text-right">
-            <a th:href="@{/region/{id}/edit(id=${region.id})}"><span class="fas fa-edit"/></a>
+            <a th:href="@{/region/__${region.id}__/edit}"><span class="fas fa-edit"/></a>
         </div>
     </div>
     <br/>
@@ -43,8 +43,10 @@
     <br/>
     <div class="container justify-content-center">
         <div class="card text-center">
-            <div class="card-body" th:each="area : ${region.areas}">
-                <h5 class="card-header"><a th:href="@{/area/__${area.id}__}" th:text="${area.name}"></a></h5>
+            <div class="card-body" th:each="area : ${areas}">
+              <h5 class="card-header">
+                <a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__}" th:text="${area.name}"></a>
+              </h5>
             </div>
         </div>
     </div>

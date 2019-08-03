@@ -20,14 +20,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="review : ${user.reviews}">
+        <tr th:each="review : ${reviews}">
             <td th:text="${review.stars}"></td>
-            <td><a th:href="@{/producer/__${review.wine.producer.id}__}" th:text="${review.wine.producer.name}"></a></td>
-            <td><a th:href="@{/producer/__${review.wine.producer.id}__/wine/__${review.wine.id}__}" th:text="${review.wine.name}"></a></td>
+            <td><a th:href="@{/d/__${review.country.key}__/__${review.region.key}__/__${review.area.key}__/__${review.producer.key}__/}" th:text="${review.producer.name}"></a></td>
+            <td><a th:href="@{/d/__${review.country.key}__/__${review.region.key}__/__${review.area.key}__/__${review.producer.key}__/__${review.wine.key}__/__${review.wine.vintage}__/__${review.wine.size}__}" th:text="${review.wine.name}"></a></td>
             <td th:text="${review.wine.vintage}"></td>
             <td th:text="${#dates.format(review.date, 'MMM dd, yyyy')}"></td>
             <td th:text="${review.comment}"></td>
             <td>
+              <a th:href="@{/review/__${review.id}__}"><span class="fas fa-eye"></span></a>
               <a th:href="@{/review/__${review.id}__/edit}"><span class="fas fa-edit"></span></a>
               <a th:href="@{/review/__${review.id}__/delete}"><span class="fas fa-trash"></span></a>
             </td>

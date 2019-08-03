@@ -44,7 +44,7 @@ public class TastedController {
             tastedService.delete(tasted);
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_TASTED, getUI(user));
+        model.addAttribute(MODEL_ATTRIBUTE_TASTED, getTastedUIs(user, user.getTasted()));
         return "tasted/tastedList";
     }
 
@@ -55,25 +55,27 @@ public class TastedController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(MODEL_ATTRIBUTE_TASTED, getUI(user));
+        model.addAttribute(MODEL_ATTRIBUTE_TASTED, getTastedUIs(user, user.getTasted()));
         return "tasted/tastedList";
     }
 
-    private List<TastedUI> getUI(User user) {
-        List<TastedUI> tasted = new ArrayList<>();
-
-        if (user.getTasted() != null) {
-            for (Tasted t : user.getTasted()) {
-                Review review = reviewService.findByWine(user.getId(), t.getWine().getId());
-                TastedUI ui = new TastedUI(t.getId(),
-                                           t.getWine().getProducer().getId(), t.getWine().getProducer().getName(),
-                                           t.getWine().getId(), t.getWine().getName(),
-                                           t.getWine().getVintage(), t.getWine().getSize(),
-                                           (review != null ? review.getId() : null));
-                tasted.add(ui);
+    private List<TastedUI> getTastedUIs(User user, List<Tasted> tasted) {
+        List<TastedUI> result = new ArrayList<>();
+        if (tasted != null) {
+            for (Tasted t : tasted) {
+                result.add(getTastedUI(user, t));
             }
         }
+        return result;
+    }
 
-        return tasted;
+    private TastedUI getTastedUI(User user, Tasted t) {
+        Long reviewId = null;
+        Review review = reviewService.findByWine(user.getId(), t.getWine().getId());
+
+        if (review != null)
+            reviewId = review.getId();
+
+        return new TastedUI(t, reviewId);
     }
 }

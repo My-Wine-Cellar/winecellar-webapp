@@ -6,14 +6,23 @@ import com.github.cliftonlabs.json_simple.JsonObject;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.*;
 
 @Data
 public class TastingNotesUI implements Serializable {
 
-    private Long wineId;
+    private CountryUI country;
+    private RegionUI region;
+    private AreaUI area;
+    private ProducerUI producer;
+    private WineUI wine;
+    private UserUI user;
 
-    private boolean show;
+    private Long id;
+    private Boolean show;
+    private Date date;
+    private Long wineId;
 
     private String sightClarity;
     private String sightIntensity;
@@ -56,23 +65,22 @@ public class TastingNotesUI implements Serializable {
 
 
     public TastingNotesUI() {
-        // Empty
-    }
-
-    private String getData(JsonObject jo, String key) {
-        StringBuilder sb = new StringBuilder();
-        List list = jo.getCollection(new StringJsonKey(key));
-        for (int i = 0; i < list.size(); i++) {
-            sb = sb.append(list.get(i));
-            if (i < list.size() - 1)
-                sb = sb.append(", ");
-        }
-        return sb.toString();
+       // Empty
     }
 
     public TastingNotesUI(GenericTastingNotes gtn) {
-        this.wineId = gtn.getWine().getId();
+        this.country = new CountryUI(gtn.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());
+        this.region = new RegionUI(gtn.getWine().getProducer().getAreas().get(0).getRegions().get(0));
+        this.area = new AreaUI(gtn.getWine().getProducer().getAreas().get(0));
+        this.producer = new ProducerUI(gtn.getWine().getProducer());
+        this.wine = new WineUI(gtn.getWine());
+        this.user = new UserUI(gtn.getUser());
+
+        this.id = gtn.getId();
+        this.date = gtn.getDate();
         this.show = gtn.getShow();
+        this.wineId = gtn.getWine().getId();
+
         JsonObject json = new JsonObject(gtn.getData());
 
         // SIGHT
@@ -132,6 +140,17 @@ public class TastingNotesUI implements Serializable {
             }
         }
         return list;
+    }
+
+    private String getData(JsonObject jo, String key) {
+        StringBuilder sb = new StringBuilder();
+        List list = jo.getCollection(new StringJsonKey(key));
+        for (int i = 0; i < list.size(); i++) {
+            sb = sb.append(list.get(i));
+            if (i < list.size() - 1)
+                sb = sb.append(", ");
+        }
+        return sb.toString();
     }
 
     public Map<String, List<String>> mapSightNotes() {

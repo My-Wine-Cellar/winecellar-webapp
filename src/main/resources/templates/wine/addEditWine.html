@@ -9,6 +9,7 @@
     <h3 class="col-sm-10" th:text="${wine.producer.name}">Producer Name</h3>
     <form th:object="${wine}" method="post">
         <input type="hidden" name="id" th:value="*{id}"/>
+        <input type="hidden" name="producerId" th:value="${wine.producer.id}"/>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>

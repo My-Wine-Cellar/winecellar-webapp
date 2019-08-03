@@ -5,34 +5,65 @@
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
 <br/>
-<div class="container justify-content-center" th:object="${gtn}">
-    <h3 class="col-sm-10"
-        th:text="|${gtn.wine.name},  ${gtn.wine.vintage} tasted on ${#dates.format(gtn.date, 'MMM dd, yyyy')}|"></h3>
-    <br/>
-    <div class="container" th:object="${tastingNotesUI}">
-        <h3 class="text-left">Sight</h3>
+<div class="container justify-content-center">
+    <h2 class="col-sm-10" th:text="|Tasting notes|"/>
+    <div class="container" th:object="${note}">
         <div class="card text-left">
             <div class="card-body">
                 <table class="table table-hover">
                     <tbody>
                     <tr>
-                        <td><b>Clarity</b></td>
+                        <td width="25%"><b>Producer</b></td>
+                        <td><a th:href="@{/d/__${note.country.key}__/__${note.region.key}__/__${note.area.key}__/__${note.producer.key}__/}" th:text="${note.producer.name}"></a></td>
+                    </tr>
+                    <tr>
+                        <td width="25%"><b>Wine</b></td>
+                        <td><a th:href="@{/d/__${note.country.key}__/__${note.region.key}__/__${note.area.key}__/__${note.producer.key}__/__${note.wine.key}__/__${note.wine.vintage}__/__${note.wine.size}__}" th:text="${note.wine.name}"></a></td>
+                    </tr>
+                    <tr>
+                        <td width="25%"><b>Vintage</b></td>
+                        <td th:text="${note.wine.vintage}"></td>
+                    </tr>
+                    <tr>
+                        <td width="25%"><b>Size</b></td>
+                        <td th:text="|${note.wine.size}L|"></td>
+                    </tr>
+                    <tr>
+                        <td width="25%"><b>Date</b></td>
+                        <td th:text="${#dates.format(note.date, 'MMM dd, yyyy')}"></td>
+                    </tr>
+                    <tr>
+                        <td width="25%"><b>User</b></td>
+                        <td><a th:href="@{/users/__${note.user.id}__}" th:text="${note.user.username}"></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <h4 class="text-left">Sight</h4>
+        <div class="card text-left">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr th:if="*{! #strings.isEmpty(sightClarity)}">
+                        <td width="25%"><b>Clarity</b></td>
                         <td th:text="*{sightClarity}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Color</b></td>
+                    <tr th:if="*{! #strings.isEmpty(sightColor)}">
+                        <td width="25%"><b>Color</b></td>
                         <td th:text="*{sightColor}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Intensity</b></td>
+                    <tr th:if="*{! #strings.isEmpty(sightIntensity)}">
+                        <td width="25%"><b>Intensity</b></td>
                         <td th:text="*{sightIntensity}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Rim variation</b></td>
+                    <tr th:if="*{! #strings.isEmpty(sightRimvariation)}">
+                        <td width="25%"><b>Rim variation</b></td>
                         <td th:text="*{sightRimvariation}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Other</b></td>
+                    <tr th:if="*{! #strings.isEmpty(sightOther)}">
+                        <td width="25%"><b>Other</b></td>
                         <td th:text="*{sightOther}"></td>
                     </tr>
                     </tbody>
@@ -40,41 +71,41 @@
             </div>
         </div>
         <br/>
-        <h3 class="text-left">Nose</h3>
+        <h4 class="text-left">Nose</h4>
         <div class="card text-left">
             <div class="card-body">
                 <table class="table table-hover">
                     <tbody>
-                    <tr>
-                        <td><b>Condition</b></td>
+                    <tr th:if="*{! #strings.isEmpty(noseCondition)}">
+                        <td width="25%"><b>Condition</b></td>
                         <td th:text="*{noseCondition}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Earth</b></td>
+                    <tr th:if="*{! #strings.isEmpty(noseEarth)}">
+                        <td width="25%"><b>Earth</b></td>
                         <td th:text="*{noseEarth}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Fruit</b></td>
+                    <tr th:if="*{! #strings.isEmpty(noseFruit)}">
+                        <td width="25%"><b>Fruit</b></td>
                         <td th:text="*{noseFruit}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Intensity</b></td>
+                    <tr th:if="*{! #strings.isEmpty(noseIntensity)}">
+                        <td width="25%"><b>Intensity</b></td>
                         <td th:text="*{noseIntensity}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Mineral</b></td>
+                    <tr th:if="*{! #strings.isEmpty(noseMineral)}">
+                        <td width="25%"><b>Mineral</b></td>
                         <td th:text="*{noseMineral}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Non fruit</b></td>
+                    <tr th:if="*{! #strings.isEmpty(noseNonFruit)}">
+                        <td width="25%"><b>Non fruit</b></td>
                         <td th:text="*{noseNonFruit}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Wood</b></td>
+                    <tr th:if="*{! #strings.isEmpty(noseWood)}">
+                        <td width="25%"><b>Wood</b></td>
                         <td th:text="*{noseWood}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Other</b></td>
+                    <tr th:if="*{! #strings.isEmpty(noseOther)}">
+                        <td width="25%"><b>Other</b></td>
                         <td th:text="*{noseOther}"></td>
                     </tr>
                     </tbody>
@@ -82,65 +113,65 @@
             </div>
         </div>
         <br/>
-        <h3 class="text-left">Palette</h3>
+        <h4 class="text-left">Palette</h4>
         <div class="card text-left">
             <div class="card-body">
                 <table class="table table-hover">
                     <tbody>
-                    <tr>
-                        <td><b>Acid</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteAcid)}">
+                        <td width="25%"><b>Acid</b></td>
                         <td th:text="*{paletteAcid}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Alcohol</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteAlcohol)}">
+                        <td width="25%"><b>Alcohol</b></td>
                         <td th:text="*{paletteAlcohol}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Body</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteBody)}">
+                        <td width="25%"><b>Body</b></td>
                         <td th:text="*{paletteBody}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Complexity</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteComplexity)}">
+                        <td width="25%"><b>Complexity</b></td>
                         <td th:text="*{paletteComplexity}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Earth</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteEarth)}">
+                        <td width="25%"><b>Earth</b></td>
                         <td th:text="*{paletteEarth}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Finish</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteFinish)}">
+                        <td width="25%"><b>Finish</b></td>
                         <td th:text="*{paletteFinish}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Fruit</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteFruit)}">
+                        <td width="25%"><b>Fruit</b></td>
                         <td th:text="*{paletteFruit}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Intensity</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteIntensity)}">
+                        <td width="25%"><b>Intensity</b></td>
                         <td th:text="*{paletteIntensity}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Mineral</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteMineral)}">
+                        <td width="25%"><b>Mineral</b></td>
                         <td th:text="*{paletteMineral}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Non fruit</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteNonFruit)}">
+                        <td width="25%"><b>Non fruit</b></td>
                         <td th:text="*{paletteNonFruit}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Sweetness</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteSweetness)}">
+                        <td width="25%"><b>Sweetness</b></td>
                         <td th:text="*{paletteSweetness}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Tannin</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteTannin)}">
+                        <td width="25%"><b>Tannin</b></td>
                         <td th:text="*{paletteTannin}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Wood</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteWood)}">
+                        <td width="25%"><b>Wood</b></td>
                         <td th:text="*{paletteWood}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Other</b></td>
+                    <tr th:if="*{! #strings.isEmpty(paletteOther)}">
+                        <td width="25%"><b>Other</b></td>
                         <td th:text="*{paletteOther}"></td>
                     </tr>
                     </tbody>
@@ -148,41 +179,41 @@
             </div>
         </div>
         <br/>
-        <h3 class="text-left">Conclusion</h3>
+        <h4 class="text-left">Conclusion</h4>
         <div class="card text-left">
             <div class="card-body">
                 <table class="table table-hover">
                     <tbody>
-                    <tr>
-                        <td><b>Age</b></td>
+                    <tr th:if="*{! #strings.isEmpty(conclusionAge)}">
+                        <td width="25%"><b>Age</b></td>
                         <td th:text="*{conclusionAge}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Climate</b></td>
+                    <tr th:if="*{! #strings.isEmpty(conclusionClimate)}">
+                        <td width="25%"><b>Climate</b></td>
                         <td th:text="*{conclusionClimate}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Countries</b></td>
+                    <tr th:if="*{! #strings.isEmpty(conclusionCountries)}">
+                        <td width="25%"><b>Countries</b></td>
                         <td th:text="*{conclusionCountries}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Development</b></td>
+                    <tr th:if="*{! #strings.isEmpty(conclusionDevelopment)}">
+                        <td width="25%"><b>Development</b></td>
                         <td th:text="*{conclusionDevelopment}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Grapes</b></td>
+                    <tr th:if="*{! #strings.isEmpty(conclusionGrapes)}">
+                        <td width="25%"><b>Grapes</b></td>
                         <td th:text="*{conclusionGrapes}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Notes</b></td>
+                    <tr th:if="*{! #strings.isEmpty(conclusionNotes)}">
+                        <td width="25%"><b>Notes</b></td>
                         <td th:text="*{conclusionNotes}"></td>
                     </tr>
-                    <tr>
-                        <td><b>World</b></td>
+                    <tr th:if="*{! #strings.isEmpty(conclusionWorld)}">
+                        <td width="25%"><b>World</b></td>
                         <td th:text="*{conclusionWorld}"></td>
                     </tr>
-                    <tr>
-                        <td><b>Other</b></td>
+                    <tr th:if="*{! #strings.isEmpty(conclusionOther)}">
+                        <td width="25%"><b>Other</b></td>
                         <td th:text="*{conclusionOther}"></td>
                     </tr>
                     </tbody>

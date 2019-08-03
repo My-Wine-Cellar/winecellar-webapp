@@ -1,8 +1,11 @@
 package com.cellar.wine.models;
 
+import com.cellar.wine.utils.ProducerSorter;
+
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -45,6 +48,11 @@ public class Area extends BaseEntity implements Comparable<Area> {
                @JoinColumn(name = "producer_id", referencedColumnName = "id")
     )
     private List<Producer> producers;
+
+    public List<Producer> getProducers() {
+        Collections.sort(producers, new ProducerSorter());
+        return producers;
+    }
 
     @Override
     public int compareTo(Area a) {

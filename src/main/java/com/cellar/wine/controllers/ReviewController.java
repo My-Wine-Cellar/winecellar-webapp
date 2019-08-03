@@ -6,6 +6,7 @@ import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ReviewService;
 import com.cellar.wine.services.WineService;
+import com.cellar.wine.ui.ReviewUI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/review")
@@ -24,6 +27,7 @@ public class ReviewController {
     private UserService userService;
     private WineService wineService;
 
+    private static final String MODEL_ATTRIBUTE_REVIEWS = "reviews";
     private static final String MODEL_ATTRIBUTE_REVIEW = "review";
     private static final String MODEL_ATTRIBUTE_WINE = "wine";
     private static final String MODEL_ATTRIBUTE_USER = "user";
@@ -90,7 +94,6 @@ public class ReviewController {
                 reviewService.save(r);
             }
 
-            model.addAttribute(MODEL_ATTRIBUTE_USER, user);
             return "redirect:/review/list";
         }
     }
@@ -105,9 +108,8 @@ public class ReviewController {
 
         User user = userService.findByUsername(principal.getName());
 
-        model.addAttribute(MODEL_ATTRIBUTE_REVIEW, review);
+        model.addAttribute(MODEL_ATTRIBUTE_REVIEW, new ReviewUI(review));
         model.addAttribute(MODEL_ATTRIBUTE_USER, user);
-        model.addAttribute(MODEL_ATTRIBUTE_WINE, review.getWine());
 
         return "review/reviewView";
     }
@@ -152,7 +154,6 @@ public class ReviewController {
                 r.setDate(new Date(System.currentTimeMillis()));
                 reviewService.save(r);
 
-                model.addAttribute(MODEL_ATTRIBUTE_USER, user);
                 return "redirect:/review/list";
             }
 
@@ -172,8 +173,7 @@ public class ReviewController {
         if (review != null) {
             reviewService.delete(review);
 
-            model.addAttribute(MODEL_ATTRIBUTE_USER, user);
-            return "review/reviewList";
+            return "redirect:/review/list";
         }
 
         return "redirect:/";
@@ -186,7 +186,21 @@ public class ReviewController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
+        model.addAttribute(MODEL_ATTRIBUTE_REVIEWS, getReviewUIs(user.getReviews()));
         return "review/reviewList";
+    }
+
+    private List<ReviewUI> getReviewUIs(List<Review> reviews) {
+        List<ReviewUI> result = new ArrayList<>();
+        if (reviews != null) {
+            for (Review r : reviews) {
+                result.add(getReviewUI(r));
+            }
+        }
+        return result;
+    }
+
+    private ReviewUI getReviewUI(Review r) {
+        return new ReviewUI(r);
     }
 }

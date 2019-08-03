@@ -1,7 +1,8 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Country;
-import com.cellar.wine.services.impl.CountryServiceImpl;
+import com.cellar.wine.services.CountryService;
+import com.cellar.wine.ui.CountryUI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,22 +18,12 @@ import java.security.Principal;
 @RequestMapping("/country")
 public class CountryController {
 
-    private CountryServiceImpl countryService;
+    private static final String MODEL_ATTRIBUTE_COUNTRY = "country";
 
-    public CountryController(CountryServiceImpl countryService) {
+    private CountryService countryService;
+
+    public CountryController(CountryService countryService) {
         this.countryService = countryService;
-    }
-
-    @GetMapping("/list")
-    public String countryListGet(Model model) {
-        model.addAttribute("countries", countryService.findWithRegions());
-        return "country/countryList";
-    }
-
-    @GetMapping("/{countryId}")
-    public String countryDetails(@PathVariable Long countryId, Model model) {
-        model.addAttribute("country", countryService.findById(countryId));
-        return "country/countryDetails";
     }
 
     @GetMapping("/{countryId}/edit")
@@ -41,7 +32,7 @@ public class CountryController {
             return "redirect:/";
         }
 
-        model.addAttribute("country", countryService.findById(countryId));
+        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, countryService.findById(countryId));
         return "country/editCountry";
     }
 
@@ -56,7 +47,8 @@ public class CountryController {
         } else {
             country.setId(countryId);
             Country savedCountry = countryService.save(country);
-            return "redirect:/country/" + savedCountry.getId();
+            CountryUI ui = new CountryUI(savedCountry);
+            return "redirect:/d/" + ui.getKey();
         }
     }
 }

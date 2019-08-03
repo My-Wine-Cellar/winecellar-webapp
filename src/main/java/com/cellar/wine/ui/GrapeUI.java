@@ -1,5 +1,7 @@
 package com.cellar.wine.ui;
 
+import com.cellar.wine.models.Grape;
+
 import lombok.*;
 
 import java.io.Serializable;
@@ -13,9 +15,13 @@ import java.util.List;
 @ToString
 @Getter
 public class GrapeUI implements Serializable {
-    private Byte percentage;
-    private String name;
     private Long id;
+    private String name;
+    private String color;
+    private String description;
+    private String weblink;
+
+    private Byte percentage;
     private Date harvestBegin;
     private Date harvestEnd;
     private Byte macerationDays;
@@ -44,6 +50,14 @@ public class GrapeUI implements Serializable {
         this.fermentationTemperature = fermentationTemperature;
 
         this.barrels = barrels;
+    }
+
+    public GrapeUI(Grape g) {
+        this.id = g.getId();
+        this.name = g.getName();
+        this.color = g.getColor();
+        this.description = g.getDescription();
+        this.weblink = g.getWeblink();
     }
 }
 
