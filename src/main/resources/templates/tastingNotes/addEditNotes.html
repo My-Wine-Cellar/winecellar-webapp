@@ -6,10 +6,26 @@
 <br/>
 <br/>
 <div class="container">
-    <h3 class="col-sm-10" th:text="|Tasting notes for ${wine.producer.name}: ${wine.name} ${wine.vintage}|"></h3>
+    <h2 class="col-sm-10" th:text="|Tasting notes|"/>
+    <div class="col-sm-10 text-left">
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <h5><a th:href="@{/d/__${note.country.key}__/__${note.region.key}__/__${note.area.key}__/__${note.producer.key}__/}" th:text="${note.producer.name}"></a></h5>
+        </li>
+        <li class="list-inline-item">
+          <h5><a th:href="@{/d/__${note.country.key}__/__${note.region.key}__/__${note.area.key}__/__${note.producer.key}__/__${note.wine.key}__/__${note.wine.vintage}__/__${note.wine.size}__}" th:text="${note.wine.name}"></a></h5>
+        </li>
+        <li class="list-inline-item">
+          <h5 th:text="${note.wine.vintage}"></h5>
+        </li>
+        <li class="list-inline-item">
+          <h5 th:text="|(${note.wine.size}L)|"></h5>
+        </li>
+      </ul>
+    </div>
     <br/>
-    <form th:object="${tastingNotesUI}" method="post">
-        <input type="hidden" name="wineId" th:value="*{wineId}"/>
+    <form th:object="${note}" method="post">
+        <input type="hidden" name="wineId" th:value="${note.wine.id}"/>
         <div class="col-sm-10">
             <div class="form-row">
                 <div class="form-group col-md-6">

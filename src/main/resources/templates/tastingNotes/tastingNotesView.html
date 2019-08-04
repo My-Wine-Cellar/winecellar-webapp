@@ -7,40 +7,26 @@
 <br/>
 <div class="container justify-content-center">
     <h2 class="col-sm-10" th:text="|Tasting notes|"/>
+    <div class="col-sm-10 text-left">
+      <ul class="list-inline">
+        <li class="list-inline-item">
+          <h5><a th:href="@{/d/__${note.country.key}__/__${note.region.key}__/__${note.area.key}__/__${note.producer.key}__/}" th:text="${note.producer.name}"></a></h5>
+        </li>
+        <li class="list-inline-item">
+          <h5><a th:href="@{/d/__${note.country.key}__/__${note.region.key}__/__${note.area.key}__/__${note.producer.key}__/__${note.wine.key}__/__${note.wine.vintage}__/__${note.wine.size}__}" th:text="${note.wine.name}"></a></h5>
+        </li>
+        <li class="list-inline-item">
+          <h5 th:text="${note.wine.vintage}"></h5>
+        </li>
+        <li class="list-inline-item">
+          <h5 th:text="|(${note.wine.size}L)|"></h5>
+        </li>
+        <li th:if="${note.user.id != user.id}" class="list-inline-item">
+          <h5>by <a th:href="@{/users/__${note.user.id}__}" th:text="${note.user.username}"></a></h5>
+        </li>
+      </ul>
+    </div>
     <div class="container" th:object="${note}">
-        <div class="card text-left">
-            <div class="card-body">
-                <table class="table table-hover">
-                    <tbody>
-                    <tr>
-                        <td width="25%"><b>Producer</b></td>
-                        <td><a th:href="@{/d/__${note.country.key}__/__${note.region.key}__/__${note.area.key}__/__${note.producer.key}__/}" th:text="${note.producer.name}"></a></td>
-                    </tr>
-                    <tr>
-                        <td width="25%"><b>Wine</b></td>
-                        <td><a th:href="@{/d/__${note.country.key}__/__${note.region.key}__/__${note.area.key}__/__${note.producer.key}__/__${note.wine.key}__/__${note.wine.vintage}__/__${note.wine.size}__}" th:text="${note.wine.name}"></a></td>
-                    </tr>
-                    <tr>
-                        <td width="25%"><b>Vintage</b></td>
-                        <td th:text="${note.wine.vintage}"></td>
-                    </tr>
-                    <tr>
-                        <td width="25%"><b>Size</b></td>
-                        <td th:text="|${note.wine.size}L|"></td>
-                    </tr>
-                    <tr>
-                        <td width="25%"><b>Date</b></td>
-                        <td th:text="${#dates.format(note.date, 'MMM dd, yyyy')}"></td>
-                    </tr>
-                    <tr>
-                        <td width="25%"><b>User</b></td>
-                        <td><a th:href="@{/users/__${note.user.id}__}" th:text="${note.user.username}"></a></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <br/>
         <h4 class="text-left">Sight</h4>
         <div class="card text-left">
             <div class="card-body">
@@ -219,6 +205,10 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+        <br/>
+        <div th:if="${note.user.id == user.id}" class="text-right">
+          <a th:href="@{/tastingnotes/__${note.id}__/edit}"><span class="fas fa-edit"></span></a>
         </div>
     </div>
 </div>
