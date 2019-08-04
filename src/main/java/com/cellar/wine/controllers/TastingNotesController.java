@@ -6,7 +6,13 @@ import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.TastingNotesService;
 import com.cellar.wine.services.WineService;
+import com.cellar.wine.ui.AreaUI;
+import com.cellar.wine.ui.CountryUI;
+import com.cellar.wine.ui.ProducerUI;
+import com.cellar.wine.ui.RegionUI;
 import com.cellar.wine.ui.TastingNotesUI;
+import com.cellar.wine.ui.UserUI;
+import com.cellar.wine.ui.WineUI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,10 +28,8 @@ import java.util.List;
 @RequestMapping("/tastingnotes")
 public class TastingNotesController {
 
-    private static final String MODEL_ATTRIBUTE_TASTING_NOTES_UI = "tastingNotesUI";
     private static final String MODEL_ATTRIBUTE_NOTES = "notes";
     private static final String MODEL_ATTRIBUTE_NOTE = "note";
-    private static final String MODEL_ATTRIBUTE_WINE = "wine";
     private static final String MODEL_ATTRIBUTE_USER = "user";
     private static final String REDIRECT = "redirect:/";
 
@@ -56,10 +60,23 @@ public class TastingNotesController {
         if (principal == null) {
             return REDIRECT;
         }
-        TastingNotesUI tastingNotesUI = new TastingNotesUI();
-        tastingNotesUI.setWineId(wineId);
-        model.addAttribute(MODEL_ATTRIBUTE_WINE, wineService.findById(wineId));
-        model.addAttribute(MODEL_ATTRIBUTE_TASTING_NOTES_UI, tastingNotesUI);
+
+        User user = userService.findByUsername(principal.getName());
+        Wine wine = wineService.findById(wineId);
+
+        if (wine == null) {
+            return REDIRECT;
+        }
+
+        TastingNotesUI ui = new TastingNotesUI();
+        ui.setUser(new UserUI(user));
+        ui.setWine(new WineUI(wine));
+        ui.setProducer(new ProducerUI(wine.getProducer()));
+        ui.setArea(new AreaUI(wine.getProducer().getAreas().get(0)));
+        ui.setRegion(new RegionUI(wine.getProducer().getAreas().get(0).getRegions().get(0)));
+        ui.setCountry(new CountryUI(wine.getProducer().getAreas().get(0).getRegions().get(0).getCountry()));
+
+        model.addAttribute(MODEL_ATTRIBUTE_NOTE, ui);
         return "tastingNotes/addEditNotes";
     }
 
@@ -102,6 +119,7 @@ public class TastingNotesController {
         }
 
         model.addAttribute(MODEL_ATTRIBUTE_NOTE, getTastingNotesUI(gtn));
+        model.addAttribute(MODEL_ATTRIBUTE_USER, new UserUI(user));
         return "tastingNotes/tastingNotesView";
     }
 
@@ -115,9 +133,9 @@ public class TastingNotesController {
         if (gtn == null) {
             return REDIRECT;
         }
+
         TastingNotesUI tastingNotesUI = new TastingNotesUI(gtn);
-        model.addAttribute(MODEL_ATTRIBUTE_TASTING_NOTES_UI, tastingNotesUI);
-        model.addAttribute(MODEL_ATTRIBUTE_WINE, gtn.getWine());
+        model.addAttribute(MODEL_ATTRIBUTE_NOTE, tastingNotesUI);
         return "tastingNotes/addEditNotes";
     }
 
@@ -126,8 +144,8 @@ public class TastingNotesController {
         if (principal == null) {
             return REDIRECT;
         }
-        if(result.hasErrors()) {
-            model.addAttribute(MODEL_ATTRIBUTE_TASTING_NOTES_UI, tastingNotesUI);
+        if (result.hasErrors()) {
+            model.addAttribute(MODEL_ATTRIBUTE_NOTE, tastingNotesUI);
             return "tastingNotes/addEditNotes";
         }
         GenericTastingNotes gtn = prepForSave(principal, tastingNotesUI);
