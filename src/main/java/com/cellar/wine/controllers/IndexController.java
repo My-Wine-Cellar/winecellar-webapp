@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 
+import javax.inject.Inject;
+
 @Controller
 public class IndexController {
 
+    @Inject
     private UserService userService;
 
-    public IndexController(UserService userService) {
-        this.userService = userService;
+    public IndexController() {
     }
 
     @RequestMapping({"", "/", "index", "index.html"})

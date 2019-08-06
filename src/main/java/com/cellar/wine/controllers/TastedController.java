@@ -15,20 +15,24 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 @Controller
 @RequestMapping("/tasted")
 public class TastedController {
 
+    @Inject
     private TastedService tastedService;
+
+    @Inject
     private ReviewService reviewService;
+
+    @Inject
     private UserService userService;
 
     private static final String MODEL_ATTRIBUTE_TASTED = "tasted";
 
-    public TastedController(TastedService tastedService, ReviewService reviewService, UserService userService) {
-        this.tastedService = tastedService;
-        this.reviewService = reviewService;
-        this.userService = userService;
+    public TastedController() {
     }
 
     @GetMapping("/{tastedId}/delete")

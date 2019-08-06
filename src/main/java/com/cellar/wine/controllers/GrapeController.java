@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -26,10 +27,10 @@ public class GrapeController {
     private static final String MODEL_ATTRIBUTE_RED_GRAPES = "redGrapes";
     private static final String MODEL_ATTRIBUTE_GRAPE = "grape";
 
+    @Inject
     private GrapeService grapeService;
 
-    public GrapeController(GrapeService grapeService) {
-        this.grapeService = grapeService;
+    public GrapeController() {
     }
 
     @InitBinder

@@ -2,8 +2,8 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.GenericTastingNotes;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.nav.Session;
 import com.cellar.wine.security.User;
-import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.TastingNotesService;
 import com.cellar.wine.services.WineService;
 import com.cellar.wine.ui.AreaUI;
@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Date;
@@ -26,22 +27,20 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/tastingnotes")
-public class TastingNotesController {
+public class TastingNotesController extends AbstractController {
 
     private static final String MODEL_ATTRIBUTE_NOTES = "notes";
     private static final String MODEL_ATTRIBUTE_NOTE = "note";
     private static final String MODEL_ATTRIBUTE_USER = "user";
     private static final String REDIRECT = "redirect:/";
 
+    @Inject
     private TastingNotesService tastingNotesService;
-    private UserService userService;
+
+    @Inject
     private WineService wineService;
 
-    public TastingNotesController(TastingNotesService tastingNotesService, UserService userService,
-                                  WineService wineService) {
-        this.tastingNotesService = tastingNotesService;
-        this.userService = userService;
-        this.wineService = wineService;
+    public TastingNotesController() {
     }
 
     @GetMapping("/list")
@@ -71,10 +70,10 @@ public class TastingNotesController {
         TastingNotesUI ui = new TastingNotesUI();
         ui.setUser(new UserUI(user));
         ui.setWine(new WineUI(wine));
-        ui.setProducer(new ProducerUI(wine.getProducer()));
-        ui.setArea(new AreaUI(wine.getProducer().getAreas().get(0)));
-        ui.setRegion(new RegionUI(wine.getProducer().getAreas().get(0).getRegions().get(0)));
-        ui.setCountry(new CountryUI(wine.getProducer().getAreas().get(0).getRegions().get(0).getCountry()));
+        ui.setProducer(getProducerUI(wine.getProducer()));
+        ui.setArea(getAreaUI(Session.getAreaId()));
+        ui.setRegion(getRegionUI(Session.getRegionId()));
+        ui.setCountry(getCountryUI(Session.getCountryId()));
 
         model.addAttribute(MODEL_ATTRIBUTE_NOTE, ui);
         return "tastingNotes/addEditNotes";
@@ -155,7 +154,7 @@ public class TastingNotesController {
     }
 
     @GetMapping("/{tastedId}/delete")
-    public String wishlistDeleteGet(@PathVariable Long tastedId, Model model, Principal principal) {
+    public String tastingNotesDeleteGet(@PathVariable Long tastedId, Model model, Principal principal) {
         if (principal == null) {
             return "redirect:/";
         }

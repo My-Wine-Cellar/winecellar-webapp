@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -24,21 +25,23 @@ import java.util.List;
 @RequestMapping("/bottle")
 public class BottleController {
 
+    @Inject
     private BottleService bottleService;
+
+    @Inject
     private UserService userService;
+
+    @Inject
     private WineService wineService;
+
+    @Inject
     private TastedService tastedService;
 
     private static final String MODEL_ATTRIBUTE_BOTTLES = "bottles";
     private static final String MODEL_ATTRIBUTE_BOTTLE = "bottle";
     private static final String MODEL_ATTRIBUTE_USER = "user";
 
-    public BottleController(BottleService bottleService, UserService userService,
-                            WineService wineService, TastedService tastedService) {
-        this.bottleService = bottleService;
-        this.userService = userService;
-        this.wineService = wineService;
-        this.tastedService = tastedService;
+    public BottleController() {
     }
 
     @InitBinder("bottle")

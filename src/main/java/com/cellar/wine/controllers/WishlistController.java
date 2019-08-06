@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Date;
@@ -23,17 +24,19 @@ import java.util.List;
 @RequestMapping("/wishlist")
 public class WishlistController {
 
+    @Inject
     private WishlistService wishlistService;
+
+    @Inject
     private UserService userService;
+
+    @Inject
     private WineService wineService;
 
     private static final String MODEL_ATTRIBUTE_USER = "user";
     private static final String MODEL_ATTRIBUTE_WISHLIST = "wishlist";
 
-    public WishlistController(WishlistService wishlistService, UserService userService, WineService wineService) {
-        this.wishlistService = wishlistService;
-        this.userService = userService;
-        this.wineService = wineService;
+    public WishlistController() {
     }
 
     @InitBinder("wishlist")

@@ -3,41 +3,34 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Area;
 import com.cellar.wine.models.Grape;
 import com.cellar.wine.models.Producer;
-import com.cellar.wine.services.AreaService;
+import com.cellar.wine.nav.Session;
 import com.cellar.wine.services.GrapeService;
-import com.cellar.wine.services.ProducerService;
-import com.cellar.wine.ui.AreaUI;
-import com.cellar.wine.ui.CountryUI;
-import com.cellar.wine.ui.RegionUI;
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-@Log
+import javax.inject.Inject;
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/area")
-public class AreaController {
+public class AreaController extends AbstractController {
 
     private static final String MODEL_ATTRIBUTE_AREA = "area";
     private static final String MODEL_ATTRIBUTE_PRODUCER = "producer";
     private static final String MODEL_ATTRIBUTE_WHITE_GRAPES = "whiteGrapes";
     private static final String MODEL_ATTRIBUTE_RED_GRAPES = "redGrapes";
 
-    private AreaService areaService;
-    private ProducerService producerService;
+    @Inject
     private GrapeService grapeService;
 
-    public AreaController(AreaService areaService, ProducerService producerService, GrapeService grapeService) {
-        this.areaService = areaService;
-        this.producerService = producerService;
-        this.grapeService = grapeService;
+    public AreaController() {
+        super();
     }
 
     @InitBinder("area")
@@ -65,12 +58,9 @@ public class AreaController {
             return "area/editArea";
         } else {
             area.setId(areaId);
-            Area savedArea = areaService.save(area);
-            AreaUI aui = new AreaUI(savedArea);
-            RegionUI rui = new RegionUI(savedArea.getRegions().get(0));
-            CountryUI cui = new CountryUI(savedArea.getRegions().get(0).getCountry());
+            areaService.save(area);
 
-            return "redirect:/d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey();
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
         }
     }
 
@@ -97,12 +87,9 @@ public class AreaController {
         } else {
             Area area = areaService.findById(areaId);
             area.getProducers().add(producer);
-            Producer savedProducer = producerService.save(producer);
-            AreaUI aui = new AreaUI(area);
-            RegionUI rui = new RegionUI(area.getRegions().get(0));
-            CountryUI cui = new CountryUI(area.getRegions().get(0).getCountry());
+            producerService.save(producer);
 
-            return "redirect:/d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey();
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
         }
     }
 
@@ -135,11 +122,7 @@ public class AreaController {
 
             areaService.save(a);
 
-            AreaUI aui = new AreaUI(a);
-            RegionUI rui = new RegionUI(a.getRegions().get(0));
-            CountryUI cui = new CountryUI(a.getRegions().get(0).getCountry());
-
-            return "redirect:/d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey();
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), a);
         }
     }
 }

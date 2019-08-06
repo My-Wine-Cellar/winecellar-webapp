@@ -12,11 +12,9 @@ import com.cellar.wine.models.Region;
 import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.models.Wishlist;
+import com.cellar.wine.nav.Session;
 import com.cellar.wine.security.User;
-import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.BottleService;
-import com.cellar.wine.services.CountryService;
-import com.cellar.wine.services.RegionService;
 import com.cellar.wine.services.ReviewService;
 import com.cellar.wine.services.TastingNotesService;
 import com.cellar.wine.services.WishlistService;
@@ -39,6 +37,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/d")
-public class DataController {
+public class DataController extends AbstractController {
 
     private static final String MODEL_ATTRIBUTE_COUNTRIES = "countries";
     private static final String MODEL_ATTRIBUTE_COUNTRY = "country";
@@ -66,32 +65,29 @@ public class DataController {
     private static final String MODEL_ATTRIBUTE_REVIEW = "myreview";
     private static final String MODEL_ATTRIBUTE_TASTINGNOTES = "mytastingnotes";
     private static final String MODEL_ATTRIBUTE_WISHLIST = "mywishlist";
-    
-    private CountryService countryService;
-    private RegionService regionService;
-    private UserService userService;
+
+    @Inject
     private BottleService bottleService;
+
+    @Inject
     private ReviewService reviewService;
+
+    @Inject
     private TastingNotesService tastingNotesService; 
+
+    @Inject
     private WishlistService wishlistService;
 
-    public DataController(CountryService countryService, RegionService regionService,
-                          UserService userService, BottleService bottleService,
-                          ReviewService reviewService, TastingNotesService tastingNotesService,
-                          WishlistService wishlistService) {
-        this.countryService = countryService;
-        this.regionService = regionService;
-        this.userService = userService;
-        this.bottleService = bottleService;
-        this.reviewService = reviewService;
-        this.tastingNotesService = tastingNotesService;
-        this.wishlistService = wishlistService;
+    public DataController() {
     }
 
     @GetMapping("/")
     public String dataRootGet(Model model) {
         Set<Country> countries = countryService.findWithRegions();
         model.addAttribute(MODEL_ATTRIBUTE_COUNTRIES, getCountryUIs(countries));
+
+        Session.updateSessionAttributes(null, null, null, null, null);
+
         return "country/countryList";
     }
 
@@ -113,6 +109,9 @@ public class DataController {
         
         model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
         model.addAttribute(MODEL_ATTRIBUTE_REGIONS, getRegionUIs(c.getRegions()));
+
+        Session.updateSessionAttributes(c.getId(), null, null, null, null);
+
         return "country/countryDetails";
     }
 
@@ -138,6 +137,9 @@ public class DataController {
         model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
         model.addAttribute(MODEL_ATTRIBUTE_REGION, getRegionUI(r));
         model.addAttribute(MODEL_ATTRIBUTE_AREAS, getAreaUIs(r.getAreas()));
+
+        Session.updateSessionAttributes(c.getId(), r.getId(), null, null, null);
+
         return "region/regionDetails";
     }
 
@@ -177,6 +179,9 @@ public class DataController {
         model.addAttribute(MODEL_ATTRIBUTE_AREA, getAreaUI(a));
         model.addAttribute(MODEL_ATTRIBUTE_PRODUCERS, getProducerUIs(a.getProducers()));
         model.addAttribute(MODEL_ATTRIBUTE_PRIMARY_GRAPES, getGrapeUIs(a.getPrimaryGrapes()));
+
+        Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), null, null);
+
         return "area/areaDetails";
     }
 
@@ -227,6 +232,9 @@ public class DataController {
         model.addAttribute(MODEL_ATTRIBUTE_AREA, getAreaUI(a));
         model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, getProducerUI(p));
         model.addAttribute(MODEL_ATTRIBUTE_WINES, getWineUIs(p.getWines()));
+
+        Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), null);
+
         return "producer/producerDetails";
     }
 
@@ -337,6 +345,9 @@ public class DataController {
         model.addAttribute(MODEL_ATTRIBUTE_REVIEW, review);
         model.addAttribute(MODEL_ATTRIBUTE_TASTINGNOTES, tastingnotes);
         model.addAttribute(MODEL_ATTRIBUTE_WISHLIST, wishlist);
+
+        Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), w.getId());
+
         return "wine/wineDetails";
     }
     
@@ -350,54 +361,6 @@ public class DataController {
         }
 
         return false;
-    }
-
-    private List<CountryUI> getCountryUIs(Set<Country> countries) {
-        List<CountryUI> result = new ArrayList<>();
-        for (Country c : countries) {
-            result.add(getCountryUI(c));
-        }
-        return result;
-    }
-
-    private CountryUI getCountryUI(Country c) {
-        return new CountryUI(c);
-    }
-
-    private List<RegionUI> getRegionUIs(List<Region> regions) {
-        List<RegionUI> result = new ArrayList<>();
-        for (Region r : regions) {
-            result.add(getRegionUI(r));
-        }
-        return result;
-    }
-
-    private RegionUI getRegionUI(Region r) {
-        return new RegionUI(r);
-    }
-
-    private List<AreaUI> getAreaUIs(List<Area> areas) {
-        List<AreaUI> result = new ArrayList<>();
-        for (Area a : areas) {
-            result.add(getAreaUI(a));
-        }
-        return result;
-    }
-
-    private AreaUI getAreaUI(Area a) {
-        return new AreaUI(a);
-    }
-
-    private List<ProducerUI> getProducerUIs(List<Producer> producers) {
-        List<ProducerUI> result = new ArrayList<>();
-        for (Producer p : producers) {
-            result.add(getProducerUI(p));
-        }
-        return result;
-    }
-
-    private ProducerUI getProducerUI(Producer p) {
-        return new ProducerUI(p);
     }
 
     private List<GrapeUI> getGrapeUIs(List<Grape> grapes) {

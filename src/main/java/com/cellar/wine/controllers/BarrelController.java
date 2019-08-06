@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -20,10 +21,10 @@ public class BarrelController {
 
     private static final String MODEL_ATTRIBUTE_BARREL = "barrel";
 
+    @Inject
     private BarrelService barrelService;
 
-    public BarrelController(BarrelService barrelService) {
-        this.barrelService = barrelService;
+    public BarrelController() {
     }
 
     @InitBinder

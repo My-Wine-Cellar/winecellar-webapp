@@ -2,14 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
-import com.cellar.wine.security.User;
-import com.cellar.wine.security.UserService;
-import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.WineService;
-import com.cellar.wine.ui.AreaUI;
-import com.cellar.wine.ui.CountryUI;
-import com.cellar.wine.ui.ProducerUI;
-import com.cellar.wine.ui.RegionUI;
 import com.cellar.wine.ui.WineUI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,21 +16,21 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/wine")
-public class WineController {
+public class WineController extends AbstractController {
 
     private static final String MODEL_ATTRIBUTE_WINE = "wine";
     private static final String ADD_OR_EDIT_WINE_TEMPLATE = "wine/addEditWine";
 
-    private final WineService wineService;
-    private final ProducerService producerService;
+    @Inject
+    private WineService wineService;
 
-    public WineController(WineService wineService, ProducerService producerService) {
-        this.wineService = wineService;
-        this.producerService = producerService;
+    public WineController() {
     }
 
     @InitBinder("wine")
@@ -73,14 +66,10 @@ public class WineController {
             producer.getWines().add(wine);
 
             Wine savedWine = wineService.save(wine);
-
-            CountryUI cui = new CountryUI(producer.getAreas().get(0).getRegions().get(0).getCountry());
-            RegionUI rui = new RegionUI(producer.getAreas().get(0).getRegions().get(0));
-            AreaUI aui = new AreaUI(producer.getAreas().get(0));
-            ProducerUI pui = new ProducerUI(producer);
             WineUI wui = new WineUI(savedWine);
-            
-            return "redirect:/d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey() + "/" + pui.getKey() +
+
+            return redirectProducer(Session.getCountryId(), Session.getRegionId(),
+                                    Session.getAreaId(), Session.getProducerId()) +
                 "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
         }
     }
@@ -112,14 +101,10 @@ public class WineController {
             wine.setProducer(producer);
 
             Wine savedWine = wineService.save(wine);
-
-            CountryUI cui = new CountryUI(producer.getAreas().get(0).getRegions().get(0).getCountry());
-            RegionUI rui = new RegionUI(producer.getAreas().get(0).getRegions().get(0));
-            AreaUI aui = new AreaUI(producer.getAreas().get(0));
-            ProducerUI pui = new ProducerUI(producer);
             WineUI wui = new WineUI(savedWine);
-            
-            return "redirect:/d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey() + "/" + pui.getKey() +
+
+            return redirectProducer(Session.getCountryId(), Session.getRegionId(),
+                                    Session.getAreaId(), Session.getProducerId()) +
                 "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
         }
     }

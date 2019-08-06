@@ -2,12 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Area;
 import com.cellar.wine.models.Producer;
-import com.cellar.wine.services.AreaService;
-import com.cellar.wine.services.ProducerService;
-import com.cellar.wine.ui.AreaUI;
-import com.cellar.wine.ui.CountryUI;
-import com.cellar.wine.ui.ProducerUI;
-import com.cellar.wine.ui.RegionUI;
+import com.cellar.wine.nav.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,19 +14,15 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/producer")
-public class ProducerController {
+public class ProducerController extends AbstractController {
 
     private static final String MODEL_ATTRIBUTE_AREA = "area";
     private static final String MODEL_ATTRIBUTE_PRODUCER = "producer";
 
     private static final String ADD_OR_EDIT_PRODUCER_TEMPLATE = "producer/addEditProducer";
 
-    private AreaService areaService;
-    private ProducerService producerService;
-
-    public ProducerController(ProducerService producerService, AreaService areaService) {
-        this.producerService = producerService;
-        this.areaService = areaService;
+    public ProducerController() {
+        super();
     }
 
     @InitBinder
@@ -46,7 +37,7 @@ public class ProducerController {
         }
 
         Producer producer = producerService.findById(producerId);
-        Area area = producer.getAreas().get(0);
+        Area area = areaService.findById(Session.getAreaId());
 
         model.addAttribute(MODEL_ATTRIBUTE_AREA, area);
         model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, producer);
@@ -61,21 +52,13 @@ public class ProducerController {
             return "redirect:/";
         }
 
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return ADD_OR_EDIT_PRODUCER_TEMPLATE;
         } else {
-            Area area = areaService.findById(areaId);
-
             producer.setId(producerId);
+            producerService.save(producer);
 
-            Producer savedProducer = producerService.save(producer);
-
-            ProducerUI pui = new ProducerUI(savedProducer);
-            AreaUI aui = new AreaUI(area);
-            RegionUI rui = new RegionUI(area.getRegions().get(0));
-            CountryUI cui = new CountryUI(area.getRegions().get(0).getCountry());
-
-            return "redirect:/d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey() + "/" + pui.getKey();
+            return redirectProducer(Session.getCountryId(), Session.getRegionId(), areaId, producerId);
         }
     }
 }

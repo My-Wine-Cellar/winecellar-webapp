@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Date;
@@ -23,8 +24,13 @@ import java.util.List;
 @RequestMapping("/review")
 public class ReviewController {
 
+    @Inject
     private ReviewService reviewService;
+
+    @Inject
     private UserService userService;
+
+    @Inject
     private WineService wineService;
 
     private static final String MODEL_ATTRIBUTE_REVIEWS = "reviews";
@@ -32,10 +38,7 @@ public class ReviewController {
     private static final String MODEL_ATTRIBUTE_WINE = "wine";
     private static final String MODEL_ATTRIBUTE_USER = "user";
 
-    public ReviewController(ReviewService reviewService, UserService userService, WineService wineService) {
-        this.reviewService = reviewService;
-        this.userService = userService;
-        this.wineService = wineService;
+    public ReviewController() {
     }
 
     @InitBinder("review")
