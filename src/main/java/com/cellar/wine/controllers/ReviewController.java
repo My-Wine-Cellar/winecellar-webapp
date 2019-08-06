@@ -2,6 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ReviewService;
@@ -33,11 +34,6 @@ public class ReviewController {
     @Inject
     private WineService wineService;
 
-    private static final String MODEL_ATTRIBUTE_REVIEWS = "reviews";
-    private static final String MODEL_ATTRIBUTE_REVIEW = "review";
-    private static final String MODEL_ATTRIBUTE_WINE = "wine";
-    private static final String MODEL_ATTRIBUTE_USER = "user";
-
     public ReviewController() {
     }
 
@@ -61,8 +57,8 @@ public class ReviewController {
             review.setWine(wine);
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_REVIEW, review);
-        model.addAttribute(MODEL_ATTRIBUTE_WINE, review.getWine());
+        model.addAttribute(Attributes.REVIEW, review);
+        model.addAttribute(Attributes.WINE, review.getWine());
 
         return "review/addEditReview";
     }
@@ -111,8 +107,8 @@ public class ReviewController {
 
         User user = userService.findByUsername(principal.getName());
 
-        model.addAttribute(MODEL_ATTRIBUTE_REVIEW, new ReviewUI(review));
-        model.addAttribute(MODEL_ATTRIBUTE_USER, user);
+        model.addAttribute(Attributes.REVIEW, new ReviewUI(review));
+        model.addAttribute(Attributes.USER, user);
 
         return "review/reviewView";
     }
@@ -130,8 +126,8 @@ public class ReviewController {
             return "redirect:/";
         }
                 
-        model.addAttribute(MODEL_ATTRIBUTE_REVIEW, review);
-        model.addAttribute(MODEL_ATTRIBUTE_WINE, review.getWine());
+        model.addAttribute(Attributes.REVIEW, review);
+        model.addAttribute(Attributes.WINE, review.getWine());
 
         return "review/addEditReview";
     }
@@ -145,7 +141,7 @@ public class ReviewController {
         }
 
         if (result.hasErrors()) {
-            model.addAttribute(MODEL_ATTRIBUTE_REVIEW, review);
+            model.addAttribute(Attributes.REVIEW, review);
             return "review/addEditReview";
         } else {
             User user = userService.findByUsername(principal.getName());
@@ -189,7 +185,7 @@ public class ReviewController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(MODEL_ATTRIBUTE_REVIEWS, getReviewUIs(user.getReviews()));
+        model.addAttribute(Attributes.REVIEWS, getReviewUIs(user.getReviews()));
         return "review/reviewList";
     }
 

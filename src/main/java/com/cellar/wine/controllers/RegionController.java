@@ -1,6 +1,7 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Region;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,6 @@ import java.security.Principal;
 @RequestMapping("/region")
 public class RegionController extends AbstractController {
 
-    private static final String MODEL_ATTRIBUTE_REGION = "region";
-
     public RegionController() {
     }
 
@@ -28,7 +27,7 @@ public class RegionController extends AbstractController {
             return "redirect:/";
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_REGION, regionService.findById(regionId));
+        model.addAttribute(Attributes.REGION, regionService.findById(regionId));
         return "region/editRegion";
     }
 

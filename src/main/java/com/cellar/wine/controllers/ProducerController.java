@@ -2,6 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Area;
 import com.cellar.wine.models.Producer;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +16,6 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/producer")
 public class ProducerController extends AbstractController {
-
-    private static final String MODEL_ATTRIBUTE_AREA = "area";
-    private static final String MODEL_ATTRIBUTE_PRODUCER = "producer";
 
     private static final String ADD_OR_EDIT_PRODUCER_TEMPLATE = "producer/addEditProducer";
 
@@ -39,8 +37,8 @@ public class ProducerController extends AbstractController {
         Producer producer = producerService.findById(producerId);
         Area area = areaService.findById(Session.getAreaId());
 
-        model.addAttribute(MODEL_ATTRIBUTE_AREA, area);
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, producer);
+        model.addAttribute(Attributes.AREA, area);
+        model.addAttribute(Attributes.PRODUCER, producer);
 
         return ADD_OR_EDIT_PRODUCER_TEMPLATE;
     }

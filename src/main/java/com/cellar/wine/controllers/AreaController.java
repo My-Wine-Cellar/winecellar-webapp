@@ -3,6 +3,7 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Area;
 import com.cellar.wine.models.Grape;
 import com.cellar.wine.models.Producer;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Session;
 import com.cellar.wine.services.GrapeService;
 import org.springframework.stereotype.Controller;
@@ -20,11 +21,6 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/area")
 public class AreaController extends AbstractController {
-
-    private static final String MODEL_ATTRIBUTE_AREA = "area";
-    private static final String MODEL_ATTRIBUTE_PRODUCER = "producer";
-    private static final String MODEL_ATTRIBUTE_WHITE_GRAPES = "whiteGrapes";
-    private static final String MODEL_ATTRIBUTE_RED_GRAPES = "redGrapes";
 
     @Inject
     private GrapeService grapeService;
@@ -44,7 +40,7 @@ public class AreaController extends AbstractController {
             return "redirect:/";
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_AREA, areaService.findById(areaId));
+        model.addAttribute(Attributes.AREA, areaService.findById(areaId));
         return "area/editArea";
     }
 
@@ -70,8 +66,8 @@ public class AreaController extends AbstractController {
             return "redirect:/";
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_AREA, areaService.findById(areaId));
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, new Producer());
+        model.addAttribute(Attributes.AREA, areaService.findById(areaId));
+        model.addAttribute(Attributes.PRODUCER, new Producer());
         return "producer/addEditProducer";
     }
 
@@ -99,9 +95,9 @@ public class AreaController extends AbstractController {
             return "redirect:/";
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_AREA, areaService.findById(areaId));
-        model.addAttribute(MODEL_ATTRIBUTE_RED_GRAPES, grapeService.getRedGrapes());
-        model.addAttribute(MODEL_ATTRIBUTE_WHITE_GRAPES, grapeService.getWhiteGrapes());
+        model.addAttribute(Attributes.AREA, areaService.findById(areaId));
+        model.addAttribute(Attributes.RED_GRAPES, grapeService.getRedGrapes());
+        model.addAttribute(Attributes.WHITE_GRAPES, grapeService.getWhiteGrapes());
         return "grape/addGrapeToArea";
     }
 

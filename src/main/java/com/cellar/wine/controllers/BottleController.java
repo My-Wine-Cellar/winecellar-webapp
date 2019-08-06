@@ -3,6 +3,7 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Bottle;
 import com.cellar.wine.models.Tasted;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.BottleService;
@@ -37,10 +38,6 @@ public class BottleController {
     @Inject
     private TastedService tastedService;
 
-    private static final String MODEL_ATTRIBUTE_BOTTLES = "bottles";
-    private static final String MODEL_ATTRIBUTE_BOTTLE = "bottle";
-    private static final String MODEL_ATTRIBUTE_USER = "user";
-
     public BottleController() {
     }
 
@@ -58,7 +55,7 @@ public class BottleController {
         Bottle bottle = new Bottle();
         Wine wine = wineService.findById(wineId);
         bottle.setWine(wine);
-        model.addAttribute(MODEL_ATTRIBUTE_BOTTLE, bottle);
+        model.addAttribute(Attributes.BOTTLE, bottle);
         return "bottle/addEditBottle";
     }
 
@@ -93,7 +90,7 @@ public class BottleController {
             if (tasted != null)
                 tastedService.delete(tasted);
 
-            model.addAttribute(MODEL_ATTRIBUTE_USER, user);
+            model.addAttribute(Attributes.USER, user);
             return "redirect:/bottle/list";
         }
     }
@@ -110,7 +107,7 @@ public class BottleController {
         if (bottle == null)
             return "redirect:/";
 
-        model.addAttribute(MODEL_ATTRIBUTE_BOTTLE, bottle);
+        model.addAttribute(Attributes.BOTTLE, bottle);
         return "bottle/addEditBottle";
     }
 
@@ -122,7 +119,7 @@ public class BottleController {
         }
 
         if (result.hasErrors()) {
-            model.addAttribute(MODEL_ATTRIBUTE_BOTTLE, bottle);
+            model.addAttribute(Attributes.BOTTLE, bottle);
             return "bottle/addEditBottle";
         } else {
             User user = userService.findByUsername(principal.getName());
@@ -136,7 +133,6 @@ public class BottleController {
 
                     bottleService.save(b);
 
-                    model.addAttribute(MODEL_ATTRIBUTE_USER, user);
                     return "redirect:/bottle/list";
                 } else {
                     user.getBottles().remove(b);
@@ -147,7 +143,6 @@ public class BottleController {
                     user.getTasted().add(tasted);
                     Tasted savedTasted = tastedService.save(tasted);
 
-                    model.addAttribute(MODEL_ATTRIBUTE_USER, user);
                     return "redirect:/tasted/list";
                 }
             }
@@ -162,7 +157,7 @@ public class BottleController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(MODEL_ATTRIBUTE_BOTTLES, getBottleUIs(user.getBottles()));
+        model.addAttribute(Attributes.BOTTLES, getBottleUIs(user.getBottles()));
         return "bottle/bottleList";
     }
 

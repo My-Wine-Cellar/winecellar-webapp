@@ -1,6 +1,7 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Barrel;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.services.BarrelService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.BarrelUI;
@@ -18,8 +19,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/barrel")
 public class BarrelController {
-
-    private static final String MODEL_ATTRIBUTE_BARREL = "barrel";
 
     @Inject
     private BarrelService barrelService;
@@ -39,7 +38,7 @@ public class BarrelController {
         if (barrels == null || barrels.isEmpty())
             return "redirect:/";
 
-        model.addAttribute(MODEL_ATTRIBUTE_BARREL, getBarrelUI(barrels.get(0)));
+        model.addAttribute(Attributes.BARREL, getBarrelUI(barrels.get(0)));
         return "barrel/barrelDetails";
     }
 
@@ -54,7 +53,7 @@ public class BarrelController {
         if (barrel == null)
             return "redirect:/";
 
-        model.addAttribute(MODEL_ATTRIBUTE_BARREL, getBarrelUI(barrel));
+        model.addAttribute(Attributes.BARREL, getBarrelUI(barrel));
         return "barrel/editBarrel";
     }
 

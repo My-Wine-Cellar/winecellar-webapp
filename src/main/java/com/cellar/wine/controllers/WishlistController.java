@@ -2,6 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Wishlist;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.WishlistService;
@@ -32,9 +33,6 @@ public class WishlistController {
 
     @Inject
     private WineService wineService;
-
-    private static final String MODEL_ATTRIBUTE_USER = "user";
-    private static final String MODEL_ATTRIBUTE_WISHLIST = "wishlist";
 
     public WishlistController() {
     }
@@ -88,7 +86,7 @@ public class WishlistController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(MODEL_ATTRIBUTE_WISHLIST, getWishlistUIs(user.getWishlist()));
+        model.addAttribute(Attributes.WISHLIST, getWishlistUIs(user.getWishlist()));
         return "wishlist/wishlistList";
     }
 

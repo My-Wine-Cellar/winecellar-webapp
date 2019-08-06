@@ -2,6 +2,8 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Session;
 import com.cellar.wine.services.WineService;
 import com.cellar.wine.ui.WineUI;
 import org.springframework.stereotype.Controller;
@@ -24,7 +26,6 @@ import javax.validation.Valid;
 @RequestMapping("/wine")
 public class WineController extends AbstractController {
 
-    private static final String MODEL_ATTRIBUTE_WINE = "wine";
     private static final String ADD_OR_EDIT_WINE_TEMPLATE = "wine/addEditWine";
 
     @Inject
@@ -46,7 +47,7 @@ public class WineController extends AbstractController {
 
         Wine wine = new Wine();
         wine.setProducer(producer);
-        model.addAttribute(MODEL_ATTRIBUTE_WINE, wine);
+        model.addAttribute(Attributes.WINE, wine);
         return ADD_OR_EDIT_WINE_TEMPLATE;
     }
 
@@ -58,7 +59,7 @@ public class WineController extends AbstractController {
         }
 
         if (result.hasErrors()) {
-            model.put(MODEL_ATTRIBUTE_WINE, wine);
+            model.put(Attributes.WINE, wine);
             return ADD_OR_EDIT_WINE_TEMPLATE;
         } else {
             Producer producer = producerService.findById(producerId);
@@ -92,7 +93,7 @@ public class WineController extends AbstractController {
         }
 
         if (result.hasErrors()) {
-            model.addAttribute(MODEL_ATTRIBUTE_WINE, wine);
+            model.addAttribute(Attributes.WINE, wine);
             return ADD_OR_EDIT_WINE_TEMPLATE;
         } else {
             Producer producer = producerService.findById(producerId);

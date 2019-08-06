@@ -1,6 +1,7 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Grape;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.services.GrapeService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.GrapeUI;
@@ -23,10 +24,6 @@ import java.util.Set;
 @RequestMapping("/grape")
 public class GrapeController {
 
-    private static final String MODEL_ATTRIBUTE_WHITE_GRAPES = "whiteGrapes";
-    private static final String MODEL_ATTRIBUTE_RED_GRAPES = "redGrapes";
-    private static final String MODEL_ATTRIBUTE_GRAPE = "grape";
-
     @Inject
     private GrapeService grapeService;
 
@@ -40,8 +37,8 @@ public class GrapeController {
 
     @GetMapping("/list")
     public String grapeListGet(Model model) {
-        model.addAttribute(MODEL_ATTRIBUTE_WHITE_GRAPES, getGrapeUIs(grapeService.getWhiteGrapes()));
-        model.addAttribute(MODEL_ATTRIBUTE_RED_GRAPES, getGrapeUIs(grapeService.getRedGrapes()));
+        model.addAttribute(Attributes.RED_GRAPES, getGrapeUIs(grapeService.getRedGrapes()));
+        model.addAttribute(Attributes.WHITE_GRAPES, getGrapeUIs(grapeService.getWhiteGrapes()));
         return "grape/grapeList";
     }
 
@@ -52,7 +49,7 @@ public class GrapeController {
         if (g == null)
             return "redirect:/";
 
-        model.addAttribute(MODEL_ATTRIBUTE_GRAPE, getGrapeUI(g));
+        model.addAttribute(Attributes.GRAPE, getGrapeUI(g));
         return "grape/grapeDetails";
     }
 
@@ -67,7 +64,7 @@ public class GrapeController {
         if (grape == null)
             return "redirect:/";
 
-        model.addAttribute(MODEL_ATTRIBUTE_GRAPE, grape);
+        model.addAttribute(Attributes.GRAPE, grape);
         return "grape/editGrape";
     }
 

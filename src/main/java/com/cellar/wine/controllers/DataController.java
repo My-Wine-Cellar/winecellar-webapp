@@ -12,6 +12,7 @@ import com.cellar.wine.models.Region;
 import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.models.Wishlist;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Session;
 import com.cellar.wine.security.User;
 import com.cellar.wine.services.BottleService;
@@ -49,23 +50,6 @@ import java.util.Set;
 @RequestMapping("/d")
 public class DataController extends AbstractController {
 
-    private static final String MODEL_ATTRIBUTE_COUNTRIES = "countries";
-    private static final String MODEL_ATTRIBUTE_COUNTRY = "country";
-    private static final String MODEL_ATTRIBUTE_REGIONS = "regions";
-    private static final String MODEL_ATTRIBUTE_REGION = "region";
-    private static final String MODEL_ATTRIBUTE_AREAS = "areas";
-    private static final String MODEL_ATTRIBUTE_AREA = "area";
-    private static final String MODEL_ATTRIBUTE_PRODUCERS = "producers";
-    private static final String MODEL_ATTRIBUTE_PRIMARY_GRAPES = "primaryGrapes";
-    private static final String MODEL_ATTRIBUTE_PRODUCER = "producer";
-    private static final String MODEL_ATTRIBUTE_WINES = "wines";
-    private static final String MODEL_ATTRIBUTE_WINE = "wine";
-    private static final String MODEL_ATTRIBUTE_WINEGRAPES = "winegrapes";
-    private static final String MODEL_ATTRIBUTE_BOTTLE = "mybottle";
-    private static final String MODEL_ATTRIBUTE_REVIEW = "myreview";
-    private static final String MODEL_ATTRIBUTE_TASTINGNOTES = "mytastingnotes";
-    private static final String MODEL_ATTRIBUTE_WISHLIST = "mywishlist";
-
     @Inject
     private BottleService bottleService;
 
@@ -84,7 +68,7 @@ public class DataController extends AbstractController {
     @GetMapping("/")
     public String dataRootGet(Model model) {
         Set<Country> countries = countryService.findWithRegions();
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRIES, getCountryUIs(countries));
+        model.addAttribute(Attributes.COUNTRIES, getCountryUIs(countries));
 
         Session.updateSessionAttributes(null, null, null, null, null);
 
@@ -107,8 +91,8 @@ public class DataController extends AbstractController {
             return "redirect:/";
         }
         
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
-        model.addAttribute(MODEL_ATTRIBUTE_REGIONS, getRegionUIs(c.getRegions()));
+        model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
+        model.addAttribute(Attributes.REGIONS, getRegionUIs(c.getRegions()));
 
         Session.updateSessionAttributes(c.getId(), null, null, null, null);
 
@@ -134,9 +118,9 @@ public class DataController extends AbstractController {
             return "redirect:/";
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
-        model.addAttribute(MODEL_ATTRIBUTE_REGION, getRegionUI(r));
-        model.addAttribute(MODEL_ATTRIBUTE_AREAS, getAreaUIs(r.getAreas()));
+        model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
+        model.addAttribute(Attributes.REGION, getRegionUI(r));
+        model.addAttribute(Attributes.AREAS, getAreaUIs(r.getAreas()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), null, null, null);
 
@@ -174,11 +158,11 @@ public class DataController extends AbstractController {
             return "redirect:/";
         }
         
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
-        model.addAttribute(MODEL_ATTRIBUTE_REGION, getRegionUI(r));
-        model.addAttribute(MODEL_ATTRIBUTE_AREA, getAreaUI(a));
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCERS, getProducerUIs(a.getProducers()));
-        model.addAttribute(MODEL_ATTRIBUTE_PRIMARY_GRAPES, getGrapeUIs(a.getPrimaryGrapes()));
+        model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
+        model.addAttribute(Attributes.REGION, getRegionUI(r));
+        model.addAttribute(Attributes.AREA, getAreaUI(a));
+        model.addAttribute(Attributes.PRODUCERS, getProducerUIs(a.getProducers()));
+        model.addAttribute(Attributes.PRIMARY_GRAPES, getGrapeUIs(a.getPrimaryGrapes()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), null, null);
 
@@ -227,11 +211,11 @@ public class DataController extends AbstractController {
             return "redirect:/";
         }
         
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
-        model.addAttribute(MODEL_ATTRIBUTE_REGION, getRegionUI(r));
-        model.addAttribute(MODEL_ATTRIBUTE_AREA, getAreaUI(a));
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, getProducerUI(p));
-        model.addAttribute(MODEL_ATTRIBUTE_WINES, getWineUIs(p.getWines()));
+        model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
+        model.addAttribute(Attributes.REGION, getRegionUI(r));
+        model.addAttribute(Attributes.AREA, getAreaUI(a));
+        model.addAttribute(Attributes.PRODUCER, getProducerUI(p));
+        model.addAttribute(Attributes.WINES, getWineUIs(p.getWines()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), null);
 
@@ -335,16 +319,16 @@ public class DataController extends AbstractController {
         }
         Collections.sort(winegrapes, new GrapeUISorter());
 
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
-        model.addAttribute(MODEL_ATTRIBUTE_REGION, getRegionUI(r));
-        model.addAttribute(MODEL_ATTRIBUTE_AREA, getAreaUI(a));
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, getProducerUI(p));
-        model.addAttribute(MODEL_ATTRIBUTE_WINE, w);
-        model.addAttribute(MODEL_ATTRIBUTE_WINEGRAPES, winegrapes);
-        model.addAttribute(MODEL_ATTRIBUTE_BOTTLE, bottle);
-        model.addAttribute(MODEL_ATTRIBUTE_REVIEW, review);
-        model.addAttribute(MODEL_ATTRIBUTE_TASTINGNOTES, tastingnotes);
-        model.addAttribute(MODEL_ATTRIBUTE_WISHLIST, wishlist);
+        model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
+        model.addAttribute(Attributes.REGION, getRegionUI(r));
+        model.addAttribute(Attributes.AREA, getAreaUI(a));
+        model.addAttribute(Attributes.PRODUCER, getProducerUI(p));
+        model.addAttribute(Attributes.WINE, w);
+        model.addAttribute(Attributes.WINEGRAPES, winegrapes);
+        model.addAttribute(Attributes.MYBOTTLE, bottle);
+        model.addAttribute(Attributes.MYREVIEW, review);
+        model.addAttribute(Attributes.MYTASTINGNOTES, tastingnotes);
+        model.addAttribute(Attributes.MYWISHLIST, wishlist);
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), w.getId());
 

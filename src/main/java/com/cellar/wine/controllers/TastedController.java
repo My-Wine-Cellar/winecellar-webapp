@@ -2,6 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Tasted;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ReviewService;
@@ -30,8 +31,6 @@ public class TastedController {
     @Inject
     private UserService userService;
 
-    private static final String MODEL_ATTRIBUTE_TASTED = "tasted";
-
     public TastedController() {
     }
 
@@ -48,7 +47,7 @@ public class TastedController {
             tastedService.delete(tasted);
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_TASTED, getTastedUIs(user, user.getTasted()));
+        model.addAttribute(Attributes.TASTED, getTastedUIs(user, user.getTasted()));
         return "tasted/tastedList";
     }
 
@@ -59,7 +58,7 @@ public class TastedController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(MODEL_ATTRIBUTE_TASTED, getTastedUIs(user, user.getTasted()));
+        model.addAttribute(Attributes.TASTED, getTastedUIs(user, user.getTasted()));
         return "tasted/tastedList";
     }
 

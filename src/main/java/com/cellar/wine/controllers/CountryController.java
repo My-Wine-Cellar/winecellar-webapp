@@ -1,6 +1,7 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Country;
+import com.cellar.wine.nav.Attributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,8 +17,6 @@ import java.security.Principal;
 @RequestMapping("/country")
 public class CountryController extends AbstractController {
 
-    private static final String MODEL_ATTRIBUTE_COUNTRY = "country";
-
     public CountryController() {
     }
 
@@ -27,7 +26,7 @@ public class CountryController extends AbstractController {
             return "redirect:/";
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, countryService.findById(countryId));
+        model.addAttribute(Attributes.COUNTRY, countryService.findById(countryId));
         return "country/editCountry";
     }
 

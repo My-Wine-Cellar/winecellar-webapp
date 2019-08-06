@@ -2,6 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.GenericTastingNotes;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Session;
 import com.cellar.wine.security.User;
 import com.cellar.wine.services.TastingNotesService;
@@ -29,9 +30,6 @@ import java.util.List;
 @RequestMapping("/tastingnotes")
 public class TastingNotesController extends AbstractController {
 
-    private static final String MODEL_ATTRIBUTE_NOTES = "notes";
-    private static final String MODEL_ATTRIBUTE_NOTE = "note";
-    private static final String MODEL_ATTRIBUTE_USER = "user";
     private static final String REDIRECT = "redirect:/";
 
     @Inject
@@ -50,7 +48,7 @@ public class TastingNotesController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(MODEL_ATTRIBUTE_NOTES, getTastingNotesUIs(user.getGenericTastingNotes()));
+        model.addAttribute(Attributes.NOTES, getTastingNotesUIs(user.getGenericTastingNotes()));
         return "tastingNotes/tastingNotesList";
     }
 
@@ -75,7 +73,7 @@ public class TastingNotesController extends AbstractController {
         ui.setRegion(getRegionUI(Session.getRegionId()));
         ui.setCountry(getCountryUI(Session.getCountryId()));
 
-        model.addAttribute(MODEL_ATTRIBUTE_NOTE, ui);
+        model.addAttribute(Attributes.NOTE, ui);
         return "tastingNotes/addEditNotes";
     }
 
@@ -117,8 +115,8 @@ public class TastingNotesController extends AbstractController {
            }
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_NOTE, getTastingNotesUI(gtn));
-        model.addAttribute(MODEL_ATTRIBUTE_USER, new UserUI(user));
+        model.addAttribute(Attributes.NOTE, getTastingNotesUI(gtn));
+        model.addAttribute(Attributes.USER, new UserUI(user));
         return "tastingNotes/tastingNotesView";
     }
 
@@ -134,7 +132,7 @@ public class TastingNotesController extends AbstractController {
         }
 
         TastingNotesUI tastingNotesUI = new TastingNotesUI(gtn);
-        model.addAttribute(MODEL_ATTRIBUTE_NOTE, tastingNotesUI);
+        model.addAttribute(Attributes.NOTE, tastingNotesUI);
         return "tastingNotes/addEditNotes";
     }
 
@@ -144,7 +142,7 @@ public class TastingNotesController extends AbstractController {
             return REDIRECT;
         }
         if (result.hasErrors()) {
-            model.addAttribute(MODEL_ATTRIBUTE_NOTE, tastingNotesUI);
+            model.addAttribute(Attributes.NOTE, tastingNotesUI);
             return "tastingNotes/addEditNotes";
         }
         GenericTastingNotes gtn = prepForSave(principal, tastingNotesUI);
