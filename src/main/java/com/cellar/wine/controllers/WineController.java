@@ -3,6 +3,7 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.nav.Session;
 import com.cellar.wine.services.WineService;
 import com.cellar.wine.ui.WineUI;
@@ -26,8 +27,6 @@ import javax.validation.Valid;
 @RequestMapping("/wine")
 public class WineController extends AbstractController {
 
-    private static final String ADD_OR_EDIT_WINE_TEMPLATE = "wine/addEditWine";
-
     @Inject
     private WineService wineService;
 
@@ -42,25 +41,25 @@ public class WineController extends AbstractController {
     @GetMapping("/new")
     public String wineNewGet(Producer producer, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         Wine wine = new Wine();
         wine.setProducer(producer);
         model.addAttribute(Attributes.WINE, wine);
-        return ADD_OR_EDIT_WINE_TEMPLATE;
+        return Paths.WINE_ADD_EDIT;
     }
 
     @PostMapping("/new")
     public String wineNewPost(@Valid Wine wine, BindingResult result, ModelMap model,
                               @RequestParam Long producerId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         if (result.hasErrors()) {
             model.put(Attributes.WINE, wine);
-            return ADD_OR_EDIT_WINE_TEMPLATE;
+            return Paths.WINE_ADD_EDIT;
         } else {
             Producer producer = producerService.findById(producerId);
             wine.setProducer(producer);
@@ -78,23 +77,23 @@ public class WineController extends AbstractController {
     @GetMapping("/{wineId}/edit")
     public String wineEditGet(@PathVariable Long wineId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         model.addAttribute(wineService.findById(wineId));
-        return ADD_OR_EDIT_WINE_TEMPLATE;
+        return Paths.WINE_ADD_EDIT;
     }
 
     @PostMapping("/{wineId}/edit")
     public String wineEditPost(@Valid Wine wine, BindingResult result, Model model,
                                @PathVariable Long wineId, @RequestParam Long producerId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         if (result.hasErrors()) {
             model.addAttribute(Attributes.WINE, wine);
-            return ADD_OR_EDIT_WINE_TEMPLATE;
+            return Paths.WINE_ADD_EDIT;
         } else {
             Producer producer = producerService.findById(producerId);
 

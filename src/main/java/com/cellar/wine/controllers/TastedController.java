@@ -3,6 +3,7 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Tasted;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ReviewService;
@@ -37,7 +38,7 @@ public class TastedController {
     @GetMapping("/{tastedId}/delete")
     public String tastedDeleteGet(@PathVariable Long tastedId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
@@ -48,18 +49,18 @@ public class TastedController {
         }
 
         model.addAttribute(Attributes.TASTED, getTastedUIs(user, user.getTasted()));
-        return "tasted/tastedList";
+        return Paths.TASTED_LIST;
     }
 
     @GetMapping("/list")
     public String tastedList(Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
         model.addAttribute(Attributes.TASTED, getTastedUIs(user, user.getTasted()));
-        return "tasted/tastedList";
+        return Paths.TASTED_LIST;
     }
 
     private List<TastedUI> getTastedUIs(User user, List<Tasted> tasted) {

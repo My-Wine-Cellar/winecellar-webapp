@@ -3,6 +3,7 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Wishlist;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.WishlistService;
@@ -45,7 +46,7 @@ public class WishlistController {
     @GetMapping("/new")
     public String wishlistNewGet(@RequestParam Long wineId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
@@ -60,13 +61,13 @@ public class WishlistController {
             wishlistService.save(wishlist);
         }
 
-        return "redirect:/wishlist/list";
+        return Paths.REDIRECT_WISHLIST_LIST;
     }
 
     @GetMapping("/{wishlistId}/delete")
     public String wishlistDeleteGet(@PathVariable Long wishlistId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
@@ -76,18 +77,18 @@ public class WishlistController {
             wishlistService.delete(wishlist);
         }
 
-        return "redirect:/wishlist/list";
+        return Paths.REDIRECT_WISHLIST_LIST;
     }
 
     @GetMapping("/list")
     public String wishlistList(Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
         model.addAttribute(Attributes.WISHLIST, getWishlistUIs(user.getWishlist()));
-        return "wishlist/wishlistList";
+        return Paths.WISHLIST_LIST;
     }
 
     private List<WishlistUI> getWishlistUIs(List<Wishlist> wishlist) {

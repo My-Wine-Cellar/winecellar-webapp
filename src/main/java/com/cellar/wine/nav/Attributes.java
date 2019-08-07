@@ -35,6 +35,7 @@ public class Attributes {
     public static final String TASTED = "tasted";
 
     public static final String USER = "user";
+    public static final String USERS = "users";
 
     public static final String WHITE_GRAPES = "whiteGrapes";
     public static final String WINE = "wine";

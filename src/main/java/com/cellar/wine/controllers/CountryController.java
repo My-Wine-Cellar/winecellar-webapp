@@ -2,6 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Country;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,21 +24,23 @@ public class CountryController extends AbstractController {
     @GetMapping("/{countryId}/edit")
     public String countryEditGet(@PathVariable Long countryId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         model.addAttribute(Attributes.COUNTRY, countryService.findById(countryId));
-        return "country/editCountry";
+        return Paths.COUNTRY_EDIT;
     }
 
     @PostMapping("/{countryId}/edit")
-    public String countryEditPost(@Valid Country country, BindingResult result, @PathVariable Long countryId, Principal principal) {
+    public String countryEditPost(@Valid Country country, BindingResult result, Model model,
+                                  @PathVariable Long countryId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         if (result.hasErrors()) {
-            return "country/editCountry";
+            model.addAttribute(Attributes.COUNTRY, country);
+            return Paths.COUNTRY_EDIT;
         } else {
             country.setId(countryId);
             countryService.save(country);

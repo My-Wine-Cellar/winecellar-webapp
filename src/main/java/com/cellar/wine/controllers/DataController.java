@@ -13,6 +13,7 @@ import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.models.Wishlist;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.nav.Session;
 import com.cellar.wine.security.User;
 import com.cellar.wine.services.BottleService;
@@ -72,7 +73,7 @@ public class DataController extends AbstractController {
 
         Session.updateSessionAttributes(null, null, null, null, null);
 
-        return "country/countryList";
+        return Paths.COUNTRY_LIST;
     }
 
     @GetMapping("/{country}")
@@ -80,15 +81,15 @@ public class DataController extends AbstractController {
         Country c = null;
 
         if (guard(country)) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
         if (c == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         if (c.getRegions() == null || c.getRegions().size() == 0) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
@@ -96,7 +97,7 @@ public class DataController extends AbstractController {
 
         Session.updateSessionAttributes(c.getId(), null, null, null, null);
 
-        return "country/countryDetails";
+        return Paths.COUNTRY_DETAILS;
     }
 
     @GetMapping("/{country}/{region}")
@@ -105,17 +106,17 @@ public class DataController extends AbstractController {
         Region r = null;
 
         if (guard(country) || guard(region)) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
         if (c == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
@@ -124,7 +125,7 @@ public class DataController extends AbstractController {
 
         Session.updateSessionAttributes(c.getId(), r.getId(), null, null, null);
 
-        return "region/regionDetails";
+        return Paths.REGION_DETAILS;
     }
 
     @GetMapping("/{country}/{region}/{area}")
@@ -135,17 +136,17 @@ public class DataController extends AbstractController {
         Area a = null;
 
         if (guard(country) || guard(region) || guard(area)) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
         if (c == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Area ar : r.getAreas()) {
@@ -155,7 +156,7 @@ public class DataController extends AbstractController {
             }
         }
         if (a == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
@@ -166,7 +167,7 @@ public class DataController extends AbstractController {
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), null, null);
 
-        return "area/areaDetails";
+        return Paths.AREA_DETAILS;
     }
 
     @GetMapping("/{country}/{region}/{area}/{producer}")
@@ -178,17 +179,17 @@ public class DataController extends AbstractController {
         Producer p = null;
 
         if (guard(country) || guard(region) || guard(area) || guard(producer)) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
         if (c == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Area ar : r.getAreas()) {
@@ -198,7 +199,7 @@ public class DataController extends AbstractController {
             }
         }
         if (a == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Producer pr : a.getProducers()) {
@@ -208,7 +209,7 @@ public class DataController extends AbstractController {
             }
         }
         if (p == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
@@ -219,7 +220,7 @@ public class DataController extends AbstractController {
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), null);
 
-        return "producer/producerDetails";
+        return Paths.PRODUCER_DETAILS;
     }
 
     @GetMapping("/{country}/{region}/{area}/{producer}/{wine}/{vintage}/{size}")
@@ -240,17 +241,17 @@ public class DataController extends AbstractController {
 
         if (guard(country) || guard(region) || guard(area) || guard(producer) ||
             guard(wine) || guard(vintage) || guard(size)) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
         if (c == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Area ar : r.getAreas()) {
@@ -260,7 +261,7 @@ public class DataController extends AbstractController {
             }
         }
         if (a == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Producer pr : a.getProducers()) {
@@ -270,7 +271,7 @@ public class DataController extends AbstractController {
             }
         }
         if (p == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Wine wi : p.getWines()) {
@@ -281,7 +282,7 @@ public class DataController extends AbstractController {
             }
         }
         if (w == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         if (principal != null) {
@@ -332,7 +333,7 @@ public class DataController extends AbstractController {
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), w.getId());
 
-        return "wine/wineDetails";
+        return Paths.WINE_DETAILS;
     }
     
     private boolean guard(Object o) {

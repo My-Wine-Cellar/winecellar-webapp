@@ -3,6 +3,7 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ReviewService;
@@ -45,7 +46,7 @@ public class ReviewController {
     @GetMapping("/new")
     public String reviewNewGet(@RequestParam Long wineId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
@@ -60,18 +61,19 @@ public class ReviewController {
         model.addAttribute(Attributes.REVIEW, review);
         model.addAttribute(Attributes.WINE, review.getWine());
 
-        return "review/addEditReview";
+        return Paths.REVIEW_ADD_EDIT;
     }
 
     @PostMapping("/new")
     public String reviewNewPost(@Valid Review review, BindingResult result, Model model,
                                 @RequestParam Long wineId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         if (result.hasErrors()) {
-            return "review/addEditReview";
+            model.addAttribute(Attributes.REVIEW, review);
+            return Paths.REVIEW_ADD_EDIT;
         } else {
             User user = userService.findByUsername(principal.getName());
             Review r = reviewService.findByWine(user.getId(), wineId);
@@ -93,7 +95,7 @@ public class ReviewController {
                 reviewService.save(r);
             }
 
-            return "redirect:/review/list";
+            return Paths.REDIRECT_REVIEW_LIST;
         }
     }
 
@@ -102,34 +104,34 @@ public class ReviewController {
         Review review = reviewService.findById(reviewId);
 
         if (review == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
 
-        model.addAttribute(Attributes.REVIEW, new ReviewUI(review));
+        model.addAttribute(Attributes.REVIEW, getReviewUI(review));
         model.addAttribute(Attributes.USER, user);
 
-        return "review/reviewView";
+        return Paths.REVIEW_VIEW;
     }
 
     @GetMapping("/{reviewId}/edit")
     public String reviewEditGet(@PathVariable Long reviewId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
         Review review = reviewService.findByUser(user.getId(), reviewId);
         
         if (review == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
                 
         model.addAttribute(Attributes.REVIEW, review);
         model.addAttribute(Attributes.WINE, review.getWine());
 
-        return "review/addEditReview";
+        return Paths.REVIEW_ADD_EDIT;
     }
 
     @PostMapping("/{reviewId}/edit")
@@ -137,12 +139,12 @@ public class ReviewController {
                                  @PathVariable Long reviewId, @RequestParam Long wineId,
                                  Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         if (result.hasErrors()) {
             model.addAttribute(Attributes.REVIEW, review);
-            return "review/addEditReview";
+            return Paths.REVIEW_ADD_EDIT;
         } else {
             User user = userService.findByUsername(principal.getName());
             Review r = reviewService.findByUser(user.getId(), reviewId);
@@ -153,17 +155,17 @@ public class ReviewController {
                 r.setDate(new Date(System.currentTimeMillis()));
                 reviewService.save(r);
 
-                return "redirect:/review/list";
+                return Paths.REDIRECT_REVIEW_LIST;
             }
 
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
     }
 
     @GetMapping("/{reviewId}/delete")
     public String reviewDeleteGet(@PathVariable Long reviewId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
@@ -172,21 +174,21 @@ public class ReviewController {
         if (review != null) {
             reviewService.delete(review);
 
-            return "redirect:/review/list";
+            return Paths.REDIRECT_REVIEW_LIST;
         }
 
-        return "redirect:/";
+        return Paths.REDIRECT_ROOT;
     }
 
     @GetMapping("/list")
     public String reviewListGet(Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
         model.addAttribute(Attributes.REVIEWS, getReviewUIs(user.getReviews()));
-        return "review/reviewList";
+        return Paths.REVIEW_LIST;
     }
 
     private List<ReviewUI> getReviewUIs(List<Review> reviews) {

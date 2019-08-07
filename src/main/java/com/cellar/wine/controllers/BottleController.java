@@ -4,6 +4,7 @@ import com.cellar.wine.models.Bottle;
 import com.cellar.wine.models.Tasted;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.BottleService;
@@ -49,25 +50,26 @@ public class BottleController {
     @GetMapping("/new")
     public String bottleNewGet(@RequestParam Long wineId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         Bottle bottle = new Bottle();
         Wine wine = wineService.findById(wineId);
         bottle.setWine(wine);
         model.addAttribute(Attributes.BOTTLE, bottle);
-        return "bottle/addEditBottle";
+        return Paths.BOTTLE_ADD_EDIT;
     }
 
     @PostMapping("/new")
     public String bottleNewPost(@Valid Bottle bottle, BindingResult result, Model model,
                                 @RequestParam Long wineId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         if (result.hasErrors()) {
-            return "bottle/addEditBottle";
+            model.addAttribute(Attributes.BOTTLE, bottle);
+            return Paths.BOTTLE_ADD_EDIT;
         } else {
             User user = userService.findByUsername(principal.getName());
             Bottle b = bottleService.findByWine(user.getId(), wineId);
@@ -90,37 +92,36 @@ public class BottleController {
             if (tasted != null)
                 tastedService.delete(tasted);
 
-            model.addAttribute(Attributes.USER, user);
-            return "redirect:/bottle/list";
+            return Paths.REDIRECT_BOTTLE_LIST;
         }
     }
 
     @GetMapping("/{bottleId}/edit")
     public String bottleEditGet(@PathVariable Long bottleId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
         Bottle bottle = bottleService.findByUser(user.getId(), bottleId);
 
         if (bottle == null)
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
 
         model.addAttribute(Attributes.BOTTLE, bottle);
-        return "bottle/addEditBottle";
+        return Paths.BOTTLE_ADD_EDIT;
     }
 
     @PostMapping("/{bottleId}/edit")
     public String bottleEditPost(@Valid Bottle bottle, BindingResult result, Model model,
                                  @PathVariable Long bottleId, @RequestParam Long wineId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         if (result.hasErrors()) {
             model.addAttribute(Attributes.BOTTLE, bottle);
-            return "bottle/addEditBottle";
+            return Paths.BOTTLE_ADD_EDIT;
         } else {
             User user = userService.findByUsername(principal.getName());
             Bottle b = bottleService.findByUser(user.getId(), bottleId);
@@ -133,7 +134,7 @@ public class BottleController {
 
                     bottleService.save(b);
 
-                    return "redirect:/bottle/list";
+                    return Paths.REDIRECT_BOTTLE_LIST;
                 } else {
                     user.getBottles().remove(b);
                     bottleService.delete(b);
@@ -143,22 +144,22 @@ public class BottleController {
                     user.getTasted().add(tasted);
                     Tasted savedTasted = tastedService.save(tasted);
 
-                    return "redirect:/tasted/list";
+                    return Paths.REDIRECT_TASTED_LIST;
                 }
             }
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
     }
 
     @GetMapping("/list")
     public String bottleListGet(Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
         model.addAttribute(Attributes.BOTTLES, getBottleUIs(user.getBottles()));
-        return "bottle/bottleList";
+        return Paths.BOTTLE_LIST;
     }
 
     private List<BottleUI> getBottleUIs(List<Bottle> bottles) {

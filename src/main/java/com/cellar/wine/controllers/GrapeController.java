@@ -2,6 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Grape;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.services.GrapeService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.GrapeUI;
@@ -39,7 +40,7 @@ public class GrapeController {
     public String grapeListGet(Model model) {
         model.addAttribute(Attributes.RED_GRAPES, getGrapeUIs(grapeService.getRedGrapes()));
         model.addAttribute(Attributes.WHITE_GRAPES, getGrapeUIs(grapeService.getWhiteGrapes()));
-        return "grape/grapeList";
+        return Paths.GRAPE_LIST;
     }
 
     @GetMapping("/{grape}")
@@ -47,40 +48,42 @@ public class GrapeController {
         Grape g = grapeService.findByLowerCaseName(AbstractKeyUI.fromKey(grape));
 
         if (g == null)
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
 
         model.addAttribute(Attributes.GRAPE, getGrapeUI(g));
-        return "grape/grapeDetails";
+        return Paths.GRAPE_DETAILS;
     }
 
     @GetMapping("/{grapeId}/edit")
     public String grapeEditGet(@PathVariable Long grapeId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         Grape grape = grapeService.findById(grapeId);
 
         if (grape == null)
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
 
         model.addAttribute(Attributes.GRAPE, grape);
-        return "grape/editGrape";
+        return Paths.GRAPE_EDIT;
     }
 
     @PostMapping("/{grapeId}/edit")
-    public String grapeEditPost(@Valid Grape grape, BindingResult result, @PathVariable Long grapeId, Principal principal) {
+    public String grapeEditPost(@Valid Grape grape, BindingResult result, Model model,
+                                @PathVariable Long grapeId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
-        if(result.hasErrors()) {
-            return "grape/editGrape";
+        if (result.hasErrors()) {
+            model.addAttribute(Attributes.GRAPE, grape);
+            return Paths.GRAPE_EDIT;
         } else {
             grape.setId(grapeId);
             Grape savedGrape = grapeService.save(grape);
-            GrapeUI ui = new GrapeUI(savedGrape);
-            return "redirect:/grape/" + ui.getKey();
+            GrapeUI ui = getGrapeUI(savedGrape);
+            return Paths.REDIRECT_GRAPE + ui.getKey();
         }
     }
 

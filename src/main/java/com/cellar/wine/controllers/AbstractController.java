@@ -4,6 +4,7 @@ import com.cellar.wine.models.Area;
 import com.cellar.wine.models.Country;
 import com.cellar.wine.models.Region;
 import com.cellar.wine.models.Producer;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.AreaService;
@@ -117,7 +118,7 @@ public abstract class AbstractController {
     protected String redirectCountry(Country country) {
         CountryUI cui = new CountryUI(country);
 
-        return "redirect:/d/" + cui.getKey();
+        return Paths.REDIRECT_ROOT + "d/" + cui.getKey();
     }
 
     protected String redirectRegion(Long countryId, Long regionId) {
@@ -129,7 +130,7 @@ public abstract class AbstractController {
         CountryUI cui = new CountryUI(country);
         RegionUI rui = new RegionUI(region);
 
-        return "redirect:/d/" + cui.getKey() + "/" + rui.getKey();
+        return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey();
     }
 
     protected String redirectArea(Long countryId, Long regionId, Long areaId) {
@@ -144,7 +145,7 @@ public abstract class AbstractController {
         RegionUI rui = new RegionUI(region);
         AreaUI aui = new AreaUI(area);
 
-        return "redirect:/d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey();
+        return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey();
     }
 
     protected String redirectProducer(Long countryId, Long regionId, Long areaId, Long producerId) {
@@ -158,6 +159,6 @@ public abstract class AbstractController {
         AreaUI aui = new AreaUI(area);
         ProducerUI pui = new ProducerUI(producer);
 
-        return "redirect:/d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey() + "/" + pui.getKey();
+        return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey() + "/" + pui.getKey();
     }
 }

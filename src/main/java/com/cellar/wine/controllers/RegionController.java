@@ -2,6 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Region;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.nav.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,22 +25,23 @@ public class RegionController extends AbstractController {
     @GetMapping("/{regionId}/edit")
     public String regionEditGet(@PathVariable Long regionId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         model.addAttribute(Attributes.REGION, regionService.findById(regionId));
-        return "region/editRegion";
+        return Paths.REGION_EDIT;
     }
 
     @PostMapping("/{regionId}/edit")
-    public String processEditRegionForm(@Valid Region region, BindingResult result,
+    public String processEditRegionForm(@Valid Region region, BindingResult result, Model model,
                                         @PathVariable Long regionId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         if (result.hasErrors()) {
-            return "region/editRegion";
+            model.addAttribute(Attributes.REGION, regionService.findById(regionId));
+            return Paths.REGION_EDIT;
         } else {
             region.setId(regionId);
             regionService.save(region);

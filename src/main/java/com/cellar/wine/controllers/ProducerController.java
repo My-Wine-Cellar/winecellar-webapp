@@ -3,6 +3,7 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Area;
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.nav.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,6 @@ import java.security.Principal;
 @RequestMapping("/producer")
 public class ProducerController extends AbstractController {
 
-    private static final String ADD_OR_EDIT_PRODUCER_TEMPLATE = "producer/addEditProducer";
-
     public ProducerController() {
         super();
     }
@@ -31,7 +30,7 @@ public class ProducerController extends AbstractController {
     @GetMapping("/{producerId}/edit")
     public String producerEditGet(@PathVariable Long producerId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         Producer producer = producerService.findById(producerId);
@@ -40,18 +39,19 @@ public class ProducerController extends AbstractController {
         model.addAttribute(Attributes.AREA, area);
         model.addAttribute(Attributes.PRODUCER, producer);
 
-        return ADD_OR_EDIT_PRODUCER_TEMPLATE;
+        return Paths.PRODUCER_ADD_EDIT;
     }
 
     @PostMapping("/{producerId}/edit")
-    public String producerEditPost(@Valid Producer producer, BindingResult result,
+    public String producerEditPost(@Valid Producer producer, BindingResult result, Model model,
                                    @PathVariable Long producerId, @RequestParam Long areaId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         if (result.hasErrors()) {
-            return ADD_OR_EDIT_PRODUCER_TEMPLATE;
+            model.addAttribute(Attributes.PRODUCER, producer);
+            return Paths.PRODUCER_ADD_EDIT;
         } else {
             producer.setId(producerId);
             producerService.save(producer);

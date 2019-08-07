@@ -2,6 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Barrel;
 import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.services.BarrelService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.BarrelUI;
@@ -36,46 +37,46 @@ public class BarrelController {
         List<Barrel> barrels = barrelService.findByLowerCaseName(AbstractKeyUI.fromKey(barrel) + "%");
 
         if (barrels == null || barrels.isEmpty())
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
 
         model.addAttribute(Attributes.BARREL, getBarrelUI(barrels.get(0)));
-        return "barrel/barrelDetails";
+        return Paths.BARREL_DETAILS;
     }
 
     @GetMapping("/{barrelId}/edit")
     public String barrelEditGet(@PathVariable Long barrelId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         Barrel barrel = barrelService.findById(barrelId);
 
         if (barrel == null)
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
 
         model.addAttribute(Attributes.BARREL, getBarrelUI(barrel));
-        return "barrel/editBarrel";
+        return Paths.BARREL_EDIT;
     }
 
     @PostMapping("/{barrelId}/edit")
-    public String barrelEditPost(@Valid BarrelUI barrel, BindingResult result, @PathVariable Long barrelId, Principal principal) {
+    public String barrelEditPost(@Valid BarrelUI barrel, BindingResult result, Model model,
+                                 @PathVariable Long barrelId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
-        if(result.hasErrors()) {
-            return "barrel/editBarrel";
+        if (result.hasErrors()) {
+            model.addAttribute(Attributes.BARREL, barrel);
+            return Paths.BARREL_EDIT;
         } else {
-
-            System.out.println(barrel);
 
             Barrel b = barrelService.findById(barrelId);
             b.setDescription(barrel.getDescription());
             b.setWeblink(barrel.getWeblink());
             Barrel savedBarrel = barrelService.save(b);
 
-            BarrelUI ui = new BarrelUI(savedBarrel);
-            return "redirect:/barrel/" + ui.getKey();
+            BarrelUI ui = getBarrelUI(savedBarrel);
+            return Paths.REDIRECT_BARREL + ui.getKey();
         }
     }
 
