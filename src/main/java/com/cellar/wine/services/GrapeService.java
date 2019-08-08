@@ -2,15 +2,15 @@ package com.cellar.wine.services;
 
 import com.cellar.wine.models.Grape;
 
-import java.util.Set;
+import java.util.List;
 
 public interface GrapeService extends CrudService<Grape, Long> {
 
     Grape findByName(String name);
 
-    Set<Grape> getWhiteGrapes();
+    List<Grape> getWhiteGrapes();
 
-    Set<Grape> getRedGrapes();
+    List<Grape> getRedGrapes();
 
     Grape findByLowerCaseName(String lcName);
 }

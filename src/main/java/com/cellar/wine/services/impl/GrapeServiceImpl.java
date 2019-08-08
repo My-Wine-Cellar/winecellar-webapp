@@ -5,6 +5,7 @@ import com.cellar.wine.repositories.GrapeRepository;
 import com.cellar.wine.services.GrapeService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -50,17 +51,13 @@ public class GrapeServiceImpl implements GrapeService {
     }
 
     @Override
-    public Set<Grape> getWhiteGrapes() {
-        Set<Grape> grapes = new TreeSet<>();
-        grapeRepository.getWhiteGrapes().forEach(grapes::add);
-        return grapes;
+    public List<Grape> getWhiteGrapes() {
+        return grapeRepository.getWhiteGrapes();
     }
 
     @Override
-    public Set<Grape> getRedGrapes() {
-        Set<Grape> grapes = new TreeSet<>();
-        grapeRepository.getRedGrapes().forEach(grapes::add);
-        return grapes;
+    public List<Grape> getRedGrapes() {
+        return grapeRepository.getRedGrapes();
     }
 
     @Override
