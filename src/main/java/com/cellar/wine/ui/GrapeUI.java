@@ -55,7 +55,7 @@ public class GrapeUI extends AbstractKeyUI {
         this.barrels = barrels;
     }
 
-    public GrapeUI(Grape g) {
+    GrapeUI(Grape g) {
         super(toKey(g.getName()));
 
         this.id = g.getId();
@@ -65,4 +65,3 @@ public class GrapeUI extends AbstractKeyUI {
         this.weblink = g.getWeblink();
     }
 }
-

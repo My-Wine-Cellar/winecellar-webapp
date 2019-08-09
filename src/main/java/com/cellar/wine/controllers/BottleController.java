@@ -10,7 +10,7 @@ import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.BottleService;
 import com.cellar.wine.services.TastedService;
 import com.cellar.wine.services.WineService;
-import com.cellar.wine.ui.BottleUI;
+import com.cellar.wine.ui.BottleUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -158,19 +158,7 @@ public class BottleController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.BOTTLES, getBottleUIs(user.getBottles()));
+        model.addAttribute(Attributes.BOTTLES, BottleUIFactory.instance().createList(user.getBottles()));
         return Paths.BOTTLE_LIST;
-    }
-
-    private List<BottleUI> getBottleUIs(List<Bottle> bottles) {
-        List<BottleUI> result = new ArrayList<>();
-        for (Bottle b : bottles) {
-            result.add(getBottleUI(b));
-        }
-        return result;
-    }
-
-    private BottleUI getBottleUI(Bottle b) {
-        return new BottleUI(b);
     }
 }

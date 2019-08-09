@@ -15,7 +15,7 @@ public class CountryUI extends AbstractKeyUI {
     private String description;
     private String weblink;
 
-    public CountryUI(Country c) {
+    CountryUI(Country c) {
         super(toKey(c.getName()));
         this.id = c.getId();
         this.name = c.getName();

@@ -24,7 +24,7 @@ public class ReviewUI implements Serializable {
     private WineUI wine;
     private UserUI user;
 
-    public ReviewUI(Review r) {
+    ReviewUI(Review r) {
         this.id = r.getId();
         this.stars = r.getStars();
         this.comment = r.getComment();

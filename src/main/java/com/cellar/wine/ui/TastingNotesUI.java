@@ -68,7 +68,7 @@ public class TastingNotesUI implements Serializable {
        // Empty
     }
 
-    public TastingNotesUI(GenericTastingNotes gtn) {
+    TastingNotesUI(GenericTastingNotes gtn) {
         this.country = new CountryUI(gtn.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());
         this.region = new RegionUI(gtn.getWine().getProducer().getAreas().get(0).getRegions().get(0));
         this.area = new AreaUI(gtn.getWine().getProducer().getAreas().get(0));

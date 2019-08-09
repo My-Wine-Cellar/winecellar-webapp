@@ -12,9 +12,13 @@ import com.cellar.wine.services.CountryService;
 import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.RegionService;
 import com.cellar.wine.ui.AreaUI;
+import com.cellar.wine.ui.AreaUIFactory;
 import com.cellar.wine.ui.CountryUI;
+import com.cellar.wine.ui.CountryUIFactory;
 import com.cellar.wine.ui.ProducerUI;
+import com.cellar.wine.ui.ProducerUIFactory;
 import com.cellar.wine.ui.RegionUI;
+import com.cellar.wine.ui.RegionUIFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,73 +46,16 @@ public abstract class AbstractController {
     public AbstractController() {
     }
 
-    protected List<CountryUI> getCountryUIs(Set<Country> countries) {
-        List<CountryUI> result = new ArrayList<>();
-        for (Country c : countries) {
-            result.add(getCountryUI(c));
-        }
-        return result;
-    }
-
     protected CountryUI getCountryUI(Long countryId) {
-        return getCountryUI(countryService.findById(countryId));
-    }
-
-    protected CountryUI getCountryUI(Country c) {
-        if (c == null)
-            return null;
-
-        return new CountryUI(c);
-    }
-
-    protected List<RegionUI> getRegionUIs(List<Region> regions) {
-        List<RegionUI> result = new ArrayList<>();
-        for (Region r : regions) {
-            result.add(getRegionUI(r));
-        }
-        return result;
+        return CountryUIFactory.instance().create(countryService.findById(countryId));
     }
 
     protected RegionUI getRegionUI(Long regionId) {
-        return getRegionUI(regionService.findById(regionId));
-    }
-
-    protected RegionUI getRegionUI(Region r) {
-        if (r == null)
-            return null;
-
-        return new RegionUI(r);
-    }
-
-    protected List<AreaUI> getAreaUIs(List<Area> areas) {
-        List<AreaUI> result = new ArrayList<>();
-        for (Area a : areas) {
-            result.add(getAreaUI(a));
-        }
-        return result;
+        return RegionUIFactory.instance().create(regionService.findById(regionId));
     }
 
     protected AreaUI getAreaUI(Long areaId) {
-        return getAreaUI(areaService.findById(areaId));
-    }
-
-    protected AreaUI getAreaUI(Area a) {
-        if (a == null)
-            return null;
-
-        return new AreaUI(a);
-    }
-
-    protected List<ProducerUI> getProducerUIs(List<Producer> producers) {
-        List<ProducerUI> result = new ArrayList<>();
-        for (Producer p : producers) {
-            result.add(getProducerUI(p));
-        }
-        return result;
-    }
-
-    protected ProducerUI getProducerUI(Producer p) {
-        return new ProducerUI(p);
+        return AreaUIFactory.instance().create(areaService.findById(areaId));
     }
 
     protected String redirectCountry(Long countryId) {
@@ -116,7 +63,7 @@ public abstract class AbstractController {
     }
 
     protected String redirectCountry(Country country) {
-        CountryUI cui = new CountryUI(country);
+        CountryUI cui = CountryUIFactory.instance().create(country);
 
         return Paths.REDIRECT_ROOT + "d/" + cui.getKey();
     }
@@ -127,8 +74,8 @@ public abstract class AbstractController {
 
     protected String redirectRegion(Long countryId, Region region) {
         Country country = countryService.findById(countryId);
-        CountryUI cui = new CountryUI(country);
-        RegionUI rui = new RegionUI(region);
+        CountryUI cui = CountryUIFactory.instance().create(country);
+        RegionUI rui = RegionUIFactory.instance().create(region);
 
         return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey();
     }
@@ -141,9 +88,9 @@ public abstract class AbstractController {
         Country country = countryService.findById(countryId);
         Region region = regionService.findById(regionId);
 
-        CountryUI cui = new CountryUI(country);
-        RegionUI rui = new RegionUI(region);
-        AreaUI aui = new AreaUI(area);
+        CountryUI cui = CountryUIFactory.instance().create(country);
+        RegionUI rui = RegionUIFactory.instance().create(region);
+        AreaUI aui = AreaUIFactory.instance().create(area);
 
         return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey();
     }
@@ -154,10 +101,10 @@ public abstract class AbstractController {
         Area area = areaService.findById(areaId);
         Producer producer = producerService.findById(producerId);
 
-        CountryUI cui = new CountryUI(country);
-        RegionUI rui = new RegionUI(region);
-        AreaUI aui = new AreaUI(area);
-        ProducerUI pui = new ProducerUI(producer);
+        CountryUI cui = CountryUIFactory.instance().create(country);
+        RegionUI rui = RegionUIFactory.instance().create(region);
+        AreaUI aui = AreaUIFactory.instance().create(area);
+        ProducerUI pui = ProducerUIFactory.instance().create(producer);
 
         return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey() + "/" + pui.getKey();
     }

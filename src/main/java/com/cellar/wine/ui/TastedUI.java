@@ -21,7 +21,7 @@ public class TastedUI implements Serializable {
     private WineUI wine;
     private Long reviewId;
     
-    public TastedUI(Tasted t, Long reviewId) {
+    TastedUI(Tasted t, Long reviewId) {
         this.id = t.getId();
         this.country = new CountryUI(t.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());
         this.region = new RegionUI(t.getWine().getProducer().getAreas().get(0).getRegions().get(0));
@@ -31,4 +31,3 @@ public class TastedUI implements Serializable {
         this.reviewId = reviewId;
     }
 }
-

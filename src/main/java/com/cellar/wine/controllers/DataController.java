@@ -22,15 +22,17 @@ import com.cellar.wine.services.TastingNotesService;
 import com.cellar.wine.services.WishlistService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.AgingUI;
-import com.cellar.wine.ui.AreaUI;
+import com.cellar.wine.ui.AreaUIFactory;
 import com.cellar.wine.ui.BarrelUI;
+import com.cellar.wine.ui.BarrelUIFactory;
 import com.cellar.wine.ui.BarrelUISorter;
-import com.cellar.wine.ui.CountryUI;
+import com.cellar.wine.ui.CountryUIFactory;
 import com.cellar.wine.ui.GrapeUI;
+import com.cellar.wine.ui.GrapeUIFactory;
 import com.cellar.wine.ui.GrapeUISorter;
-import com.cellar.wine.ui.ProducerUI;
-import com.cellar.wine.ui.RegionUI;
-import com.cellar.wine.ui.WineUI;
+import com.cellar.wine.ui.ProducerUIFactory;
+import com.cellar.wine.ui.RegionUIFactory;
+import com.cellar.wine.ui.WineUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,7 +47,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/d")
@@ -68,8 +69,8 @@ public class DataController extends AbstractController {
 
     @GetMapping("/")
     public String dataRootGet(Model model) {
-        Set<Country> countries = countryService.findWithRegions();
-        model.addAttribute(Attributes.COUNTRIES, getCountryUIs(countries));
+        List<Country> countries = countryService.findWithRegions();
+        model.addAttribute(Attributes.COUNTRIES, CountryUIFactory.instance().createList(countries));
 
         Session.updateSessionAttributes(null, null, null, null, null);
 
@@ -92,8 +93,8 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
         
-        model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
-        model.addAttribute(Attributes.REGIONS, getRegionUIs(c.getRegions()));
+        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
+        model.addAttribute(Attributes.REGIONS, RegionUIFactory.instance().createList(c.getRegions()));
 
         Session.updateSessionAttributes(c.getId(), null, null, null, null);
 
@@ -119,9 +120,9 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
-        model.addAttribute(Attributes.REGION, getRegionUI(r));
-        model.addAttribute(Attributes.AREAS, getAreaUIs(r.getAreas()));
+        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
+        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.AREAS, AreaUIFactory.instance().createList(r.getAreas()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), null, null, null);
 
@@ -159,11 +160,11 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
         
-        model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
-        model.addAttribute(Attributes.REGION, getRegionUI(r));
-        model.addAttribute(Attributes.AREA, getAreaUI(a));
-        model.addAttribute(Attributes.PRODUCERS, getProducerUIs(a.getProducers()));
-        model.addAttribute(Attributes.PRIMARY_GRAPES, getGrapeUIs(a.getPrimaryGrapes()));
+        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
+        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
+        model.addAttribute(Attributes.PRODUCERS, ProducerUIFactory.instance().createList(a.getProducers()));
+        model.addAttribute(Attributes.PRIMARY_GRAPES, GrapeUIFactory.instance().createList(a.getPrimaryGrapes()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), null, null);
 
@@ -212,11 +213,11 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
         
-        model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
-        model.addAttribute(Attributes.REGION, getRegionUI(r));
-        model.addAttribute(Attributes.AREA, getAreaUI(a));
-        model.addAttribute(Attributes.PRODUCER, getProducerUI(p));
-        model.addAttribute(Attributes.WINES, getWineUIs(p.getWines()));
+        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
+        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
+        model.addAttribute(Attributes.PRODUCER, ProducerUIFactory.instance().create(p));
+        model.addAttribute(Attributes.WINES, WineUIFactory.instance().createList(p.getWines()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), null);
 
@@ -320,10 +321,10 @@ public class DataController extends AbstractController {
         }
         Collections.sort(winegrapes, new GrapeUISorter());
 
-        model.addAttribute(Attributes.COUNTRY, getCountryUI(c));
-        model.addAttribute(Attributes.REGION, getRegionUI(r));
-        model.addAttribute(Attributes.AREA, getAreaUI(a));
-        model.addAttribute(Attributes.PRODUCER, getProducerUI(p));
+        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
+        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
+        model.addAttribute(Attributes.PRODUCER, ProducerUIFactory.instance().create(p));
         model.addAttribute(Attributes.WINE, w);
         model.addAttribute(Attributes.WINEGRAPES, winegrapes);
         model.addAttribute(Attributes.MYBOTTLE, bottle);
@@ -346,32 +347,5 @@ public class DataController extends AbstractController {
         }
 
         return false;
-    }
-
-    private List<GrapeUI> getGrapeUIs(List<Grape> grapes) {
-        List<GrapeUI> result = new ArrayList<>();
-        if (grapes != null) {
-            for (Grape g : grapes) {
-                result.add(getGrapeUI(g));
-            }
-            Collections.sort(result, new GrapeUISorter());
-        }
-        return result;
-    }
-
-    private GrapeUI getGrapeUI(Grape g) {
-        return new GrapeUI(g);
-    }
-
-    private List<WineUI> getWineUIs(List<Wine> wines) {
-        List<WineUI> result = new ArrayList<>();
-        for (Wine w : wines) {
-            result.add(getWineUI(w));
-        }
-        return result;
-    }
-
-    private WineUI getWineUI(Wine w) {
-        return new WineUI(w);
     }
 }

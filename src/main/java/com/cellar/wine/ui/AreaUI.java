@@ -15,7 +15,7 @@ public class AreaUI extends AbstractKeyUI {
     private String description;
     private String weblink;
 
-    public AreaUI(Area a) {
+    AreaUI(Area a) {
         super(toKey(a.getName()));
         this.id = a.getId();
         this.name = a.getName();

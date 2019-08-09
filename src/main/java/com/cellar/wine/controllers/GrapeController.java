@@ -6,6 +6,7 @@ import com.cellar.wine.nav.Paths;
 import com.cellar.wine.services.GrapeService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.GrapeUI;
+import com.cellar.wine.ui.GrapeUIFactory;
 import com.cellar.wine.ui.GrapeUISorter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,8 +39,8 @@ public class GrapeController {
 
     @GetMapping("/list")
     public String grapeListGet(Model model) {
-        model.addAttribute(Attributes.RED_GRAPES, getGrapeUIs(grapeService.getRedGrapes()));
-        model.addAttribute(Attributes.WHITE_GRAPES, getGrapeUIs(grapeService.getWhiteGrapes()));
+        model.addAttribute(Attributes.RED_GRAPES, GrapeUIFactory.instance().createList(grapeService.getRedGrapes()));
+        model.addAttribute(Attributes.WHITE_GRAPES, GrapeUIFactory.instance().createList(grapeService.getWhiteGrapes()));
         return Paths.GRAPE_LIST;
     }
 
@@ -50,7 +51,7 @@ public class GrapeController {
         if (g == null)
             return Paths.REDIRECT_ROOT;
 
-        model.addAttribute(Attributes.GRAPE, getGrapeUI(g));
+        model.addAttribute(Attributes.GRAPE, GrapeUIFactory.instance().create(g));
         return Paths.GRAPE_DETAILS;
     }
 
@@ -82,21 +83,8 @@ public class GrapeController {
         } else {
             grape.setId(grapeId);
             Grape savedGrape = grapeService.save(grape);
-            GrapeUI ui = getGrapeUI(savedGrape);
+            GrapeUI ui = GrapeUIFactory.instance().create(savedGrape);
             return Paths.REDIRECT_GRAPE + ui.getKey();
         }
-    }
-
-    private List<GrapeUI> getGrapeUIs(Set<Grape> grapes) {
-        List<GrapeUI> result = new ArrayList<>();
-        for (Grape g : grapes) {
-            result.add(getGrapeUI(g));
-        }
-        Collections.sort(result, new GrapeUISorter());
-        return result;
-    }
-
-    private GrapeUI getGrapeUI(Grape g) {
-        return new GrapeUI(g);
     }
 }

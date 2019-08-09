@@ -41,7 +41,7 @@ public class BarrelUI extends AbstractKeyUI {
         setKey(toKey(shortname));
     }
 
-    public BarrelUI(Barrel b) {
+    BarrelUI(Barrel b) {
         super();
 
         this.id = b.getId();

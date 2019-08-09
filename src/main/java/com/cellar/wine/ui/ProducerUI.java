@@ -18,7 +18,7 @@ public class ProducerUI extends AbstractKeyUI {
     private String email;
     private String website;
 
-    public ProducerUI(Producer p) {
+    ProducerUI(Producer p) {
         super(toKey(p.getName()));
         this.id = p.getId();
         this.name = p.getName();

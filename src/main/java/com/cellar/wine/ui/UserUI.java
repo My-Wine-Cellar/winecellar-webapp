@@ -18,7 +18,7 @@ public class UserUI implements Serializable {
     private String middleName;
     private String lastName;
 
-    public UserUI(User u) {
+    UserUI(User u) {
         this.id = u.getId();
         this.username = u.getUsername();
         this.firstName = u.getFirstName();

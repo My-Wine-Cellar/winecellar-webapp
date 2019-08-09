@@ -8,13 +8,14 @@ import com.cellar.wine.nav.Session;
 import com.cellar.wine.security.User;
 import com.cellar.wine.services.TastingNotesService;
 import com.cellar.wine.services.WineService;
-import com.cellar.wine.ui.AreaUI;
-import com.cellar.wine.ui.CountryUI;
-import com.cellar.wine.ui.ProducerUI;
-import com.cellar.wine.ui.RegionUI;
+import com.cellar.wine.ui.AreaUIFactory;
+import com.cellar.wine.ui.CountryUIFactory;
+import com.cellar.wine.ui.ProducerUIFactory;
+import com.cellar.wine.ui.RegionUIFactory;
 import com.cellar.wine.ui.TastingNotesUI;
-import com.cellar.wine.ui.UserUI;
-import com.cellar.wine.ui.WineUI;
+import com.cellar.wine.ui.TastingNotesUIFactory;
+import com.cellar.wine.ui.UserUIFactory;
+import com.cellar.wine.ui.WineUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,7 +48,7 @@ public class TastingNotesController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.NOTES, getTastingNotesUIs(user.getGenericTastingNotes()));
+        model.addAttribute(Attributes.NOTES, TastingNotesUIFactory.instance().createList(user.getGenericTastingNotes()));
         return Paths.TASTING_NOTES_LIST;
     }
 
@@ -65,9 +66,9 @@ public class TastingNotesController extends AbstractController {
         }
 
         TastingNotesUI ui = new TastingNotesUI();
-        ui.setUser(new UserUI(user));
-        ui.setWine(new WineUI(wine));
-        ui.setProducer(getProducerUI(wine.getProducer()));
+        ui.setUser(UserUIFactory.instance().create(user));
+        ui.setWine(WineUIFactory.instance().create(wine));
+        ui.setProducer(ProducerUIFactory.instance().create(wine.getProducer()));
         ui.setArea(getAreaUI(Session.getAreaId()));
         ui.setRegion(getRegionUI(Session.getRegionId()));
         ui.setCountry(getCountryUI(Session.getCountryId()));
@@ -115,8 +116,8 @@ public class TastingNotesController extends AbstractController {
            }
         }
 
-        model.addAttribute(Attributes.NOTE, getTastingNotesUI(gtn));
-        model.addAttribute(Attributes.USER, new UserUI(user));
+        model.addAttribute(Attributes.NOTE, TastingNotesUIFactory.instance().create(gtn));
+        model.addAttribute(Attributes.USER, UserUIFactory.instance().create(user));
         return Paths.TASTING_NOTES_VIEW;
     }
 
@@ -131,8 +132,7 @@ public class TastingNotesController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        TastingNotesUI tastingNotesUI = new TastingNotesUI(gtn);
-        model.addAttribute(Attributes.NOTE, tastingNotesUI);
+        model.addAttribute(Attributes.NOTE, TastingNotesUIFactory.instance().create(gtn));
         return Paths.TASTING_NOTES_ADD_EDIT;
     }
 
@@ -178,19 +178,5 @@ public class TastingNotesController extends AbstractController {
                 tastingNotesUI.mapConclusionNotes(),
                 tastingNotesUI.getShow(),
                 date, user, wine);
-    }
-
-    private List<TastingNotesUI> getTastingNotesUIs(List<GenericTastingNotes> gtns) {
-        List<TastingNotesUI> result = new ArrayList<>();
-        if (gtns != null) {
-            for (GenericTastingNotes g : gtns) {
-                result.add(getTastingNotesUI(g));
-            }
-        }
-        return result;
-    }
-
-    private TastingNotesUI getTastingNotesUI(GenericTastingNotes g) {
-        return new TastingNotesUI(g);
     }
 }

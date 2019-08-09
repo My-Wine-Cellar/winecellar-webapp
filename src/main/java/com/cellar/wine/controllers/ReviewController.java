@@ -9,6 +9,7 @@ import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.ReviewService;
 import com.cellar.wine.services.WineService;
 import com.cellar.wine.ui.ReviewUI;
+import com.cellar.wine.ui.ReviewUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -109,7 +110,7 @@ public class ReviewController {
 
         User user = userService.findByUsername(principal.getName());
 
-        model.addAttribute(Attributes.REVIEW, getReviewUI(review));
+        model.addAttribute(Attributes.REVIEW, ReviewUIFactory.instance().create(review));
         model.addAttribute(Attributes.USER, user);
 
         return Paths.REVIEW_VIEW;
@@ -187,21 +188,7 @@ public class ReviewController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.REVIEWS, getReviewUIs(user.getReviews()));
+        model.addAttribute(Attributes.REVIEWS, ReviewUIFactory.instance().createList(user.getReviews()));
         return Paths.REVIEW_LIST;
-    }
-
-    private List<ReviewUI> getReviewUIs(List<Review> reviews) {
-        List<ReviewUI> result = new ArrayList<>();
-        if (reviews != null) {
-            for (Review r : reviews) {
-                result.add(getReviewUI(r));
-            }
-        }
-        return result;
-    }
-
-    private ReviewUI getReviewUI(Review r) {
-        return new ReviewUI(r);
     }
 }

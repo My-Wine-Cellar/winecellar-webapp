@@ -8,7 +8,7 @@ import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.WishlistService;
 import com.cellar.wine.services.WineService;
-import com.cellar.wine.ui.WishlistUI;
+import com.cellar.wine.ui.WishlistUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -87,21 +87,7 @@ public class WishlistController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.WISHLIST, getWishlistUIs(user.getWishlist()));
+        model.addAttribute(Attributes.WISHLIST, WishlistUIFactory.instance().createList(user.getWishlist()));
         return Paths.WISHLIST_LIST;
-    }
-
-    private List<WishlistUI> getWishlistUIs(List<Wishlist> wishlist) {
-        List<WishlistUI> result = new ArrayList<>();
-        if (wishlist != null) {
-            for (Wishlist w : wishlist) {
-                result.add(getWishlistUI(w));
-            }
-        }
-        return result;
-    }
-
-    private WishlistUI getWishlistUI(Wishlist w) {
-        return new WishlistUI(w);
     }
 }

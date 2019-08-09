@@ -7,6 +7,7 @@ import com.cellar.wine.nav.Paths;
 import com.cellar.wine.nav.Session;
 import com.cellar.wine.services.WineService;
 import com.cellar.wine.ui.WineUI;
+import com.cellar.wine.ui.WineUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -66,7 +67,7 @@ public class WineController extends AbstractController {
             producer.getWines().add(wine);
 
             Wine savedWine = wineService.save(wine);
-            WineUI wui = new WineUI(savedWine);
+            WineUI wui = WineUIFactory.instance().create(savedWine);
 
             return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                                     Session.getAreaId(), Session.getProducerId()) +
@@ -80,7 +81,7 @@ public class WineController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(wineService.findById(wineId));
+        model.addAttribute(Attributes.WINE, wineService.findById(wineId));
         return Paths.WINE_ADD_EDIT;
     }
 
@@ -101,7 +102,7 @@ public class WineController extends AbstractController {
             wine.setProducer(producer);
 
             Wine savedWine = wineService.save(wine);
-            WineUI wui = new WineUI(savedWine);
+            WineUI wui = WineUIFactory.instance().create(savedWine);
 
             return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                                     Session.getAreaId(), Session.getProducerId()) +

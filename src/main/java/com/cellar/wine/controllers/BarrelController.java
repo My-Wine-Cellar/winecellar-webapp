@@ -6,6 +6,7 @@ import com.cellar.wine.nav.Paths;
 import com.cellar.wine.services.BarrelService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.BarrelUI;
+import com.cellar.wine.ui.BarrelUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,7 +40,7 @@ public class BarrelController {
         if (barrels == null || barrels.isEmpty())
             return Paths.REDIRECT_ROOT;
 
-        model.addAttribute(Attributes.BARREL, getBarrelUI(barrels.get(0)));
+        model.addAttribute(Attributes.BARREL, BarrelUIFactory.instance().create(barrels.get(0)));
         return Paths.BARREL_DETAILS;
     }
 
@@ -54,7 +55,7 @@ public class BarrelController {
         if (barrel == null)
             return Paths.REDIRECT_ROOT;
 
-        model.addAttribute(Attributes.BARREL, getBarrelUI(barrel));
+        model.addAttribute(Attributes.BARREL, BarrelUIFactory.instance().create(barrel));
         return Paths.BARREL_EDIT;
     }
 
@@ -75,12 +76,8 @@ public class BarrelController {
             b.setWeblink(barrel.getWeblink());
             Barrel savedBarrel = barrelService.save(b);
 
-            BarrelUI ui = getBarrelUI(savedBarrel);
+            BarrelUI ui = BarrelUIFactory.instance().create(savedBarrel);
             return Paths.REDIRECT_BARREL + ui.getKey();
         }
-    }
-
-    private BarrelUI getBarrelUI(Barrel b) {
-        return new BarrelUI(b);
     }
 }
