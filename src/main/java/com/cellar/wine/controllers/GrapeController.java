@@ -1,9 +1,12 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Grape;
+import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.services.GrapeService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.GrapeUI;
+import com.cellar.wine.ui.GrapeUIFactory;
 import com.cellar.wine.ui.GrapeUISorter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -22,14 +26,10 @@ import java.util.Set;
 @RequestMapping("/grape")
 public class GrapeController {
 
-    private static final String MODEL_ATTRIBUTE_WHITE_GRAPES = "whiteGrapes";
-    private static final String MODEL_ATTRIBUTE_RED_GRAPES = "redGrapes";
-    private static final String MODEL_ATTRIBUTE_GRAPE = "grape";
-
+    @Inject
     private GrapeService grapeService;
 
-    public GrapeController(GrapeService grapeService) {
-        this.grapeService = grapeService;
+    public GrapeController() {
     }
 
     @InitBinder
@@ -39,9 +39,9 @@ public class GrapeController {
 
     @GetMapping("/list")
     public String grapeListGet(Model model) {
-        model.addAttribute(MODEL_ATTRIBUTE_WHITE_GRAPES, getGrapeUIs(grapeService.getWhiteGrapes()));
-        model.addAttribute(MODEL_ATTRIBUTE_RED_GRAPES, getGrapeUIs(grapeService.getRedGrapes()));
-        return "grape/grapeList";
+        model.addAttribute(Attributes.RED_GRAPES, GrapeUIFactory.instance().createList(grapeService.getRedGrapes()));
+        model.addAttribute(Attributes.WHITE_GRAPES, GrapeUIFactory.instance().createList(grapeService.getWhiteGrapes()));
+        return Paths.GRAPE_LIST;
     }
 
     @GetMapping("/{grape}")
@@ -49,53 +49,42 @@ public class GrapeController {
         Grape g = grapeService.findByLowerCaseName(AbstractKeyUI.fromKey(grape));
 
         if (g == null)
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
 
-        model.addAttribute(MODEL_ATTRIBUTE_GRAPE, getGrapeUI(g));
-        return "grape/grapeDetails";
+        model.addAttribute(Attributes.GRAPE, GrapeUIFactory.instance().create(g));
+        return Paths.GRAPE_DETAILS;
     }
 
     @GetMapping("/{grapeId}/edit")
     public String grapeEditGet(@PathVariable Long grapeId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         Grape grape = grapeService.findById(grapeId);
 
         if (grape == null)
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
 
-        model.addAttribute(MODEL_ATTRIBUTE_GRAPE, grape);
-        return "grape/editGrape";
+        model.addAttribute(Attributes.GRAPE, grape);
+        return Paths.GRAPE_EDIT;
     }
 
     @PostMapping("/{grapeId}/edit")
-    public String grapeEditPost(@Valid Grape grape, BindingResult result, @PathVariable Long grapeId, Principal principal) {
+    public String grapeEditPost(@Valid Grape grape, BindingResult result, Model model,
+                                @PathVariable Long grapeId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
-        if(result.hasErrors()) {
-            return "grape/editGrape";
+        if (result.hasErrors()) {
+            model.addAttribute(Attributes.GRAPE, grape);
+            return Paths.GRAPE_EDIT;
         } else {
             grape.setId(grapeId);
             Grape savedGrape = grapeService.save(grape);
-            GrapeUI ui = new GrapeUI(savedGrape);
-            return "redirect:/grape/" + ui.getKey();
+            GrapeUI ui = GrapeUIFactory.instance().create(savedGrape);
+            return Paths.REDIRECT_GRAPE + ui.getKey();
         }
-    }
-
-    private List<GrapeUI> getGrapeUIs(Set<Grape> grapes) {
-        List<GrapeUI> result = new ArrayList<>();
-        for (Grape g : grapes) {
-            result.add(getGrapeUI(g));
-        }
-        Collections.sort(result, new GrapeUISorter());
-        return result;
-    }
-
-    private GrapeUI getGrapeUI(Grape g) {
-        return new GrapeUI(g);
     }
 }

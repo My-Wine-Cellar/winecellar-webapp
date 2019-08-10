@@ -5,6 +5,7 @@ import com.cellar.wine.repositories.CountryRepository;
 import com.cellar.wine.services.CountryService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -50,9 +51,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Set<Country> findWithRegions() {
-        Set<Country> countries = new TreeSet<>();
-        countryRepository.findWithRegions().forEach(countries::add);
-        return countries;
+    public List<Country> findWithRegions() {
+        return countryRepository.findWithRegions();
     }
 }

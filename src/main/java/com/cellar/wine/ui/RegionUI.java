@@ -15,7 +15,7 @@ public class RegionUI extends AbstractKeyUI {
     private String description;
     private String weblink;
 
-    public RegionUI(Region r) {
+    RegionUI(Region r) {
         super(toKey(r.getName()));
         this.id = r.getId();
         this.name = r.getName();

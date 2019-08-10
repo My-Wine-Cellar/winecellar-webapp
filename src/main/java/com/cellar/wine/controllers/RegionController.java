@@ -1,9 +1,9 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Region;
-import com.cellar.wine.services.RegionService;
-import com.cellar.wine.ui.CountryUI;
-import com.cellar.wine.ui.RegionUI;
+import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
+import com.cellar.wine.nav.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,42 +17,36 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/region")
-public class RegionController {
+public class RegionController extends AbstractController {
 
-    private static final String MODEL_ATTRIBUTE_REGION = "region";
-
-    private RegionService regionService;
-
-    public RegionController(RegionService regionService) {
-        this.regionService = regionService;
+    public RegionController() {
     }
 
     @GetMapping("/{regionId}/edit")
     public String regionEditGet(@PathVariable Long regionId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_REGION, regionService.findById(regionId));
-        return "region/editRegion";
+        model.addAttribute(Attributes.REGION, regionService.findById(regionId));
+        return Paths.REGION_EDIT;
     }
 
     @PostMapping("/{regionId}/edit")
-    public String processEditRegionForm(@Valid Region region, BindingResult result,
+    public String processEditRegionForm(@Valid Region region, BindingResult result, Model model,
                                         @PathVariable Long regionId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
-        if(result.hasErrors()) {
-            return "region/editRegion";
+        if (result.hasErrors()) {
+            model.addAttribute(Attributes.REGION, regionService.findById(regionId));
+            return Paths.REGION_EDIT;
         } else {
             region.setId(regionId);
-            Region savedRegion = regionService.save(region);
-            CountryUI cui = new CountryUI(savedRegion.getCountry());
-            RegionUI rui = new RegionUI(savedRegion);
+            regionService.save(region);
 
-            return "redirect:/d/" + cui.getKey() + "/" + rui.getKey();
+            return redirectRegion(Session.getCountryId(), region);
         }
     }
 }

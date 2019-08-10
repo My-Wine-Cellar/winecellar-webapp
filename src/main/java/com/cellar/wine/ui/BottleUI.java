@@ -5,6 +5,8 @@ import com.cellar.wine.models.Bottle;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode
 @ToString
@@ -22,7 +24,7 @@ public class BottleUI implements Serializable {
     private ProducerUI producer;
     private WineUI wine;
 
-    public BottleUI(Bottle b) {
+    BottleUI(Bottle b) {
         this.id = b.getId();
         this.number = b.getNumber();
         this.location = b.getLocation();

@@ -2,17 +2,20 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Wishlist;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.WishlistService;
 import com.cellar.wine.services.WineService;
-import com.cellar.wine.ui.WishlistUI;
+import com.cellar.wine.ui.WishlistUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Date;
@@ -23,17 +26,16 @@ import java.util.List;
 @RequestMapping("/wishlist")
 public class WishlistController {
 
+    @Inject
     private WishlistService wishlistService;
+
+    @Inject
     private UserService userService;
+
+    @Inject
     private WineService wineService;
 
-    private static final String MODEL_ATTRIBUTE_USER = "user";
-    private static final String MODEL_ATTRIBUTE_WISHLIST = "wishlist";
-
-    public WishlistController(WishlistService wishlistService, UserService userService, WineService wineService) {
-        this.wishlistService = wishlistService;
-        this.userService = userService;
-        this.wineService = wineService;
+    public WishlistController() {
     }
 
     @InitBinder("wishlist")
@@ -44,7 +46,7 @@ public class WishlistController {
     @GetMapping("/new")
     public String wishlistNewGet(@RequestParam Long wineId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
@@ -59,13 +61,13 @@ public class WishlistController {
             wishlistService.save(wishlist);
         }
 
-        return "redirect:/wishlist/list";
+        return Paths.REDIRECT_WISHLIST_LIST;
     }
 
     @GetMapping("/{wishlistId}/delete")
     public String wishlistDeleteGet(@PathVariable Long wishlistId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
@@ -75,31 +77,17 @@ public class WishlistController {
             wishlistService.delete(wishlist);
         }
 
-        return "redirect:/wishlist/list";
+        return Paths.REDIRECT_WISHLIST_LIST;
     }
 
     @GetMapping("/list")
     public String wishlistList(Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(MODEL_ATTRIBUTE_WISHLIST, getWishlistUIs(user.getWishlist()));
-        return "wishlist/wishlistList";
-    }
-
-    private List<WishlistUI> getWishlistUIs(List<Wishlist> wishlist) {
-        List<WishlistUI> result = new ArrayList<>();
-        if (wishlist != null) {
-            for (Wishlist w : wishlist) {
-                result.add(getWishlistUI(w));
-            }
-        }
-        return result;
-    }
-
-    private WishlistUI getWishlistUI(Wishlist w) {
-        return new WishlistUI(w);
+        model.addAttribute(Attributes.WISHLIST, WishlistUIFactory.instance().createList(user.getWishlist()));
+        return Paths.WISHLIST_LIST;
     }
 }

@@ -12,25 +12,27 @@ import com.cellar.wine.models.Region;
 import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Wine;
 import com.cellar.wine.models.Wishlist;
+import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
+import com.cellar.wine.nav.Session;
 import com.cellar.wine.security.User;
-import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.BottleService;
-import com.cellar.wine.services.CountryService;
-import com.cellar.wine.services.RegionService;
 import com.cellar.wine.services.ReviewService;
 import com.cellar.wine.services.TastingNotesService;
 import com.cellar.wine.services.WishlistService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.AgingUI;
-import com.cellar.wine.ui.AreaUI;
+import com.cellar.wine.ui.AreaUIFactory;
 import com.cellar.wine.ui.BarrelUI;
+import com.cellar.wine.ui.BarrelUIFactory;
 import com.cellar.wine.ui.BarrelUISorter;
-import com.cellar.wine.ui.CountryUI;
+import com.cellar.wine.ui.CountryUIFactory;
 import com.cellar.wine.ui.GrapeUI;
+import com.cellar.wine.ui.GrapeUIFactory;
 import com.cellar.wine.ui.GrapeUISorter;
-import com.cellar.wine.ui.ProducerUI;
-import com.cellar.wine.ui.RegionUI;
-import com.cellar.wine.ui.WineUI;
+import com.cellar.wine.ui.ProducerUIFactory;
+import com.cellar.wine.ui.RegionUIFactory;
+import com.cellar.wine.ui.WineUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,60 +41,40 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/d")
-public class DataController {
+public class DataController extends AbstractController {
 
-    private static final String MODEL_ATTRIBUTE_COUNTRIES = "countries";
-    private static final String MODEL_ATTRIBUTE_COUNTRY = "country";
-    private static final String MODEL_ATTRIBUTE_REGIONS = "regions";
-    private static final String MODEL_ATTRIBUTE_REGION = "region";
-    private static final String MODEL_ATTRIBUTE_AREAS = "areas";
-    private static final String MODEL_ATTRIBUTE_AREA = "area";
-    private static final String MODEL_ATTRIBUTE_PRODUCERS = "producers";
-    private static final String MODEL_ATTRIBUTE_PRIMARY_GRAPES = "primaryGrapes";
-    private static final String MODEL_ATTRIBUTE_PRODUCER = "producer";
-    private static final String MODEL_ATTRIBUTE_WINES = "wines";
-    private static final String MODEL_ATTRIBUTE_WINE = "wine";
-    private static final String MODEL_ATTRIBUTE_WINEGRAPES = "winegrapes";
-    private static final String MODEL_ATTRIBUTE_BOTTLE = "mybottle";
-    private static final String MODEL_ATTRIBUTE_REVIEW = "myreview";
-    private static final String MODEL_ATTRIBUTE_TASTINGNOTES = "mytastingnotes";
-    private static final String MODEL_ATTRIBUTE_WISHLIST = "mywishlist";
-    
-    private CountryService countryService;
-    private RegionService regionService;
-    private UserService userService;
+    @Inject
     private BottleService bottleService;
+
+    @Inject
     private ReviewService reviewService;
+
+    @Inject
     private TastingNotesService tastingNotesService; 
+
+    @Inject
     private WishlistService wishlistService;
 
-    public DataController(CountryService countryService, RegionService regionService,
-                          UserService userService, BottleService bottleService,
-                          ReviewService reviewService, TastingNotesService tastingNotesService,
-                          WishlistService wishlistService) {
-        this.countryService = countryService;
-        this.regionService = regionService;
-        this.userService = userService;
-        this.bottleService = bottleService;
-        this.reviewService = reviewService;
-        this.tastingNotesService = tastingNotesService;
-        this.wishlistService = wishlistService;
+    public DataController() {
     }
 
     @GetMapping("/")
     public String dataRootGet(Model model) {
-        Set<Country> countries = countryService.findWithRegions();
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRIES, getCountryUIs(countries));
-        return "country/countryList";
+        List<Country> countries = countryService.findWithRegions();
+        model.addAttribute(Attributes.COUNTRIES, CountryUIFactory.instance().createList(countries));
+
+        Session.updateSessionAttributes(null, null, null, null, null);
+
+        return Paths.COUNTRY_LIST;
     }
 
     @GetMapping("/{country}")
@@ -100,20 +82,23 @@ public class DataController {
         Country c = null;
 
         if (guard(country)) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
         if (c == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         if (c.getRegions() == null || c.getRegions().size() == 0) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
-        model.addAttribute(MODEL_ATTRIBUTE_REGIONS, getRegionUIs(c.getRegions()));
-        return "country/countryDetails";
+        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
+        model.addAttribute(Attributes.REGIONS, RegionUIFactory.instance().createList(c.getRegions()));
+
+        Session.updateSessionAttributes(c.getId(), null, null, null, null);
+
+        return Paths.COUNTRY_DETAILS;
     }
 
     @GetMapping("/{country}/{region}")
@@ -122,23 +107,26 @@ public class DataController {
         Region r = null;
 
         if (guard(country) || guard(region)) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
         if (c == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
-        model.addAttribute(MODEL_ATTRIBUTE_REGION, getRegionUI(r));
-        model.addAttribute(MODEL_ATTRIBUTE_AREAS, getAreaUIs(r.getAreas()));
-        return "region/regionDetails";
+        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
+        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.AREAS, AreaUIFactory.instance().createList(r.getAreas()));
+
+        Session.updateSessionAttributes(c.getId(), r.getId(), null, null, null);
+
+        return Paths.REGION_DETAILS;
     }
 
     @GetMapping("/{country}/{region}/{area}")
@@ -149,17 +137,17 @@ public class DataController {
         Area a = null;
 
         if (guard(country) || guard(region) || guard(area)) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
         if (c == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Area ar : r.getAreas()) {
@@ -169,15 +157,18 @@ public class DataController {
             }
         }
         if (a == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
-        model.addAttribute(MODEL_ATTRIBUTE_REGION, getRegionUI(r));
-        model.addAttribute(MODEL_ATTRIBUTE_AREA, getAreaUI(a));
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCERS, getProducerUIs(a.getProducers()));
-        model.addAttribute(MODEL_ATTRIBUTE_PRIMARY_GRAPES, getGrapeUIs(a.getPrimaryGrapes()));
-        return "area/areaDetails";
+        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
+        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
+        model.addAttribute(Attributes.PRODUCERS, ProducerUIFactory.instance().createList(a.getProducers()));
+        model.addAttribute(Attributes.PRIMARY_GRAPES, GrapeUIFactory.instance().createList(a.getPrimaryGrapes()));
+
+        Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), null, null);
+
+        return Paths.AREA_DETAILS;
     }
 
     @GetMapping("/{country}/{region}/{area}/{producer}")
@@ -189,17 +180,17 @@ public class DataController {
         Producer p = null;
 
         if (guard(country) || guard(region) || guard(area) || guard(producer)) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
         if (c == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Area ar : r.getAreas()) {
@@ -209,7 +200,7 @@ public class DataController {
             }
         }
         if (a == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Producer pr : a.getProducers()) {
@@ -219,15 +210,18 @@ public class DataController {
             }
         }
         if (p == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
-        model.addAttribute(MODEL_ATTRIBUTE_REGION, getRegionUI(r));
-        model.addAttribute(MODEL_ATTRIBUTE_AREA, getAreaUI(a));
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, getProducerUI(p));
-        model.addAttribute(MODEL_ATTRIBUTE_WINES, getWineUIs(p.getWines()));
-        return "producer/producerDetails";
+        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
+        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
+        model.addAttribute(Attributes.PRODUCER, ProducerUIFactory.instance().create(p));
+        model.addAttribute(Attributes.WINES, WineUIFactory.instance().createList(p.getWines()));
+
+        Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), null);
+
+        return Paths.PRODUCER_DETAILS;
     }
 
     @GetMapping("/{country}/{region}/{area}/{producer}/{wine}/{vintage}/{size}")
@@ -248,17 +242,17 @@ public class DataController {
 
         if (guard(country) || guard(region) || guard(area) || guard(producer) ||
             guard(wine) || guard(vintage) || guard(size)) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
         if (c == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Area ar : r.getAreas()) {
@@ -268,7 +262,7 @@ public class DataController {
             }
         }
         if (a == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Producer pr : a.getProducers()) {
@@ -278,7 +272,7 @@ public class DataController {
             }
         }
         if (p == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
         for (Wine wi : p.getWines()) {
@@ -289,7 +283,7 @@ public class DataController {
             }
         }
         if (w == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
         
         if (principal != null) {
@@ -327,17 +321,20 @@ public class DataController {
         }
         Collections.sort(winegrapes, new GrapeUISorter());
 
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, getCountryUI(c));
-        model.addAttribute(MODEL_ATTRIBUTE_REGION, getRegionUI(r));
-        model.addAttribute(MODEL_ATTRIBUTE_AREA, getAreaUI(a));
-        model.addAttribute(MODEL_ATTRIBUTE_PRODUCER, getProducerUI(p));
-        model.addAttribute(MODEL_ATTRIBUTE_WINE, w);
-        model.addAttribute(MODEL_ATTRIBUTE_WINEGRAPES, winegrapes);
-        model.addAttribute(MODEL_ATTRIBUTE_BOTTLE, bottle);
-        model.addAttribute(MODEL_ATTRIBUTE_REVIEW, review);
-        model.addAttribute(MODEL_ATTRIBUTE_TASTINGNOTES, tastingnotes);
-        model.addAttribute(MODEL_ATTRIBUTE_WISHLIST, wishlist);
-        return "wine/wineDetails";
+        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
+        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
+        model.addAttribute(Attributes.PRODUCER, ProducerUIFactory.instance().create(p));
+        model.addAttribute(Attributes.WINE, w);
+        model.addAttribute(Attributes.WINEGRAPES, winegrapes);
+        model.addAttribute(Attributes.MYBOTTLE, bottle);
+        model.addAttribute(Attributes.MYREVIEW, review);
+        model.addAttribute(Attributes.MYTASTINGNOTES, tastingnotes);
+        model.addAttribute(Attributes.MYWISHLIST, wishlist);
+
+        Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), w.getId());
+
+        return Paths.WINE_DETAILS;
     }
     
     private boolean guard(Object o) {
@@ -350,80 +347,5 @@ public class DataController {
         }
 
         return false;
-    }
-
-    private List<CountryUI> getCountryUIs(Set<Country> countries) {
-        List<CountryUI> result = new ArrayList<>();
-        for (Country c : countries) {
-            result.add(getCountryUI(c));
-        }
-        return result;
-    }
-
-    private CountryUI getCountryUI(Country c) {
-        return new CountryUI(c);
-    }
-
-    private List<RegionUI> getRegionUIs(List<Region> regions) {
-        List<RegionUI> result = new ArrayList<>();
-        for (Region r : regions) {
-            result.add(getRegionUI(r));
-        }
-        return result;
-    }
-
-    private RegionUI getRegionUI(Region r) {
-        return new RegionUI(r);
-    }
-
-    private List<AreaUI> getAreaUIs(List<Area> areas) {
-        List<AreaUI> result = new ArrayList<>();
-        for (Area a : areas) {
-            result.add(getAreaUI(a));
-        }
-        return result;
-    }
-
-    private AreaUI getAreaUI(Area a) {
-        return new AreaUI(a);
-    }
-
-    private List<ProducerUI> getProducerUIs(List<Producer> producers) {
-        List<ProducerUI> result = new ArrayList<>();
-        for (Producer p : producers) {
-            result.add(getProducerUI(p));
-        }
-        return result;
-    }
-
-    private ProducerUI getProducerUI(Producer p) {
-        return new ProducerUI(p);
-    }
-
-    private List<GrapeUI> getGrapeUIs(List<Grape> grapes) {
-        List<GrapeUI> result = new ArrayList<>();
-        if (grapes != null) {
-            for (Grape g : grapes) {
-                result.add(getGrapeUI(g));
-            }
-            Collections.sort(result, new GrapeUISorter());
-        }
-        return result;
-    }
-
-    private GrapeUI getGrapeUI(Grape g) {
-        return new GrapeUI(g);
-    }
-
-    private List<WineUI> getWineUIs(List<Wine> wines) {
-        List<WineUI> result = new ArrayList<>();
-        for (Wine w : wines) {
-            result.add(getWineUI(w));
-        }
-        return result;
-    }
-
-    private WineUI getWineUI(Wine w) {
-        return new WineUI(w);
     }
 }

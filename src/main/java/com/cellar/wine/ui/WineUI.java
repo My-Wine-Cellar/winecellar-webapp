@@ -15,7 +15,7 @@ public class WineUI extends AbstractKeyUI {
     private Integer vintage;
     private Float size;
 
-    public WineUI(Wine w) {
+    WineUI(Wine w) {
         super(toKey(w.getName()));
         this.id = w.getId();
         this.name = w.getName();

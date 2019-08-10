@@ -21,7 +21,7 @@ public class WishlistUI implements Serializable {
     private ProducerUI producer;
     private WineUI wine;
 
-    public WishlistUI(Wishlist w) {
+    WishlistUI(Wishlist w) {
         this.id = w.getId();
         this.date = w.getDate();
         this.country = new CountryUI(w.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());

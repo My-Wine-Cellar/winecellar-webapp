@@ -1,8 +1,8 @@
 package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Country;
-import com.cellar.wine.services.CountryService;
-import com.cellar.wine.ui.CountryUI;
+import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,39 +16,35 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/country")
-public class CountryController {
+public class CountryController extends AbstractController {
 
-    private static final String MODEL_ATTRIBUTE_COUNTRY = "country";
-
-    private CountryService countryService;
-
-    public CountryController(CountryService countryService) {
-        this.countryService = countryService;
+    public CountryController() {
     }
 
     @GetMapping("/{countryId}/edit")
     public String countryEditGet(@PathVariable Long countryId, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(MODEL_ATTRIBUTE_COUNTRY, countryService.findById(countryId));
-        return "country/editCountry";
+        model.addAttribute(Attributes.COUNTRY, countryService.findById(countryId));
+        return Paths.COUNTRY_EDIT;
     }
 
     @PostMapping("/{countryId}/edit")
-    public String countryEditPost(@Valid Country country, BindingResult result, @PathVariable Long countryId, Principal principal) {
+    public String countryEditPost(@Valid Country country, BindingResult result, Model model,
+                                  @PathVariable Long countryId, Principal principal) {
         if (principal == null) {
-            return "redirect:/";
+            return Paths.REDIRECT_ROOT;
         }
 
-        if(result.hasErrors()) {
-            return "country/editCountry";
+        if (result.hasErrors()) {
+            model.addAttribute(Attributes.COUNTRY, country);
+            return Paths.COUNTRY_EDIT;
         } else {
             country.setId(countryId);
-            Country savedCountry = countryService.save(country);
-            CountryUI ui = new CountryUI(savedCountry);
-            return "redirect:/d/" + ui.getKey();
+            countryService.save(country);
+            return redirectCountry(country);
         }
     }
 }

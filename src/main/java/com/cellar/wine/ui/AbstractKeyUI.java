@@ -14,10 +14,10 @@ public abstract class AbstractKeyUI implements Serializable {
 
     private String key;
 
-    public AbstractKeyUI() {
+    AbstractKeyUI() {
     }
 
-    public AbstractKeyUI(String key) {
+    AbstractKeyUI(String key) {
         this.key = key;
     }
 

@@ -1,36 +1,41 @@
 package com.cellar.wine.controllers;
 
+import com.cellar.wine.nav.Attributes;
+import com.cellar.wine.nav.Paths;
 import com.cellar.wine.security.UserService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 
+import javax.inject.Inject;
+
 @Controller
 public class IndexController {
 
+    @Inject
     private UserService userService;
 
-    public IndexController(UserService userService) {
-        this.userService = userService;
+    public IndexController() {
     }
 
     @RequestMapping({"", "/", "index", "index.html"})
     public String index(Model model, Principal principal) {
         if (model != null && principal != null)
-            model.addAttribute("user", userService.findByUsername(principal.getName()));
+            model.addAttribute(Attributes.USER, userService.findByUsername(principal.getName()));
 
-        return "index";
+        return Paths.INDEX;
     }
 
     @RequestMapping("/login")
     public String loginForm() {
-        return "security/login";
+        return Paths.SECURITY_LOGIN;
     }
 
     @RequestMapping("/errorpage")
     public String error() {
-        return "error";
+        return Paths.ERROR;
     }
 }
