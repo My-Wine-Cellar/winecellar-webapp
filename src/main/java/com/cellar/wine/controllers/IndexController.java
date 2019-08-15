@@ -21,21 +21,26 @@ public class IndexController {
     public IndexController() {
     }
 
-    @RequestMapping({"", "/", "index", "index.html"})
+    @RequestMapping("/")
+    public String landingPage() {
+        return Paths.LANDING_PAGE;
+    }
+
+    @RequestMapping("/welcome")
     public String index(Model model, Principal principal) {
         if (model != null && principal != null)
             model.addAttribute(Attributes.USER, userService.findByUsername(principal.getName()));
 
-        return Paths.INDEX;
+        return Paths.WELCOME_PAGE;
     }
 
     @RequestMapping("/login")
-    public String loginForm() {
+    public String login() {
         return Paths.SECURITY_LOGIN;
     }
 
     @RequestMapping("/errorpage")
     public String error() {
-        return Paths.ERROR;
+        return Paths.ERROR_PAGE;
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="~{fragments/layout :: head}"/>
 <body>
 <div th:replace="~{fragments/layout :: nav}"/>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <br/>
-        <div class="text-right">
+        <div class="text-right" sec:authorize="isAuthenticated()">
             <a th:href="@{/area/__${area.id}__/edit}"><span class="fas fa-edit"/></a>
         </div>
     </div>
@@ -52,7 +52,7 @@
             </div>
         </div>
         <br/>
-        <div class="text-right">
+        <div class="text-right" sec:authorize="isAuthenticated()">
             <a th:href="@{/area/__${area.id}__/addProducer}"><span class="fas fa-plus-square"/></a>
         </div>
     </div>
@@ -68,7 +68,7 @@
             </div>
         </div>
         <br/>
-        <div class="text-right">
+        <div class="text-right" sec:authorize="isAuthenticated()">
             <a th:href="@{/area/__${area.id}__/addGrape}"><span class="fas fa-plus-square"/></a>
         </div>
     </div>

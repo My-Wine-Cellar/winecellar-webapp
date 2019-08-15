@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:include="~{fragments/layout :: head}"/>
-
 <body>
-
 <div th:replace="~{fragments/layout :: nav}"/>
-
 <div class="jumbotron jumbotron-fluid">
     <div class="container text-center">
         <h1 th:text="#{error}">Error:</h1>
@@ -15,7 +11,6 @@
     </div>
 </div>
 <br/><br/>
-
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

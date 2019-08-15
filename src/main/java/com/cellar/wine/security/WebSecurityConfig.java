@@ -2,7 +2,6 @@ package com.cellar.wine.security;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,44 +31,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        // Public access to login, landing, and error pages
+        http.authorizeRequests().antMatchers("/", "/login", "/errorpage").permitAll();
+
+        // Public access to countries, grapes, wines, wine reviews, tasting notes, and producers
+        http.authorizeRequests().antMatchers("/d/**", "/grape/**", "/review/**", "/tastingnotes/**").permitAll();
+
+        // Static resource permissions
+        http.authorizeRequests()
+                .antMatchers("/css/**", "/fonts/**", "/images/**", "/webfonts/**", "/js/**", "/webjars/**", "/messages/**")
+                .permitAll();
+
+        // Loging specifications
+        http.formLogin().loginPage("/login").defaultSuccessUrl("/welcome", true);
+
+        //Logout specifications
         http
-                .authorizeRequests()
-                .antMatchers(
-                        "/js/**",
-                        "/css/**",
-                        "/images/**",
-                        "/webjars/**",
-                        "/messages/**",
-                        "/fonts/**").permitAll()
-                .antMatchers("/user/**").hasRole("USER")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/", true)
-                .permitAll()
-                .and()
                 .logout()
                 .deleteCookies("remove")
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
-                .and()
-                .exceptionHandling()
-                .and()
-                .csrf()
-                .disable()
-        ;
-        //Needed for H2 Console
-        http.headers().frameOptions().sameOrigin();
-    }
+                .logoutSuccessUrl("/")
+                .permitAll();
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+        // Csrf protection
+        http.exceptionHandling().and().csrf().disable();
     }
 }

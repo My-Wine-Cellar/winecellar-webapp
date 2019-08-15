@@ -15,14 +15,16 @@ public class Paths {
     public static final String COUNTRY_EDIT = "country/editCountry";
     public static final String COUNTRY_LIST = "country/countryList";
 
-    public static final String ERROR = "error";
+    public static final String ERROR_PAGE = "error";
 
     public static final String GRAPE_ADD_TO_AREA = "grape/addGrapeToArea";
     public static final String GRAPE_DETAILS = "grape/grapeDetails";
     public static final String GRAPE_EDIT = "grape/editGrape";
     public static final String GRAPE_LIST = "grape/grapeList";
 
-    public static final String INDEX = "index";
+    public static final String WELCOME_PAGE = "index/welcomePage";
+
+    public static final String LANDING_PAGE = "index/landingPage";
     
     public static final String PRODUCER_DETAILS = "producer/producerDetails";
     public static final String PRODUCER_ADD_EDIT = "producer/addEditProducer";

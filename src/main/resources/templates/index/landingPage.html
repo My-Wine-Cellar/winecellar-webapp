@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body class="wine-background">
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/>
+<!-- App info: main content about the app -->
+<div class="container">
+    <div class="card border-0 shadow my-5">
+        <div class="card-body p-5">
+            <h1 class="font-weight-light" th:text="|#{welcome} to MyWineCellar.info|"></h1>
+            <p class="lead">This application serves a variety of purposes</p>
+            <p class="lead">Before you decide to register please poke around</p>
+            <p class="lead mb-0">Or feell free to email with any questions or suggestions:</p>
+        </div>
+    </div>
+</div>
+<br/>
+<!-- App info: three columns to give info about cellar, tasting, reviews -->
+<div class="container">
+    <div class="card-deck">
+        <div class="card">
+            <div class="card-body text-center">
+                <div><i class="fas fa-wine-bottle fa-5x"></i></div><br/>
+                <h5 class="card-title">Cellar</h5>
+                <p class="card-text">Store your wines and know when to drink it!</p>
+                <p class="card-text">Plenty of ways to store and locate.</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body text-center">
+                <div><i class="far fa-star fa-5x"></i></div><br/>
+                <h5 class="card-title">Ratings</h5>
+                <p class="card-text">Rate wines so you know what to drink next...</p>
+                <p class="card-text">or NOT if its bad!</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body text-center">
+                <div><i class="far fa-clipboard fa-5x"></i></div><br/>
+                <h5 class="card-title">Tasting Notes</h5>
+                <p class="card-text">Take and refer back to tasting notes.</p>
+                <p class="card-text">Also feel free to wishlist wines for future tastings.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<br/><br/><br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>

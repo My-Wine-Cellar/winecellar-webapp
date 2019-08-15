@@ -102,13 +102,16 @@ public class ReviewController {
 
     @GetMapping("/{reviewId}")
     public String reviewDetailsGet(@PathVariable Long reviewId, Model model, Principal principal) {
-        Review review = reviewService.findById(reviewId);
 
+        Review review = reviewService.findById(reviewId);
         if (review == null) {
             return Paths.REDIRECT_ROOT;
         }
 
-        User user = userService.findByUsername(principal.getName());
+        User user = null;
+        if(principal != null) {
+            user = userService.findByUsername(principal.getName());
+        }
 
         model.addAttribute(Attributes.REVIEW, ReviewUIFactory.instance().create(review));
         model.addAttribute(Attributes.USER, user);
