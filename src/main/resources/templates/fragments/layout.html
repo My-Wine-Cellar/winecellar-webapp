@@ -15,7 +15,11 @@
 <body>
 
 <nav th:fragment="nav" class="navbar navbar-custom navbar-expand-md">
-    <a class="navbar-brand" th:href="@{/}">
+    <a sec:authorize="! isAuthenticated()" class="navbar-brand" th:href="@{/}">
+        MyWine<img th:src="@{/images/wine.png}" alt="wine bottle" style="height: 60px"/>Cellar.info
+    </a>
+
+    <a sec:authorize="isAuthenticated()" class="navbar-brand" th:href="@{/welcome}">
         MyWine<img th:src="@{/images/wine.png}" alt="wine bottle" style="height: 60px"/>Cellar.info
     </a>
 
@@ -23,10 +27,10 @@
         <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
     </button>
 
-    <div class="collapse navbar-collapse " id="navbarSupportedContent" sec:authorize="isAuthenticated()">
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_USER')">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Home <span class="fas fa-home"></span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -40,23 +44,28 @@
             <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
                 <a class="nav-link" th:href="@{/bottle/list}">My Cellar <span class="fas fa-wine-bottle"></span></a>
             </li>
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+            <li class="nav-item">
                 <a class="nav-link" th:href="@{/d/}">Countries <span class="fas fa-globe"></span></a>
             </li>
-            <li class="nav-item" sec:authorize="hasRole('ROLE_USER')">
+            <li class="nav-item">
                 <a class="nav-link" th:href="@{/grape/list}">Grapes <span class="fas fa-wine-glass"></span></a>
             </li>
 
-            <!-- Security specific nav items -->
-
+            <!-- SECURITY SPECIFIC NAV ITEMS -->
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" th:href="@{/registeruser}">Register User<span class="fas fa-user-plus" aria-hidden="true"></span></a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" th:href="@{/userlist}">User List<span class="fas fa-users" aria-hidden="true"></span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" sec:authorize="isAuthenticated()">
                 <a class="nav-link" th:href="@{/logout}">Logout<span class="fas fa-sign-out-alt" aria-hidden="true"></span></a>
+            </li>
+            <li class="nav-item" sec:authorize="! isAuthenticated()">
+                <a class="nav-link" th:href="@{/register}">Register<span class="fas fa-user-plus" aria-hidden="true"></span></a>
+            </li>
+            <li class="nav-item" sec:authorize="! isAuthenticated()">
+                <a class="nav-link" th:href="@{/login}">Login<span class="fas fa-sign-in-alt" aria-hidden="true"></span></a>
             </li>
         </ul>
     </div>
