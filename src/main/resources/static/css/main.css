@@ -71,6 +71,30 @@
     -o-background-size: cover;
 }
 
+.cellar-background {
+    background: url('/images/cellar.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.headywine-background {
+    background: url('/images/headywine.jpeg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.overheadwine-background {
+    background: url('/images/overheadwine.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
 /*
 Are ya yellow?!: #feda6a
 
