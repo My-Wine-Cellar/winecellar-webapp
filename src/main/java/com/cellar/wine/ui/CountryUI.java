@@ -12,6 +12,7 @@ public class CountryUI extends AbstractKeyUI {
 
     private Long id;
     private String name;
+    private String flag;
     private String description;
     private String weblink;
 
@@ -19,6 +20,7 @@ public class CountryUI extends AbstractKeyUI {
         super(toKey(c.getName()));
         this.id = c.getId();
         this.name = c.getName();
+        this.flag = c.getFlag();
         this.description = c.getDescription();
         this.weblink = c.getWeblink();
     }
