@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="~{fragments/layout :: head}"/>
-<body>
+<body class="overheadwine-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<div class="jumbotron jumbotron-fluid">
-    <div class="container text-center">
-        <h1 th:text="#{error}">Error:</h1>
-        <p>An error occurred, try to <a th:href="@{/}">start from the
-            beginning</a></p>
+<br/><br/>
+<div class="container">
+    <div class="card shadow my-5 text-center">
+        <div class="card-body">
+            <h1 class="card-title" th:text="#{error}">Error:</h1>
+            <p class="card-text">An error occurred, try to <a th:href="@{/}">start from the
+                beginning</a></p>
+        </div>
     </div>
 </div>
 <br/><br/>
