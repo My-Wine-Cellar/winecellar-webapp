@@ -17,7 +17,7 @@ public class Country extends BaseEntity implements Comparable<Country> {
         super();
     }
 
-    public Country(String name, String description, String weblink) {
+    public Country(String name, String flag, String description, String weblink) {
         super();
         this.name = name;
         this.description = description;
@@ -26,6 +26,9 @@ public class Country extends BaseEntity implements Comparable<Country> {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "flag")
+    private String flag;
 
     @Column(name = "description", length = 8192)
     private String description;

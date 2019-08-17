@@ -12,7 +12,7 @@ public interface CountryRepository extends JpaRepository<Country, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM country c WHERE lower(c.name) = :lc_name")
     Country findByLowerCaseName(@Param("lc_name") String lcName);
 
-    @Query(nativeQuery = true, value = "SELECT DISTINCT c.id, c.description, c.name, c.weblink " +
+    @Query(nativeQuery = true, value = "SELECT DISTINCT c.id, c.name, c.flag, c.description, c.weblink " +
                                        "FROM country c JOIN region r ON c.id = r.country_id ORDER BY c.name")
     List<Country> findWithRegions();
 }
