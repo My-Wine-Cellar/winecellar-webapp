@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="~{fragments/layout :: head}"/>
-<body>
+<body class="cellar-background">
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
-<br/>
+<div class="container">
+    <div class="card border-0 shadow">
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:object="${bottle.wine}">
@@ -44,9 +45,7 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label class="form-check-label" for="showBottle">Allow people to see these bottles</label>
-            </div>
-            <div class="form-group col-md-6">
+                <label class="col-sm-8 control-label" for="showBottle">Allow people to see these bottles</label>
                 <input type="checkbox" class="form-check-input showBottle" th:field="*{show}" id="showBottle">
             </div>
         </div>
@@ -57,7 +56,10 @@
                     class="btn btn-default" th:text="${text}">
             </button>
         </div>
+        <br/>
     </form>
+</div>
+</div>
 </div>
 <br/>
 <br/>
