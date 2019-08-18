@@ -8,7 +8,7 @@
 <br/>
 <div class="container justify-content-center">
     <div class="card text-center">
-        <div class="card-body" th:each="country : ${countries}">
+        <div class="card-body p-1" th:each="country : ${countries}">
           <h5 class="card-header">
             <a th:href="@{/d/__${country.key}__}" th:text="${country.name}"></a>
             <img th:src="@{/images/flags/__${country.flag}__.png}"/>

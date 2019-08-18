@@ -9,7 +9,7 @@
         <h2 align="center">Red Grapes</h2>
         <br/>
         <div class="card">
-            <div class="card-body" th:each="grape : ${redGrapes}">
+            <div class="card-body p-1" th:each="grape : ${redGrapes}">
                 <h5 class="card-header"><a th:href="@{/grape/__${grape.key}__}" th:text="${grape.name}"></a></h5>
             </div>
         </div>
@@ -19,7 +19,7 @@
         <h2 align="center">White Grapes</h2>
         <br/>
         <div class="card">
-            <div class="card-body" th:each="grape : ${whiteGrapes}">
+            <div class="card-body p-1" th:each="grape : ${whiteGrapes}">
                 <h5 class="card-header"><a th:href="@{/grape/__${grape.key}__}" th:text="${grape.name}"></a></h5>
             </div>
         </div>

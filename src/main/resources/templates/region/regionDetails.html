@@ -43,7 +43,7 @@
     <br/>
     <div class="container justify-content-center">
         <div class="card text-center">
-            <div class="card-body" th:each="area : ${areas}">
+            <div class="card-body p-1" th:each="area : ${areas}">
               <h5 class="card-header">
                 <a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__}" th:text="${area.name}"></a>
               </h5>
