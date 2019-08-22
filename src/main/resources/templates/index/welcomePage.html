@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="~{fragments/layout :: head}"/>
-<body>
+<body class="welcome-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<div class="jumbotron jumbotron-fluid" sec:authorize="isAuthenticated()">
-    <div class="container text-center">
-      <h1 th:text="|#{welcome}, ${user.firstName}|"></h1>
-    </div>
-</div>
-<div class="container justify-content-left">
+<br/>
+<div class="container">
+    <div class="card border-0 shadow">
+<div class="container">
+    <br/>
+    <h1 th:text="|#{welcome}, ${user.firstName}|"></h1>
+    <br/>
     <div class="card text-left">
       <div class="card-body">
         <h5 class="card-text">
@@ -28,6 +29,9 @@
         </h5>
       </div>
     </div>
+    <br/>
+</div>
+</div>
 </div>
 <br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>

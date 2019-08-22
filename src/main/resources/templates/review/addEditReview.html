@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="~{fragments/layout :: head}"/>
-<body>
+<body class="review-background">
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
-<br/>
+<div class="container">
+    <div class="card border-0 shadow">
 <div class="container justify-content-center">
+    <br/>
     <h2 class="col-sm-10" th:text="Review"/>
     <h4 class="col-sm-10" th:text="|${wine.producer.name}: ${wine.name} ${wine.vintage}|"/>
     <p/>
@@ -26,7 +28,10 @@
                     class="btn btn-default" th:text="${text}">
             </button>
         </div>
+        <br/>
     </form>
+</div>
+</div>
 </div>
 <br/>
 <br/>

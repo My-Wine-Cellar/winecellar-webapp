@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="~{fragments/layout :: head}"/>
-<body>
+<body class="country-background">
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
+<div class="container">
+    <div class="card border-0 shadow">
 <div class="container justify-content-center">
     <div class="card text-center">
         <div class="card-body" th:object="${country}">
@@ -45,6 +47,9 @@
             </div>
         </div>
     </div>
+    <br/>
+</div>
+</div>
 </div>
 <br/>
 <br/>

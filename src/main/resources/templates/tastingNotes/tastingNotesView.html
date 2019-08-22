@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="~{fragments/layout :: head}"/>
-<body>
+<body class="tasting-background">
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
-<br/>
+<div class="container">
+    <div class="card border-0 shadow">
 <div class="container justify-content-center">
+    <br/>
     <h2 class="col-sm-10" th:text="|Tasting notes|"/>
     <div class="col-sm-10 text-left">
         <ul class="list-inline">
@@ -34,7 +36,7 @@
         </ul>
     </div>
     <div class="container" th:object="${note}">
-        <h4 class="text-left">Sight</h4>
+        <h5 class="text-left">Sight</h4>
         <div class="card text-left">
             <div class="card-body">
                 <table class="table table-hover">
@@ -64,7 +66,7 @@
             </div>
         </div>
         <br/>
-        <h4 class="text-left">Nose</h4>
+        <h5 class="text-left">Nose</h4>
         <div class="card text-left">
             <div class="card-body">
                 <table class="table table-hover">
@@ -106,7 +108,7 @@
             </div>
         </div>
         <br/>
-        <h4 class="text-left">Palette</h4>
+        <h5 class="text-left">Palette</h4>
         <div class="card text-left">
             <div class="card-body">
                 <table class="table table-hover">
@@ -172,7 +174,7 @@
             </div>
         </div>
         <br/>
-        <h4 class="text-left">Conclusion</h4>
+        <h5 class="text-left">Conclusion</h4>
         <div class="card text-left">
             <div class="card-body">
                 <table class="table table-hover">
@@ -218,6 +220,9 @@
             <a th:href="@{/tastingnotes/__${note.id}__/edit}"><span class="fas fa-edit"></span></a>
         </div>
     </div>
+    <br/>
+</div>
+</div>
 </div>
 <br/>
 <br/>

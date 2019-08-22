@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="~{fragments/layout :: head}"/>
-<body>
+<body class="wishlist-background">
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
-<h2 align="center">My Wishlist</h2>
-<br/>
+<div class="container">
+    <div class="card border-0 shadow">
 <div class="container justify-content-center">
+    <br/>
+    <h2 align="center">My Wishlist</h2>
+    <br/>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -30,6 +33,8 @@
         </tbody>
     </table>
     <br/>
+</div>
+</div>
 </div>
 <br/>
 <br/>

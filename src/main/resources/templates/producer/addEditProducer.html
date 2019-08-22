@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="~{fragments/layout :: head}"/>
-<body>
+<body class="producer-background">
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
-<br/>
+<div class="container">
+    <div class="card border-0 shadow">
 <div class="container justify-content-center">
+    <br/>
     <form th:object="${producer}" method="post">
         <input type="hidden" name="id" th:value="*{id}"/>
         <input type="hidden" name="areaId" th:value="${area.id}"/>
@@ -41,7 +43,10 @@
                     class="btn btn-default" th:text="${text}">
             </button>
         </div>
+        <br/>
     </form>
+</div>
+</div>
 </div>
 <br/>
 <br/>
