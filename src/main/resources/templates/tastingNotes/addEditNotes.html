@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="~{fragments/layout :: head}"/>
-<body>
+<body class="tasting-background">
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
-<br/>
 <div class="container">
+    <div class="card border-0 shadow">
+<div class="container">
+    <br/>
     <h2 class="col-sm-10" th:text="|Tasting notes|"/>
     <div class="col-sm-10 text-left">
       <ul class="list-inline">
@@ -52,7 +54,7 @@
                 <input th:replace="~{fragments/inputField :: input ('Intensity', 'sightIntensity', 'text')}"/>
             </div>
             <div class="form-group col-md-6">
-                <input th:replace="~{fragments/inputField :: input ('Rimvariation', 'sightRimvariation', 'text')}"/>
+                <input th:replace="~{fragments/inputField :: input ('Rim variation', 'sightRimvariation', 'text')}"/>
             </div>
         </div>
         <div class="form-row">
@@ -76,7 +78,7 @@
                 <input th:replace="~{fragments/inputField :: input ('Fruit', 'noseFruit', 'text')}"/>
             </div>
             <div class="form-group col-md-6">
-                <input th:replace="~{fragments/inputField :: input ('NonFruit', 'noseNonFruit', 'text')}"/>
+                <input th:replace="~{fragments/inputField :: input ('Non fruit', 'noseNonFruit', 'text')}"/>
             </div>
         </div>
         <div class="form-row">
@@ -127,7 +129,7 @@
                 <input th:replace="~{fragments/inputField :: input ('Fruit', 'paletteFruit', 'text')}"/>
             </div>
             <div class="form-group col-md-6">
-                <input th:replace="~{fragments/inputField :: input ('NonFruit', 'paletteNonFruit', 'text')}"/>
+                <input th:replace="~{fragments/inputField :: input ('Non fruit', 'paletteNonFruit', 'text')}"/>
             </div>
         </div>
         <div class="form-row">
@@ -192,7 +194,10 @@
         <div class="text-center">
             <button type="submit" class="btn btn-default" th:text="Save"></button>
         </div>
+        <br/>
     </form>
+</div>
+</div>
 </div>
 <br/>
 <br/>

@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="~{fragments/layout :: head}"/>
-<body>
+<body class="wine-background">
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
+<div class="container">
+    <div class="card border-0 shadow">
 <div class="container text-left">
+    <br/>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a></li>
@@ -304,8 +307,11 @@
             </div>
         </div>
     </div>
+    <br/
 </div>
-<br/><br/><br/><br/><br/>
+</div>
+</div>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>
