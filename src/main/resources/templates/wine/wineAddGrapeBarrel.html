@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body class="wine-background">
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/><br/>
+<div class="container">
+    <div class="card p-2 shadow">
+        <div class="container">
+            <div class="card shadow p-2 m-3">
+                <div class="card-body text-center p-5">
+                    <h3 class="font-weight-light mb-4">Now adding barrel to the grape:</h3>
+                    <p class="lead">Similar rules apply here.</p>
+                    <p class="lead">Use <span class="btn-link fas fa-plus-square"></span> for additional barrels where the grapes are stored.</p>
+                    <p class="lead">The <span class="btn-link fas fa-check-circle"></span> button will send you back to adding another grape.</p>
+                    <p class="lead">You can go back and forth and <span class="btn-link fas fa-save"></span> when ready.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="container">
+    <div class="card p-2 shadow">
+        <div class="container justify-content-center">
+            <div class="container">
+                <div class="container justify-content-center">
+                    <div class="card shadow my-5 text-center">
+                        <div class="card-body">
+                            <h4 class="card-subtitle" th:text="|${wine.name}|"></h4>
+                            <br/>
+                            <p class="card-text"
+                               th:if="${wine.description != null && !wine.description.isEmpty()}"
+                               th:text="|Description: ${wine.description}|"></p>
+                            <ul class="list-inline">
+                                <li class="list-inline-item card-text" th:text="|Vintage: ${wine.vintage}|"></li>
+                                <li class="list-inline-item card-text" th:text="|Size: ${wine.size}L|"></li>
+                            </ul>
+                            <ul class="list-inline">
+                                <li class="list-inline-item card-text" th:if="${wine.closure != null}"
+                                    th:text="|Closure: ${wine.closure.name}|"></li>
+                                <li class="list-inline-item card-text" th:if="${wine.shape != null}"
+                                    th:text="|Shape: ${wine.shape.name}|"></li>
+                            </ul>
+                            <ul class="list-inline">
+                                <li class="list-inline-item card-text" th:if="${wine.acid}"
+                                    th:text="|Acid: ${wine.acid} g/L|"></li>
+                                <li class="list-inline-item card-text" th:if="${wine.getPH()}"
+                                    th:text="|Ph: ${wine.pH}|"></li>
+                            </ul>
+                            <ul class="list-inline">
+                                <li class="list-inline-item card-text" th:if="${wine.alcohol}"
+                                    th:text="|Alcohol: ${wine.alcohol}%|"></li>
+                                <li class="list-inline-item card-text" th:if="${wine.bottleAging}"
+                                    th:text="|Aging: ${wine.bottleAging} days|"></li>
+                            </ul>
+                            <p class="card-link" th:if="${wine.weblink != null && !wine.weblink.isEmpty()}"
+                               th:text="${wine.weblink}"></p>
+                            <p class="card-text" th:if="${wine.subarea != null && !wine.subarea.isEmpty()}"
+                               th:text="${wine.subarea}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="container justify-content-center">
+                    <div class="card shadow my-5">
+                        <div class="card-body">
+                            <h5 class="card-text ml-4" th:text="|Grape: ${grape.name}|"></h5>
+                            <form th:object="${barrelComponent}" method="post">
+                                <div class="container">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4 ml-3 mr-4">
+                                            <label th:for="${barrels}">Barrel</label>
+                                            <select class="form-control" th:field="*{barrel}">
+                                                <option value="">Please select a Barrel</option>
+                                                <option class="form-control" th:each="b : ${barrels}"
+                                                        th:value="${b.id}"
+                                                        th:text="${b.name}"
+                                                        th:selected="${barrelComponent.barrel}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-5 ml-5" th:object="${barrelComponent}">
+                                            <input th:replace="~{fragments/inputField :: input ('Percentage', 'percentage', 'number')}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-5">
+                                            <input th:replace="~{fragments/inputField :: input ('Size', 'size', 'number')}"/>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <input th:replace="~{fragments/inputField :: input ('Aging', 'aging', 'number')}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="btn-toolbar justify-content-center">
+                                    <button type="submit" name="action" value="addAnotherGrape"
+                                            class="btn btn-link mr-5 fas fa-check-circle"
+                                            data-toggle="tooltip" title="Add another Grape">
+                                    </button>
+                                    <button type="submit" name="action" value="saveWine"
+                                            class="btn btn-link mr-5 fas fa-save"
+                                            data-toggle="tooltip" title="Save Wine"></button>
+                                    <button type="submit" name="action" value="addAnotherBarrel"
+                                            class="btn btn-link fas fa-plus-square"
+                                            data-toggle="tooltip" title="Add another Barrel">
+                                    </button>
+                                </div>
+                                <br/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/><br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>

@@ -1,10 +1,18 @@
 package com.cellar.wine.models;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.sql.Date;
 import java.util.List;
-import javax.persistence.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -39,7 +47,7 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
     @JoinColumn(name = "grape_id", referencedColumnName = "id")
     private Grape grape;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "wine_id", referencedColumnName = "id")
     private Wine wine;
 
@@ -51,7 +59,7 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
     @JoinColumn(name = "fermentation_id", referencedColumnName = "id")
     private Fermentation fermentation;
 
-    @OneToMany(mappedBy = "grapeComponent")
+    @OneToMany(mappedBy = "grapeComponent", cascade = CascadeType.REMOVE)
     private List<BarrelComponent> barrelComponents;
 
     @Override
