@@ -4,6 +4,10 @@ INSERT INTO barrel (name, description, weblink) VALUES ('American (New)', '', ''
 INSERT INTO barrel (name, description, weblink) VALUES ('American (Used)', '', '');
 INSERT INTO barrel (name, description, weblink) VALUES ('Slavonian (New)', '', '');
 INSERT INTO barrel (name, description, weblink) VALUES ('Slavonian (Used)', '', '');
+INSERT INTO barrel (name, description, weblink) VALUES ('Hungarian (New)', '', '');
+INSERT INTO barrel (name, description, weblink) VALUES ('Hungarian (Used)', '', '');
+INSERT INTO barrel (name, description, weblink) VALUES ('Russian (New)', '', '');
+INSERT INTO barrel (name, description, weblink) VALUES ('Russian (Used)', '', '');
 INSERT INTO barrel (name, description, weblink) VALUES ('Steel', '', '');
 INSERT INTO barrel (name, description, weblink) VALUES ('Concrete', '', '');
 INSERT INTO barrel (name, description, weblink) VALUES ('Chips', '', '');
