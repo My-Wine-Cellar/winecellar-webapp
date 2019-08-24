@@ -6,16 +6,16 @@
 <br/>
 <div class="container">
     <div class="card border-0 shadow">
-<div class="container justify-content-center">
-    <div class="card shadow my-5 text-center">
-        <div class="card-body">
-            <h1 class="card-title" th:text="#{error}">Error:</h1>
-            <p class="card-text">An error occurred, try to <a th:href="@{/}">start from the
-                beginning</a></p>
+        <div class="container justify-content-center">
+            <div class="card shadow my-5 text-center">
+                <div class="card-body">
+                    <h1 class="card-title" th:text="#{error}">Error:</h1>
+                    <p class="card-text">An error occurred, try to <a th:href="@{/}">start from the
+                        beginning</a></p>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 <br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>

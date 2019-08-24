@@ -5,51 +5,54 @@
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
 <div class="container">
-    <div class="card border-0 shadow">
-<div class="container justify-content-center">
-    <div class="card text-center">
-        <div class="card-body" th:object="${country}">
-          <h2 class="card-header" th:text="*{name}"></h2>
-          <img th:src="@{/images/flags/__${country.flag}__.png}"/>
-        </div>
-    </div>
-    <br/>
-    <div class="container justify-content-left">
-        <div class="card text-left">
-            <div class="card-body" th:object="${country}">
-                <p class="card-text" th:text="*{description}"></p>
-                <table class="table table-hover">
-                    <tbody>
-                    <tr th:if="${country.weblink != null && !country.weblink.isEmpty()}">
-                        <td><b>Web</b></td>
-                        <td><a th:href="*{weblink}" target="_blank"><div th:text="*{weblink}"/></a></td>
-                    </tr>
-                    </tbody>
-                </table>
+    <div class="card p-2 shadow">
+        <div class="container justify-content-center">
+            <div class="card text-center">
+                <div class="card-body" th:object="${country}">
+                    <h2 class="card-header" th:text="*{name}"></h2>
+                    <img th:src="@{/images/flags/__${country.flag}__.png}"/>
+                </div>
             </div>
-        </div>
-        <br/>
-        <div class="text-right" sec:authorize="isAuthenticated()">
-            <a th:href="@{/country/__${country.id}__/edit}"><span class="fas fa-edit"/></a>
-        </div>
-    </div>
-    <br/>
-    <br/>
-    <h3 align="center" th:switch="${country.name}">
-        <span th:case="'United States'">States</span>
-        <span th:case="*">Regions</span>
-    </h3>
-    <br/>
-    <div class="container justify-content-center">
-        <div class="card text-center">
-            <div class="card-body p-1" th:each="region : ${regions}">
-                <h5 class="card-header"><a th:href="@{/d/__${country.key}__/__${region.key}__}" th:text="${region.name}"></a></h5>
+            <br/>
+            <div class="container justify-content-left">
+                <div class="card text-left">
+                    <div class="card-body" th:object="${country}">
+                        <p class="card-text" th:text="*{description}"></p>
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr th:if="${country.weblink != null && !country.weblink.isEmpty()}">
+                                <td><b>Web</b></td>
+                                <td><a th:href="*{weblink}" target="_blank">
+                                    <div th:text="*{weblink}"/>
+                                </a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <div class="text-right" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/country/__${country.id}__/edit}"><span class="fas fa-edit"/></a>
+                </div>
             </div>
+            <br/>
+            <br/>
+            <h3 align="center" th:switch="${country.name}">
+                <span th:case="'United States'">States</span>
+                <span th:case="*">Regions</span>
+            </h3>
+            <br/>
+            <div class="container justify-content-center">
+                <div class="card text-center">
+                    <div class="card-body p-1" th:each="region : ${regions}">
+                        <h5 class="card-header"><a th:href="@{/d/__${country.key}__/__${region.key}__}"
+                                                   th:text="${region.name}"></a></h5>
+                    </div>
+                </div>
+            </div>
+            <br/>
         </div>
     </div>
-    <br/>
-</div>
-</div>
 </div>
 <br/>
 <br/>

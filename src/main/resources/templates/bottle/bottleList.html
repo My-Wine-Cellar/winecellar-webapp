@@ -6,37 +6,41 @@
 <br/>
 <div class="container">
     <div class="card border-0 shadow">
-<div class="container justify-content-center">
-    <br/>
-    <h2 align="center">My Cellar</h2>
-    <br/>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Bottle #</th>
-            <th>Producer</th>
-            <th>Wine</th>
-            <th>Vintage</th>
-            <th>Size</th>
-            <th>Location</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="bottle : ${bottles}">
-            <td th:text="${bottle.number}"></td>
-            <td><a th:href="@{/d/__${bottle.country.key}__/__${bottle.region.key}__/__${bottle.area.key}__/__${bottle.producer.key}__/}" th:text="${bottle.producer.name}"></a></td>
-            <td><a th:href="@{/d/__${bottle.country.key}__/__${bottle.region.key}__/__${bottle.area.key}__/__${bottle.producer.key}__/__${bottle.wine.key}__/__${bottle.wine.vintage}__/__${bottle.wine.size}__}" th:text="${bottle.wine.name}"></a></td>
-            <td th:text="${bottle.wine.vintage}"></td>
-            <td th:text="|${bottle.wine.size}L|"></td>
-            <td th:text="${bottle.location}"></td>
-            <td><a th:href="@{/bottle/__${bottle.id}__/edit}"><span class="fas fa-edit"/></a></td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
-</div>
-</div>
+        <div class="container justify-content-center">
+            <br/>
+            <h2 align="center">My Cellar</h2>
+            <br/>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Bottle #</th>
+                    <th>Producer</th>
+                    <th>Wine</th>
+                    <th>Vintage</th>
+                    <th>Size</th>
+                    <th>Location</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bottle : ${bottles}">
+                    <td th:text="${bottle.number}"></td>
+                    <td>
+                        <a th:href="@{/d/__${bottle.country.key}__/__${bottle.region.key}__/__${bottle.area.key}__/__${bottle.producer.key}__/}"
+                           th:text="${bottle.producer.name}"></a></td>
+                    <td>
+                        <a th:href="@{/d/__${bottle.country.key}__/__${bottle.region.key}__/__${bottle.area.key}__/__${bottle.producer.key}__/__${bottle.wine.key}__/__${bottle.wine.vintage}__/__${bottle.wine.size}__}"
+                           th:text="${bottle.wine.name}"></a></td>
+                    <td th:text="${bottle.wine.vintage}"></td>
+                    <td th:text="|${bottle.wine.size}L|"></td>
+                    <td th:text="${bottle.location}"></td>
+                    <td><a th:href="@{/bottle/__${bottle.id}__/edit}"><span class="fas fa-edit"/></a></td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
+        </div>
+    </div>
 </div>
 <br/>
 <br/>

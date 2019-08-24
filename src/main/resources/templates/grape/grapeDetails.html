@@ -5,50 +5,52 @@
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
 <div class="container">
-    <div class="card border-0 shadow">
-<div class="container justify-content-center">
-    <div class="card text-center">
-        <div class="card-body" th:object="${grape}">
-            <h2 class="card-header" th:text="*{name}"></h2>
-        </div>
-    </div>
-    <br/>
-    <div class="container justify-content-left">
-        <div class="card text-left">
-            <div class="card-body" th:object="${grape}">
-                <p class="card-text" th:text="*{description}"></p>
-                <table class="table table-hover">
-                    <tbody>
-                    <tr>
-                        <td><b>Color</b></td>
-                        <td th:text="*{color}"></td>
-                    </tr>
-                    <tr th:if="*{! #strings.isEmpty(alternativeNames)}">
-                        <td><b>Alternative Names</b></td>
-                        <td th:text="*{alternativeNames}"></td>
-                    </tr>
-                    <tr th:if="${grape.weblink != null && !grape.weblink.isEmpty()}">
-                        <td><b>Web</b></td>
-                        <td><a th:href="*{weblink}" target="_blank"><div th:text="*{weblink}"/></a></td>
-                    </tr>
-                    <!--
-                    <tr>
-                        <td><b>Areas</b></td>
-                        <td th:text="*{areas}"></td>
-                    </tr>
-                    -->
-                    </tbody>
-                </table>
+    <div class="card p-2 shadow">
+        <div class="container justify-content-center">
+            <div class="card text-center">
+                <div class="card-body" th:object="${grape}">
+                    <h2 class="card-header" th:text="*{name}"></h2>
+                </div>
             </div>
+            <br/>
+            <div class="container justify-content-left">
+                <div class="card text-left">
+                    <div class="card-body" th:object="${grape}">
+                        <p class="card-text" th:text="*{description}"></p>
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr>
+                                <td><b>Color</b></td>
+                                <td th:text="*{color}"></td>
+                            </tr>
+                            <tr th:if="*{! #strings.isEmpty(alternativeNames)}">
+                                <td><b>Alternative Names</b></td>
+                                <td th:text="*{alternativeNames}"></td>
+                            </tr>
+                            <tr th:if="${grape.weblink != null && !grape.weblink.isEmpty()}">
+                                <td><b>Web</b></td>
+                                <td><a th:href="*{weblink}" target="_blank">
+                                    <div th:text="*{weblink}"/>
+                                </a></td>
+                            </tr>
+                            <!--
+                            <tr>
+                                <td><b>Areas</b></td>
+                                <td th:text="*{areas}"></td>
+                            </tr>
+                            -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="text-right" sec:authorize="isAuthenticated()">
+                <a th:href="@{/grape/__${grape.id}__/edit}"><span class="fas fa-edit"/></a>
+            </div>
+            <br/>
         </div>
     </div>
-    <br/>
-    <div class="text-right" sec:authorize="isAuthenticated()">
-        <a th:href="@{/grape/__${grape.id}__/edit}"><span class="fas fa-edit"/></a>
-    </div>
-    <br/>
-</div>
-</div>
 </div>
 <br/>
 <br/>
