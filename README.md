@@ -3,15 +3,14 @@
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [Setup](#setup)
-* [Docker setup](#docker-setup)
+* [Docker](#docker)
+* [Project Setup](#project-setup)
 * [Contribution](#contribution)
 * [Status](#status)
 * [Contact](#contact)
 
 ## General info
-> This is my first real project built and deployed as a means to learn and grow as a junior developer.
-> All development is run on MacBook Pro (Retina, 13-inch, Early 2015) macOS High Sierra
+> Webapp for keeping track of wines, their tasting notes, and reviews. Goal is to be the premier open-source winecellar application.
 
 ## Technologies
 * Spring Boot
@@ -23,34 +22,33 @@
 * Hibernate
 * Docker
 * PostgreSQL
-* AWS
-* Linux
 
-## Setup
+## Docker
+
+> You will need to have [Docker Engine](https://docs.docker.com/install/) installed before proceeding
+
+```
+$ docker run --name postgres-dev -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
+```
+> This will pull down the latest postgres image and run the container with all necessary SpringBoot properties for connection. 
+
+## Project Setup
 ```
 $ git clone https://github.com/pauldpearson/winecellar-webapp.git
 $ cd winecellarwebapp
 $ ./gradlew bootRun
 ```
-> Access here: http://localhost:8080/ <br/> You can then login as user1, user2, or admin; both use password for...password
-
-## Docker setup
-
-```
-$ docker run --name postgres-dev -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
-```
-> This has been the simplest way I found to work on my Mac for local development and the application.properties file will reflect the connection.
+> Access here: http://localhost:8080/ <br/> You can then login as user1 or user2 and password is...password
 
 ## Contribution
-> Feel free!  I'm trying to setup issues and project boards as best I can as it helps me remain focused when I'm working.  Contact info is below.
+> Feel free!  There are issues and a project board.  Contact info is below.
 
 ## Status
-> *Project is deployed on AWS EC2 RHEL-7.6 AMI here:*
-[My Wine Cellar](http://www.mywinecellar.info)
+> *Once v2.0 is ready and in production this will be updated*
 
 ## License
-[![License](https://img.shields.io/badge/License-EPL%202.0-red.svg)](https://www.eclipse.org/legal/epl-2.0/)
+[![License](https://img.shields.io/badge/License-EPL%202.0-orange.svg)](https://www.eclipse.org/legal/epl-2.0/)
 > Wincellar is released under version 2.0 of the Eclipse Public License
 
 ## Contact
-> Created by [Paul Pearson](mailto:paul.darlington.pearson@gmail.com) - feel free to contact me!
+> Created by [Paul Pearson](mailto:paul.darlington.pearson@gmail.com) & Jesper Pedersen
