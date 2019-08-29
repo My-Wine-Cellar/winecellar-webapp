@@ -34,8 +34,8 @@ $ docker run --name postgres-dev -p 5432:5432 -d -e POSTGRES_USER=winecellar -e 
 
 ## Project Setup
 ```
-$ git clone https://github.com/pauldpearson/winecellar-webapp.git
-$ cd winecellarwebapp
+$ git clone https://github.com/pauldpearson/winecellar-webapp
+$ cd winecellar-webapp
 $ ./gradlew bootRun
 ```
 > Access here: http://localhost:8080/ <br/> You can then login as user1 or user2 and password is...password
