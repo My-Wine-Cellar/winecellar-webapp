@@ -43,14 +43,10 @@
     color: #B11227;
 }
 
-.btn {
-    color: #3A4958;
-    background-color: #feda6a;
-}
-
-.btn:hover {
-    color: #393f4d;
-    background-color: #f7cb5b;
+.btn, .btn:focus, .btn:active {
+    outline:none;
+    box-shadow:none;
+    background-color: transparent;
 }
 
 .nav-item {
