@@ -2,24 +2,24 @@ package com.cellar.wine.nav;
 
 public class Paths {
 
+    public static final String AREA_ADD_GRAPE = "area/areaAddGrape";
     public static final String AREA_DETAILS = "area/areaDetails";
-    public static final String AREA_EDIT = "area/editArea";
+    public static final String AREA_EDIT = "area/areaEdit";
 
     public static final String BARREL_DETAILS = "barrel/barrelDetails";
-    public static final String BARREL_EDIT = "barrel/editBarrel";
+    public static final String BARREL_EDIT = "barrel/barrelEdit";
 
-    public static final String BOTTLE_ADD_EDIT = "bottle/addEditBottle";
+    public static final String BOTTLE_ADD_EDIT = "bottle/bottleAddEdit";
     public static final String BOTTLE_LIST = "bottle/bottleList";
 
     public static final String COUNTRY_DETAILS = "country/countryDetails";
-    public static final String COUNTRY_EDIT = "country/editCountry";
+    public static final String COUNTRY_EDIT = "country/countryEdit";
     public static final String COUNTRY_LIST = "country/countryList";
 
     public static final String ERROR_PAGE = "error";
 
-    public static final String GRAPE_ADD_TO_AREA = "grape/addGrapeToArea";
     public static final String GRAPE_DETAILS = "grape/grapeDetails";
-    public static final String GRAPE_EDIT = "grape/editGrape";
+    public static final String GRAPE_EDIT = "grape/grapeEdit";
     public static final String GRAPE_LIST = "grape/grapeList";
 
     public static final String WELCOME_PAGE = "index/welcomePage";
@@ -27,7 +27,7 @@ public class Paths {
     public static final String LANDING_PAGE = "index/landingPage";
     
     public static final String PRODUCER_DETAILS = "producer/producerDetails";
-    public static final String PRODUCER_ADD_EDIT = "producer/addEditProducer";
+    public static final String PRODUCER_ADD_EDIT = "producer/producerAddEdit";
     
     public static final String REDIRECT_ADMIN_USER_LIST = "redirect:/userlist";
     public static final String REDIRECT_BARREL = "redirect:/barrel/";
@@ -38,9 +38,12 @@ public class Paths {
     public static final String REDIRECT_TASTED_LIST = "redirect:/tasted/list";
     public static final String REDIRECT_TASTINGNOTES_LIST = "redirect:/tastingnotes/list";
     public static final String REDIRECT_WISHLIST_LIST = "redirect:/wishlist/list";
+    public static final String REDIRECT_WELCOME = "redirect:/welcome";
+
     public static final String REGION_DETAILS = "region/regionDetails";
-    public static final String REGION_EDIT = "region/editRegion";
-    public static final String REVIEW_ADD_EDIT = "review/addEditReview";
+    public static final String REGION_EDIT = "region/regionEdit";
+
+    public static final String REVIEW_ADD_EDIT = "review/reviewAddEdit";
     public static final String REVIEW_LIST = "review/reviewList";
     public static final String REVIEW_VIEW = "review/reviewView";
 
@@ -49,11 +52,13 @@ public class Paths {
     public static final String SECURITY_USER_REGISTRATION = "security/registerUser";
 
     public static final String TASTED_LIST = "tasted/tastedList";
-    public static final String TASTING_NOTES_ADD_EDIT = "tastingNotes/addEditNotes";
-    public static final String TASTING_NOTES_LIST = "tastingNotes/tastingNotesList";    
+
+    public static final String TASTING_NOTES_ADD_EDIT = "tastingNotes/tastingNotesAddEdit";
+    public static final String TASTING_NOTES_LIST = "tastingNotes/tastingNotesList";
     public static final String TASTING_NOTES_VIEW = "tastingNotes/tastingNotesView";
 
     public static final String WINE_DETAILS = "wine/wineDetails";
     public static final String WINE_ADD_EDIT = "wine/addEditWine";
+
     public static final String WISHLIST_LIST = "wishlist/wishlistList";
 }

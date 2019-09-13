@@ -1,41 +1,29 @@
 package com.cellar.wine.controllers;
 
-import com.cellar.wine.models.Wishlist;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.models.Wishlist;
 import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
 import com.cellar.wine.security.User;
-import com.cellar.wine.security.UserService;
-import com.cellar.wine.services.WishlistService;
-import com.cellar.wine.services.WineService;
 import com.cellar.wine.ui.WishlistUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.inject.Inject;
-import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/wishlist")
-public class WishlistController {
-
-    @Inject
-    private WishlistService wishlistService;
-
-    @Inject
-    private UserService userService;
-
-    @Inject
-    private WineService wineService;
+public class WishlistController extends AbstractController {
 
     public WishlistController() {
+        super();
     }
 
     @InitBinder("wishlist")

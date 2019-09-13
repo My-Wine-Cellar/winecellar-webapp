@@ -6,12 +6,7 @@ import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
 import com.cellar.wine.nav.Session;
 import com.cellar.wine.security.User;
-import com.cellar.wine.services.TastingNotesService;
-import com.cellar.wine.services.WineService;
-import com.cellar.wine.ui.AreaUIFactory;
-import com.cellar.wine.ui.CountryUIFactory;
 import com.cellar.wine.ui.ProducerUIFactory;
-import com.cellar.wine.ui.RegionUIFactory;
 import com.cellar.wine.ui.TastingNotesUI;
 import com.cellar.wine.ui.TastingNotesUIFactory;
 import com.cellar.wine.ui.UserUIFactory;
@@ -19,26 +14,22 @@ import com.cellar.wine.ui.WineUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/tastingnotes")
 public class TastingNotesController extends AbstractController {
 
-    @Inject
-    private TastingNotesService tastingNotesService;
-
-    @Inject
-    private WineService wineService;
-
     public TastingNotesController() {
+        super();
     }
 
     @GetMapping("/list")
@@ -79,7 +70,8 @@ public class TastingNotesController extends AbstractController {
 
     @PostMapping("/new")
     public String tastingNotesNewPost(@Valid TastingNotesUI tastingNotesUI, Model model,
-                                      BindingResult result, Principal principal) {
+                                      BindingResult result, Principal principal,
+                                      @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -88,16 +80,21 @@ public class TastingNotesController extends AbstractController {
             model.addAttribute(Attributes.NOTE, tastingNotesUI);
             return Paths.TASTING_NOTES_ADD_EDIT;
         } else {
-            GenericTastingNotes gtn = prepForSave(principal, tastingNotesUI);
-            tastingNotesService.save(gtn);
-            return Paths.REDIRECT_TASTINGNOTES_LIST;
+            if(action.equals("save")) {
+                GenericTastingNotes gtn = prepForSave(principal, tastingNotesUI);
+                tastingNotesService.save(gtn);
+                return Paths.REDIRECT_TASTINGNOTES_LIST;
+            } else {
+                return Paths.REDIRECT_WELCOME;
+            }
+
         }
     }
 
     @GetMapping("/{tastedId}")
     public String tastingNotesDetailsGet(@PathVariable Long tastedId, Model model, Principal principal) {
         User user = null;
-        
+
         if (principal != null) {
             user = userService.findByUsername(principal.getName());
         }
@@ -108,12 +105,12 @@ public class TastingNotesController extends AbstractController {
         }
 
         if (!gtn.getShow()) {
-           if (user == null) {
-               return Paths.REDIRECT_ROOT;
-           }
-           if (gtn.getUser().getId() != user.getId()) {
-               return Paths.REDIRECT_ROOT;
-           }
+            if (user == null) {
+                return Paths.REDIRECT_ROOT;
+            }
+            if (gtn.getUser().getId() != user.getId()) {
+                return Paths.REDIRECT_ROOT;
+            }
         }
 
         model.addAttribute(Attributes.NOTE, TastingNotesUIFactory.instance().create(gtn));
@@ -138,22 +135,28 @@ public class TastingNotesController extends AbstractController {
 
     @PostMapping("/{tastedId}/edit")
     public String tastingNotesEditPost(@Valid TastingNotesUI tastingNotesUI, BindingResult result,
-                                       @PathVariable Long tastedId, Model model, Principal principal) {
+                                       @PathVariable Long tastedId, Model model, Principal principal,
+                                       @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
         if (result.hasErrors()) {
             model.addAttribute(Attributes.NOTE, tastingNotesUI);
             return Paths.TASTING_NOTES_ADD_EDIT;
+        } else {
+            if (action.equals("save")) {
+                GenericTastingNotes gtn = prepForSave(principal, tastingNotesUI);
+                gtn.setId(tastedId);
+                tastingNotesService.save(gtn);
+                return Paths.REDIRECT_TASTINGNOTES_LIST;
+            } else {
+                return Paths.REDIRECT_TASTINGNOTES_LIST;
+            }
         }
-        GenericTastingNotes gtn = prepForSave(principal, tastingNotesUI);
-        gtn.setId(tastedId);
-        tastingNotesService.save(gtn);
-        return Paths.REDIRECT_TASTINGNOTES_LIST;
     }
 
     @GetMapping("/{tastedId}/delete")
-    public String tastingNotesDeleteGet(@PathVariable Long tastedId, Model model, Principal principal) {
+    public String tastingNotesDeleteGet(@PathVariable Long tastedId, Principal principal) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }

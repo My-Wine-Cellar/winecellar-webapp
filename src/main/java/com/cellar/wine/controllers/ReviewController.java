@@ -5,38 +5,28 @@ import com.cellar.wine.models.Wine;
 import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
 import com.cellar.wine.security.User;
-import com.cellar.wine.security.UserService;
-import com.cellar.wine.services.ReviewService;
-import com.cellar.wine.services.WineService;
-import com.cellar.wine.ui.ReviewUI;
 import com.cellar.wine.ui.ReviewUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/review")
-public class ReviewController {
-
-    @Inject
-    private ReviewService reviewService;
-
-    @Inject
-    private UserService userService;
-
-    @Inject
-    private WineService wineService;
+public class ReviewController extends AbstractController {
 
     public ReviewController() {
+        super();
     }
 
     @InitBinder("review")
@@ -141,7 +131,8 @@ public class ReviewController {
     @PostMapping("/{reviewId}/edit")
     public String reviewEditPost(@Valid Review review, BindingResult result,
                                  @PathVariable Long reviewId, @RequestParam Long wineId,
-                                 Model model, Principal principal) {
+                                 Model model, Principal principal,
+                                 @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -157,11 +148,10 @@ public class ReviewController {
                 r.setStars(review.getStars());
                 r.setComment(review.getComment());
                 r.setDate(new Date(System.currentTimeMillis()));
-                reviewService.save(r);
 
+                if (action.equals("save")) reviewService.save(r);
                 return Paths.REDIRECT_REVIEW_LIST;
             }
-
             return Paths.REDIRECT_ROOT;
         }
     }
