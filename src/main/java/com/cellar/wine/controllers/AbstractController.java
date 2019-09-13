@@ -2,15 +2,22 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.models.Area;
 import com.cellar.wine.models.Country;
-import com.cellar.wine.models.Region;
 import com.cellar.wine.models.Producer;
+import com.cellar.wine.models.Region;
 import com.cellar.wine.nav.Paths;
-import com.cellar.wine.security.User;
 import com.cellar.wine.security.UserService;
 import com.cellar.wine.services.AreaService;
+import com.cellar.wine.services.BarrelService;
+import com.cellar.wine.services.BottleService;
 import com.cellar.wine.services.CountryService;
+import com.cellar.wine.services.GrapeService;
 import com.cellar.wine.services.ProducerService;
 import com.cellar.wine.services.RegionService;
+import com.cellar.wine.services.ReviewService;
+import com.cellar.wine.services.TastedService;
+import com.cellar.wine.services.TastingNotesService;
+import com.cellar.wine.services.WineService;
+import com.cellar.wine.services.WishlistService;
 import com.cellar.wine.ui.AreaUI;
 import com.cellar.wine.ui.AreaUIFactory;
 import com.cellar.wine.ui.CountryUI;
@@ -19,10 +26,6 @@ import com.cellar.wine.ui.ProducerUI;
 import com.cellar.wine.ui.ProducerUIFactory;
 import com.cellar.wine.ui.RegionUI;
 import com.cellar.wine.ui.RegionUIFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -42,6 +45,30 @@ public abstract class AbstractController {
 
     @Inject
     protected UserService userService;
+
+    @Inject
+    protected GrapeService grapeService;
+
+    @Inject
+    protected BottleService bottleService;
+
+    @Inject
+    protected WineService wineService;
+
+    @Inject
+    protected TastedService tastedService;
+
+    @Inject
+    protected ReviewService reviewService;
+
+    @Inject
+    protected BarrelService barrelService;
+
+    @Inject
+    protected TastingNotesService tastingNotesService;
+
+    @Inject
+    protected WishlistService wishlistService;
 
     public AbstractController() {
     }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body class="grape-background">
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/><br/>
+<div class="container">
+    <div class="card p-2 shadow">
+        <div class="container">
+            <div class="card shadow p-2 m-3 text-center">
+                <h3 th:text="${area.name}">Area Name</h3>
+                <form th:object="${area}" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <label th:for="${redGrapes}">Red Grapes</label>
+                            <select multiple class="form-control" size="10" th:field="*{primaryGrapes}">
+                                <option class="form-control" th:each="addRedGrape : ${redGrapes}"
+                                        th:text="${addRedGrape.name}"
+                                        th:value="${addRedGrape.id}" th:selected="${area.primaryGrapes.clear()}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label th:for="${whiteGrapes}">White Grapes</label>
+                            <select multiple class="form-control" size="10" th:field="*{primaryGrapes}">
+                                <option class="form-control" th:each="addWhiteGrape : ${whiteGrapes}"
+                                        th:text="${addWhiteGrape.name}"
+                                        th:value="${addWhiteGrape.id}" th:selected="${area.primaryGrapes.clear()}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div th:insert="~{fragments/button :: btn-toolbar-cancel-save}"/>
+                    <br/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br/><br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>

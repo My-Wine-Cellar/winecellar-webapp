@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -19,6 +20,7 @@ import java.security.Principal;
 public class CountryController extends AbstractController {
 
     public CountryController() {
+        super();
     }
 
     @GetMapping("/{countryId}/edit")
@@ -33,7 +35,8 @@ public class CountryController extends AbstractController {
 
     @PostMapping("/{countryId}/edit")
     public String countryEditPost(@Valid Country country, BindingResult result, Model model,
-                                  @PathVariable Long countryId, Principal principal) {
+                                  @PathVariable Long countryId, Principal principal,
+                                  @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -42,9 +45,14 @@ public class CountryController extends AbstractController {
             model.addAttribute(Attributes.COUNTRY, country);
             return Paths.COUNTRY_EDIT;
         } else {
-            country.setId(countryId);
-            countryService.save(country);
-            return redirectCountry(country);
+            if (action.equals("save")) {
+                country.setId(countryId);
+                countryService.save(country);
+                return redirectCountry(country);
+            } else {
+                return redirectCountry(country);
+            }
         }
     }
+
 }

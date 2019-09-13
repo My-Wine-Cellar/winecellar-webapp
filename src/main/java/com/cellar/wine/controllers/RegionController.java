@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -20,6 +21,7 @@ import java.security.Principal;
 public class RegionController extends AbstractController {
 
     public RegionController() {
+        super();
     }
 
     @GetMapping("/{regionId}/edit")
@@ -27,14 +29,14 @@ public class RegionController extends AbstractController {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
-
         model.addAttribute(Attributes.REGION, regionService.findById(regionId));
         return Paths.REGION_EDIT;
     }
 
     @PostMapping("/{regionId}/edit")
     public String processEditRegionForm(@Valid Region region, BindingResult result, Model model,
-                                        @PathVariable Long regionId, Principal principal) {
+                                        @PathVariable Long regionId, Principal principal,
+                                        @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -43,10 +45,13 @@ public class RegionController extends AbstractController {
             model.addAttribute(Attributes.REGION, regionService.findById(regionId));
             return Paths.REGION_EDIT;
         } else {
-            region.setId(regionId);
-            regionService.save(region);
-
-            return redirectRegion(Session.getCountryId(), region);
+            if (action.equals("save")) {
+                region.setId(regionId);
+                regionService.save(region);
+                return redirectRegion(Session.getCountryId(), region);
+            } else {
+                return redirectRegion(Session.getCountryId(), region);
+            }
         }
     }
 }

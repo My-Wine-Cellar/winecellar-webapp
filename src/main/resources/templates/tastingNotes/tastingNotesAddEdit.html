@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body class="tasting-background">
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/>
+<div class="container">
+    <div class="card p-2 shadow">
+        <div class="container">
+            <div class="card shadow p-2 m-3">
+                <h2 class="col-sm-10" th:text="|Tasting notes|"></h2>
+                <div class="col-sm-10 text-left">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <h5>
+                                <a th:href="@{/d/__${note.country.key}__/__${note.region.key}__/__${note.area.key}__/__${note.producer.key}__/}"
+                                   th:text="${note.producer.name}"></a></h5>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5>
+                                <a th:href="@{/d/__${note.country.key}__/__${note.region.key}__/__${note.area.key}__/__${note.producer.key}__/__${note.wine.key}__/__${note.wine.vintage}__/__${note.wine.size}__}"
+                                   th:text="${note.wine.name}"></a></h5>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5 th:text="${note.wine.vintage}"></h5>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5 th:text="|(${note.wine.size}L)|"></h5>
+                        </li>
+                    </ul>
+                </div>
+                <br/>
+                <form th:object="${note}" method="post">
+                    <input type="hidden" name="wineId" th:value="${note.wine.id}"/>
+                    <div class="col-sm-10">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="form-check-label" for="showNotes">Allow people to see these notes</label>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="checkbox" class="form-check-input showNotes" th:field="*{show}"
+                                       id="showNotes">
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <!-- SIGHT -->
+                    <h4 class="col-sm-10">Sight</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Clarity', 'sightClarity', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Color', 'sightColor', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Intensity', 'sightIntensity', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Rim variation', 'sightRimvariation', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Other', 'sightOther', 'text')}"/>
+                        </div>
+                    </div>
+
+                    <!-- NOSE -->
+                    <h4 class="col-sm-10">Nose</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Condition', 'noseCondition', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Earth', 'noseEarth', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Fruit', 'noseFruit', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Non fruit', 'noseNonFruit', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Mineral', 'noseMineral', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Intensity', 'noseIntensity', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Wood', 'noseWood', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Other', 'noseOther', 'text')}"/>
+                        </div>
+                    </div>
+
+                    <!-- PALETTE -->
+                    <h4 class="col-sm-10">Palette</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Acid', 'paletteAcid', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Alcohol', 'paletteAlcohol', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Body', 'paletteBody', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Complexity', 'paletteComplexity', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Earth', 'paletteEarth', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Mineral', 'paletteMineral', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Fruit', 'paletteFruit', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Non fruit', 'paletteNonFruit', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Intensity', 'paletteIntensity', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Sweetness', 'paletteSweetness', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Tannin', 'paletteTannin', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Wood', 'paletteWood', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Finish', 'paletteFinish', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Other', 'paletteOther', 'text')}"/>
+                        </div>
+                    </div>
+
+                    <!-- CONCLUSION -->
+                    <h4 class="col-sm-10">Conclusion</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Age', 'conclusionAge', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Development', 'conclusionDevelopment', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Countries', 'conclusionCountries', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('World', 'conclusionWorld', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Grapes', 'conclusionGrapes', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Climate', 'conclusionClimate', 'text')}"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Notes', 'conclusionNotes', 'text')}"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input th:replace="~{fragments/inputField :: input ('Other', 'conclusionOther', 'text')}"/>
+                        </div>
+                    </div>
+                    <div th:insert="~{fragments/button :: btn-toolbar-cancel-save}"/>
+                    <br/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br/><br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+<script>$('.showNotes').prop('checked', true)</script>
+</html>

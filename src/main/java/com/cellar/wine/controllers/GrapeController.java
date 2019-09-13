@@ -3,33 +3,29 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Grape;
 import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
-import com.cellar.wine.services.GrapeService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.GrapeUI;
 import com.cellar.wine.ui.GrapeUIFactory;
-import com.cellar.wine.ui.GrapeUISorter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/grape")
-public class GrapeController {
-
-    @Inject
-    private GrapeService grapeService;
+public class GrapeController extends AbstractController {
 
     public GrapeController() {
+        super();
     }
 
     @InitBinder
@@ -72,7 +68,8 @@ public class GrapeController {
 
     @PostMapping("/{grapeId}/edit")
     public String grapeEditPost(@Valid Grape grape, BindingResult result, Model model,
-                                @PathVariable Long grapeId, Principal principal) {
+                                @PathVariable Long grapeId, Principal principal,
+                                @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -81,10 +78,17 @@ public class GrapeController {
             model.addAttribute(Attributes.GRAPE, grape);
             return Paths.GRAPE_EDIT;
         } else {
-            grape.setId(grapeId);
-            Grape savedGrape = grapeService.save(grape);
-            GrapeUI ui = GrapeUIFactory.instance().create(savedGrape);
-            return Paths.REDIRECT_GRAPE + ui.getKey();
+            if (action.equals("save")) {
+                grape.setId(grapeId);
+                Grape savedGrape = grapeService.save(grape);
+                GrapeUI ui = GrapeUIFactory.instance().create(savedGrape);
+                return Paths.REDIRECT_GRAPE + ui.getKey();
+            } else {
+                Grape g = grapeService.findByLowerCaseName(AbstractKeyUI.fromKey(grape.getName()));
+                GrapeUI grapeUI = GrapeUIFactory.instance().create(g);
+                return Paths.REDIRECT_GRAPE + grapeUI.getKey();
+            }
         }
     }
+
 }

@@ -3,7 +3,6 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Barrel;
 import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
-import com.cellar.wine.services.BarrelService;
 import com.cellar.wine.ui.AbstractKeyUI;
 import com.cellar.wine.ui.BarrelUI;
 import com.cellar.wine.ui.BarrelUIFactory;
@@ -11,21 +10,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
 @RequestMapping("/barrel")
-public class BarrelController {
-
-    @Inject
-    private BarrelService barrelService;
+public class BarrelController extends AbstractController {
 
     public BarrelController() {
+        super();
     }
 
     @InitBinder
@@ -61,7 +62,8 @@ public class BarrelController {
 
     @PostMapping("/{barrelId}/edit")
     public String barrelEditPost(@Valid BarrelUI barrel, BindingResult result, Model model,
-                                 @PathVariable Long barrelId, Principal principal) {
+                                 @PathVariable Long barrelId, Principal principal,
+                                 @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -74,10 +76,15 @@ public class BarrelController {
             Barrel b = barrelService.findById(barrelId);
             b.setDescription(barrel.getDescription());
             b.setWeblink(barrel.getWeblink());
-            Barrel savedBarrel = barrelService.save(b);
 
-            BarrelUI ui = BarrelUIFactory.instance().create(savedBarrel);
-            return Paths.REDIRECT_BARREL + ui.getKey();
+            if (action.equals("save")) {
+                Barrel savedBarrel = barrelService.save(b);
+                BarrelUI ui = BarrelUIFactory.instance().create(savedBarrel);
+                return Paths.REDIRECT_BARREL + ui.getKey();
+            } else {
+                BarrelUI cancelBarrel = BarrelUIFactory.instance().create(b);
+                return Paths.REDIRECT_BARREL + cancelBarrel.getKey();
+            }
         }
     }
 }

@@ -6,40 +6,27 @@ import com.cellar.wine.models.Wine;
 import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
 import com.cellar.wine.security.User;
-import com.cellar.wine.security.UserService;
-import com.cellar.wine.services.BottleService;
-import com.cellar.wine.services.TastedService;
-import com.cellar.wine.services.WineService;
 import com.cellar.wine.ui.BottleUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/bottle")
-public class BottleController {
-
-    @Inject
-    private BottleService bottleService;
-
-    @Inject
-    private UserService userService;
-
-    @Inject
-    private WineService wineService;
-
-    @Inject
-    private TastedService tastedService;
+public class BottleController extends AbstractController {
 
     public BottleController() {
+        super();
     }
 
     @InitBinder("bottle")
@@ -114,7 +101,8 @@ public class BottleController {
 
     @PostMapping("/{bottleId}/edit")
     public String bottleEditPost(@Valid Bottle bottle, BindingResult result, Model model,
-                                 @PathVariable Long bottleId, @RequestParam Long wineId, Principal principal) {
+                                 @PathVariable Long bottleId, @RequestParam Long wineId, Principal principal,
+                                 @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -132,9 +120,9 @@ public class BottleController {
                     b.setLocation(bottle.getLocation());
                     b.setShow(bottle.getShow());
 
-                    bottleService.save(b);
-
+                    if (action.equals("save")) bottleService.save(b);
                     return Paths.REDIRECT_BOTTLE_LIST;
+
                 } else {
                     user.getBottles().remove(b);
                     bottleService.delete(b);
@@ -142,7 +130,7 @@ public class BottleController {
                     Wine wine = wineService.findById(wineId);
                     Tasted tasted = new Tasted(user, wine);
                     user.getTasted().add(tasted);
-                    Tasted savedTasted = tastedService.save(tasted);
+                    tastedService.save(tasted);
 
                     return Paths.REDIRECT_TASTED_LIST;
                 }

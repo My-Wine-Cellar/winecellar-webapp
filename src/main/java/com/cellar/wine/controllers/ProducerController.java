@@ -9,7 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -44,7 +49,8 @@ public class ProducerController extends AbstractController {
 
     @PostMapping("/{producerId}/edit")
     public String producerEditPost(@Valid Producer producer, BindingResult result, Model model,
-                                   @PathVariable Long producerId, @RequestParam Long areaId, Principal principal) {
+                                   @PathVariable Long producerId, @RequestParam Long areaId, Principal principal,
+                                   @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -53,10 +59,13 @@ public class ProducerController extends AbstractController {
             model.addAttribute(Attributes.PRODUCER, producer);
             return Paths.PRODUCER_ADD_EDIT;
         } else {
-            producer.setId(producerId);
-            producerService.save(producer);
-
-            return redirectProducer(Session.getCountryId(), Session.getRegionId(), areaId, producerId);
+            if (action.equals("save")) {
+                producer.setId(producerId);
+                producerService.save(producer);
+                return redirectProducer(Session.getCountryId(), Session.getRegionId(), areaId, producerId);
+            } else {
+                return redirectProducer(Session.getCountryId(), Session.getRegionId(), areaId, producerId);
+            }
         }
     }
 }
