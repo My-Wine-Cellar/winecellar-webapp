@@ -49,7 +49,8 @@ public class BottleController extends AbstractController {
 
     @PostMapping("/new")
     public String bottleNewPost(@Valid Bottle bottle, BindingResult result, Model model,
-                                @RequestParam Long wineId, Principal principal) {
+                                @RequestParam Long wineId, Principal principal,
+                                @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -62,24 +63,28 @@ public class BottleController extends AbstractController {
             Bottle b = bottleService.findByWine(user.getId(), wineId);
             Tasted tasted = tastedService.findByWine(user.getId(), wineId);
 
-            if (b == null) {
-                Wine wine = wineService.findById(wineId);
-                bottle.setWine(wine);
-                bottle.setShow(true);
-                bottle.setUser(user);
-                user.getBottles().add(bottle);
-                bottleService.save(bottle);
+            if (action.equals("save")) {
+                if (b == null) {
+                    Wine wine = wineService.findById(wineId);
+                    bottle.setWine(wine);
+                    bottle.setShow(true);
+                    bottle.setUser(user);
+                    user.getBottles().add(bottle);
+                    bottleService.save(bottle);
+                } else {
+                    b.setNumber(bottle.getNumber());
+                    b.setLocation(bottle.getLocation());
+                    b.setShow(bottle.getShow());
+                    bottleService.save(b);
+                }
+
+                if (tasted != null)
+                    tastedService.delete(tasted);
+
+                return Paths.REDIRECT_BOTTLE_LIST;
             } else {
-                b.setNumber(bottle.getNumber());
-                b.setLocation(bottle.getLocation());
-                b.setShow(bottle.getShow());
-                bottleService.save(b);
+                return Paths.REDIRECT_WELCOME;
             }
-
-            if (tasted != null)
-                tastedService.delete(tasted);
-
-            return Paths.REDIRECT_BOTTLE_LIST;
         }
     }
 

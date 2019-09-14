@@ -57,7 +57,8 @@ public class ReviewController extends AbstractController {
 
     @PostMapping("/new")
     public String reviewNewPost(@Valid Review review, BindingResult result, Model model,
-                                @RequestParam Long wineId, Principal principal) {
+                                @RequestParam Long wineId, Principal principal,
+                                @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -69,24 +70,28 @@ public class ReviewController extends AbstractController {
             User user = userService.findByUsername(principal.getName());
             Review r = reviewService.findByWine(user.getId(), wineId);
 
-            if (r == null) {
-                Wine wine = wineService.findById(wineId);
+            if (action.equals("save")) {
+                if (r == null) {
+                    Wine wine = wineService.findById(wineId);
 
-                review.setDate(new Date(System.currentTimeMillis()));
-                review.setUser(user);
-                review.setWine(wine);
+                    review.setDate(new Date(System.currentTimeMillis()));
+                    review.setUser(user);
+                    review.setWine(wine);
 
-                user.getReviews().add(review);
+                    user.getReviews().add(review);
 
-                reviewService.save(review);
+                    reviewService.save(review);
+                } else {
+                    r.setStars(review.getStars());
+                    r.setComment(review.getComment());
+                    r.setDate(new Date(System.currentTimeMillis()));
+                    reviewService.save(r);
+                }
+
+                return Paths.REDIRECT_REVIEW_LIST;
             } else {
-                r.setStars(review.getStars());
-                r.setComment(review.getComment());
-                r.setDate(new Date(System.currentTimeMillis()));
-                reviewService.save(r);
+                return Paths.REDIRECT_WELCOME;
             }
-
-            return Paths.REDIRECT_REVIEW_LIST;
         }
     }
 
@@ -99,7 +104,7 @@ public class ReviewController extends AbstractController {
         }
 
         User user = null;
-        if(principal != null) {
+        if (principal != null) {
             user = userService.findByUsername(principal.getName());
         }
 
@@ -117,11 +122,11 @@ public class ReviewController extends AbstractController {
 
         User user = userService.findByUsername(principal.getName());
         Review review = reviewService.findByUser(user.getId(), reviewId);
-        
+
         if (review == null) {
             return Paths.REDIRECT_ROOT;
         }
-                
+
         model.addAttribute(Attributes.REVIEW, review);
         model.addAttribute(Attributes.WINE, review.getWine());
 
