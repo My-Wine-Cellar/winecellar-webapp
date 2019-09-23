@@ -6,14 +6,21 @@ public class Attributes {
     public static final String AREAS = "areas";
 
     public static final String BARREL = "barrel";
+    public static final String BARRELS = "barrels";
+    public static final String BARREL_COMPONENT = "barrelComponent";
     public static final String BOTTLE = "bottle";
     public static final String BOTTLES = "bottles";
 
+    public static final String CLOSURE = "closure";
     public static final String COUNTRIES = "countries";
     public static final String COUNTRY = "country";
 
-    public static final String GRAPE = "grape";
+    public static final String FERMENTATION = "fermentation";
 
+    public static final String GRAPE = "grape";
+    public static final String GRAPE_COMPONENT = "grapeComponent";
+
+    public static final String MACERATION = "maceration";
     public static final String MYBOTTLE = "mybottle";
     public static final String MYREVIEW = "myreview";
     public static final String MYTASTINGNOTES = "mytastingnotes";
@@ -31,6 +38,8 @@ public class Attributes {
     public static final String REGIONS = "regions";
     public static final String REVIEW = "review";
     public static final String REVIEWS = "reviews";
+
+    public static final String SHAPE = "shape";
 
     public static final String TASTED = "tasted";
 

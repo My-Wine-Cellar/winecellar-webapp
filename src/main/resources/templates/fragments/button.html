@@ -3,12 +3,23 @@
 
 <div th:fragment="btn-toolbar-cancel-save" class="btn-toolbar justify-content-center">
     <button type="submit" name="action" value="cancel"
-            class="btn btn-link fas fa-eject mr-5"
+            class="btn btn-link fas fa-redo mr-5"
             data-toggle="tooltip" title="Cancel">
     </button>
     <button type="submit" name="action" value="save"
             class="btn btn-link fas fa-save"
             data-toggle="tooltip" title="Save">
+    </button>
+</div>
+
+<div th:fragment="btn-toolbar-wine-flow (back, ok)" class="btn-toolbar justify-content-center">
+    <button type="submit" name="action" value="back"
+            class="btn btn-link mr-5 fas fa-backward"
+            data-toggle="tooltip" th:title="${back}">
+    </button>
+    <button type="submit" name="action" value="ok"
+            class="btn btn-link fas fa-forward"
+            data-toggle="tooltip" th:title="${ok}">
     </button>
 </div>
 

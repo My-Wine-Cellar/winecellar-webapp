@@ -1,8 +1,16 @@
 package com.cellar.wine.models;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -63,11 +71,11 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @Column(name = "subarea")
     private String subarea;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "producer_id", referencedColumnName = "id")
     private Producer producer;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine", cascade = CascadeType.REMOVE)
     private List<GrapeComponent> grapes;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
