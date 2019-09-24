@@ -5,24 +5,13 @@ import com.cellar.wine.repositories.AreaRepository;
 import com.cellar.wine.services.AreaService;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-import java.util.TreeSet;
+import javax.inject.Inject;
 
 @Service
 public class AreaServiceImpl implements AreaService {
 
-    private final AreaRepository areaRepository;
-
-    public AreaServiceImpl(AreaRepository areaRepository) {
-        this.areaRepository = areaRepository;
-    }
-
-    @Override
-    public Set<Area> findAll() {
-        Set<Area> areas = new TreeSet<>();
-        areaRepository.findAll().forEach(areas::add);
-        return areas;
-    }
+    @Inject
+    private AreaRepository areaRepository;
 
     @Override
     public Area findById(Long aLong) {
@@ -37,11 +26,6 @@ public class AreaServiceImpl implements AreaService {
     @Override
     public void delete(Area object) {
         areaRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        areaRepository.deleteById(aLong);
     }
 
     @Override

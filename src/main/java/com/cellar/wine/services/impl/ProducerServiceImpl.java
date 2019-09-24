@@ -5,24 +5,13 @@ import com.cellar.wine.repositories.ProducerRepository;
 import com.cellar.wine.services.ProducerService;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-import java.util.TreeSet;
+import javax.inject.Inject;
 
 @Service
 public class ProducerServiceImpl implements ProducerService {
 
-    private final ProducerRepository producerRepository;
-
-    public ProducerServiceImpl(ProducerRepository producerRepository) {
-        this.producerRepository = producerRepository;
-    }
-
-    @Override
-    public Set<Producer> findAll() {
-        Set<Producer> producers = new TreeSet<>();
-        producerRepository.findAll().forEach(producers::add);
-        return producers;
-    }
+    @Inject
+    private ProducerRepository producerRepository;
 
     @Override
     public Producer findById(Long aLong) {
@@ -37,11 +26,6 @@ public class ProducerServiceImpl implements ProducerService {
     @Override
     public void delete(Producer object) {
         producerRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        producerRepository.deleteById(aLong);
     }
 
     @Override

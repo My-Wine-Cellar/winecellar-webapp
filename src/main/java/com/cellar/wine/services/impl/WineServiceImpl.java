@@ -6,25 +6,14 @@ import com.cellar.wine.repositories.WineRepository;
 import com.cellar.wine.services.WineService;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 public class WineServiceImpl implements WineService {
 
-    private final WineRepository wineRepository;
-
-    public WineServiceImpl(WineRepository wineRepository) {
-        this.wineRepository = wineRepository;
-    }
-
-    @Override
-    public Set<Wine> findAll() {
-        Set<Wine> wines = new TreeSet<>();
-        wineRepository.findAll().forEach(wines::add);
-        return wines;
-    }
+    @Inject
+    private WineRepository wineRepository;
 
     @Override
     public Wine findById(Long aLong) {
@@ -39,11 +28,6 @@ public class WineServiceImpl implements WineService {
     @Override
     public void delete(Wine object) {
         wineRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        wineRepository.deleteById(aLong);
     }
 
     @Override

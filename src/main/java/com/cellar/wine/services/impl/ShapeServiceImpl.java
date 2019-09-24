@@ -5,21 +5,19 @@ import com.cellar.wine.repositories.ShapeRepository;
 import com.cellar.wine.services.ShapeService;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-import java.util.TreeSet;
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ShapeServiceImpl implements ShapeService {
 
-    private final ShapeRepository shapeRepository;
-
-    public ShapeServiceImpl(ShapeRepository shapeRepository) {
-        this.shapeRepository = shapeRepository;
-    }
+    @Inject
+    private ShapeRepository shapeRepository;
 
     @Override
-    public Set<Shape> findAll() {
-        Set<Shape> shapes = new TreeSet<>();
+    public List<Shape> findAll() {
+        List<Shape> shapes = new ArrayList<>();
         shapeRepository.findAll().forEach(shapes::add);
         return shapes;
     }
@@ -39,8 +37,4 @@ public class ShapeServiceImpl implements ShapeService {
         shapeRepository.delete(object);
     }
 
-    @Override
-    public void deleteById(Long aLong) {
-        shapeRepository.deleteById(aLong);
-    }
 }

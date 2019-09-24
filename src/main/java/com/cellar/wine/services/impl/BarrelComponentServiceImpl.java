@@ -6,21 +6,12 @@ import com.cellar.wine.services.BarrelComponentService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 public class BarrelComponentServiceImpl implements BarrelComponentService {
 
     @Inject
     private BarrelComponentRepository barrelComponentRepository;
-
-    @Override
-    public Set<BarrelComponent> findAll() {
-        Set<BarrelComponent> barrelComponents = new TreeSet<>();
-        barrelComponentRepository.findAll().forEach(barrelComponents::add);
-        return barrelComponents;
-    }
 
     @Override
     public BarrelComponent findById(Long aLong) {
@@ -42,8 +33,4 @@ public class BarrelComponentServiceImpl implements BarrelComponentService {
         barrelComponentRepository.delete(object);
     }
 
-    @Override
-    public void deleteById(Long aLong) {
-        barrelComponentRepository.deleteById(aLong);
-    }
 }

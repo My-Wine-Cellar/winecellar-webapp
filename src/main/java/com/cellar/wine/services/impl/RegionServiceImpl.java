@@ -5,24 +5,13 @@ import com.cellar.wine.repositories.RegionRepository;
 import com.cellar.wine.services.RegionService;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-import java.util.TreeSet;
+import javax.inject.Inject;
 
 @Service
 public class RegionServiceImpl implements RegionService {
 
-    private final RegionRepository regionRepository;
-
-    public RegionServiceImpl(RegionRepository regionRepository) {
-        this.regionRepository = regionRepository;
-    }
-
-    @Override
-    public Set<Region> findAll() {
-        Set<Region> regions = new TreeSet<>();
-        regionRepository.findAll().forEach(regions::add);
-        return regions;
-    }
+    @Inject
+    private RegionRepository regionRepository;
 
     @Override
     public Region findById(Long aLong) {
@@ -37,11 +26,6 @@ public class RegionServiceImpl implements RegionService {
     @Override
     public void delete(Region object) {
         regionRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        regionRepository.deleteById(aLong);
     }
 
     @Override
