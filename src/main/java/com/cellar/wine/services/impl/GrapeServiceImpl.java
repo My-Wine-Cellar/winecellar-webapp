@@ -3,6 +3,7 @@ package com.cellar.wine.services.impl;
 import com.cellar.wine.models.Grape;
 import com.cellar.wine.repositories.GrapeRepository;
 import com.cellar.wine.services.GrapeService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -23,7 +24,7 @@ public class GrapeServiceImpl implements GrapeService {
     @Override
     public List<Grape> findAll() {
         List<Grape> grapes = new ArrayList<>();
-        grapeRepository.findAll().forEach(grapes::add);
+        grapeRepository.findAll(Sort.by("name")).forEach(grapes::add);
         return grapes;
     }
 
