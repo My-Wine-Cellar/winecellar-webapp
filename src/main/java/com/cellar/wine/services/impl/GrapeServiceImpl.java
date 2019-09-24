@@ -5,18 +5,15 @@ import com.cellar.wine.repositories.GrapeRepository;
 import com.cellar.wine.services.GrapeService;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 public class GrapeServiceImpl implements GrapeService {
 
-    private final GrapeRepository grapeRepository;
-
-    public GrapeServiceImpl(GrapeRepository grapeRepository) {
-        this.grapeRepository = grapeRepository;
-    }
+    @Inject
+    private GrapeRepository grapeRepository;
 
     @Override
     public Grape findByName(String name) {
@@ -24,8 +21,8 @@ public class GrapeServiceImpl implements GrapeService {
     }
 
     @Override
-    public Set<Grape> findAll() {
-        Set<Grape> grapes = new TreeSet<>();
+    public List<Grape> findAll() {
+        List<Grape> grapes = new ArrayList<>();
         grapeRepository.findAll().forEach(grapes::add);
         return grapes;
     }
@@ -43,11 +40,6 @@ public class GrapeServiceImpl implements GrapeService {
     @Override
     public void delete(Grape object) {
         grapeRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        grapeRepository.deleteById(aLong);
     }
 
     @Override

@@ -5,22 +5,19 @@ import com.cellar.wine.repositories.BarrelRepository;
 import com.cellar.wine.services.BarrelService;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 @Service
 public class BarrelServiceImpl implements BarrelService {
 
-    private final BarrelRepository barrelRepository;
-
-    public BarrelServiceImpl(BarrelRepository barrelRepository) {
-        this.barrelRepository = barrelRepository;
-    }
+    @Inject
+    private BarrelRepository barrelRepository;
 
     @Override
-    public Set<Barrel> findAll() {
-        Set<Barrel> barrels = new TreeSet<>();
+    public List<Barrel> findAll() {
+        List<Barrel> barrels = new ArrayList<>();
         barrelRepository.findAll().forEach(barrels::add);
         return barrels;
     }
@@ -38,11 +35,6 @@ public class BarrelServiceImpl implements BarrelService {
     @Override
     public void delete(Barrel object) {
         barrelRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        barrelRepository.deleteById(aLong);
     }
 
     @Override

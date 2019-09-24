@@ -5,17 +5,13 @@ import com.cellar.wine.repositories.WishlistRepository;
 import com.cellar.wine.services.WishlistService;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-import java.util.TreeSet;
+import javax.inject.Inject;
 
 @Service
 public class WishlistServiceImpl implements WishlistService {
 
+    @Inject
     private WishlistRepository wishlistRepository;
-
-    public WishlistServiceImpl(WishlistRepository wishlistRepository) {
-        this.wishlistRepository = wishlistRepository;
-    }
 
     public Wishlist findByUser(Integer userId, Long id) {
         return wishlistRepository.findByUser(userId, id);
@@ -23,13 +19,6 @@ public class WishlistServiceImpl implements WishlistService {
 
     public Wishlist findByWine(Integer userId, Long wineId) {
         return wishlistRepository.findByWine(userId, wineId);
-    }
-
-    @Override
-    public Set<Wishlist> findAll() {
-        Set<Wishlist> wishlists = new TreeSet<>();
-        wishlistRepository.findAll().forEach(wishlists::add);
-        return wishlists;
     }
 
     @Override
@@ -45,11 +34,6 @@ public class WishlistServiceImpl implements WishlistService {
     @Override
     public void delete(Wishlist object) {
         wishlistRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        wishlistRepository.deleteById(aLong);
     }
 
 }

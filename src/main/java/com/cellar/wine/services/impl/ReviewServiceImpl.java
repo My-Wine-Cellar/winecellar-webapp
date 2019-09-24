@@ -5,17 +5,13 @@ import com.cellar.wine.repositories.ReviewRepository;
 import com.cellar.wine.services.ReviewService;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-import java.util.TreeSet;
+import javax.inject.Inject;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
+    @Inject
     private ReviewRepository reviewRepository;
-
-    public ReviewServiceImpl(ReviewRepository reviewRepository) {
-        this.reviewRepository = reviewRepository;
-    }
 
     public Review findByUser(Integer userId, Long id) {
         return reviewRepository.findByUser(userId, id);
@@ -23,13 +19,6 @@ public class ReviewServiceImpl implements ReviewService {
 
     public Review findByWine(Integer userId, Long wineId) {
         return reviewRepository.findByWine(userId, wineId);
-    }
-
-    @Override
-    public Set<Review> findAll() {
-        Set<Review> reviews = new TreeSet<>();
-        reviewRepository.findAll().forEach(reviews::add);
-        return reviews;
     }
 
     @Override
@@ -45,11 +34,6 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void delete(Review object) {
         reviewRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        reviewRepository.deleteById(aLong);
     }
 
 }

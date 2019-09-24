@@ -5,21 +5,19 @@ import com.cellar.wine.repositories.ClosureRepository;
 import com.cellar.wine.services.ClosureService;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-import java.util.TreeSet;
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ClosureServiceImpl implements ClosureService {
 
-    private final ClosureRepository closureRepository;
-
-    public ClosureServiceImpl(ClosureRepository closureRepository) {
-        this.closureRepository = closureRepository;
-    }
+    @Inject
+    private ClosureRepository closureRepository;
 
     @Override
-    public Set<Closure> findAll() {
-        Set<Closure> closures = new TreeSet<>();
+    public List<Closure> findAll() {
+        List<Closure> closures = new ArrayList<>();
         closureRepository.findAll().forEach(closures::add);
         return closures;
     }
@@ -39,8 +37,4 @@ public class ClosureServiceImpl implements ClosureService {
         closureRepository.delete(object);
     }
 
-    @Override
-    public void deleteById(Long aLong) {
-        closureRepository.deleteById(aLong);
-    }
 }

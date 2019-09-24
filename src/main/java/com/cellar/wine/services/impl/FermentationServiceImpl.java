@@ -5,21 +5,13 @@ import com.cellar.wine.repositories.FermentationRepository;
 import com.cellar.wine.services.FermentationService;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import javax.inject.Inject;
 
 @Service
 public class FermentationServiceImpl implements FermentationService {
 
-    private final FermentationRepository fermentationRepository;
-
-    public FermentationServiceImpl(FermentationRepository fermentationRepository) {
-        this.fermentationRepository = fermentationRepository;
-    }
-
-    @Override
-    public Set<Fermentation> findAll() {
-        return null;
-    }
+    @Inject
+    private FermentationRepository fermentationRepository;
 
     @Override
     public Fermentation findById(Long aLong) {
@@ -36,8 +28,4 @@ public class FermentationServiceImpl implements FermentationService {
 
     }
 
-    @Override
-    public void deleteById(Long aLong) {
-
-    }
 }

@@ -5,17 +5,13 @@ import com.cellar.wine.repositories.TastedRepository;
 import com.cellar.wine.services.TastedService;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-import java.util.TreeSet;
+import javax.inject.Inject;
 
 @Service
 public class TastedServiceImpl implements TastedService {
 
+    @Inject
     private TastedRepository tastedRepository;
-
-    public TastedServiceImpl(TastedRepository tastedRepository) {
-        this.tastedRepository = tastedRepository;
-    }
 
     public Tasted findByUser(Integer userId, Long id) {
         return tastedRepository.findByUser(userId, id);
@@ -23,13 +19,6 @@ public class TastedServiceImpl implements TastedService {
 
     public Tasted findByWine(Integer userId, Long wineId) {
         return tastedRepository.findByWine(userId, wineId);
-    }
-
-    @Override
-    public Set<Tasted> findAll() {
-        Set<Tasted> tasteds = new TreeSet<>();
-        tastedRepository.findAll().forEach(tasteds::add);
-        return tasteds;
     }
 
     @Override
@@ -45,11 +34,6 @@ public class TastedServiceImpl implements TastedService {
     @Override
     public void delete(Tasted object) {
         tastedRepository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-        tastedRepository.deleteById(aLong);
     }
 
 }
