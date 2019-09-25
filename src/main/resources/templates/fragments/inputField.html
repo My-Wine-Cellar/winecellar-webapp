@@ -3,52 +3,42 @@
 
 <form>
     <th:block th:fragment="input (label, name, type)">
-        <div th:with="valid=${!#fields.hasErrors(name)}"
-             th:class="${'form-group' + (valid ? '' : ' has-error')}"
-             class="form-group">
-            <label class="col-sm-5 control-label" th:text="${label}">Label</label>
-            <div class="col-sm-10">
-                <div th:switch="${type}">
-                    <input th:case="'text'" class="form-control" autocomplete="off" type="text" th:field="*{__${name}__}"/>
-                    <input th:case="'tel'" class="form-control" autocomplete="off" type="tel" th:field="*{__${name}__}" pattern="^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$"/>
-                    <input th:case="'url'" class="form-control" autocomplete="off" type="url" th:field="*{__${name}__}"/>
-                    <input th:case="'number'" class="form-control" autocomplete="off" type="number" th:field="*{__${name}__}" pattern="^\d*\.?\d*$"/>
-                    <input th:case="'date'" class="form-control" type="date" th:field="*{__${name}__}"
-                           placeholder="YYYY-MM-DD" title="Enter a date in this format: YYYY-MM-DD"
-                           pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>
-                </div>
-                <span th:if="${valid}"
-                      class="fa fa-ok form-control-feedback"
-                      aria-hidden="true"></span>
-                <th:block th:if="${!valid}">
-            <span class="fa fa-error form-control-feedback"
-                  aria-hidden="true"></span>
-                    <span class="alert-danger" th:errors="*{__${name}__}">Error</span>
-                </th:block>
+        <div th:with="valid=${!#fields.hasErrors(name)}" th:class="${'form-group' + (valid ? '' : ' has-error')}" class="form-group">
+            <label class="control-label" th:text="${label}">Label</label>
+            <div th:switch="${type}">
+                <input th:case="'text'" class="form-control" autocomplete="off" type="text"
+                       th:field="*{__${name}__}"/>
+                <input th:case="'tel'" class="form-control" autocomplete="off" type="tel" th:field="*{__${name}__}"
+                       pattern="^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$"/>
+                <input th:case="'url'" class="form-control" autocomplete="off" type="url"
+                       th:field="*{__${name}__}"/>
+                <input th:case="'number'" class="form-control" autocomplete="off" type="number"
+                       th:field="*{__${name}__}" pattern="^\d*\.?\d*$"/>
+                <input th:case="'date'" class="form-control" type="date" th:field="*{__${name}__}"
+                       title="Enter a date in this format: MM-DD-YYYY"
+                       pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"/>
             </div>
+            <span th:if="${valid}" class="fa fa-ok form-control-feedback" aria-hidden="true"></span>
+            <th:block th:if="${!valid}">
+                <span class="fa fa-error form-control-feedback" aria-hidden="true"></span>
+                <span class="alert-danger" th:errors="*{__${name}__}">Error</span>
+            </th:block>
         </div>
     </th:block>
 </form>
 
 <form>
     <th:block th:fragment="textarea (label, name, type)">
-        <div th:with="valid=${!#fields.hasErrors(name)}"
-             th:class="${'form-group' + (valid ? '' : ' has-error')}"
-             class="form-group">
-            <label class="col-sm-5 control-label" th:text="${label}">Label</label>
-            <div class="col-sm-11">
-                <div th:switch="${type}">
-                    <textarea rows="10" th:case="'text'" autocomplete="off" class="form-control" type="text" th:field="*{__${name}__}"></textarea>
-                </div>
-                <span th:if="${valid}"
-                      class="fa fa-ok form-control-feedback"
-                      aria-hidden="true"></span>
-                <th:block th:if="${!valid}">
-            <span class="fa fa-error form-control-feedback"
-                  aria-hidden="true"></span>
-                    <span class="alert-danger" th:errors="*{__${name}__}">Error</span>
-                </th:block>
+        <div th:with="valid=${!#fields.hasErrors(name)}" th:class="${'form-group' + (valid ? '' : ' has-error')}" class="form-group">
+            <label class="control-label" th:text="${label}">Label</label>
+            <div th:switch="${type}">
+                <textarea rows="5" th:case="'text'" autocomplete="off" class="form-control" type="text" th:field="*{__${name}__}"></textarea>
             </div>
+            <span th:if="${valid}" class="fa fa-ok form-control-feedback" aria-hidden="true"></span>
+            <th:block th:if="${!valid}">
+                <span class="fa fa-error form-control-feedback" aria-hidden="true"></span>
+                <span class="alert-danger" th:errors="*{__${name}__}">Error</span>
+            </th:block>
         </div>
     </th:block>
 </form>

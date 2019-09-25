@@ -59,6 +59,20 @@
     margin: 4px;
 }
 
+/* Removes the Select arrow on dropdowns */
+select {
+    /* for Firefox */
+    -moz-appearance: none;
+    /* for Chrome */
+    -webkit-appearance: none;
+}
+
+/* For IE10 */
+select::-ms-expand {
+    display: none;
+}
+
+/* Background photos */
 .welcome-background {
     background: url('/images/welcome.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
