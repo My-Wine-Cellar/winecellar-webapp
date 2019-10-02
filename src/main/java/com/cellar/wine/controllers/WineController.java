@@ -59,7 +59,7 @@ public class WineController extends AbstractController {
         model.addAttribute(Attributes.WINE, wine);
         model.addAttribute(Attributes.CLOSURE, closureService.findAll());
         model.addAttribute(Attributes.SHAPE, shapeService.findAll());
-        return Paths.WINE_ADD_REQUIRED;
+        return Paths.WINE_ADD_EDIT_DETAILS;
     }
 
     @PostMapping(value = "/new")
@@ -71,7 +71,7 @@ public class WineController extends AbstractController {
 
         if (result.hasErrors()) {
             model.addAttribute(Attributes.WINE, wine);
-            return Paths.WINE_ADD_REQUIRED;
+            return Paths.WINE_ADD_EDIT_DETAILS;
         } else {
             Producer producer = producerService.findById(producerId);
             wine.setProducer(producer);
@@ -209,30 +209,48 @@ public class WineController extends AbstractController {
     public String wineEditGet(@PathVariable Long wineId, Model model, Principal principal) {
         principalNull(principal);
         model.addAttribute(Attributes.WINE, wineService.findById(wineId));
-        return Paths.WINE_EDIT_DETAILS;
+        model.addAttribute(Attributes.CLOSURE, closureService.findAll());
+        model.addAttribute(Attributes.SHAPE, shapeService.findAll());
+        return Paths.WINE_ADD_EDIT_DETAILS;
     }
 
     @PostMapping("/{wineId}/edit")
     public String wineEditPost(@Valid Wine wine, BindingResult result,
-                               Model model, Principal principal,
+                               Model model, Principal principal, SessionStatus status,
+                               @RequestParam(value = "action") String action,
                                @PathVariable Long wineId, @RequestParam Long producerId) {
         principalNull(principal);
 
         if (result.hasErrors()) {
             model.addAttribute(Attributes.WINE, wine);
-            return Paths.WINE_EDIT_DETAILS;
+            return Paths.WINE_ADD_EDIT_DETAILS;
         } else {
             Producer producer = producerService.findById(producerId);
 
             wine.setId(wineId);
             wine.setProducer(producer);
 
-            Wine savedWine = wineService.save(wine);
-            WineUI wui = WineUIFactory.instance().create(savedWine);
+            switch (action) {
+                case "save":
+                    Wine savedWine = wineService.save(wine);
+                    WineUI wui = WineUIFactory.instance().create(savedWine);
 
-            return redirectProducer(Session.getCountryId(), Session.getRegionId(),
-                    Session.getAreaId(), Session.getProducerId()) +
-                    "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
+                    Session.clear(status);
+                    return redirectProducer(Session.getCountryId(), Session.getRegionId(),
+                            Session.getAreaId(), Session.getProducerId()) +
+                            "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
+                case "next":
+                    return Paths.REDIRECT_WINE_GRAPE;
+                case "cancel":
+                    WineUI wineUI = WineUIFactory.instance().create(wine);
+                    Session.clear(status);
+                    return redirectProducer(Session.getCountryId(), Session.getRegionId(),
+                            Session.getAreaId(), Session.getProducerId()) +
+                            "/" + wineUI.getKey() + "/" + wineUI.getVintage() + "/" + wineUI.getSize();
+                default:
+                    Session.clear(status);
+                    return Paths.ERROR_PAGE;
+            }
         }
     }
 

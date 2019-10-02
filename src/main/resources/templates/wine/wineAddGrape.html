@@ -8,7 +8,7 @@
     <div class="card p-2 shadow">
         <div class="container">
             <div class="card shadow p-2 m-3">
-                <div class="card-body text-center p-5">
+                <div class="card-body text-center">
                     <h3 class="font-weight-light mb-4">This is where you will start the process of adding grapes and
                         their barrels to this wine.</h3>
                     <p class="lead">At a minimum you must choose a grape from the dropdown.</p>
@@ -73,7 +73,7 @@
                             <form th:object="${grapeComponent}" method="post">
                                 <div class="container">
                                     <div class="form-row">
-                                        <div class="form-group col-md-4 ml-3 mr-4">
+                                        <div class="form-group col-md-3">
                                             <label th:for="${winegrapes}">Grapes</label>
                                             <select class="form-control" th:field="*{grape}">
                                                 <option value="">Please select a Grape</option>
@@ -84,38 +84,31 @@
                                                 </option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-5 ml-5">
+                                        <div class="form-group col-md-3">
                                             <input th:replace="~{fragments/inputField :: input ('Percentage', 'percentage', 'number')}"/>
                                         </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-5">
+                                        <div class="form-group col-md-3">
                                             <input th:replace="~{fragments/inputField :: input ('Harvest Begin Date', 'harvestBegin', 'date')}"/>
                                         </div>
-                                        <div class="form-group col-md-5">
+                                        <div class="form-group col-md-3">
                                             <input th:replace="~{fragments/inputField :: input ('Harvest End Date', 'harvestEnd', 'date')}"/>
                                         </div>
                                     </div>
-                                    <p class="ml-3"><b>Maceration</b></p>
-                                    <div class="form-row" th:object="${grapeComponent.maceration}">
-                                        <div class="form-group col-md-5">
-                                            <input th:replace="~{fragments/inputField :: input ('Days', 'days', 'text')}"/>
+                                    <div class="form-row" >
+                                        <div class="form-group col-md-3" th:object="${grapeComponent.maceration}">
+                                            <input th:replace="~{fragments/inputField :: input ('Maceration days', 'days', 'text')}"/>
                                         </div>
-                                        <div class="form-group col-md-5">
-                                            <input th:replace="~{fragments/inputField :: input ('Temperature', 'temperature', 'number')}"/>
+                                        <div class="form-group col-md-3" th:object="${grapeComponent.maceration}">
+                                            <input th:replace="~{fragments/inputField :: input ('Maceration temp.', 'temperature', 'number')}"/>
                                         </div>
-                                    </div>
-                                    <p class="ml-3"><b>Fermentation</b></p>
-                                    <div class="form-row" th:object="${grapeComponent.fermentation}">
-                                        <div class="form-group col-md-5">
-                                            <input th:replace="~{fragments/inputField :: input ('Days', 'days', 'text')}"/>
+                                        <div class="form-group col-md-3" th:object="${grapeComponent.fermentation}">
+                                            <input th:replace="~{fragments/inputField :: input ('Fermentation days', 'days', 'text')}"/>
                                         </div>
-                                        <div class="form-group col-md-5">
-                                            <input th:replace="~{fragments/inputField :: input ('Temperature', 'temperature', 'number')}"/>
+                                        <div class="form-group col-md-3" th:object="${grapeComponent.fermentation}">
+                                            <input th:replace="~{fragments/inputField :: input ('Fermentation temp.', 'temperature', 'number')}"/>
                                         </div>
                                     </div>
                                 </div>
-                                <br/>
                                 <div class="btn-toolbar justify-content-center">
                                     <button type="submit" name="action" value="addAnotherGrape"
                                             class="btn btn-link mr-5 fas fa-check-circle"
@@ -129,7 +122,6 @@
                                             data-toggle="tooltip" title="Add Barrel to this Grape">
                                     </button>
                                 </div>
-                                <br/>
                             </form>
                         </div>
                     </div>

@@ -8,7 +8,7 @@
     <div class="card p-2 shadow">
         <div class="container">
             <div class="card shadow p-2 m-3">
-                <div class="card-body text-center p-5">
+                <div class="card-body text-center">
                     <h3 class="font-weight-light mb-4">Now adding barrel to the grape:</h3>
                     <p class="lead">Similar rules apply here.</p>
                     <p class="lead">Use <span class="btn-link fas fa-plus-square"></span> for additional barrels where the grapes are stored.</p>
@@ -66,11 +66,11 @@
                 <div class="container justify-content-center">
                     <div class="card shadow my-5">
                         <div class="card-body">
-                            <h5 class="card-text ml-4" th:text="|Grape: ${grape.name}|"></h5>
+                            <h5 class="card-text ml-3" th:text="|Grape: ${grape.name}|"></h5>
                             <form th:object="${barrelComponent}" method="post">
                                 <div class="container">
                                     <div class="form-row">
-                                        <div class="form-group col-md-4 ml-3 mr-4">
+                                        <div class="form-group col-md-3">
                                             <label th:for="${barrels}">Barrel</label>
                                             <select class="form-control" th:field="*{barrel}">
                                                 <option value="">Please select a Barrel</option>
@@ -81,20 +81,17 @@
                                                 </option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-5 ml-5" th:object="${barrelComponent}">
+                                        <div class="form-group col-md-3" th:object="${barrelComponent}">
                                             <input th:replace="~{fragments/inputField :: input ('Percentage', 'percentage', 'number')}"/>
                                         </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-5">
+                                        <div class="form-group col-md-3">
                                             <input th:replace="~{fragments/inputField :: input ('Size', 'size', 'number')}"/>
                                         </div>
-                                        <div class="form-group col-md-5">
+                                        <div class="form-group col-md-3">
                                             <input th:replace="~{fragments/inputField :: input ('Aging', 'aging', 'number')}"/>
                                         </div>
                                     </div>
                                 </div>
-                                <br/>
                                 <div class="btn-toolbar justify-content-center">
                                     <button type="submit" name="action" value="addAnotherGrape"
                                             class="btn btn-link mr-5 fas fa-check-circle"
@@ -108,7 +105,6 @@
                                             data-toggle="tooltip" title="Add another Barrel">
                                     </button>
                                 </div>
-                                <br/>
                             </form>
                         </div>
                     </div>

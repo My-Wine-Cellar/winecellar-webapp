@@ -3,11 +3,11 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="producer-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
     <div class="card p-2 shadow">
         <div class="container">
-            <div class="card shadow p-2 m-3">
+            <div class="card shadow p-4 m-3">
                 <form th:object="${producer}" method="post">
                     <input type="hidden" name="id" th:value="*{id}"/>
                     <input type="hidden" name="areaId" th:value="${area.id}"/>
@@ -17,34 +17,31 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <input th:replace="~{fragments/inputField :: input ('Phone', 'phone', 'tel')}"/>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
                             <input th:replace="~{fragments/inputField :: input ('Fax', 'fax', 'tel')}"/>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <input th:replace="~{fragments/inputField :: input ('Website', 'website', 'url')}"/>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <input th:replace="~{fragments/inputField :: input ('Email', 'email', 'text')}"/>
                         </div>
                     </div>
-                    <div>
-                        <div class="form-group">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
                         <textarea
                                 th:replace="~{fragments/inputField :: textarea ('Description', 'description', 'text')}"></textarea>
                         </div>
                     </div>
-                    <br/>
                     <div th:insert="~{fragments/button :: btn-toolbar-cancel-save}"/>
-                    <br/>
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 <br/><br/>
