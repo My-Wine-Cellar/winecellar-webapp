@@ -37,7 +37,6 @@ public class Paths {
     public static final String REDIRECT_ROOT = "redirect:/";
     public static final String REDIRECT_TASTED_LIST = "redirect:/tasted/list";
     public static final String REDIRECT_TASTINGNOTES_LIST = "redirect:/tastingnotes/list";
-    public static final String REDIRECT_WINE = "redirect:/wine/";
     public static final String REDIRECT_WINE_GRAPE = "redirect:/wine/grape";
     public static final String REDIRECT_WISHLIST_LIST = "redirect:/wishlist/list";
     public static final String REDIRECT_WELCOME = "redirect:/welcome";
@@ -59,12 +58,9 @@ public class Paths {
     public static final String TASTING_NOTES_LIST = "tastingNotes/tastingNotesList";
     public static final String TASTING_NOTES_VIEW = "tastingNotes/tastingNotesView";
 
-    public static final String WINE_ADD_REQUIRED = "wine/wineAddRequired";
-    public static final String WINE_ADD_DETAILS = "wine/wineAddDetails";
     public static final String WINE_ADD_GRAPE = "wine/wineAddGrape";
     public static final String WINE_ADD_GRAPE_BARREL = "wine/wineAddGrapeBarrel";
     public static final String WINE_DETAILS = "wine/wineDetails";
-    public static final String WINE_EDIT_DETAILS = "wine/wineEditDetails";
-    public static final String WINE_DATA_SHEET = "wine/wineDataSheet";
+    public static final String WINE_ADD_EDIT_DETAILS = "wine/wineAddEditDetails";
     public static final String WISHLIST_LIST = "wishlist/wishlistList";
 }
