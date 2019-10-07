@@ -3,7 +3,7 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="country-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
     <div class="card p-2 shadow">
         <div class="container justify-content-center">
@@ -21,7 +21,7 @@
                         <table class="table table-hover">
                             <tbody>
                             <tr th:if="${country.weblink != null && !country.weblink.isEmpty()}">
-                                <td><b>Web</b></td>
+                                <td><b th:text="#{web}"></b></td>
                                 <td><a th:href="*{weblink}" target="_blank">
                                     <div th:text="*{weblink}"/>
                                 </a></td>
@@ -38,8 +38,8 @@
             <br/>
             <br/>
             <h3 align="center" th:switch="${country.name}">
-                <span th:case="'United States'">States</span>
-                <span th:case="*">Regions</span>
+                <span th:case="'United States'" th:text="#{states}"></span>
+                <span th:case="*" th:text="#{regions}"></span>
             </h3>
             <br/>
             <div class="container justify-content-center">
@@ -54,8 +54,7 @@
         </div>
     </div>
 </div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

@@ -3,11 +3,11 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="bottle-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
     <div class="card p-2 shadow">
         <div class="container">
-            <div class="card shadow p-2 m-3">
+            <div class="card shadow p-4 m-3">
                 <div class="card text-center">
                     <div class="card-body" th:object="${bottle.wine}">
                         <h3 class="card-header" th:text="*{name}"></h3>
@@ -18,15 +18,15 @@
                     <table class="table table-hover">
                         <tbody>
                         <tr>
-                            <td><b>Producer</b></td>
+                            <td><b th:text="#{producer}"></b></td>
                             <td th:text="${bottle.wine.producer.name}"></td>
                         </tr>
                         <tr>
-                            <td><b>Vintage</b></td>
+                            <td><b th:text="#{vintage}"></b></td>
                             <td th:text="*{vintage}"></td>
                         </tr>
                         <tr>
-                            <td><b>Size</b></td>
+                            <td><b th:text="#{size}"></b></td>
                             <td th:text="*{size}"></td>
                         </tr>
                         </tbody>
@@ -52,10 +52,7 @@
                                    id="showBottle">
                         </div>
                     </div>
-                    <br/>
-                    <br/>
                     <div th:insert="~{fragments/button :: btn-toolbar-cancel-save}"/>
-                    <br/>
                 </form>
             </div>
         </div>

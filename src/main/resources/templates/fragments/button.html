@@ -4,11 +4,11 @@
 <div th:fragment="btn-toolbar-cancel-save" class="btn-toolbar justify-content-center">
     <button type="submit" name="action" value="cancel"
             class="btn btn-link fas fa-redo mr-5"
-            data-toggle="tooltip" title="Cancel">
+            data-toggle="tooltip" th:title="#{cancel}">
     </button>
     <button type="submit" name="action" value="save"
             class="btn btn-link fas fa-save"
-            data-toggle="tooltip" title="Save">
+            data-toggle="tooltip" th:title="#{save}">
     </button>
 </div>
 

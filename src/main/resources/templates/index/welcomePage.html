@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="~{fragments/layout :: head}"/>
 <body class="welcome-background">
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
 <div class="container">
     <div class="card border-0 shadow">
-<div class="container">
-    <br/>
-    <h1 th:text="|#{welcome}, ${user.firstName}|"></h1>
-    <br/>
-    <div class="card text-left">
-      <div class="card-body">
-        <h5 class="card-text">
-          <a th:href="@{/bottle/list}">My Cellar <span class="fas fa-wine-bottle"></span></a>
-        </h5>
-        <h5 class="card-text">
-          <a th:href="@{/review/list}">My Reviews <span class="far fa-star"></span></a>
-        </h5>
-        <h5 class="card-text">
-          <a th:href="@{/wishlist/list}">My Wishlist <span class="fas fa-gift"></span></a>
-        </h5>
-        <h5 class="card-text">
-          <a th:href="@{/tastingnotes/list}">My Tasting Notes <span class="far fa-clipboard"></span></a>
-        </h5>
-        <h5 class="card-text">
-          <a th:href="@{/tasted/list}">My Tasted Wines <span class="fas fa-archive"></span></a>
-        </h5>
-      </div>
+        <div class="container">
+            <br/>
+            <h1 th:text="|#{welcome}, ${user.firstName}|"></h1>
+            <br/>
+            <div class="card text-left">
+                <div class="card-body">
+                    <h5 class="card-text">
+                        <a th:href="@{/bottle/list}">My Cellar <span class="fas fa-wine-bottle"></span></a>
+                    </h5>
+                    <h5 class="card-text">
+                        <a th:href="@{/review/list}">My Reviews <span class="far fa-star"></span></a>
+                    </h5>
+                    <h5 class="card-text">
+                        <a th:href="@{/wishlist/list}">My Wishlist <span class="fas fa-gift"></span></a>
+                    </h5>
+                    <h5 class="card-text">
+                        <a th:href="@{/tastingnotes/list}">My Tasting Notes <span class="far fa-clipboard"></span></a>
+                    </h5>
+                    <h5 class="card-text">
+                        <a th:href="@{/tasted/list}">My Tasted Wines <span class="fas fa-archive"></span></a>
+                    </h5>
+                </div>
+            </div>
+            <br/>
+        </div>
     </div>
-    <br/>
-</div>
-</div>
 </div>
 <br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>

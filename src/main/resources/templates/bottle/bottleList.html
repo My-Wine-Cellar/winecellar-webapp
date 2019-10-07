@@ -3,7 +3,7 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="bottle-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
     <div class="card border-0 shadow">
         <div class="container justify-content-center">
@@ -13,12 +13,12 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Bottle #</th>
-                    <th>Producer</th>
-                    <th>Wine</th>
-                    <th>Vintage</th>
-                    <th>Size</th>
-                    <th>Location</th>
+                    <th th:text="#{bottle} + ' #'"></th>
+                    <th th:text="#{producer}"></th>
+                    <th th:text="#{wine}"></th>
+                    <th th:text="#{vintage}"></th>
+                    <th th:text="#{size}"></th>
+                    <th th:text="#{location}"></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -42,8 +42,7 @@
         </div>
     </div>
 </div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

@@ -3,62 +3,65 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="region-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
-    <div class="card border-0 shadow">
-<div class="container text-left">
-    <br/>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a></li>
-        </ol>
-    </nav>
-</div>
-<div class="container justify-content-center">
-    <div class="card text-center">
-        <div class="card-body" th:object="${region}">
-            <h2 class="card-header" th:text="*{name}"></h2>
+    <div class="card p-2 shadow">
+        <div class="container text-left">
+            <br/>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a>
+                    </li>
+                </ol>
+            </nav>
         </div>
-    </div>
-    <br/>
-    <div class="container justify-content-left">
-        <div class="card text-left">
-            <div class="card-body" th:object="${region}">
-                <p class="card-text" th:text="*{description}"></p>
-                <table class="table table-hover">
-                    <tbody>
-                    <tr th:if="${region.weblink != null && !region.weblink.isEmpty()}">
-                        <td><b>Web</b></td>
-                        <td><a th:href="*{weblink}" target="_blank"><div th:text="*{weblink}"/></a></td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="container justify-content-center">
+            <div class="card text-center">
+                <div class="card-body" th:object="${region}">
+                    <h2 class="card-header" th:text="*{name}"></h2>
+                </div>
             </div>
-        </div>
-        <br/>
-        <div class="text-right" sec:authorize="isAuthenticated()">
-            <a th:href="@{/region/__${region.id}__/edit}"><span class="fas fa-edit"/></a>
-        </div>
-    </div>
-    <br/>
-    <br/>
-    <h3 align="center">Areas</h3>
-    <br/>
-    <div class="container justify-content-center">
-        <div class="card text-center">
-            <div class="card-body p-1" th:each="area : ${areas}">
-              <h5 class="card-header">
-                <a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__}" th:text="${area.name}"></a>
-              </h5>
+            <br/>
+            <div class="container justify-content-left">
+                <div class="card text-left">
+                    <div class="card-body" th:object="${region}">
+                        <p class="card-text" th:text="*{description}"></p>
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr th:if="${region.weblink != null && !region.weblink.isEmpty()}">
+                                <td><b th:text="#{web}">Web</b></td>
+                                <td><a th:href="*{weblink}" target="_blank">
+                                    <div th:text="*{weblink}"/>
+                                </a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <div class="text-right" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/region/__${region.id}__/edit}"><span class="fas fa-edit"/></a>
+                </div>
             </div>
+            <br/>
+            <br/>
+            <h3 align="center" th:text="|#{area}s|">Areas</h3>
+            <br/>
+            <div class="container justify-content-center">
+                <div class="card text-center">
+                    <div class="card-body p-1" th:each="area : ${areas}">
+                        <h5 class="card-header">
+                            <a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__}"
+                               th:text="${area.name}"></a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <br/>
         </div>
     </div>
-    <br/>
 </div>
-</div>
-</div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>
