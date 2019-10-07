@@ -3,84 +3,89 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="area-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
     <div class="card border-0 shadow">
-<div class="container text-left">
-    <br/>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a></li>
-            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/}" th:text="${region.name}"></a></li>
-        </ol>
-    </nav>
-</div>
-<div class="container justify-content-center">
-    <div class="card text-center">
-        <div class="card-body" th:object="${area}">
-            <h2 class="card-header" th:text="*{name}"></h2>
+        <div class="container text-left">
+            <br/>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a>
+                    </li>
+                    <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/}"
+                                                   th:text="${region.name}"></a></li>
+                </ol>
+            </nav>
         </div>
-    </div>
-    <br/>
-    <div class="container justify-content-left">
-        <div class="card text-left">
-            <div class="card-body" th:object="${area}">
-                <p class="card-text" th:text="*{description}"></p>
-                <table class="table table-hover">
-                    <tbody>
-                    <tr th:if="${area.weblink != null && !area.weblink.isEmpty()}">
-                        <td><b>Web</b></td>
-                        <td><a th:href="*{weblink}" target="_blank"><div th:text="*{weblink}"/></a></td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="container justify-content-center">
+            <div class="card text-center">
+                <div class="card-body" th:object="${area}">
+                    <h2 class="card-header" th:text="*{name}"></h2>
+                </div>
+            </div>
+            <br/>
+            <div class="container justify-content-left">
+                <div class="card text-left">
+                    <div class="card-body" th:object="${area}">
+                        <p class="card-text" th:text="*{description}"></p>
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr th:if="${area.weblink != null && !area.weblink.isEmpty()}">
+                                <td><b th:text="#{web}"></b></td>
+                                <td><a th:href="*{weblink}" target="_blank">
+                                    <div th:text="*{weblink}"/>
+                                </a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <div class="text-right" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/area/__${area.id}__/edit}"><span class="fas fa-edit"/></a>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <h3 align="center" th:text="|#{producer}s|"></h3>
+            <br/>
+            <div class="container justify-content-center">
+                <div class="card text-center">
+                    <div class="card-body p-1" th:each="producer : ${producers}">
+                        <h5 class="card-header">
+                            <a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/__${producer.key}__}"
+                               th:text="${producer.name}"></a>
+                        </h5>
+                    </div>
+                </div>
+                <br/>
+                <div class="text-right" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/area/__${area.id}__/addProducer}"><span class="fas fa-plus-square"/></a>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <br/>
+            <h3 align="center" th:text="#{grapes}"></h3>
+            <br/>
+            <div class="container justify-content-center">
+                <div class="card text-center">
+                    <div class="card-body p-1" th:each="grape : ${primaryGrapes}">
+                        <h5 class="card-header"><a th:href="@{/grape/__${grape.key}__}" th:text="${grape.name}"></a>
+                        </h5>
+                    </div>
+                </div>
+                <br/>
+                <div class="text-right" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/area/__${area.id}__/addGrape}"><span class="fas fa-plus-square"/></a>
+                </div>
+                <br/>
             </div>
         </div>
-        <br/>
-        <div class="text-right" sec:authorize="isAuthenticated()">
-            <a th:href="@{/area/__${area.id}__/edit}"><span class="fas fa-edit"/></a>
-        </div>
-    </div>
-    <br/>
-    <br/>
-    <br/>
-    <h3 align="center">Producers</h3>
-    <br/>
-    <div class="container justify-content-center">
-        <div class="card text-center">
-            <div class="card-body p-1" th:each="producer : ${producers}">
-              <h5 class="card-header">
-                <a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/__${producer.key}__}" th:text="${producer.name}"></a>
-              </h5>
-            </div>
-        </div>
-        <br/>
-        <div class="text-right" sec:authorize="isAuthenticated()">
-            <a th:href="@{/area/__${area.id}__/addProducer}"><span class="fas fa-plus-square"/></a>
-        </div>
-    </div>
-    <br/>
-    <br/>
-    <br/>
-    <h3 align="center">Grapes</h3>
-    <br/>
-    <div class="container justify-content-center">
-        <div class="card text-center">
-            <div class="card-body p-1" th:each="grape : ${primaryGrapes}">
-                <h5 class="card-header"><a th:href="@{/grape/__${grape.key}__}" th:text="${grape.name}"></a></h5>
-            </div>
-        </div>
-        <br/>
-        <div class="text-right" sec:authorize="isAuthenticated()">
-            <a th:href="@{/area/__${area.id}__/addGrape}"><span class="fas fa-plus-square"/></a>
-        </div>
-        <br/>
     </div>
 </div>
-</div>
-</div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

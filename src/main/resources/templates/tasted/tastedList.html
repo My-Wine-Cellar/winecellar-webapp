@@ -3,55 +3,58 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="tasted-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
-    <div class="card border-0 shadow">
-<div class="container justify-content-center">
-    <br/>
-    <h2 align="center">My Tasted Wines</h2>
-    <br/>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Producer</th>
-            <th>Wine</th>
-            <th>Vintage</th>
-            <th>Size</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="t : ${tasted}">
-            <td><a th:href="@{/d/__${t.country.key}__/__${t.region.key}__/__${t.area.key}__/__${t.producer.key}__/}" th:text="${t.producer.name}"></a></td>
-            <td><a th:href="@{/d/__${t.country.key}__/__${t.region.key}__/__${t.area.key}__/__${t.producer.key}__/__${t.wine.key}__/__${t.wine.vintage}__/__${t.wine.size}__}" th:text="${t.wine.name}"></a></td>
-            <td th:text="${t.wine.vintage}"></td>
-            <td th:text="|${t.wine.size}L|"></td>
-            <td>
-              <div class="text-left">
-                <ul class="list-inline">
-                  <li class="list-inline-item" th:if="${t.reviewId != null}">
-                    <a th:href="@{/review/__${t.reviewId}__}">
-                      <span class="far fa-star"></span>
-                    </a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a th:href="@{/bottle/new(wineId=${t.wine.id})}"><span class="fas fa-wine-bottle"></span></a>
-                  </li>
-                  <li class="list-inline-item">
-                    <a th:href="@{/tasted/__${t.id}__/delete}"><span class="fas fa-trash"></span></a>
-                  </li>
-                </ul>
-              </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
+    <div class="card p-2 shadow">
+        <div class="container justify-content-center">
+            <br/>
+            <h2 align="center" th:text="#{myTastedWines}">My Tasted Wines</h2>
+            <br/>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{producer}">Producer</th>
+                    <th th:text="#{wine}">Wine</th>
+                    <th th:text="#{vintage}">Vintage</th>
+                    <th th:text="#{size}">Size</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="t : ${tasted}">
+                    <td>
+                        <a th:href="@{/d/__${t.country.key}__/__${t.region.key}__/__${t.area.key}__/__${t.producer.key}__/}"
+                           th:text="${t.producer.name}"></a></td>
+                    <td>
+                        <a th:href="@{/d/__${t.country.key}__/__${t.region.key}__/__${t.area.key}__/__${t.producer.key}__/__${t.wine.key}__/__${t.wine.vintage}__/__${t.wine.size}__}"
+                           th:text="${t.wine.name}"></a></td>
+                    <td th:text="${t.wine.vintage}"></td>
+                    <td th:text="|${t.wine.size}L|"></td>
+                    <td>
+                        <div class="text-left">
+                            <ul class="list-inline">
+                                <li class="list-inline-item" th:if="${t.reviewId != null}">
+                                    <a th:href="@{/review/__${t.reviewId}__}">
+                                        <span class="far fa-star"></span>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a th:href="@{/bottle/new(wineId=${t.wine.id})}"><span
+                                            class="fas fa-wine-bottle"></span></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a th:href="@{/tasted/__${t.id}__/delete}"><span class="fas fa-trash"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

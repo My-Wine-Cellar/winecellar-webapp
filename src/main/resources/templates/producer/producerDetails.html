@@ -5,87 +5,93 @@
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/>
 <div class="container">
-    <div class="card border-0 shadow">
-<div class="container text-left">
-    <br/>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a></li>
-            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/}" th:text="${region.name}"></a></li>
-            <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/}" th:text="${area.name}"></a></li>
-        </ol>
-    </nav>
-</div>
-<div class="container justify-content-center">
-    <div class="card text-center">
-        <div class="card-body" th:object="${producer}">
-            <h2 class="card-header" th:text="*{name}"></h2>
+    <div class="card p-2 shadow">
+        <div class="container text-left">
+            <br/>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/}" th:text="${country.name}"></a>
+                    </li>
+                    <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/}"
+                                                   th:text="${region.name}"></a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/}"
+                                                   th:text="${area.name}"></a></li>
+                </ol>
+            </nav>
         </div>
-    </div>
-    <br/>
-    <div class="container justify-content-left">
-        <div class="card text-left">
-            <div class="card-body" th:object="${producer}">
-                <p class="card-text" th:text="*{description}"></p>
-                <table class="table table-hover">
+        <div class="container justify-content-center">
+            <div class="card text-center">
+                <div class="card-body" th:object="${producer}">
+                    <h2 class="card-header" th:text="*{name}"></h2>
+                </div>
+            </div>
+            <br/>
+            <div class="container justify-content-left">
+                <div class="card text-left">
+                    <div class="card-body" th:object="${producer}">
+                        <p class="card-text" th:text="*{description}"></p>
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr th:if="${producer.phone != null && !producer.phone.isEmpty()}">
+                                <td><b th:text="#{phone}">Phone</b></td>
+                                <td th:text="*{phone}"></td>
+                            </tr>
+                            <tr th:if="${producer.fax != null && !producer.fax.isEmpty()}">
+                                <td><b th:text="#{fax}">Fax</b></td>
+                                <td th:text="*{fax}"></td>
+                            </tr>
+                            <tr th:if="${producer.email != null && !producer.email.isEmpty()}">
+                                <td><b th:text="#{email}">Email</b></td>
+                                <td><a th:href="|mailto:*{email}|">
+                                    <div th:text="*{email}"/>
+                                </a></td>
+                            </tr>
+                            <tr th:if="${producer.website != null && !producer.website.isEmpty()}">
+                                <td><b th:text="#{web}">Web</b></td>
+                                <td><a th:href="*{website}" target="_blank">
+                                    <div th:text="*{website}"/>
+                                </a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br/>
+                <div class="text-right" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/producer/__${producer.id}__/edit}"><span class="fas fa-edit"/></a>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <h3 align="center">Wines</h3>
+            <br/>
+            <div class="container">
+                <table class="table table-hover table-sm">
+                    <thead>
+                    <tr>
+                        <th th:text="#{name}">Name</th>
+                        <th th:text="#{vintage}">Vintage</th>
+                        <th th:text="#{size}">Size</th>
+                    </tr>
+                    </thead>
                     <tbody>
-                    <tr th:if="${producer.phone != null && !producer.phone.isEmpty()}">
-                        <td><b>Phone</b></td>
-                        <td th:text="*{phone}"></td>
-                    </tr>
-                    <tr th:if="${producer.fax != null && !producer.fax.isEmpty()}">
-                        <td><b>Fax</b></td>
-                        <td th:text="*{fax}"></td>
-                    </tr>
-                    <tr th:if="${producer.email != null && !producer.email.isEmpty()}">
-                        <td><b>Email</b></td>
-                        <td><a th:href="|mailto:*{email}|"><div th:text="*{email}"/></a></td>
-                    </tr>
-                    <tr th:if="${producer.website != null && !producer.website.isEmpty()}">
-                        <td><b>Web</b></td>
-                        <td><a th:href="*{website}" target="_blank"><div th:text="*{website}"/></a></td>
+                    <tr th:each="wine : ${wines}">
+                        <td>
+                            <a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/__${producer.key}__/__${wine.key}__/__${wine.vintage}__/__${wine.size}__}"
+                               th:text="${wine.name}"></a></td>
+                        <td th:text="${wine.vintage}">Vintage</td>
+                        <td th:text="|${wine.size}L|">Size</td>
                     </tr>
                     </tbody>
                 </table>
+                <div class="text-right" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/wine/new(id=${producer.id})}"><span class="fas fa-plus-square"/></a>
+                </div>
             </div>
         </div>
-        <br/>
-        <div class="text-right" sec:authorize="isAuthenticated()">
-            <a th:href="@{/producer/__${producer.id}__/edit}"><span class="fas fa-edit"/></a>
-        </div>
-    </div>
-    <br/>
-    <br/>
-    <h3 align="center">Wines</h3>
-    <br/>
-    <div class="container">
-        <table class="table table-hover table-sm">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Vintage</th>
-                <th>Size</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="wine : ${wines}">
-                <td><a th:href="@{/d/__${country.key}__/__${region.key}__/__${area.key}__/__${producer.key}__/__${wine.key}__/__${wine.vintage}__/__${wine.size}__}" th:text="${wine.name}"></a></td>
-                <td th:text="${wine.vintage}">Vintage</td>
-                <td th:text="|${wine.size}L|">Size</td>
-            </tr>
-            </tbody>
-        </table>
-        <br/>
-        <div class="text-right" sec:authorize="isAuthenticated()">
-            <a th:href="@{/wine/new(id=${producer.id})}"><span class="fas fa-plus-square"/></a>
-        </div>
-        <br/>
     </div>
 </div>
-</div>
-</div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

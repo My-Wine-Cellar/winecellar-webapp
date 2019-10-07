@@ -3,11 +3,11 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="wine-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
     <div class="card p-2 shadow">
         <div class="container">
-            <div class="card shadow p-2 m-3">
+            <div class="card shadow p-4 m-3">
                 <div class="card-body">
                     <form th:object="${wine}" method="post">
                         <input type="hidden" name="id" th:value="*{id}"/>

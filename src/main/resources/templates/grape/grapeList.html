@@ -3,35 +3,36 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="grape-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
     <div class="card border-0 shadow">
-<div class="row justify-content-between">
-    <div class="col-sm-6" style="padding-left: 40px">
-        <br/>
-        <h2 align="center">Red Grapes</h2>
-        <br/>
-        <div class="card">
-            <div class="card-body p-1" th:each="grape : ${redGrapes}">
-                <h5 class="card-header"><a th:href="@{/grape/__${grape.key}__}" th:text="${grape.name}"></a></h5>
+        <div class="row justify-content-between">
+            <div class="col-sm-6" style="padding-left: 40px">
+                <br/>
+                <h2 align="center" th:text="#{redGrapes}">Red Grapes</h2>
+                <br/>
+                <div class="card">
+                    <div class="card-body p-1" th:each="grape : ${redGrapes}">
+                        <h5 class="card-header"><a th:href="@{/grape/__${grape.key}__}" th:text="${grape.name}"></a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6" style="padding-right: 40px">
+                <br/>
+                <h2 align="center" th:text="#{whiteGrapes}">White Grapes</h2>
+                <br/>
+                <div class="card">
+                    <div class="card-body p-1" th:each="grape : ${whiteGrapes}">
+                        <h5 class="card-header"><a th:href="@{/grape/__${grape.key}__}" th:text="${grape.name}"></a>
+                        </h5>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-6" style="padding-right: 40px">
-        <br/>
-        <h2 align="center">White Grapes</h2>
-        <br/>
-        <div class="card">
-            <div class="card-body p-1" th:each="grape : ${whiteGrapes}">
-                <h5 class="card-header"><a th:href="@{/grape/__${grape.key}__}" th:text="${grape.name}"></a></h5>
-            </div>
-        </div>
-    </div>
 </div>
-</div>
-</div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

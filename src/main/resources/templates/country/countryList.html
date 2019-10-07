@@ -3,27 +3,26 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="country-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
     <div class="card border-0 shadow">
-<div class="container justify-content-center">
-    <br/>
-    <h2 align="center">Countries</h2>
-    <br/>
-    <div class="card text-center">
-        <div class="card-body p-1" th:each="country : ${countries}">
-          <h5 class="card-header">
-            <a th:href="@{/d/__${country.key}__}" th:text="${country.name}"></a>
-            <img th:src="@{/images/flags/__${country.flag}__.png}"/>
-          </h5>
+        <div class="container justify-content-center">
+            <br/>
+            <h2 align="center" th:text="#{countries}"></h2>
+            <br/>
+            <div class="card text-center">
+                <div class="card-body p-1" th:each="country : ${countries}">
+                    <h5 class="card-header">
+                        <a th:href="@{/d/__${country.key}__}" th:text="${country.name}"></a>
+                        <img th:src="@{/images/flags/__${country.flag}__.png}"/>
+                    </h5>
+                </div>
+            </div>
+            <br/>
         </div>
     </div>
-    <br/>
 </div>
-</div>
-</div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

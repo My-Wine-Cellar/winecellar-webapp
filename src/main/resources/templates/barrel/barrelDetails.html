@@ -3,7 +3,7 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="barrel-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
     <div class="card p-2 shadow">
         <div class="container justify-content-center">
@@ -20,9 +20,9 @@
                         <table class="table table-hover">
                             <tbody>
                             <tr th:if="${barrel.weblink != null && !barrel.weblink.isEmpty()}">
-                                <td><b>Web</b></td>
+                                <td><b th:text="#{web}"></b></td>
                                 <td><a th:href="*{weblink}" target="_blank">
-                                    <div th:text="*{weblink}"/>
+                                    <div th:text="*{weblink}"></div>
                                 </a></td>
                             </tr>
                             </tbody>
@@ -32,14 +32,13 @@
             </div>
             <br/>
             <div class="text-right">
-                <a th:href="@{/barrel/__${barrel.id}__/edit}"><span class="fas fa-edit"/></a>
+                <a th:href="@{/barrel/__${barrel.id}__/edit}"><span class="fas fa-edit"></span></a>
             </div>
             <br/>
         </div>
     </div>
 </div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

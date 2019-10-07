@@ -3,43 +3,46 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="tasting-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
-    <div class="card border-0 shadow">
-<div class="container justify-content-center">
-    <br/>
-    <h2 align="center">My Tasting Notes</h2>
-    <br/>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Producer</th>
-            <th>Wine</th>
-            <th>Vintage</th>
-            <th>Date</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="n : ${notes}">
-            <td><a th:href="@{/d/__${n.country.key}__/__${n.region.key}__/__${n.area.key}__/__${n.producer.key}__/}" th:text="${n.producer.name}"></a></td>
-            <td><a th:href="@{/d/__${n.country.key}__/__${n.region.key}__/__${n.area.key}__/__${n.producer.key}__/__${n.wine.key}__/__${n.wine.vintage}__/__${n.wine.size}__}" th:text="${n.wine.name}"></a></td>
-            <td th:text="${n.wine.vintage}"></td>
-            <td th:text="${#dates.format(n.date, 'MMM dd, yyyy')}"></td>
-            <td>
-              <a th:href="@{__${n.id}__}"><span class="fas fa-eye"></span></a>
-              <a th:href="@{__${n.id}__/edit}"><span class="fas fa-edit"></span></a>
-              <a th:href="@{__${n.id}__/delete}"><span class="fas fa-trash"></span></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
+    <div class="card p-2 shadow">
+        <div class="container justify-content-center">
+            <br/>
+            <h2 align="center">My Tasting Notes</h2>
+            <br/>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{producer}">Producer</th>
+                    <th th:text="#{wine}">Wine</th>
+                    <th th:text="#{vintage}">Vintage</th>
+                    <th th:text="#{date}">Date</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="n : ${notes}">
+                    <td>
+                        <a th:href="@{/d/__${n.country.key}__/__${n.region.key}__/__${n.area.key}__/__${n.producer.key}__/}"
+                           th:text="${n.producer.name}"></a></td>
+                    <td>
+                        <a th:href="@{/d/__${n.country.key}__/__${n.region.key}__/__${n.area.key}__/__${n.producer.key}__/__${n.wine.key}__/__${n.wine.vintage}__/__${n.wine.size}__}"
+                           th:text="${n.wine.name}"></a></td>
+                    <td th:text="${n.wine.vintage}"></td>
+                    <td th:text="${#dates.format(n.date, 'MMM dd, yyyy')}"></td>
+                    <td>
+                        <a th:href="@{__${n.id}__}"><span class="fas fa-eye"></span></a>
+                        <a th:href="@{__${n.id}__/edit}"><span class="fas fa-edit"></span></a>
+                        <a th:href="@{__${n.id}__/delete}"><span class="fas fa-trash"></span></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

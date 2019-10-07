@@ -3,47 +3,49 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="review-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
-    <div class="card border-0 shadow">
-<div class="container justify-content-center">
-    <br/>
-    <h2 align="center">My Reviews</h2>
-    <br/>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Stars</th>
-            <th>Producer</th>
-            <th>Wine</th>
-            <th>Vintage</th>
-            <th>Date</th>
-            <th>Comment</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="review : ${reviews}">
-            <td th:text="${review.stars}"></td>
-            <td><a th:href="@{/d/__${review.country.key}__/__${review.region.key}__/__${review.area.key}__/__${review.producer.key}__/}" th:text="${review.producer.name}"></a></td>
-            <td><a th:href="@{/d/__${review.country.key}__/__${review.region.key}__/__${review.area.key}__/__${review.producer.key}__/__${review.wine.key}__/__${review.wine.vintage}__/__${review.wine.size}__}" th:text="${review.wine.name}"></a></td>
-            <td th:text="${review.wine.vintage}"></td>
-            <td th:text="${#dates.format(review.date, 'MMM dd, yyyy')}"></td>
-            <td th:text="${review.comment}"></td>
-            <td>
-              <a th:href="@{/review/__${review.id}__}"><span class="fas fa-eye"></span></a>
-              <a th:href="@{/review/__${review.id}__/edit}"><span class="fas fa-edit"></span></a>
-              <a th:href="@{/review/__${review.id}__/delete}"><span class="fas fa-trash"></span></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
+    <div class="card p-2 shadow">
+        <div class="container justify-content-center">
+            <br/>
+            <h2 align="center" th:text="#{myReviews}">My Reviews</h2>
+            <br/>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{stars}">Stars</th>
+                    <th th:text="#{producer}">Producer</th>
+                    <th th:text="#{wine}">Wine</th>
+                    <th th:text="#{vintage}">Vintage</th>
+                    <th th:text="#{date}">Date</th>
+                    <th th:text="#{comment}">Comment</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review : ${reviews}">
+                    <td th:text="${review.stars}"></td>
+                    <td>
+                        <a th:href="@{/d/__${review.country.key}__/__${review.region.key}__/__${review.area.key}__/__${review.producer.key}__/}"
+                           th:text="${review.producer.name}"></a></td>
+                    <td>
+                        <a th:href="@{/d/__${review.country.key}__/__${review.region.key}__/__${review.area.key}__/__${review.producer.key}__/__${review.wine.key}__/__${review.wine.vintage}__/__${review.wine.size}__}"
+                           th:text="${review.wine.name}"></a></td>
+                    <td th:text="${review.wine.vintage}"></td>
+                    <td th:text="${#dates.format(review.date, 'MMM dd, yyyy')}"></td>
+                    <td th:text="${review.comment}"></td>
+                    <td>
+                        <a th:href="@{/review/__${review.id}__}"><span class="fas fa-eye"></span></a>
+                        <a th:href="@{/review/__${review.id}__/edit}"><span class="fas fa-edit"></span></a>
+                        <a th:href="@{/review/__${review.id}__/delete}"><span class="fas fa-trash"></span></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-<br/>
-<br/>
+<br/><br/>
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>
