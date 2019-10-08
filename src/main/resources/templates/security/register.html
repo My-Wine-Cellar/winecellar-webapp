@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body class="welcome-background">
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/><br/>
+<div class="container">
+    <div class="card p-2 shadow">
+        <div class="container">
+            <div class="card shadow p-4 m-3">
+                <div class="card-body text-center">
+                    <h4>Hoping to have user registration working asap...</h4>
+                    <h4>For now, please send us an email and we'll get you setup.</h4>
+                    <h5><a href="mailto:mywinecellarinfo@gmail.com" th:text="#{email.wincellar}"></a></h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<br/><br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>

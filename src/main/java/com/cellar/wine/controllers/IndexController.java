@@ -39,6 +39,11 @@ public class IndexController {
         return Paths.SECURITY_LOGIN;
     }
 
+    @RequestMapping("/register")
+    public String register() {
+        return Paths.SECURITY_REGISTER;
+    }
+
     @RequestMapping("/errorpage")
     public String error() {
         return Paths.ERROR_PAGE;
