@@ -13,7 +13,7 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th th:text="#{bottle} + ' #'"></th>
+                    <th th:text="#{bottleNumber}"></th>
                     <th th:text="#{producer}"></th>
                     <th th:text="#{wine}"></th>
                     <th th:text="#{vintage}"></th>
@@ -34,7 +34,7 @@
                     <td th:text="${bottle.wine.vintage}"></td>
                     <td th:text="|${bottle.wine.size}L|"></td>
                     <td th:text="${bottle.location}"></td>
-                    <td><a th:href="@{/bottle/__${bottle.id}__/edit}"><span class="fas fa-edit"/></a></td>
+                    <td><a th:href="@{/bottle/__${bottle.id}__/edit}" th:title="#{edit}"><span class="fas fa-edit"></span></a></td>
                 </tr>
                 </tbody>
             </table>

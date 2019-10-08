@@ -61,7 +61,7 @@
                             <tr th:if="${wine.weblink != null && !wine.weblink.isEmpty()}">
                                 <td><b th:text="#{web}">Web</b></td>
                                 <td><a th:href="*{weblink}" target="_blank">
-                                    <div th:text="*{weblink}"/>
+                                    <div th:text="*{weblink}"></div>
                                 </a></td>
                             </tr>
                             <tr>
@@ -79,7 +79,7 @@
                 <br/>
                 <div class="text-right" sec:authorize="isAuthenticated()">
                     <a th:href="@{/wine/__${wine.id}__/edit}">
-                        <span data-toggle="tooltip" data-placement="top" title="Edit wine" class="fas fa-edit"></span>
+                        <span data-toggle="tooltip" data-placement="top" th:title="#{edit}" class="fas fa-edit"></span>
                     </a>
                 </div>
                 <br/>
@@ -89,24 +89,24 @@
                     <ul class="list-inline">
                         <li class="list-inline-item" th:if="${mybottle == null}">
                             <a th:href="@{/bottle/new(wineId=${wine.id})}">
-                                <span data-toggle="tooltip" title="Add a bottle to your cellar"
+                                <span data-toggle="tooltip" th:title="#{addBtlToCellar}"
                                       class="fas fa-wine-bottle"></span>
                             </a>
                         </li>
                         <li class="list-inline-item" th:if="${myreview == null}">
                             <a th:href="@{/review/new(wineId=${wine.id})}">
-                                <span data-toggle="tooltip" title="Review this wine" class="far fa-star"></span>
+                                <span data-toggle="tooltip" th:title="#{reviewWine}" class="far fa-star"></span>
                             </a>
                         </li>
                         <li class="list-inline-item" th:if="${mybottle == null && mywishlist == null}">
                             <a th:href="@{/wishlist/new(wineId=${wine.id})}">
-                                <span data-toggle="tooltip" title="Put this wine in your wishlist"
+                                <span data-toggle="tooltip" th:title="#{wishlistWine}"
                                       class="fas fa-gift"></span>
                             </a>
                         </li>
                         <li class="list-inline-item" th:if="${mytastingnotes == null}">
                             <a th:href="@{/tastingnotes/new(wineId=${wine.id})}">
-                                <span data-toggle="tooltip" title="Taste wine and make notes"
+                                <span data-toggle="tooltip" th:title="#{tasteWine}"
                                       class="far fa-clipboard"></span>
                             </a>
                         </li>
@@ -180,7 +180,7 @@
                                         <tbody>
                                         <tr th:each="tn : ${wine.genericTastingNotes}">
                                             <td th:if="${tn.show}">
-                                                <a th:href="@{/tastingnotes/__${tn.id}__}"><span
+                                                <a th:href="@{/tastingnotes/__${tn.id}__}" th:title="#{view}"><span
                                                         class="fas fa-eye"></span></a>
                                             </td>
                                             <td th:if="${tn.show}"
@@ -213,7 +213,7 @@
                                             <td th:text="${mybottle.number}">Bottle #</td>
                                             <td th:text="${mybottle.location}">Location</td>
                                             <td>
-                                                <a th:href="@{/bottle/__${mybottle.id}__/edit}">
+                                                <a th:href="@{/bottle/__${mybottle.id}__/edit}" th:title="#{edit}">
                                                     <span class="fas fa-edit"></span>
                                                 </a>
                                             </td>

@@ -30,7 +30,7 @@
                             <tr th:if="${grape.weblink != null && !grape.weblink.isEmpty()}">
                                 <td><b th:text="#{web}"></b></td>
                                 <td><a th:href="*{weblink}" target="_blank">
-                                    <div th:text="*{weblink}"/>
+                                    <div th:text="*{weblink}"></div>
                                 </a></td>
                             </tr>
                             <!--
@@ -45,7 +45,7 @@
                 </div>
             </div>
             <div class="text-right" sec:authorize="isAuthenticated()">
-                <a th:href="@{/grape/__${grape.id}__/edit}"><span class="fas fa-edit"/></a>
+                <a th:href="@{/grape/__${grape.id}__/edit}" th:title="#{edit}"><span class="fas fa-edit"></span></a>
             </div>
         </div>
     </div>

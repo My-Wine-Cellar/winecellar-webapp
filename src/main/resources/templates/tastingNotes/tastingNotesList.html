@@ -8,7 +8,7 @@
     <div class="card p-2 shadow">
         <div class="container justify-content-center">
             <br/>
-            <h2 align="center">My Tasting Notes</h2>
+            <h2 align="center" th:title="#{myTastingNotes}">My Tasting Notes</h2>
             <br/>
             <table class="table table-hover">
                 <thead>
@@ -31,9 +31,9 @@
                     <td th:text="${n.wine.vintage}"></td>
                     <td th:text="${#dates.format(n.date, 'MMM dd, yyyy')}"></td>
                     <td>
-                        <a th:href="@{__${n.id}__}"><span class="fas fa-eye"></span></a>
-                        <a th:href="@{__${n.id}__/edit}"><span class="fas fa-edit"></span></a>
-                        <a th:href="@{__${n.id}__/delete}"><span class="fas fa-trash"></span></a>
+                        <a th:href="@{__${n.id}__}" th:title="#{view}"><span class="fas fa-eye"></span></a>
+                        <a th:href="@{__${n.id}__/edit}" th:title="#{edit}"><span class="fas fa-edit"></span></a>
+                        <a th:href="@{__${n.id}__/delete}" th:title="#{delete}"><span class="fas fa-trash"></span></a>
                     </td>
                 </tr>
                 </tbody>

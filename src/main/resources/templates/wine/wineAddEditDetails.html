@@ -73,15 +73,15 @@
                         <div class="btn-toolbar justify-content-center">
                             <button type="submit" name="action" value="cancel"
                                     class="btn btn-link mr-5 fas fa-redo"
-                                    data-toggle="tooltip" title="Cancel and go back">
+                                    data-toggle="tooltip" th:title="#{cancelBack}">
                             </button>
                             <button type="submit" name="action" value="save"
                                     class="btn btn-link mr-5 fas fa-save"
-                                    data-toggle="tooltip" title="Save">
+                                    data-toggle="tooltip" th:title="#{save}">
                             </button>
                             <button th:if="${wine.isNew()}" type="submit" name="action" value="next"
                                     class="btn btn-link fas fa-plus-square"
-                                    data-toggle="tooltip" title="Add Grape">
+                                    data-toggle="tooltip" th:title="#{addGrape}">
                             </button>
                         </div>
                     </form>
