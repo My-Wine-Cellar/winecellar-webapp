@@ -50,6 +50,7 @@ public class Paths {
 
     public static final String SECURITY_ADMIN_CONSOLE = "security/adminConsole";
     public static final String SECURITY_LOGIN = "security/login";
+    public static final String SECURITY_REGISTER = "security/register";
     public static final String SECURITY_USER_REGISTRATION = "security/registerUser";
 
     public static final String TASTED_LIST = "tasted/tastedList";
