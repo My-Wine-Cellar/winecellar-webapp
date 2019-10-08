@@ -51,7 +51,7 @@
                     </table>
                 </div>
                 <div sec:authorize="isAuthenticated()" th:if="${review.user.id == user.id}" class="text-right">
-                    <a th:href="@{/review/__${review.id}__/edit}"><span class="fas fa-edit"></span></a>
+                    <a th:href="@{/review/__${review.id}__/edit}" th:title="#{edit}"><span class="fas fa-edit"></span></a>
                 </div>
             </div>
         </div>

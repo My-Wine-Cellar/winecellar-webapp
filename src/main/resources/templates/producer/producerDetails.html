@@ -43,13 +43,13 @@
                             <tr th:if="${producer.email != null && !producer.email.isEmpty()}">
                                 <td><b th:text="#{email}">Email</b></td>
                                 <td><a th:href="|mailto:*{email}|">
-                                    <div th:text="*{email}"/>
+                                    <div th:text="*{email}"></div>
                                 </a></td>
                             </tr>
                             <tr th:if="${producer.website != null && !producer.website.isEmpty()}">
                                 <td><b th:text="#{web}">Web</b></td>
                                 <td><a th:href="*{website}" target="_blank">
-                                    <div th:text="*{website}"/>
+                                    <div th:text="*{website}"></div>
                                 </a></td>
                             </tr>
                             </tbody>
@@ -58,7 +58,8 @@
                 </div>
                 <br/>
                 <div class="text-right" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/producer/__${producer.id}__/edit}"><span class="fas fa-edit"/></a>
+                    <a th:href="@{/producer/__${producer.id}__/edit}" th:title="#{edit}"><span
+                            class="fas fa-edit"></span></a>
                 </div>
             </div>
             <br/>
@@ -85,7 +86,8 @@
                     </tbody>
                 </table>
                 <div class="text-right" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/wine/new(id=${producer.id})}"><span class="fas fa-plus-square"/></a>
+                    <a th:href="@{/wine/new(id=${producer.id})}" th:title="#{addWine}"><span
+                            class="fas fa-plus-square"></span></a>
                 </div>
             </div>
         </div>

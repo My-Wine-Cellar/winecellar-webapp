@@ -7,7 +7,7 @@
 <div class="container">
     <div class="card p-2 shadow">
         <div class="container">
-            <div class="card shadow p-2 m-3">
+            <div class="card shadow p-4 m-3">
                 <h3 class="col-sm-10" th:text="${barrel.shortname}"></h3>
                 <form th:object="${barrel}" method="post">
                     <div class="form-group">
@@ -19,9 +19,7 @@
                             <input th:replace="~{fragments/inputField :: input ('Web', 'weblink', 'url')}"/>
                         </div>
                     </div>
-                    <br/>
                     <div th:insert="~{fragments/button :: btn-toolbar-cancel-save}"/>
-                    <br/>
                 </form>
             </div>
         </div>

@@ -5,7 +5,7 @@
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/><br/>
 <div class="container">
-    <div class="card border-0 shadow">
+    <div class="card p-2 shadow">
         <div class="container text-left">
             <br/>
             <nav aria-label="breadcrumb">
@@ -33,7 +33,7 @@
                             <tr th:if="${area.weblink != null && !area.weblink.isEmpty()}">
                                 <td><b th:text="#{web}"></b></td>
                                 <td><a th:href="*{weblink}" target="_blank">
-                                    <div th:text="*{weblink}"/>
+                                    <div th:text="*{weblink}"></div>
                                 </a></td>
                             </tr>
                             </tbody>
@@ -42,7 +42,7 @@
                 </div>
                 <br/>
                 <div class="text-right" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/area/__${area.id}__/edit}"><span class="fas fa-edit"/></a>
+                    <a th:href="@{/area/__${area.id}__/edit}" th:title="#{edit}"><span class="fas fa-edit"></span></a>
                 </div>
             </div>
             <br/>
@@ -61,7 +61,8 @@
                 </div>
                 <br/>
                 <div class="text-right" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/area/__${area.id}__/addProducer}"><span class="fas fa-plus-square"/></a>
+                    <a th:href="@{/area/__${area.id}__/addProducer}" th:title="#{addProducer}"><span
+                            class="fas fa-plus-square"></span></a>
                 </div>
             </div>
             <br/>
@@ -78,7 +79,8 @@
                 </div>
                 <br/>
                 <div class="text-right" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/area/__${area.id}__/addGrape}"><span class="fas fa-plus-square"/></a>
+                    <a th:href="@{/area/__${area.id}__/addGrape}" th:title="#{addGrape}"><span
+                            class="fas fa-plus-square"></span></a>
                 </div>
                 <br/>
             </div>

@@ -3,9 +3,9 @@
 <head th:include="~{fragments/layout :: head}"/>
 <body class="welcome-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/>
+<br/><br/>
 <div class="container">
-    <div class="card border-0 shadow">
+    <div class="card p-2 shadow">
         <div class="container">
             <br/>
             <h1 th:text="|#{welcome}, ${user.firstName}|"></h1>
