@@ -33,6 +33,7 @@ public class Paths {
     public static final String REDIRECT_BARREL = "redirect:/barrel/";
     public static final String REDIRECT_BOTTLE_LIST = "redirect:/bottle/list";
     public static final String REDIRECT_GRAPE = "redirect:/grape/";
+    public static final String REDIRECT_REGISTER_SUCCESS = "redirect:/register/success";
     public static final String REDIRECT_REVIEW_LIST = "redirect:/review/list";
     public static final String REDIRECT_ROOT = "redirect:/";
     public static final String REDIRECT_TASTED_LIST = "redirect:/tasted/list";
@@ -49,8 +50,10 @@ public class Paths {
     public static final String REVIEW_VIEW = "review/reviewView";
 
     public static final String SECURITY_ADMIN_CONSOLE = "security/adminConsole";
+    public static final String SECURITY_BAD_TOKEN = "security/badToken";
     public static final String SECURITY_LOGIN = "security/login";
     public static final String SECURITY_REGISTER = "security/register";
+    public static final String SECURITY_SUCCESS = "security/success";
     public static final String SECURITY_USER_REGISTRATION = "security/registerUser";
 
     public static final String TASTED_LIST = "tasted/tastedList";

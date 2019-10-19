@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:include="~{fragments/layout :: head}"/>
+<body class="">
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/><br/><br/>
+<div class="container">
+    <div class="card p-2 shadow">
+        <div class="container">
+            <div class="card shadow p-4 m-3">
+                <h1>You have a bad or expired token. You will have to start over.</h1>
+                <a th:href="@{/register.html}"
+                   th:text="#{startOver}">register</a>
+            </div>
+        </div>
+    </div>
+</div>
+<br/><br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>

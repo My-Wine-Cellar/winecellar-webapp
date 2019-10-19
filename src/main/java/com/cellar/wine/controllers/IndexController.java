@@ -2,7 +2,7 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
-import com.cellar.wine.security.UserService;
+import com.cellar.wine.security.service.UserService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

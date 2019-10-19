@@ -1,6 +1,6 @@
 package com.cellar.wine.models;
 
-import com.cellar.wine.security.User;
+import com.cellar.wine.security.model.User;
 import lombok.*;
 
 import javax.persistence.Column;

@@ -1,4 +1,4 @@
-package com.cellar.wine.security;
+package com.cellar.wine.security.model;
 
 import com.cellar.wine.models.Bottle;
 import com.cellar.wine.models.GenericTastingNotes;

@@ -2,7 +2,7 @@ package com.cellar.wine.ui;
 
 import com.cellar.wine.models.Review;
 import com.cellar.wine.models.Tasted;
-import com.cellar.wine.security.User;
+import com.cellar.wine.security.model.User;
 import com.cellar.wine.services.ReviewService;
 
 import java.util.ArrayList;

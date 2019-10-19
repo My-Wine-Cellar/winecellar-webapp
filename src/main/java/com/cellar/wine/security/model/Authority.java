@@ -1,4 +1,4 @@
-package com.cellar.wine.security;
+package com.cellar.wine.security.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

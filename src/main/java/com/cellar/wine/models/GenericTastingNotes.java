@@ -1,6 +1,6 @@
 package com.cellar.wine.models;
 
-import com.cellar.wine.security.User;
+import com.cellar.wine.security.model.User;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
