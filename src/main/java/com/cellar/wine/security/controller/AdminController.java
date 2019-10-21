@@ -1,8 +1,10 @@
-package com.cellar.wine.security;
+package com.cellar.wine.security.controller;
 
 import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
 
+import com.cellar.wine.security.model.User;
+import com.cellar.wine.security.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +32,7 @@ public class AdminController {
     }
 
     @PostMapping("/registeruser")
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findByUsername(user.getUsername());
         if (userExists != null) {

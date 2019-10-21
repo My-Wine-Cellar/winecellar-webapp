@@ -3,7 +3,7 @@ package com.cellar.wine.controllers;
 import com.cellar.wine.models.Tasted;
 import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
-import com.cellar.wine.security.User;
+import com.cellar.wine.security.model.User;
 import com.cellar.wine.ui.TastedUIFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

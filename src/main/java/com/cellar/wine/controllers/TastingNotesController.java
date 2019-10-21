@@ -5,7 +5,7 @@ import com.cellar.wine.models.Wine;
 import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
 import com.cellar.wine.nav.Session;
-import com.cellar.wine.security.User;
+import com.cellar.wine.security.model.User;
 import com.cellar.wine.ui.ProducerUIFactory;
 import com.cellar.wine.ui.TastingNotesUI;
 import com.cellar.wine.ui.TastingNotesUIFactory;

@@ -16,6 +16,12 @@
                 <input th:case="'url'" class="form-control" autocomplete="off" type="url"
                        th:placeholder="#{__${name}__}"
                        th:field="*{__${name}__}"/>
+                <input th:case="'email'" class="form-control" type="email"
+                       th:placeholder="#{__${name}__}"
+                       th:field="*{__${name}__}"/>
+                <input th:case="'password'" class="form-control" type="password"
+                       th:placeholder="#{__${name}__}"
+                       th:field="*{__${name}__}"/>
                 <input th:case="'number'" class="form-control" autocomplete="off" type="number"
                        th:placeholder="#{__${name}__}"
                        th:field="*{__${name}__}" pattern="^\d*\.?\d*$"/>
@@ -27,7 +33,7 @@
             <span th:if="${valid}" class="fa fa-ok form-control-feedback" aria-hidden="true"></span>
             <th:block th:if="${!valid}">
                 <span class="fa fa-error form-control-feedback" aria-hidden="true"></span>
-                <span class="alert-danger" th:errors="*{__${name}__}">Error</span>
+                <p class="alert-danger" th:errors="*{__${name}__}">Error</p>
             </th:block>
         </div>
     </th:block>

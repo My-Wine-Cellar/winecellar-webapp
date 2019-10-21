@@ -5,7 +5,7 @@ import com.cellar.wine.models.Country;
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Region;
 import com.cellar.wine.nav.Paths;
-import com.cellar.wine.security.UserService;
+import com.cellar.wine.security.service.UserService;
 import com.cellar.wine.services.AreaService;
 import com.cellar.wine.services.BarrelComponentService;
 import com.cellar.wine.services.BarrelService;

@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/fonts/**", "/images/**", "/webfonts/**", "/js/**", "/webjars/**", "/messages/**")
                 .permitAll();
 
-        // Loging specifications
+        // Login specifications
         http.formLogin().loginPage("/login").defaultSuccessUrl("/welcome", true);
 
         //Logout specifications

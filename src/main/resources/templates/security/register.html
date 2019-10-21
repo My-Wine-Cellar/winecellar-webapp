@@ -1,21 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="~{fragments/layout :: head}"/>
 <body class="welcome-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/><br/>
+<br/><br/><br/>
 <div class="container">
     <div class="card p-2 shadow">
         <div class="container">
             <div class="card shadow p-4 m-3">
-                <div class="card-body text-center">
-                    <h4>Hoping to have user registration working asap...</h4>
-                    <h4>For now, please send us an email and we'll get you setup.</h4>
-                    <h5><a href="mailto:mywinecellarinfo@gmail.com" th:text="#{email.wincellar}"></a></h5>
+                <div class="container" align="center">
+                    <form th:object="${user}" method="post">
+                        <h1>Registration Form</h1><br/>
+                        <div class="form-row justify-content-center">
+                            <div class="form-group col-sm-4">
+                                <input th:replace="~{fragments/inputField :: input ('Username', 'userName', 'text')}">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <input th:replace="~{fragments/inputField :: input ('Email', 'email', 'email')}">
+                            </div>
+                        </div>
+                        <div class="form-row justify-content-center">
+                            <div class="form-group col-sm-4">
+                                <input th:replace="~{fragments/inputField :: input ('First Name', 'firstName', 'text')}">
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <input th:replace="~{fragments/inputField :: input ('Last Name', 'lastName', 'text')}">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-5">
+                            <label class="control-label" th:text="#{password}">Label</label>
+                            <input type="password" th:field="*{password}" class="form-control"
+                                   id="password" placeholder="Password">
+                            <ul class="text-danger" th:each="error: ${#fields.errors('password')}">
+                                <li th:each="message : ${error.split(',')}">
+                                    <p class="error-message" th:text="${message}"></p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="form-group col-sm-5">
+                            <input th:replace="~{fragments/inputField :: input ('Matching Password', 'matchingPassword', 'password')}">
+                        </div>
+                        <button type="submit" class="btn btn-link fas fa-user-plus" data-toggle="tooltip"
+                                th:title="#{register}"></button>
+                    </form>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <br/><br/>

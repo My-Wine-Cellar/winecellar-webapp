@@ -1,6 +1,6 @@
 package com.cellar.wine.ui;
 
-import com.cellar.wine.security.User;
+import com.cellar.wine.security.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
