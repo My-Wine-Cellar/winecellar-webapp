@@ -1,30 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:include="~{fragments/layout :: head}"/>
-
-<body>
+<body class="welcome-background">
 <div th:replace="~{fragments/layout :: nav}"/>
-<br/><br/>
-<br/>
+<br/><br/><br/>
 <div class="container" sec:authorize="hasRole('ROLE_ADMIN')">
-    <h2 align="center">Users</h2>
-    <table class="table table-hover">
-        <thead class="thead-light">
-        <tr>
-            <th>Username</th>
-            <th>Role</th>
-            <th></th>
-        </tr>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.username}">Username</td>
-            <td th:text="${user.authorities}">Role</td>
-            <td><a th:href="@{'/userlist/' + ${user.id} + '/delete'}" onclick="return confirm('Are you sure you want to delete this user?');" class="btn btn-default">Delete User</a></td>
-        </tr>
-        </thead>
-    </table>
+    <div class="card p-2 shadow">
+        <div class="container">
+            <div class="card shadow p-4 m-3">
+                <h2 align="center">Users</h2>
+                <table class="table table-sm table-hover">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Last login</th>
+                        <th>Enabled</th>
+<!--                        <th></th>-->
+                    </tr>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.firstName}">Username</td>
+                        <td th:text="${user.lastName}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${user.lastLogin}"></td>
+                        <td th:text="${user.enabled}"></td>
+<!--                        <td><a th:href="@{'/admin/' + ${user.id} + '/view'}"-->
+<!--                               class="fas fa-eye" data-toggle="tooltip" th:text="#{view}"></a></td>-->
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 <br/><br/>
-
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 </body>

@@ -29,7 +29,7 @@ public class Paths {
     public static final String PRODUCER_DETAILS = "producer/producerDetails";
     public static final String PRODUCER_ADD_EDIT = "producer/producerAddEdit";
     
-    public static final String REDIRECT_ADMIN_USER_LIST = "redirect:/userlist";
+    public static final String REDIRECT_ADMIN_USER_LIST = "redirect:/admin/userlist";
     public static final String REDIRECT_BARREL = "redirect:/barrel/";
     public static final String REDIRECT_BOTTLE_LIST = "redirect:/bottle/list";
     public static final String REDIRECT_GRAPE = "redirect:/grape/";

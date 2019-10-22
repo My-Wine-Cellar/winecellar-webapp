@@ -56,6 +56,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .permitAll();
 
+        // Admin only access
+        http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
+
         // Csrf protection
         http.exceptionHandling().and().csrf().disable();
     }
