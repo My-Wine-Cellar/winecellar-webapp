@@ -15,22 +15,22 @@
 ## Technologies
 * Spring Boot
 * Spring Security
-* Gradle
+* Gradle (v4.10)
 * Project Lombok
 * Bootstrap
 * Thymeleaf
 * Hibernate
 * Docker
-* PostgreSQL
+* PostgreSQL (v9.4 or higher is required)
 
 ## Docker
 
 > You will need to have [Docker Engine](https://docs.docker.com/install/) installed before proceeding
 
 ```
-$ docker run --name postgres-dev -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
+$ docker run --name winecellar -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
 ```
-> This will pull down the latest postgres image and run the container with all necessary SpringBoot properties for connection. 
+> This will pull down the latest PostgreSQL image and run the container with all necessary Spring Boot properties for connection. 
 
 ## Project Setup
 ```
