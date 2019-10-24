@@ -36,41 +36,31 @@ public class AreaController extends AbstractController {
 
     @GetMapping("/{areaId}/edit")
     public String areaEditGet(@PathVariable Long areaId, Model model, Principal principal) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
         model.addAttribute(Attributes.AREA, areaService.findById(areaId));
         return Paths.AREA_EDIT;
     }
 
     @PostMapping("/{areaId}/edit")
-    public String areaEditPost(@Valid Area area, BindingResult result, Model model,
-                               @PathVariable Long areaId, Principal principal,
+    public String areaEditPost(Area area, Principal principal,
+                               @PathVariable Long areaId,
                                @RequestParam("action") String action) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
-        if (result.hasErrors()) {
-            model.addAttribute(Attributes.AREA, area);
-            return Paths.AREA_EDIT;
+        if (action.equals("save")) {
+            area.setId(areaId);
+            areaService.save(area);
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
         } else {
-            if (action.equals("save")) {
-                area.setId(areaId);
-                areaService.save(area);
-                return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
-            } else {
-                return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
-            }
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
         }
     }
 
+
     @GetMapping("/{areaId}/addProducer")
     public String areaAddProducerGet(Model model, @PathVariable Long areaId, Principal principal) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
         model.addAttribute(Attributes.AREA, areaService.findById(areaId));
         model.addAttribute(Attributes.PRODUCER, new Producer());
@@ -81,12 +71,12 @@ public class AreaController extends AbstractController {
     public String areaAddProducerPost(@Valid Producer producer, BindingResult result, Model model,
                                       @PathVariable Long areaId, Principal principal,
                                       @RequestParam("action") String action) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
+        if (action.equals("cancel")) {
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
+        }
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.PRODUCER, producer);
             return Paths.PRODUCER_ADD_EDIT;
         } else {
             Area area = areaService.findById(areaId);
@@ -94,17 +84,15 @@ public class AreaController extends AbstractController {
                 area.getProducers().add(producer);
                 producerService.save(producer);
                 return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
-            } else {
-                return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
             }
         }
+        return Paths.ERROR_PAGE;
     }
 
     @GetMapping("/{areaId}/addGrape")
     public String areaAddGrapeGet(Model model, @PathVariable Long areaId, Principal principal) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
+
         model.addAttribute(Attributes.AREA, areaService.findById(areaId));
         model.addAttribute(Attributes.RED_GRAPES, grapeService.getRedGrapes());
         model.addAttribute(Attributes.WHITE_GRAPES, grapeService.getWhiteGrapes());
@@ -112,26 +100,20 @@ public class AreaController extends AbstractController {
     }
 
     @PostMapping("/{areaId}/addGrape")
-    public String areaAddGrapePost(@Valid Area area, BindingResult result, Model model,
-                                   @PathVariable Long areaId, Principal principal,
+    public String areaAddGrapePost(Area area, Principal principal,
+                                   @PathVariable Long areaId,
                                    @RequestParam("action") String action) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
+        principalNull(principal);
+
+        Area a = areaService.findById(areaId);
+        if (action.equals("save")) {
+            List<Grape> grapes = area.getPrimaryGrapes();
+            grapes.forEach(grape -> grape.getAreas().add(a));
+            areaService.save(a);
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), a);
+        } else {
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), a);
         }
 
-        if (result.hasErrors()) {
-            model.addAttribute(Attributes.AREA, area);
-            return Paths.AREA_ADD_GRAPE;
-        } else {
-            Area a = areaService.findById(areaId);
-            if (action.equals("save")) {
-                List<Grape> grapes = area.getPrimaryGrapes();
-                grapes.forEach(grape -> grape.getAreas().add(a));
-                areaService.save(a);
-                return redirectArea(Session.getCountryId(), Session.getRegionId(), a);
-            } else {
-                return redirectArea(Session.getCountryId(), Session.getRegionId(), a);
-            }
-        }
     }
 }

@@ -4,6 +4,8 @@ import com.cellar.wine.utils.WineSorter;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,6 +29,8 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
         this.website = website;
     }
 
+    @NotNull
+    @NotEmpty(message = "You must at least provide the name")
     @Column(name = "name")
     private String name;
 

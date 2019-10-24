@@ -9,7 +9,7 @@
         <div class="container">
             <div class="card shadow p-2 m-3">
                 <div class="card-body text-center">
-                    <h3 class="font-weight-light mb-4">Now adding barrel to the grape:</h3>
+                    <h3 class="font-weight-light mb-4">All fields on this form are required!</h3>
                     <p class="lead">Similar rules apply here.</p>
                     <p class="lead">Use <span class="btn-link fas fa-plus-square"></span> for additional barrels where the grapes are stored.</p>
                     <p class="lead">The <span class="btn-link fas fa-check-circle"></span> button will send you back to adding another grape.</p>
@@ -82,13 +82,13 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-3" th:object="${barrelComponent}">
-                                            <input th:replace="~{fragments/inputField :: input ('Percentage', 'percentage', 'number')}"/>
+                                            <input th:replace="~{fragments/inputField :: input ('*Percentage*', 'percentage', 'number')}"/>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input th:replace="~{fragments/inputField :: input ('Size', 'size', 'number')}"/>
+                                            <input th:replace="~{fragments/inputField :: input ('*Size*', 'size', 'number')}"/>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input th:replace="~{fragments/inputField :: input ('Aging', 'aging', 'number')}"/>
+                                            <input th:replace="~{fragments/inputField :: input ('*Aging*', 'aging', 'number')}"/>
                                         </div>
                                     </div>
                                 </div>

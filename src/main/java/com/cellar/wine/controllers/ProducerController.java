@@ -46,22 +46,23 @@ public class ProducerController extends AbstractController {
     }
 
     @PostMapping("/{producerId}/edit")
-    public String producerEditPost(@Valid Producer producer, BindingResult result, Model model,
-                                   @PathVariable Long producerId, @RequestParam Long areaId, Principal principal,
+    public String producerEditPost(@Valid Producer producer, BindingResult result, Principal principal,
+                                   @PathVariable Long producerId,
                                    @RequestParam("action") String action) {
         principalNull(principal);
 
+        if (action.equals("cancel")) {
+            return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
+        }
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.PRODUCER, producer);
             return Paths.PRODUCER_ADD_EDIT;
         } else {
             if (action.equals("save")) {
                 producer.setId(producerId);
                 producerService.save(producer);
-                return redirectProducer(Session.getCountryId(), Session.getRegionId(), areaId, producerId);
-            } else {
-                return redirectProducer(Session.getCountryId(), Session.getRegionId(), areaId, producerId);
+                return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
             }
         }
+        return Paths.ERROR_PAGE;
     }
 }
