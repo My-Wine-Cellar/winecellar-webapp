@@ -25,9 +25,7 @@ public class CountryController extends AbstractController {
 
     @GetMapping("/{countryId}/edit")
     public String countryEditGet(@PathVariable Long countryId, Model model, Principal principal) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
         model.addAttribute(Attributes.COUNTRY, countryService.findById(countryId));
         return Paths.COUNTRY_EDIT;
@@ -37,9 +35,7 @@ public class CountryController extends AbstractController {
     public String countryEditPost(@Valid Country country, BindingResult result, Model model,
                                   @PathVariable Long countryId, Principal principal,
                                   @RequestParam("action") String action) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
         if (result.hasErrors()) {
             model.addAttribute(Attributes.COUNTRY, country);
