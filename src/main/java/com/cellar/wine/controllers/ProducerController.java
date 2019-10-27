@@ -34,9 +34,7 @@ public class ProducerController extends AbstractController {
 
     @GetMapping("/{producerId}/edit")
     public String producerEditGet(@PathVariable Long producerId, Model model, Principal principal) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
         Producer producer = producerService.findById(producerId);
         Area area = areaService.findById(Session.getAreaId());
@@ -51,9 +49,7 @@ public class ProducerController extends AbstractController {
     public String producerEditPost(@Valid Producer producer, BindingResult result, Model model,
                                    @PathVariable Long producerId, @RequestParam Long areaId, Principal principal,
                                    @RequestParam("action") String action) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
         if (result.hasErrors()) {
             model.addAttribute(Attributes.PRODUCER, producer);

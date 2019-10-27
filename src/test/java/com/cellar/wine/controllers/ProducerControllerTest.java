@@ -1,109 +1,76 @@
 package com.cellar.wine.controllers;
 
+import com.cellar.wine.models.Area;
 import com.cellar.wine.models.Producer;
+import com.cellar.wine.services.AreaService;
 import com.cellar.wine.services.ProducerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ProducerControllerTest {
+class ProducerControllerTest {
+
+    @InjectMocks
+    ProducerController controller;
 
     @Mock
     ProducerService producerService;
 
-    @InjectMocks
-    ProducerController producerController;
+    @Mock
+    AreaService areaService;
 
-    private Set<Producer> producers;
+    private Producer producer;
+
+    private Area area;
 
     private MockMvc mockMvc;
 
-    private Producer producer1 = new Producer();
-    private Producer producer2 = new Producer();
-
     @BeforeEach
-    void setUp() throws Exception {
-        producers = new HashSet<>();
-        producer1.setId(1L);
-        producers.add(producer1);
-        producers.add(producer2);
+    void setUp() {
+        producer = new Producer();
+        producer.setId(1L);
+        producer.setName("Producer");
 
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(producerController)
-                .build();
+        area = new Area();
+        area.setId(1L);
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
     @Test
-    void displayOwner() throws Exception {
-        when(producerService.findById(anyLong())).thenReturn(producer1);
+    void producerEditGet() throws Exception {
+        when(producerService.findById(anyLong())).thenReturn(producer);
 
-        mockMvc.perform(get("/producers/1"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("producers/producerDetails"))
-                .andExpect(model().attribute("producer", hasProperty("id", is(1L))));
+        mockMvc.perform(get("/producer/{producerId}/edit", producer.getId())
+                .param("areaId", area.getId().toString()))
+                .andExpect(model().attribute("producer", producer))
+                //.andExpect(model().attribute("area", area))
+                .andExpect(status().is(200))
+                .andExpect(view().name("producer/producerAddEdit"));
     }
 
+    //@Test
+    void producerEditPost() throws Exception {
 
-    @Test
-    void initCreationForm() throws Exception {
-        mockMvc.perform(get("/producers/new"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("producers/createOrUpdateProducer"))
-                .andExpect(model().attributeExists("producer"));
+        when(producerService.findById(anyLong())).thenReturn(producer);
 
-        verifyZeroInteractions(producerService);
-    }
-
-    @Test
-    void processCreationForm() throws Exception {
-        when(producerService.save(ArgumentMatchers.any())).thenReturn(producer1);
-
-        mockMvc.perform(post("/producers/new"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/producers/" + producer1.getId()));
-
-        verify(producerService).save(ArgumentMatchers.any());
-    }
-
-    @Test
-    void initUpdateProducerForm() throws Exception {
-        when(producerService.findById(anyLong())).thenReturn(producer1);
-
-        mockMvc.perform(get("/producers/1/edit"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("producers/createOrUpdateProducer"))
-                .andExpect(model().attributeExists("producer"));
-
-        verifyZeroInteractions(producerService);
-    }
-
-    @Test
-    void processUpdateProducerForm() throws Exception {
-        when(producerService.save(ArgumentMatchers.any())).thenReturn(producer1);
-
-        mockMvc.perform(post("/producers/1/edit"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/producers/" + producer1.getId()))
-                .andExpect(model().attributeExists("producer"));
-
-        verify(producerService).save(ArgumentMatchers.any());
+        mockMvc.perform(post("/producer/{producerId}/edit", producer.getId())
+                .param("action", "save")
+                .param("areaId", area.getId().toString()))
+                .andExpect(model().attribute("producer", producer))
+                .andExpect(status().isOk());
     }
 }
