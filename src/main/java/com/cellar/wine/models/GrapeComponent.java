@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
     @Column(name = "harvest_end")
     private Date harvestEnd;
 
+    @NotNull(message = "You need to select a grape")
     @ManyToOne
     @JoinColumn(name = "grape_id", referencedColumnName = "id")
     private Grape grape;

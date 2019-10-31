@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -17,6 +18,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "barrel_component")
 public class BarrelComponent extends BaseEntity implements Comparable<BarrelComponent> {
+
+    private static final String NOT_NULL_MESSAGE = "This field is required";
 
     public BarrelComponent() {
         super();
@@ -32,12 +35,15 @@ public class BarrelComponent extends BaseEntity implements Comparable<BarrelComp
         this.barrel = barrel;
     }
 
+    @NotNull(message = NOT_NULL_MESSAGE)
     @Column(name = "percentage")
     private Byte percentage;
 
+    @NotNull(message = NOT_NULL_MESSAGE)
     @Column(name = "size")
     private Integer size;
 
+    @NotNull(message = NOT_NULL_MESSAGE)
     @Column(name = "aging")
     private Integer aging;
 
@@ -45,6 +51,7 @@ public class BarrelComponent extends BaseEntity implements Comparable<BarrelComp
     @JoinColumn(name = "grape_component_id", referencedColumnName = "id")
     private GrapeComponent grapeComponent;
 
+    @NotNull(message = "You need to select a barrel")
     @ManyToOne
     @JoinColumn(name = "barrel_id", referencedColumnName = "id")
     private Barrel barrel;

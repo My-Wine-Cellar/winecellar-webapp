@@ -10,7 +10,6 @@
             <div class="card shadow p-4 m-3">
                 <form th:object="${producer}" method="post">
                     <input type="hidden" name="id" th:value="*{id}"/>
-                    <input type="hidden" name="areaId" th:value="${area.id}"/>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>

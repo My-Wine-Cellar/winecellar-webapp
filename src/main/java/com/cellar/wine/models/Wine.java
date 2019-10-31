@@ -11,6 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -41,15 +44,20 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
         this.shape = shape;
     }
 
+    @NotNull
+    @NotEmpty
     @Column(name = "name")
     private String name;
 
+    @NotNull
+    @Min(value = 4)
     @Column(name = "vintage")
     private Integer vintage;
 
     @Column(name = "alcohol")
     private Float alcohol;
 
+    @NotNull
     @Column(name = "size")
     private Float size;
 

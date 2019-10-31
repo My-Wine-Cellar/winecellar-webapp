@@ -11,7 +11,7 @@ INSERT INTO grape_component (percentage, grape_id, wine_id) VALUES (7, 115, 1);
 INSERT INTO grape_component (percentage, grape_id, wine_id) VALUES (6, 162, 1);
 INSERT INTO grape_component (percentage, grape_id, wine_id) VALUES (4, 184, 1);
 INSERT INTO grape_component (percentage, grape_id, wine_id) VALUES (2, 157, 1);
-INSERT INTO barrel_component (percentage, aging, grape_component_id, barrel_id) VALUES (100, 545, 1, 1);
+INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barrel_id) VALUES (100, 545, 225, 1, 1);
 
 -- Poggio Antico
 INSERT INTO producer (name, phone, fax, email, description, website) VALUES ('Poggio Antico', '+39 0577-848044', '+39 0577-846563', 'mail@poggioantico.com', 'Poggio Antico, Tuscany', 'https://www.poggioantico.com/');
@@ -21,7 +21,7 @@ INSERT INTO wine (name, vintage, size, alcohol, acid, bottle_aging, weblink, pro
 INSERT INTO maceration (days) VALUES (8);
 INSERT INTO fermentation (days, temperature) VALUES (20, 26);
 INSERT INTO grape_component (percentage, harvest_begin, harvest_end, grape_id, wine_id, maceration_id, fermentation_id) VALUES (100, '2013-09-26'::date, '2013-10-21'::date, 201, 2, 2, 1);
-INSERT INTO barrel_component (percentage, aging, grape_component_id, barrel_id) VALUES (100, 1095, 6, 5);
+INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barrel_id) VALUES (100, 1095, 500, 6, 5);
 -- Madre
 INSERT INTO wine (name, vintage, size, alcohol, acid, bottle_aging, weblink, producer_id, closure_id, shape_id) VALUES ('Madre', 2016, 0.75, 14.5, 5.7, 120, 'https://www.poggioantico.com/product/madre/', 2, 1, 1);
 INSERT INTO fermentation (days, temperature) VALUES (10, 30);

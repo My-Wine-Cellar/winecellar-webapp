@@ -39,6 +39,7 @@ public class Paths {
     public static final String REDIRECT_TASTED_LIST = "redirect:/tasted/list";
     public static final String REDIRECT_TASTINGNOTES_LIST = "redirect:/tastingnotes/list";
     public static final String REDIRECT_WINE_GRAPE = "redirect:/wine/grape";
+    public static final String REDIRECT_WINE_NEW = "redirect:/wine/new";
     public static final String REDIRECT_WISHLIST_LIST = "redirect:/wishlist/list";
     public static final String REDIRECT_WELCOME = "redirect:/welcome";
 

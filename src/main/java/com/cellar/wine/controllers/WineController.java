@@ -64,14 +64,18 @@ public class WineController extends AbstractController {
 
     @PostMapping(value = "/new")
     public String wineAddRequiredPost(@Valid Wine wine, BindingResult result,
-                                      Model model, Principal principal, SessionStatus status,
+                                      Principal principal, SessionStatus status,
                                       @RequestParam Long producerId,
                                       @RequestParam(value = "action") String action) {
         principalNull(principal);
 
+        if (action.equals("cancel")) {
+            Session.clear(status);
+            return redirectProducer(Session.getCountryId(), Session.getRegionId(),
+                    Session.getAreaId(), Session.getProducerId());
+        }
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.WINE, wine);
-            return Paths.WINE_ADD_EDIT_DETAILS;
+            return Paths.REDIRECT_WINE_NEW + "?id=" + producerId;
         } else {
             Producer producer = producerService.findById(producerId);
             wine.setProducer(producer);
@@ -87,10 +91,6 @@ public class WineController extends AbstractController {
                             "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
                 case "next":
                     return Paths.REDIRECT_WINE_GRAPE;
-                case "cancel":
-                    Session.clear(status);
-                    return redirectProducer(Session.getCountryId(), Session.getRegionId(),
-                            Session.getAreaId(), Session.getProducerId());
                 default:
                     Session.clear(status);
                     return Paths.ERROR_PAGE;
@@ -110,18 +110,24 @@ public class WineController extends AbstractController {
     }
 
     @PostMapping("/grape")
-    public String wineAddGrapeComponentsPost(SessionStatus status, Principal principal,
-                                             GrapeComponent grapeComponent,
+    public String wineAddGrapeComponentsPost(SessionStatus status, Principal principal, Model model,
+                                             @Valid GrapeComponent grapeComponent, BindingResult result,
                                              @RequestParam(value = "action") String action) {
         principalNull(principal);
 
         Wine wine = Session.getWine();
+
+        if (result.hasErrors()) {
+            model.addAttribute(Attributes.WINEGRAPES, grapeService.findAll());
+            return Paths.WINE_ADD_GRAPE;
+        }
 
         Session.setGrapeComponent(grapeComponent);
         List<GrapeComponent> grapes = Session.getGrapeComponents();
         List<BarrelComponent> barrels = Session.getBarrelComponents();
 
         grapeComponent.setWine(wine);
+
         switch (action) {
             case "addAnotherGrape":
                 return Paths.REDIRECT_WINE_GRAPE;
@@ -166,7 +172,8 @@ public class WineController extends AbstractController {
 
     @PostMapping("/grape/{grapeId}/barrel")
     public String wineAddGrapeBarrelPost(Principal principal, SessionStatus status,
-                                         BarrelComponent barrelComponent,
+                                         @PathVariable Long grapeId, Model model,
+                                         @Valid BarrelComponent barrelComponent, BindingResult result,
                                          @RequestParam(value = "action") String action) {
         principalNull(principal);
 
@@ -178,29 +185,36 @@ public class WineController extends AbstractController {
         List<GrapeComponent> grapes = Session.getGrapeComponents();
 
         barrelComponent.setGrapeComponent(grapeComponent);
-        switch (action) {
-            case "addAnotherGrape":
-                return Paths.REDIRECT_WINE_GRAPE;
-            case "addAnotherBarrel":
-                return Paths.REDIRECT_WINE_GRAPE + "/" + grapeComponent.getGrape().getId() + "/barrel";
-            case "saveWine":
-                Wine savedWine = wineService.save(wine);
 
-                saveOrNullMaceration(grapes);
-                saveOrNullFermentation(grapes);
+        if (result.hasErrors()) {
+            Grape grape = grapeService.findById(grapeId);
+            model.addAttribute(Attributes.GRAPE, grape);
+            return Paths.WINE_ADD_GRAPE_BARREL;
+        } else {
+            switch (action) {
+                case "addAnotherGrape":
+                    return Paths.REDIRECT_WINE_GRAPE;
+                case "addAnotherBarrel":
+                    return Paths.REDIRECT_WINE_GRAPE + "/" + grapeComponent.getGrape().getId() + "/barrel";
+                case "saveWine":
+                    Wine savedWine = wineService.save(wine);
 
-                grapeComponentService.saveAll(grapes);
-                barrelComponentService.saveAll(barrels);
+                    saveOrNullMaceration(grapes);
+                    saveOrNullFermentation(grapes);
 
-                WineUI wui = WineUIFactory.instance().create(savedWine);
+                    grapeComponentService.saveAll(grapes);
+                    barrelComponentService.saveAll(barrels);
 
-                Session.clear(status);
-                return redirectProducer(Session.getCountryId(), Session.getRegionId(),
-                        Session.getAreaId(), Session.getProducerId()) +
-                        "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
-            default:
-                Session.clear(status);
-                return Paths.ERROR_PAGE;
+                    WineUI wui = WineUIFactory.instance().create(savedWine);
+
+                    Session.clear(status);
+                    return redirectProducer(Session.getCountryId(), Session.getRegionId(),
+                            Session.getAreaId(), Session.getProducerId()) +
+                            "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
+                default:
+                    Session.clear(status);
+                    return Paths.ERROR_PAGE;
+            }
         }
 
     }

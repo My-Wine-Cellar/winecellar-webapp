@@ -8,19 +8,39 @@
     <div class="card p-2 shadow">
         <div class="container">
             <div class="card shadow p-4 m-3">
+                <div class="card-body text-center">
+                    <h3 class="font-weight-light mb-4">And here begins the process of adding a Wine!</h3>
+                    <p class="lead"><b>Name, vintage, and size are required.</b></p>
+                    <p class="lead">Vintage needs to be in YYYY format.</p>
+                    <p class="lead">Size values are based off Liter.  So for the standard wine bottle of 750ml, you would use .75 or 0.75</p>
+                    <p class="lead">Next you can hit <span class="btn-link fas fa-plus-square"></span> to add the grape/s that makeup this wine.</p>
+                    <p class="lead">Or feel free to <span
+                            class="btn-link fas fa-redo"></span> cancel and go back to the last page.</p>
+                    <p class="lead">Otherwise simply <span
+                            class="btn-link fas fa-save"></span> when ready.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="container">
+    <div class="card p-2 shadow">
+        <div class="container">
+            <div class="card shadow p-4 m-3">
                 <div class="card-body">
                     <form th:object="${wine}" method="post">
                         <input type="hidden" name="id" th:value="*{id}"/>
                         <input type="hidden" name="producerId" th:value="${wine.producer.id}"/>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
+                                <input th:replace="~{fragments/inputField :: input ('*Name*', 'name', 'text')}"/>
                             </div>
                             <div class="form-group col-md-2">
-                                <input th:replace="~{fragments/inputField :: input ('Vintage', 'vintage', 'number')}"/>
+                                <input th:replace="~{fragments/inputField :: input ('*Vintage*', 'vintage', 'number')}"/>
                             </div>
                             <div class="form-group col-md-2">
-                                <input th:replace="~{fragments/inputField :: input ('Size', 'size', 'text')}"/>
+                                <input th:replace="~{fragments/inputField :: input ('*Size*', 'size', 'text')}"/>
                             </div>
                         </div>
                         <div class="form-row">
@@ -47,18 +67,20 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-md-2">
                                 <input th:replace="~{fragments/inputField :: input ('Aging', 'bottleAging', 'number')}"/>
                             </div>
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-md-2">
                                 <input th:replace="~{fragments/inputField :: input ('Alcohol', 'alcohol', 'text')}"/>
                             </div>
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-md-2">
                                 <input th:replace="~{fragments/inputField :: input ('Acid', 'acid', 'text')}"/>
                             </div>
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-md-2">
                                 <input th:replace="~{fragments/inputField :: input ('pH', 'pH', 'text')}"/>
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-4">
                                 <input th:replace="~{fragments/inputField :: input ('Subarea', 'subarea', 'text')}"/>
                             </div>
