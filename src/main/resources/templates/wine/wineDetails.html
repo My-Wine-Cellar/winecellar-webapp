@@ -117,15 +117,15 @@
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li th:if="${! #lists.isEmpty(wine.reviews)}" class="nav-item">
                             <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab"
-                               aria-controls="review" aria-selected="true">Reviews</a>
+                               aria-controls="review" aria-selected="true" th:text="#{reviews}">Reviews</a>
                         </li>
                         <li th:if="${! #lists.isEmpty(wine.genericTastingNotes)}" class="nav-item">
                             <a class="nav-link" id="tastingnotes-tab" data-toggle="tab" href="#tastingnotes" role="tab"
-                               aria-controls="tastingnotes" aria-selected="false">Tasting Notes</a>
+                               aria-controls="tastingnotes" aria-selected="false" th:text="#{tastingNotes}">Tasting Notes</a>
                         </li>
                         <li th:if="${mybottle != null}" class="nav-item" sec:authorize="isAuthenticated()">
                             <a class="nav-link" id="cellar-tab" data-toggle="tab" href="#cellar" role="tab"
-                               aria-controls="cellar" aria-selected="false">Cellar</a>
+                               aria-controls="cellar" aria-selected="false" th:text="#{cellar}">Cellar</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="data-sheet-tab" data-toggle="tab" href="#data-sheet" role="tab"
@@ -272,23 +272,23 @@
                                         <tbody>
                                         <tr th:if="${winegrape.percentage}">
                                             <td width="25%"><b th:text="#{percentage}">Percentage</b></td>
-                                            <td th:text="|${winegrape.percentage}%|"/>
+                                            <td th:text="|${winegrape.percentage}%|"></td>
                                         </tr>
                                         <tr th:if="${winegrape.harvestBegin}">
                                             <td width="25%"><b th:text="#{harvestStart}">Harvest start</b></td>
-                                            <td th:text="${#dates.format(winegrape.harvestBegin, 'MMM dd, yyyy')}"/>
+                                            <td th:text="${#dates.format(winegrape.harvestBegin, 'MMM dd, yyyy')}"></td>
                                         </tr>
                                         <tr th:if="${winegrape.harvestEnd}">
                                             <td width="25%"><b th:text="#{harvestEnd}">Harvest end</b></td>
-                                            <td th:text="${#dates.format(winegrape.harvestEnd, 'MMM dd, yyyy')}"/>
+                                            <td th:text="${#dates.format(winegrape.harvestEnd, 'MMM dd, yyyy')}"></td>
                                         </tr>
                                         <tr th:if="${winegrape.macerationDays}">
                                             <td width="25%"><b th:text="#{maceration}">Maceration</b></td>
-                                            <td th:text="${winegrape.macerationDays} + ' days' + (${winegrape.macerationTemperature} != null ? ' at ' + ${winegrape.macerationTemperature} + 'C' : '')"/>
+                                            <td th:text="${winegrape.macerationDays} + ' days' + (${winegrape.macerationTemperature} != null ? ' at ' + ${winegrape.macerationTemperature} + 'C' : '')"></td>
                                         </tr>
                                         <tr th:if="${winegrape.fermentationDays}">
                                             <td width="25%"><b th:text="#{fermentation}">Fermentation</b></td>
-                                            <td th:text="${winegrape.fermentationDays} + ' days' + (${winegrape.fermentationTemperature} != null ? ' at ' + ${winegrape.fermentationTemperature} + 'C' : '')"/>
+                                            <td th:text="${winegrape.fermentationDays} + ' days' + (${winegrape.fermentationTemperature} != null ? ' at ' + ${winegrape.fermentationTemperature} + 'C' : '')"></td>
                                         </tr>
                                         <tr th:if="${! #lists.isEmpty(winegrape.barrels)}">
                                             <td width="25%"><b th:text="#{barrels}">Barrels</b></td>
@@ -305,15 +305,15 @@
                                                         <tbody>
                                                         <tr th:if="${barrel.percentage}">
                                                             <td width="25%" th:text="#{percentage}">Percentage</td>
-                                                            <td th:text="|${barrel.percentage}%|"/>
+                                                            <td th:text="|${barrel.percentage}%|"></td>
                                                         </tr>
                                                         <tr th:if="${barrel.size}">
                                                             <td width="25%" th:text="#{size}">Size</td>
-                                                            <td th:text="|${barrel.size}L|"/>
+                                                            <td th:text="|${barrel.size}L|"></td>
                                                         </tr>
                                                         <tr th:if="${barrel.aging}">
                                                             <td width="25%" th:text="#{aging}">Aging</td>
-                                                            <td th:text="${barrel.aging}"/>
+                                                            <td th:text="${barrel.aging}"></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
