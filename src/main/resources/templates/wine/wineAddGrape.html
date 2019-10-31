@@ -33,28 +33,28 @@
                             <br/>
                             <p class="card-text"
                                th:if="${wine.description != null && !wine.description.isEmpty()}"
-                               th:text="|Description: ${wine.description}|"></p>
+                               th:text="|#{description}: ${wine.description}|"></p>
                             <ul class="list-inline">
-                                <li class="list-inline-item card-text" th:text="|Vintage: ${wine.vintage}|"></li>
-                                <li class="list-inline-item card-text" th:text="|Size: ${wine.size}L|"></li>
+                                <li class="list-inline-item card-text" th:text="|#{vintage}: ${wine.vintage}|"></li>
+                                <li class="list-inline-item card-text" th:text="|#{size}: ${wine.size}L|"></li>
                             </ul>
                             <ul class="list-inline">
                                 <li class="list-inline-item card-text" th:if="${wine.closure != null}"
-                                    th:text="|Closure: ${wine.closure.name}|"></li>
+                                    th:text="|#{closure}: ${wine.closure.name}|"></li>
                                 <li class="list-inline-item card-text" th:if="${wine.shape != null}"
-                                    th:text="|Shape: ${wine.shape.name}|"></li>
+                                    th:text="|#{shape}: ${wine.shape.name}|"></li>
                             </ul>
                             <ul class="list-inline">
                                 <li class="list-inline-item card-text" th:if="${wine.acid}"
-                                    th:text="|Acid: ${wine.acid} g/L|"></li>
+                                    th:text="|#{acid}: ${wine.acid} g/L|"></li>
                                 <li class="list-inline-item card-text" th:if="${wine.getPH()}"
-                                    th:text="|Ph: ${wine.pH}|"></li>
+                                    th:text="|#{pH}: ${wine.pH}|"></li>
                             </ul>
                             <ul class="list-inline">
                                 <li class="list-inline-item card-text" th:if="${wine.alcohol}"
-                                    th:text="|Alochol: ${wine.alcohol}%|"></li>
+                                    th:text="|#{alcohol}: ${wine.alcohol}%|"></li>
                                 <li class="list-inline-item card-text" th:if="${wine.bottleAging}"
-                                    th:text="|Aging: ${wine.bottleAging} days|"></li>
+                                    th:text="|#{aging}: ${wine.bottleAging} days|"></li>
                             </ul>
                             <p class="card-link" th:if="${wine.weblink != null && !wine.weblink.isEmpty()}"
                                th:text="${wine.weblink}"></p>
@@ -72,7 +72,7 @@
                                 <div class="container">
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label th:for="${winegrapes}">Grapes</label>
+                                            <label th:for="${winegrapes}" th:text="#{grapes}">Grapes</label>
                                             <select class="form-control" th:field="*{grape}">
                                                 <option value="">Please select a Grape</option>
                                                 <option class="form-control" th:each="winegrape : ${winegrapes}"
