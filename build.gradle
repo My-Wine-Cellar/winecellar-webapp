@@ -35,6 +35,7 @@ dependencies {
     compile('com.github.cliftonlabs:json-simple:3.1.0')
     compile('javax.inject:javax.inject:1')
     compile('org.passay:passay:1.5.0')
+    compile('org.apache.commons:commons-lang3:3.9')
 
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('org.postgresql:postgresql:42.2.5')

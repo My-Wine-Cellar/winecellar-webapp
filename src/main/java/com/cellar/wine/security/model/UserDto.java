@@ -3,6 +3,7 @@ package com.cellar.wine.security.model;
 import com.cellar.wine.security.password.ValidPassword;
 import com.cellar.wine.utils.Regex;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -38,10 +39,10 @@ public class UserDto {
     private String email;
 
     public String getFirstName() {
-        return firstName.substring(0, 1).toUpperCase() + (firstName.length() > 1 ? firstName.substring(1) : "");
+        return StringUtils.capitalize(firstName);
     }
 
     public String getLastName() {
-        return lastName.substring(0, 1).toUpperCase() + (lastName.length() > 1 ? lastName.substring(1) : "");
+        return StringUtils.capitalize(lastName);
     }
 }

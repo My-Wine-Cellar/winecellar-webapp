@@ -33,7 +33,7 @@
                     <td>
                         <a th:href="@{__${n.id}__}" th:title="#{view}"><span class="fas fa-eye"></span></a>
                         <a th:href="@{__${n.id}__/edit}" th:title="#{edit}"><span class="fas fa-edit"></span></a>
-                        <a th:href="@{__${n.id}__/delete}" th:title="#{delete}"><span class="fas fa-trash"></span></a>
+                        <a th:href="@{__${n.id}__/delete}" onclick="return confirm('Are you sure?');" th:title="#{delete}"><span class="fas fa-trash"></span></a>
                     </td>
                 </tr>
                 </tbody>

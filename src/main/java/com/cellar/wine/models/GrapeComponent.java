@@ -35,7 +35,7 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
         this.wine = wine;
     }
 
-    @NotNull
+    @NotNull(message = "Please provide the %")
     @Column(name = "percentage")
     private Byte percentage;
 
@@ -45,12 +45,11 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
     @Column(name = "harvest_end")
     private Date harvestEnd;
 
-    @NotNull(message = "You need to select a grape")
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "grape_id", referencedColumnName = "id")
     private Grape grape;
 
-    @NotNull
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "wine_id", referencedColumnName = "id")
     private Wine wine;

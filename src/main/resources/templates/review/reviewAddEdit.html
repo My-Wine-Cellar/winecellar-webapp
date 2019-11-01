@@ -14,7 +14,7 @@
                     <input type="hidden" name="id" th:value="*{id}"/>
                     <input type="hidden" name="wineId" th:value="${wine.id}"/>
                     <div class="form-row">
-                        <div class="form-group col-md-1">
+                        <div class="form-group col-md-2">
                             <input th:replace="~{fragments/inputField :: input ('Stars', 'stars', 'number')}"/>
                         </div>
                     </div>
