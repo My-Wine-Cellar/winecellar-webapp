@@ -1,0 +1,7 @@
+^\/[\*]$
+^\W?\* My-Wine-Cellar, copyright \d\d\d\d$
+^\W?\*$
+^\W?\* This is free software; you can redistribute it and/or modify it$
+^\W?\* under the terms of the Eclipse Public License 2.0 which is available at$
+^\W?\* http://www.eclipse.org/legal/epl-2.0$
+^\W?[\*]\/$

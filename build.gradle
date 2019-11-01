@@ -13,11 +13,22 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'checkstyle'
 
 repositories {
     mavenCentral()
     mavenLocal()
     jcenter()
+}
+
+checkstyle {
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+    configProperties = [
+        'configDir': rootProject.file('config/checkstyle'),
+        'baseDir': rootDir,
+    ]
+
+    toolVersion "8.26"
 }
 
 dependencies {
