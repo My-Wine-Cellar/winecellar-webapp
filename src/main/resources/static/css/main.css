@@ -73,6 +73,14 @@ select::-ms-expand {
 }
 
 /* Background photos */
+.about-background {
+    background: url('/images/about.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
 .welcome-background {
     background: url('/images/welcome.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;

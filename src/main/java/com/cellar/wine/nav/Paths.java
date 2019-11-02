@@ -2,6 +2,11 @@ package com.cellar.wine.nav;
 
 public class Paths {
 
+    public static final String ABOUT = "about/about";
+    public static final String ABOUT_CONTACT_US = "about/contactus";
+    public static final String ABOUT_CREDITS = "about/credits";
+    public static final String ABOUT_LICENSE = "about/license";
+    public static final String ABOUT_PEOPLE = "about/people";
     public static final String AREA_ADD_GRAPE = "area/areaAddGrape";
     public static final String AREA_DETAILS = "area/areaDetails";
     public static final String AREA_EDIT = "area/areaEdit";
@@ -21,8 +26,6 @@ public class Paths {
     public static final String GRAPE_DETAILS = "grape/grapeDetails";
     public static final String GRAPE_EDIT = "grape/grapeEdit";
     public static final String GRAPE_LIST = "grape/grapeList";
-
-    public static final String WELCOME_PAGE = "index/welcomePage";
 
     public static final String LANDING_PAGE = "index/landingPage";
     
@@ -63,6 +66,7 @@ public class Paths {
     public static final String TASTING_NOTES_LIST = "tastingNotes/tastingNotesList";
     public static final String TASTING_NOTES_VIEW = "tastingNotes/tastingNotesView";
 
+    public static final String WELCOME_PAGE = "index/welcomePage";
     public static final String WINE_ADD_GRAPE = "wine/wineAddGrape";
     public static final String WINE_ADD_GRAPE_BARREL = "wine/wineAddGrapeBarrel";
     public static final String WINE_DETAILS = "wine/wineDetails";
