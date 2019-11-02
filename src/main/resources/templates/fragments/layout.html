@@ -62,6 +62,20 @@
             <li class="nav-item" sec:authorize="! isAuthenticated()">
                 <a class="nav-link" th:href="@{/login}">Login<span class="fas fa-sign-in-alt" aria-hidden="true"></span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/about}">About</a>
+            </li>
+            <li class="nav-item dropdown">
+                <div id="navbarDropdownAboutLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-ellipsis-v"></span>
+                </div>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownAboutLink">
+                    <a class="dropdown-item" th:href="@{/about/people}">People</a>
+                    <a class="dropdown-item" th:href="@{/about/credits}">Credits</a>
+                    <a class="dropdown-item" th:href="@{/about/license}">License</a>
+                    <a class="dropdown-item" th:href="@{/about/contactus}">Contact Us</a>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>
@@ -69,7 +83,7 @@
 <div th:fragment="footer" class="container">
     <footer class="footer">
         <div class="container text-center">
-            <a href="https://github.com/pauldpearson/winecellar-webapp" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://github.com/My-Wine-Cellar/winecellar-webapp" target="_blank"><i class="fab fa-github"></i></a>
         </div>
     </footer>
 </div>

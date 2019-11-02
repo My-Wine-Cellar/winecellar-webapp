@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:include="~{fragments/layout :: head}"/>
+<body class="about-background">
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/>
+<div class="container">
+  <div class="card border-0 shadow">
+    <div class="container">
+      <br/>
+      <div class="container justify-content-center">
+        <br/>
+        <h2 align="center">Contact Us</h2>
+        <br/>
+      </div>
+      <div class="text-left">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td width="20%">Question</td>
+              <td>
+                <a href="https://github.com/My-Wine-Cellar/winecellar-webapp/issues" target="_blank">github.com/My-Wine-Cellar/winecellar-webapp/issues</a>
+              </td>
+            </tr>
+            <tr>
+              <td width="20%">Feature request</td>
+              <td>
+                <a href="https://github.com/My-Wine-Cellar/winecellar-webapp/issues" target="_blank">github.com/My-Wine-Cellar/winecellar-webapp/issues</a>
+              </td>
+            </tr>
+            <tr>
+              <td width="20%">Issue</td>
+              <td>
+                <a href="https://github.com/My-Wine-Cellar/winecellar-webapp/issues" target="_blank">github.com/My-Wine-Cellar/winecellar-webapp/issues</a>
+              </td>
+            </tr>
+            <tr>
+              <td width="20%">Email</td>
+              <td>
+                <a href="mailto:mywinecellarinfo@gmail.com">mywinecellarinfo@gmail.com</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br/>
+    </div>
+  </div>
+</div>
+<br/><br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+</body>
+</html>
