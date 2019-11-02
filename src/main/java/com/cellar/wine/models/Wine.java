@@ -79,6 +79,7 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @Column(name = "subarea")
     private String subarea;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "producer_id", referencedColumnName = "id")
     private Producer producer;
@@ -101,10 +102,12 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<Wishlist> wishlists;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "closure_id", referencedColumnName = "id")
     private Closure closure;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shape_id", referencedColumnName = "id")
     private Shape shape;

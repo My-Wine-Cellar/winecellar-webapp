@@ -3,6 +3,7 @@ package com.cellar.wine.models;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -21,6 +22,7 @@ public class Maceration extends BaseEntity implements Comparable<Maceration> {
         this.temperature = temperature;
     }
 
+    @NotNull
     @Column(name = "days")
     private Byte days;
 

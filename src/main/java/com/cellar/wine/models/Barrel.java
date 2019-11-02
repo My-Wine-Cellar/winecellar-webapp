@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
@@ -22,6 +24,7 @@ public class Barrel extends BaseEntity implements Comparable<Barrel> {
         this.weblink = weblink;
     }
 
+    @NotNull
     @Column(name = "name")
     private String name;
 

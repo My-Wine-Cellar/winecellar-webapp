@@ -3,6 +3,7 @@ package com.cellar.wine.models;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class Region extends BaseEntity implements Comparable<Region> {
         this.country = country;
     }
 
+    @NotNull
     @Column(name = "name")
     private String name;
 
@@ -33,6 +35,7 @@ public class Region extends BaseEntity implements Comparable<Region> {
     @Column(name = "weblink")
     private String weblink;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;

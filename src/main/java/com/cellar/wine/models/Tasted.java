@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -23,10 +24,12 @@ public class Tasted extends BaseEntity implements Comparable<Tasted> {
         this.wine = wine;
     }
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "wine_id", referencedColumnName = "id")
     private Wine wine;
