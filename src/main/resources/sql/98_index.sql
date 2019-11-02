@@ -7,6 +7,9 @@ CREATE INDEX idx_bottle_user_wine ON bottle (user_id, wine_id);
 -- country
 CREATE INDEX idx_country_lc_name ON country (lower(name));
 
+-- generic_tasting_notes
+CREATE INDEX idx_generic_tasting_notes_data ON generic_tasting_notes USING GIN (data);
+
 -- grape
 CREATE INDEX idx_grape_lc_name ON grape (lower(name));
 
