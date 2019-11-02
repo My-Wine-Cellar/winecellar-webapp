@@ -32,16 +32,16 @@ INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barre
 INSERT INTO barrel_component (percentage, aging, size, grape_component_id, barrel_id) VALUES (100, 545, 500, 8, 1);
 
 -- Bottles for users
-INSERT INTO bottle (number, show, user_id, wine_id) VALUES (1, false, 888888, 1);
-INSERT INTO bottle (number, show, user_id, wine_id) VALUES (6, true, 777777, 2);
-INSERT INTO bottle (number, show, user_id, wine_id) VALUES (12, true, 777777, 3);
+INSERT INTO bottle (number, show, user_id, wine_id) VALUES (1, false, 2, 1);
+INSERT INTO bottle (number, show, user_id, wine_id) VALUES (6, true, 3, 2);
+INSERT INTO bottle (number, show, user_id, wine_id) VALUES (12, true, 3, 3);
 
 -- Reviews for users
-INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (4.0, 'Very good', now()::date, 888888, 1);
-INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (5.0, 'Excellent', now()::date, 777777, 2);
-INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (4.0, 'Very good', now()::date, 777777, 3);
+INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (4.0, 'Very good', now()::date, 2, 1);
+INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (5.0, 'Excellent', now()::date, 3, 2);
+INSERT INTO review (stars, comment, date, user_id, wine_id) VALUES (4.0, 'Very good', now()::date, 3, 3);
 
 -- Wishlist for users
-INSERT INTO wishlist (date, user_id, wine_id) VALUES (now()::date, 888888, 2);
-INSERT INTO wishlist (date, user_id, wine_id) VALUES (now()::date, 777777, 1);
+INSERT INTO wishlist (date, user_id, wine_id) VALUES (now()::date, 2, 2);
+INSERT INTO wishlist (date, user_id, wine_id) VALUES (now()::date, 3, 1);
 

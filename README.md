@@ -38,7 +38,13 @@ $ git clone https://github.com/pauldpearson/winecellar-webapp
 $ cd winecellar-webapp
 $ ./gradlew bootRun
 ```
-> Access here: http://localhost:8080/ <br/> You can then login as user1 or user2 and password is...password
+> Access here: http://localhost:8080/
+
+| Account | Type  | Password |
+| ------- | ----- | -------- |
+| user1   | user  | password |
+| user2   | user  | password |
+| admin   | admin | password |
 
 ## Contribution
 > Feel free!  There are issues and a project board.  Contact info is below.
