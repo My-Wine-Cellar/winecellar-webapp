@@ -24,3 +24,10 @@ CREATE INDEX idx_tasted_user_wine ON tasted (user_id, wine_id);
 
 -- wishlist
 CREATE INDEX idx_wishlist_user_wine ON wishlist (user_id, wine_id);
+
+-- Search
+CREATE INDEX idx_area_search ON area USING GIN (to_tsvector('english', coalesce(name, '') || ' ' || coalesce(description, '')));
+CREATE INDEX idx_country_search ON country USING GIN (to_tsvector('english', coalesce(name, '') || ' ' || coalesce(description, '')));
+CREATE INDEX idx_producer_search ON producer USING GIN (to_tsvector('english', coalesce(name, '') || ' ' || coalesce(description, '')));
+CREATE INDEX idx_region_search ON region USING GIN (to_tsvector('english', coalesce(name, '') || ' ' || coalesce(description, '')));
+CREATE INDEX idx_wine_search ON wine USING GIN (to_tsvector('english', coalesce(name, '') || ' ' || coalesce(description, '')));
