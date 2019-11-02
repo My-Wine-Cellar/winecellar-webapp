@@ -3,6 +3,7 @@ package com.cellar.wine.models;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,9 +24,11 @@ public class Grape extends BaseEntity implements Comparable<Grape> {
         this.weblink = weblink;
     }
 
+    @NotNull
     @Column(name = "name")
     private String name;
 
+    @NotNull
     @Column(name = "color")
     private String color;
 

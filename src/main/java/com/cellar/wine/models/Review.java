@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -29,19 +30,23 @@ public class Review extends BaseEntity implements Comparable<Review> {
         this.wine = wine;
     }
 
+    @NotNull
     @Column(name = "stars")
     private Float stars;
 
     @Column(name = "comment", length = 512)
     private String comment;
 
+    @NotNull
     @Column(name = "date")
     private Date date;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "wine_id", referencedColumnName = "id")
     private Wine wine;

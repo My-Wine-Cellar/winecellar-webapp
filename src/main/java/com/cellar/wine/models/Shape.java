@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -28,6 +29,7 @@ public class Shape extends BaseEntity implements Comparable<Shape> {
         this.weblink = weblink;
     }
 
+    @NotNull
     @Column(name = "name")
     private String name;
 

@@ -1,21 +1,25 @@
 package com.cellar.wine.models;
 
 import com.cellar.wine.security.model.User;
-import com.github.cliftonlabs.json_simple.JsonObject;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Type;
+
+import com.github.cliftonlabs.json_simple.JsonObject;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -88,20 +92,25 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
         this.wine = wine;
     }
 
+    @NotNull
     @Column(name = "show")
     private Boolean show;
 
+    @NotNull
     @Column(name = "date")
     private Date date;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "wine_id", referencedColumnName = "id")
     private Wine wine;
 
+    @NotNull
     @Column(name = "data")
     @Type(type = "com.cellar.wine.hibernate.JSONB")
     private Map<String, Serializable> data;

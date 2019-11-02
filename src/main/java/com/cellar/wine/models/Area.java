@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
@@ -25,6 +27,7 @@ public class Area extends BaseEntity implements Comparable<Area> {
         this.weblink = weblink;
     }
 
+    @NotNull
     @Column(name = "name")
     private String name;
 

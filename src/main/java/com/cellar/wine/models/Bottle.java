@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -27,6 +28,7 @@ public class Bottle extends BaseEntity implements Comparable<Bottle> {
         this.wine = wine;
     }
 
+    @NotNull
     @Column(name = "number")
     private Integer number;
 
@@ -36,10 +38,12 @@ public class Bottle extends BaseEntity implements Comparable<Bottle> {
     @Column(name = "show")
     private Boolean show;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "wine_id", referencedColumnName = "id")
     private Wine wine;
