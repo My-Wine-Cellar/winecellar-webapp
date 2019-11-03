@@ -2,12 +2,14 @@ package com.cellar.wine.controllers;
 
 import com.cellar.wine.nav.Paths;
 import com.cellar.wine.ui.SearchUI;
+import com.cellar.wine.utils.SearchSorter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.annotation.Resource;
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Search
+ */
 @Controller
 @RequestMapping("/search")
 public class SearchController {
@@ -23,9 +28,17 @@ public class SearchController {
     @Resource
     private DataSource ds;
 
+    /**
+     * Constructor
+     */
     public SearchController() {
     }
 
+    /**
+     * Is the token valid - keywords and guard against SQL injection
+     * @param token The token
+     * @return True if valid, other false
+     */
     private boolean isValidToken(String token) {
         if (token == null || "".equals(token))
             return false;
@@ -39,6 +52,14 @@ public class SearchController {
         return true;
     }
 
+    /**
+     * Search a table
+     * @param input The search input
+     * @param table The table name
+     * @param type The search type
+     * @return The list of results
+     * @throws Exception In case of an error
+     */
     private List<SearchUI> search(String input, String table, SearchUI.SearchResult type) throws Exception {
         List<SearchUI> l = new ArrayList<>();
         Connection c = null;
@@ -79,12 +100,14 @@ public class SearchController {
             }
 
             StringBuilder sb = new StringBuilder();
-            sb = sb.append("SELECT id, name, description FROM ");
+            sb = sb.append("SELECT id, name, description, ts_rank_cd(vector, query) AS rank FROM ");
             sb = sb.append(table);
-            sb = sb.append(" WHERE to_tsvector(\'english\', coalesce(name, \'\') || \' \' || coalesce(description, \'\')) @@");
-            sb = sb.append(" to_tsquery(\'");
+            sb = sb.append(", to_tsvector(\'english\', coalesce(name, \'\') || \' \' || coalesce(description, \'\'))");
+            sb = sb.append(" vector, ");
+            sb = sb.append("to_tsquery(\'");
             sb = sb.append(validInput);
-            sb = sb.append("\');");
+            sb = sb.append("\') query ");
+            sb = sb.append("WHERE vector @@ query;");
 
             boolean result = stmt.execute(sb.toString());
             if (result) {
@@ -94,12 +117,11 @@ public class SearchController {
                     Long id = rs.getLong(1);
                     String name = rs.getString(2);
                     String description = rs.getString(3);
+                    Double rank = rs.getDouble(4);
 
-                    l.add(new SearchUI(type, id, name, description));
+                    l.add(new SearchUI(type, id, name, description, rank));
                 }
             }
-
-            System.out.println(l);
         } catch (Exception e) {
             throw e;
         } finally {
@@ -129,32 +151,69 @@ public class SearchController {
         return l;
     }
 
+    /**
+     * Search area
+     * @param input The search input
+     * @return The list of results
+     * @throws Exception In case of an error
+     */
     private List<SearchUI> searchArea(String input) throws Exception {
         return search(input, "area", SearchUI.SearchResult.AREA);
     }
 
+    /**
+     * Search country
+     * @param input The search input
+     * @return The list of results
+     * @throws Exception In case of an error
+     */
     private List<SearchUI> searchCountry(String input) throws Exception {
         return search(input, "country", SearchUI.SearchResult.COUNTRY);
     }
 
+    /**
+     * Search producer
+     * @param input The search input
+     * @return The list of results
+     * @throws Exception In case of an error
+     */
     private List<SearchUI> searchProducer(String input) throws Exception {
         return search(input, "producer", SearchUI.SearchResult.PRODUCER);
     }
 
+    /**
+     * Search region
+     * @param input The search input
+     * @return The list of results
+     * @throws Exception In case of an error
+     */
     private List<SearchUI> searchRegion(String input) throws Exception {
         return search(input, "region", SearchUI.SearchResult.REGION);
     }
 
+    /**
+     * Search wine
+     * @param input The search input
+     * @return The list of results
+     * @throws Exception In case of an error
+     */
     private List<SearchUI> searchWine(String input) throws Exception {
         return search(input, "wine", SearchUI.SearchResult.WINE);
     }
 
+    /**
+     * Search
+     * @return The page identifier
+     */
     @GetMapping("/new")
     public String searchNewGet() {
+        List<SearchUI> l = new ArrayList<>();
         String input = "Poggio";
 
         try {
-            searchProducer(input);
+            l.addAll(searchProducer(input));
+
+            Collections.sort(l, new SearchSorter());
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
