@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -50,7 +51,7 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     private String name;
 
     @NotNull
-    @Min(value = 4)
+    @Digits(integer = 4, fraction = 0)
     @Column(name = "vintage")
     private Integer vintage;
 
@@ -79,7 +80,6 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @Column(name = "subarea")
     private String subarea;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "producer_id", referencedColumnName = "id")
     private Producer producer;

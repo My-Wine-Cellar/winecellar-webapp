@@ -43,7 +43,7 @@
                                             class="fas fa-wine-bottle"></span></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a th:href="@{/tasted/__${t.id}__/delete}"><span class="fas fa-trash"></span></a>
+                                    <a th:href="@{/tasted/__${t.id}__/delete}" onclick="return confirm('Are you sure?');"><span class="fas fa-trash"></span></a>
                                 </li>
                             </ul>
                         </div>

@@ -32,7 +32,7 @@
                     <td th:text="${wish.wine.vintage}"></td>
                     <td th:text="|${wish.wine.size}L|"></td>
                     <td th:text="${#dates.format(wish.date, 'MMM dd, yyyy')}"></td>
-                    <td><a th:href="@{/wishlist/__${wish.id}__/delete}" th:title="#{delete}"><span class="fas fa-trash"></span></a></td>
+                    <td><a th:href="@{/wishlist/__${wish.id}__/delete}" onclick="return confirm('Are you sure?');" th:title="#{delete}"><span class="fas fa-trash"></span></a></td>
                 </tr>
                 </tbody>
             </table>
