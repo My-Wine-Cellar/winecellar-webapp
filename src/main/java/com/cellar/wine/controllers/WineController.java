@@ -5,6 +5,7 @@ import com.cellar.wine.models.Grape;
 import com.cellar.wine.models.GrapeComponent;
 import com.cellar.wine.models.Producer;
 import com.cellar.wine.models.Wine;
+import com.cellar.wine.nav.Actions;
 import com.cellar.wine.nav.Attributes;
 import com.cellar.wine.nav.Paths;
 import com.cellar.wine.nav.Session;
@@ -69,7 +70,7 @@ public class WineController extends AbstractController {
                                       @RequestParam(value = "action") String action) {
         principalNull(principal);
 
-        if (action.equals("cancel")) {
+        if (action.equals(Actions.CANCEL)) {
             Session.clear(status);
             return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                     Session.getAreaId(), Session.getProducerId());
@@ -81,7 +82,7 @@ public class WineController extends AbstractController {
             wine.setProducer(producer);
             producer.getWines().add(wine);
             switch (action) {
-                case "save":
+                case Actions.SAVE_WINE:
                     Wine savedWine = wineService.save(wine);
                     WineUI wui = WineUIFactory.instance().create(savedWine);
 
@@ -89,7 +90,7 @@ public class WineController extends AbstractController {
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                             Session.getAreaId(), Session.getProducerId()) +
                             "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
-                case "next":
+                case Actions.ADD_GRAPE:
                     return Paths.REDIRECT_WINE_GRAPE;
                 default:
                     Session.clear(status);
@@ -129,11 +130,11 @@ public class WineController extends AbstractController {
         grapeComponent.setWine(wine);
 
         switch (action) {
-            case "addAnotherGrape":
+            case Actions.ADD_ANOTHER_GRAPE:
                 return Paths.REDIRECT_WINE_GRAPE;
-            case "addBarrel":
+            case Actions.ADD_BARREL:
                 return Paths.REDIRECT_WINE_GRAPE + "/" + grapeComponent.getGrape().getId() + "/barrel";
-            case "saveWine":
+            case Actions.SAVE_WINE:
                 Wine savedWine = wineService.save(wine);
 
                 saveOrNullMaceration(grapes);
@@ -192,11 +193,11 @@ public class WineController extends AbstractController {
             return Paths.WINE_ADD_GRAPE_BARREL;
         } else {
             switch (action) {
-                case "addAnotherGrape":
+                case Actions.ADD_ANOTHER_GRAPE:
                     return Paths.REDIRECT_WINE_GRAPE;
-                case "addAnotherBarrel":
+                case Actions.ADD_ANOTHER_BARREL:
                     return Paths.REDIRECT_WINE_GRAPE + "/" + grapeComponent.getGrape().getId() + "/barrel";
-                case "saveWine":
+                case Actions.SAVE_WINE:
                     Wine savedWine = wineService.save(wine);
 
                     saveOrNullMaceration(grapes);
@@ -245,7 +246,7 @@ public class WineController extends AbstractController {
             wine.setProducer(producer);
 
             switch (action) {
-                case "save":
+                case Actions.SAVE_WINE:
                     Wine savedWine = wineService.save(wine);
                     WineUI wui = WineUIFactory.instance().create(savedWine);
 
@@ -253,9 +254,9 @@ public class WineController extends AbstractController {
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                             Session.getAreaId(), Session.getProducerId()) +
                             "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
-                case "next":
+                case Actions.ADD_GRAPE:
                     return Paths.REDIRECT_WINE_GRAPE;
-                case "cancel":
+                case Actions.CANCEL:
                     WineUI wineUI = WineUIFactory.instance().create(wine);
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),

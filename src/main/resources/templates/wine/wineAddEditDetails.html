@@ -97,11 +97,11 @@
                                     class="btn btn-link mr-5 fas fa-redo"
                                     data-toggle="tooltip" th:title="#{cancelBack}">
                             </button>
-                            <button type="submit" name="action" value="save"
+                            <button type="submit" name="action" value="saveWine"
                                     class="btn btn-link mr-5 fas fa-save"
                                     data-toggle="tooltip" th:title="#{save}">
                             </button>
-                            <button th:if="${wine.isNew()}" type="submit" name="action" value="next"
+                            <button th:if="${wine.isNew()}" type="submit" name="action" value="addGrape"
                                     class="btn btn-link fas fa-plus-square"
                                     data-toggle="tooltip" th:title="#{addGrape}">
                             </button>
