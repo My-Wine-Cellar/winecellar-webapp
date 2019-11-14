@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class WineWebappApplicationTests {
+class WineWebappApplicationTests {
 
     MockMvc mockMvc;
 

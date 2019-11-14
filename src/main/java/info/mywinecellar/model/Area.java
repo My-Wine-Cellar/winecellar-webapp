@@ -22,6 +22,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,12 +64,15 @@ public class Area extends BaseEntity implements Comparable<Area> {
     @Column(name = "weblink")
     private String weblink;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "areas")
     private List<Region> regions;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "areas")
     private List<Grape> primaryGrapes;
 
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "area_producer",
             joinColumns =

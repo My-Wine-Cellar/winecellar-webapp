@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,6 +62,7 @@ public class Country extends BaseEntity implements Comparable<Country> {
     @Column(name = "weblink")
     private String weblink;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "country")
     private List<Region> regions;
 

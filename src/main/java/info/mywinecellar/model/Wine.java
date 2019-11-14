@@ -24,6 +24,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -118,47 +119,59 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @Column(name = "subarea")
     private String subarea;
 
+    @JsonIgnore
     @Lob
     @org.hibernate.annotations.Type(type = "org.hibernate.type.ImageType")
     private byte[] image;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "producer_id", referencedColumnName = "id")
     private Producer producer;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine", cascade = CascadeType.REMOVE)
     private List<GrapeComponent> grapes;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<Bottle> bottles;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<GenericTastingNotes> genericTastingNotes;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<Tasted> tasted;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<Review> reviews;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
     private List<Wishlist> wishlists;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "closure_id", referencedColumnName = "id")
     private Closure closure;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shape_id", referencedColumnName = "id")
     private Shape shape;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private Type type;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "color_id", referencedColumnName = "id")
