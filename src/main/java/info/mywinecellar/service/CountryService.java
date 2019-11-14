@@ -18,14 +18,16 @@ import java.util.List;
 public interface CountryService extends CrudService<Country, Long> {
 
     /**
-     * Find by lower case name
+     * Find by lowercase name
+     *
      * @param lcName The lower case name
      * @return The country
      */
     Country findByLowerCaseName(String lcName);
 
     /**
-     * Find countries with regions
+     * Find countries with wine producing regions
+     *
      * @return The countries
      */
     List<Country> findWithRegions();

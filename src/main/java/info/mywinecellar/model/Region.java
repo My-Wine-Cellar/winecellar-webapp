@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,11 +64,13 @@ public class Region extends BaseEntity implements Comparable<Region> {
     @Column(name = "weblink")
     private String weblink;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "region_area",
             joinColumns =
