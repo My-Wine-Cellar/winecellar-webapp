@@ -18,17 +18,31 @@ import java.util.Comparator;
 public class WishlistSorter implements Comparator<Wishlist> {
     private WineSorter wineSorter;
 
+    /**
+     * Default constructor that doesn't take country into account
+     */
     public WishlistSorter() {
         this(false);
     }
 
+    /**
+     * Constructor
+     * @param country Should country be considered
+     */
     public WishlistSorter(boolean country) {
         wineSorter = new WineSorter(country);
     }
 
+    /**
+     * Compare two wishlist entities
+     * @param w1 Instance one
+     * @param w2 Instance two
+     * @return 0 if equals, otherwise result of WineSorter
+     */
     public int compare(Wishlist w1, Wishlist w2) {
-        if (w1.getId().equals(w2.getId()))
+        if (w1.getId().equals(w2.getId())) {
             return 0;
+        }
 
         return wineSorter.compare(w1.getWine(), w2.getWine());
     }
