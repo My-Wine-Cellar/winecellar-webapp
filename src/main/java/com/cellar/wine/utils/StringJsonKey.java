@@ -14,6 +14,10 @@ public class StringJsonKey implements JsonKey {
 
     private final String str;
 
+    /**
+     * Constructor
+     * @param str The key
+     */
     public StringJsonKey(String str) {
         this.str = str;
     }

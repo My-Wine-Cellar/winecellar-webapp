@@ -17,13 +17,22 @@ import java.util.Comparator;
  */
 public class ProducerSorter implements Comparator<Producer> {
 
+    /**
+     * Default constructor
+     */
     public ProducerSorter() {
     }
 
+    /**
+     * Compare two producer entities
+     * @param p1 Instance one
+     * @param p2 Instance two
+     * @return 0 if equals, otherwise result of name compare
+     */
     public int compare(Producer p1, Producer p2) {
-        
-        if (p1.getId().equals(p2.getId()))
+        if (p1.getId().equals(p2.getId())) {
             return 0;
+        }
 
         return p1.getName().compareTo(p2.getName());
     }
