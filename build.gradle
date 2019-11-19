@@ -27,7 +27,7 @@ checkstyle {
         'configDir': rootProject.file('config/checkstyle'),
         'baseDir': rootDir,
     ]
-    checkstyleMain.exclude '**/com/cellar/wine/utils/Regex.java'
+    checkstyleMain.exclude '**/info/mywinecellar/utils/Regex.java'
 
     toolVersion "8.26"
 }
