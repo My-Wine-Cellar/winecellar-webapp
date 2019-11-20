@@ -52,21 +52,21 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
     public static final String NOSE_WOOD = "wood";
     public static final String NOSE_OTHER = "other";
 
-    public static final String PALETTE = "palette";
-    public static final String PALETTE_SWEETNESS = "sweetness";
-    public static final String PALETTE_FRUIT = "fruit";
-    public static final String PALETTE_NON_FRUIT = "non-fruit";
-    public static final String PALETTE_EARTH = "earth";
-    public static final String PALETTE_MINERAL = "mineral";
-    public static final String PALETTE_WOOD = "wood";
-    public static final String PALETTE_TANNIN = "tannin";
-    public static final String PALETTE_ACID = "acid";
-    public static final String PALETTE_ALCOHOL = "alcohol";
-    public static final String PALETTE_BODY = "body";
-    public static final String PALETTE_INTENSITY = "intensity";
-    public static final String PALETTE_FINISH = "finish";
-    public static final String PALETTE_COMPLEXITY = "complexity";
-    public static final String PALETTE_OTHER = "other";
+    public static final String PALATE = "palate";
+    public static final String PALATE_SWEETNESS = "sweetness";
+    public static final String PALATE_FRUIT = "fruit";
+    public static final String PALATE_NON_FRUIT = "non-fruit";
+    public static final String PALATE_EARTH = "earth";
+    public static final String PALATE_MINERAL = "mineral";
+    public static final String PALATE_WOOD = "wood";
+    public static final String PALATE_TANNIN = "tannin";
+    public static final String PALATE_ACID = "acid";
+    public static final String PALATE_ALCOHOL = "alcohol";
+    public static final String PALATE_BODY = "body";
+    public static final String PALATE_INTENSITY = "intensity";
+    public static final String PALATE_FINISH = "finish";
+    public static final String PALATE_COMPLEXITY = "complexity";
+    public static final String PALATE_OTHER = "other";
 
     public static final String CONCLUSION = "conclusion";
     public static final String CONCLUSION_DEVELOPMENT = "development";
@@ -83,7 +83,7 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
     }
 
     public GenericTastingNotes(Map<String, List<String>> sight, Map<String, List<String>> nose,
-                               Map<String, List<String>> palette, Map<String, List<String>> conclusion,
+                               Map<String, List<String>> palate, Map<String, List<String>> conclusion,
                                Boolean show, Date date, User user, Wine wine) {
         super();
         this.data = new HashMap<String, Serializable>();
@@ -91,7 +91,7 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
         // Do we need com.github.cliftonlabs.json_simple.JsonArray here for the values ?
         this.data.put(SIGHT, new JsonObject(sight));
         this.data.put(NOSE, new JsonObject(nose));
-        this.data.put(PALETTE, new JsonObject(palette));
+        this.data.put(PALATE, new JsonObject(palate));
         this.data.put(CONCLUSION, new JsonObject(conclusion));
 
         this.show = show;
