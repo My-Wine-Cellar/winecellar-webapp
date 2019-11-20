@@ -10,10 +10,16 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Country;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@EqualsAndHashCode(callSuper=true)
-@ToString(callSuper=true)
+/**
+ * UI for wishlist
+ */
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Getter
 @Setter
 public class CountryUI extends AbstractKeyUI {
@@ -24,6 +30,10 @@ public class CountryUI extends AbstractKeyUI {
     private String description;
     private String weblink;
 
+    /**
+     * Constructor
+     * @param c The country
+     */
     CountryUI(Country c) {
         super(toKey(c.getName()));
         this.id = c.getId();

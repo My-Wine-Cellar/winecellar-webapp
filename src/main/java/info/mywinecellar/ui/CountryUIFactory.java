@@ -13,15 +13,27 @@ import info.mywinecellar.model.Country;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * CountryUI factory
+ */
 public class CountryUIFactory implements FactoryUI<Country, CountryUI> {
 
     private CountryUIFactory() {
     }
 
+    /**
+     * Create the factory
+     * @return The factory
+     */
     public static FactoryUI<Country, CountryUI> instance() {
         return new CountryUIFactory();
     }
 
+    /**
+     * Create a list of UI objects
+     * @param countries The countries
+     * @return The UI objects
+     */
     public List<CountryUI> createList(List<Country> countries) {
         List<CountryUI> result = new ArrayList<>();
         if (countries != null) {
@@ -32,6 +44,11 @@ public class CountryUIFactory implements FactoryUI<Country, CountryUI> {
         return result;
     }
 
+    /**
+     * Create a UI object
+     * @param c A country
+     * @return The UI
+     */
     public CountryUI create(Country c) {
         if (c == null) {
             return null;

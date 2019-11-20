@@ -57,11 +57,19 @@ public class SearchUI implements Comparable<SearchUI> {
         return name.compareTo(su.getName());
     }
 
+    /**
+     * The search result type
+     */
     public enum SearchResult {
+        /** AREA */
         AREA,
+        /** COUNTRY */
         COUNTRY,
+        /** PRODUCER */
         PRODUCER,
+        /** REGION */
         REGION,
+        /** WINE */
         WINE
     }
 }

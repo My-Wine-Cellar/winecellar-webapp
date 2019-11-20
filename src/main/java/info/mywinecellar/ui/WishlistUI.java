@@ -10,11 +10,17 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Wishlist;
 
-import lombok.*;
-
 import java.io.Serializable;
 import java.sql.Date;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * UI for wishlist
+ */
 @EqualsAndHashCode
 @ToString
 @Getter
@@ -29,6 +35,10 @@ public class WishlistUI implements Serializable {
     private ProducerUI producer;
     private WineUI wine;
 
+    /**
+     * Constructor
+     * @param w The wishlist
+     */
     WishlistUI(Wishlist w) {
         this.id = w.getId();
         this.date = w.getDate();

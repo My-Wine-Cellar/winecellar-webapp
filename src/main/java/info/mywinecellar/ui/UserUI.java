@@ -10,10 +10,16 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.security.model.User;
 
-import lombok.*;
-
 import java.io.Serializable;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * UI for user
+ */
 @EqualsAndHashCode
 @ToString
 @Getter
@@ -26,6 +32,10 @@ public class UserUI implements Serializable {
     private String middleName;
     private String lastName;
 
+    /**
+     * Constructor
+     * @param u The user
+     */
     UserUI(User u) {
         this.id = u.getId();
         this.username = u.getUsername();

@@ -15,19 +15,29 @@ import java.util.Comparator;
  */
 public class GrapeUISorter implements Comparator<GrapeUI> {
 
+    /**
+     * Default constructor
+     */
     public GrapeUISorter() {
     }
 
-    public int compare(GrapeUI wg1, GrapeUI wg2) {
+    /**
+     * Compare two grapes
+     * @param g1 The first grape
+     * @param g2 The second grape
+     * @return 0 if equals, otherwise based on percentage and name
+     */
+    public int compare(GrapeUI g1, GrapeUI g2) {
         int result;
 
-        if (wg1.getPercentage() != null && wg2.getPercentage() != null) {
-            result = wg1.getPercentage().compareTo(wg2.getPercentage());
-            if (result != 0)
+        if (g1.getPercentage() != null && g2.getPercentage() != null) {
+            result = g1.getPercentage().compareTo(g2.getPercentage());
+            if (result != 0) {
                 return -result;
+            }
         }
 
-        return wg1.getName().compareTo(wg2.getName());
+        return g1.getName().compareTo(g2.getName());
     }
 }
 

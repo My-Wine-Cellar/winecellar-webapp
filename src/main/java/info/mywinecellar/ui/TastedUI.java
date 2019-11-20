@@ -10,12 +10,14 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Tasted;
 
-import lombok.*;
-
 import java.io.Serializable;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
- * Tasted bean
+ * UI for tasted
  */
 @EqualsAndHashCode(callSuper = false)
 @ToString
@@ -28,7 +30,12 @@ public class TastedUI implements Serializable {
     private ProducerUI producer;
     private WineUI wine;
     private Long reviewId;
-    
+
+    /**
+     * Constructor
+     * @param t The tasted
+     * @param reviewId The review id
+     */
     TastedUI(Tasted t, Long reviewId) {
         this.id = t.getId();
         this.country = new CountryUI(t.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());

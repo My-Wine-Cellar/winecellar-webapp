@@ -10,10 +10,16 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Wine;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@EqualsAndHashCode(callSuper=true)
-@ToString(callSuper=true)
+/**
+ * UI for wine
+ */
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Getter
 @Setter
 public class WineUI extends AbstractKeyUI {
@@ -23,6 +29,10 @@ public class WineUI extends AbstractKeyUI {
     private Integer vintage;
     private Float size;
 
+    /**
+     * Constructor
+     * @param w The wine
+     */
     WineUI(Wine w) {
         super(toKey(w.getName()));
         this.id = w.getId();

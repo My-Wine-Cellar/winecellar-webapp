@@ -10,10 +10,12 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Barrel;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
- * Barrel bean
+ * UI for barrel
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -28,11 +30,22 @@ public class BarrelUI extends AbstractKeyUI {
     private Byte percentage;
     private Integer size;
     private AgingUI aging;
-    
+
+    /**
+     * Default constructor
+     */
     public BarrelUI() {
         // Empty
     }
 
+    /**
+     * Constructor
+     * @param percentage The percentage
+     * @param name The name
+     * @param id The identifier
+     * @param size The size
+     * @param aging The aging
+     */
     public BarrelUI(Byte percentage,
                     String name, Long id,
                     Integer size, AgingUI aging) {
@@ -49,6 +62,10 @@ public class BarrelUI extends AbstractKeyUI {
         setKey(toKey(shortname));
     }
 
+    /**
+     * Constructor
+     * @param b The barrel
+     */
     BarrelUI(Barrel b) {
         super();
 
@@ -61,20 +78,28 @@ public class BarrelUI extends AbstractKeyUI {
         setKey(toKey(shortname));
     }
 
+    /**
+     * Set the description
+     * @param s The description
+     */
     public void setDescription(String s) {
         description = s;
     }
 
+    /**
+     * Set the web link
+     * @param s The web link
+     */
     public void setWeblink(String s) {
         weblink = s;
     }
 
-    private String getShortName(String name) {
-        if (name.indexOf("(") != -1) {
-            return name.substring(0, name.indexOf("(") - 1);
+    private String getShortName(String n) {
+        if (n.indexOf("(") != -1) {
+            return n.substring(0, n.indexOf("(") - 1);
         }
 
-        return name;
+        return n;
     }
 }
 
