@@ -10,13 +10,21 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.GenericTastingNotes;
 import info.mywinecellar.util.StringJsonKey;
-import com.github.cliftonlabs.json_simple.JsonObject;
-import lombok.Data;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
+import com.github.cliftonlabs.json_simple.JsonObject;
+import lombok.Data;
+
+/**
+ * UI for generic tasting notes
+ */
 @Data
 public class TastingNotesUI implements Serializable {
 
@@ -72,10 +80,17 @@ public class TastingNotesUI implements Serializable {
     private String conclusionOther;
 
 
+    /**
+     * Default constructor
+     */
     public TastingNotesUI() {
        // Empty
     }
 
+    /**
+     * Constructor
+     * @param gtn The generic tasting notes
+     */
     TastingNotesUI(GenericTastingNotes gtn) {
         this.country = new CountryUI(gtn.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());
         this.region = new RegionUI(gtn.getWine().getProducer().getAreas().get(0).getRegions().get(0));
@@ -155,12 +170,17 @@ public class TastingNotesUI implements Serializable {
         List list = jo.getCollection(new StringJsonKey(key));
         for (int i = 0; i < list.size(); i++) {
             sb = sb.append(list.get(i));
-            if (i < list.size() - 1)
+            if (i < list.size() - 1) {
                 sb = sb.append(", ");
+            }
         }
         return sb.toString();
     }
 
+    /**
+     * Get the sight notes
+     * @return The map
+     */
     public Map<String, List<String>> mapSightNotes() {
         Map<String, List<String>> sightMap = new HashMap<>();
         sightMap.put(GenericTastingNotes.SIGHT_CLARITY, processString(sightClarity));
@@ -171,6 +191,10 @@ public class TastingNotesUI implements Serializable {
         return sightMap;
     }
 
+    /**
+     * Get the nose notes
+     * @return The map
+     */
     public Map<String, List<String>> mapNoseNotes() {
         Map<String, List<String>> noseMap = new HashMap<>();
         noseMap.put(GenericTastingNotes.NOSE_CONDITION, processString(noseCondition));
@@ -184,6 +208,10 @@ public class TastingNotesUI implements Serializable {
         return noseMap;
     }
 
+    /**
+     * Get the palate notes
+     * @return The map
+     */
     public Map<String, List<String>> mapPalleteNotes() {
         Map<String, List<String>> paletteMap = new HashMap<>();
         paletteMap.put(GenericTastingNotes.PALETTE_ACID, processString(paletteAcid));
@@ -203,6 +231,10 @@ public class TastingNotesUI implements Serializable {
         return paletteMap;
     }
 
+    /**
+     * Get the conclusion notes
+     * @return The map
+     */
     public Map<String, List<String>> mapConclusionNotes() {
         Map<String, List<String>> conclusionMap = new HashMap<>();
         conclusionMap.put(GenericTastingNotes.CONCLUSION_AGE, processString(conclusionAge));

@@ -15,23 +15,35 @@ import java.util.Comparator;
  */
 public class BarrelUISorter implements Comparator<BarrelUI> {
 
+    /**
+     * Default constructor
+     */
     public BarrelUISorter() {
     }
 
+    /**
+     * Compare two barrels
+     * @param b1 The first barrel
+     * @param b2 The second barrel
+     * @return 0, if equals; otherwise based on percentage, aging, size and name
+     */
     public int compare(BarrelUI b1, BarrelUI b2) {
         int result;
 
         result = b1.getPercentage().compareTo(b2.getPercentage());
-        if (result != 0)
+        if (result != 0) {
             return -result;
+        }
 
         result = b1.getAging().compareTo(b2.getAging());
-        if (result != 0)
+        if (result != 0) {
             return -result;
+        }
 
         result = b1.getSize().compareTo(b2.getSize());
-        if (result != 0)
+        if (result != 0) {
             return result;
+        }
 
         return b1.getName().compareTo(b2.getName());
     }

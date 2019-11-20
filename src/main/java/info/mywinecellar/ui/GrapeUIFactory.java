@@ -14,15 +14,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * GrapeUI factory
+ */
 public class GrapeUIFactory implements FactoryUI<Grape, GrapeUI> {
 
     private GrapeUIFactory() {
     }
 
+    /**
+     * Create the factory
+     * @return The factory
+     */
     public static FactoryUI<Grape, GrapeUI> instance() {
         return new GrapeUIFactory();
     }
 
+    /**
+     * Create a list of UI objects
+     * @param grapes The grapes
+     * @return The UI objects
+     */
     public List<GrapeUI> createList(List<Grape> grapes) {
         List<GrapeUI> result = new ArrayList<>();
         if (grapes != null) {
@@ -34,6 +46,11 @@ public class GrapeUIFactory implements FactoryUI<Grape, GrapeUI> {
         return result;
     }
 
+    /**
+     * Create a UI object
+     * @param g A grape
+     * @return The UI
+     */
     public GrapeUI create(Grape g) {
         if (g == null) {
             return null;

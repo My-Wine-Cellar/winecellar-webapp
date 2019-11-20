@@ -13,15 +13,27 @@ import info.mywinecellar.model.Wine;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * WineUI factory
+ */
 public class WineUIFactory implements FactoryUI<Wine, WineUI> {
 
     private WineUIFactory() {
     }
 
+    /**
+     * Create the factory
+     * @return The factory
+     */
     public static FactoryUI<Wine, WineUI> instance() {
         return new WineUIFactory();
     }
 
+    /**
+     * Create a list of UI objects
+     * @param wines The wines
+     * @return The UI objects
+     */
     public List<WineUI> createList(List<Wine> wines) {
         List<WineUI> result = new ArrayList<>();
         if (wines != null) {
@@ -32,6 +44,11 @@ public class WineUIFactory implements FactoryUI<Wine, WineUI> {
         return result;
     }
 
+    /**
+     * Create a UI object
+     * @param w A wine
+     * @return The UI
+     */
     public WineUI create(Wine w) {
         if (w == null) {
             return null;

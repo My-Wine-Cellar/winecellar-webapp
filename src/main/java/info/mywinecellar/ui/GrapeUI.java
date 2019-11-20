@@ -10,13 +10,15 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Grape;
 
-import lombok.*;
-
 import java.sql.Date;
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 /**
- * Grape bean
+ * UI for grape
  */
 @EqualsAndHashCode(callSuper = false)
 @ToString
@@ -37,7 +39,20 @@ public class GrapeUI extends AbstractKeyUI {
     private Byte fermentationDays;
     private Float fermentationTemperature;
     private List<BarrelUI> barrels;
-    
+
+    /**
+     * Constructor
+     * @param percentage The percentage
+     * @param name The name
+     * @param id The identifier
+     * @param harvestBegin The harvest begin date
+     * @param harvestEnd The harvest end date
+     * @param macerationDays The number of maceration days
+     * @param macerationTemperature The maceration temperature
+     * @param fermentationDays The number of fermentation days
+     * @param fermentationTemperature The fermentation temperature
+     * @param barrels The barrels
+     */
     public GrapeUI(Byte percentage,
                    String name, Long id,
                    Date harvestBegin, Date harvestEnd,
@@ -62,6 +77,10 @@ public class GrapeUI extends AbstractKeyUI {
         this.barrels = barrels;
     }
 
+    /**
+     * Constructor
+     * @param g The grape
+     */
     GrapeUI(Grape g) {
         super(toKey(g.getName()));
 

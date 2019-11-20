@@ -10,10 +10,16 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Bottle;
 
-import lombok.*;
-
 import java.io.Serializable;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * UI for bottle
+ */
 @EqualsAndHashCode
 @ToString
 @Getter
@@ -30,6 +36,10 @@ public class BottleUI implements Serializable {
     private ProducerUI producer;
     private WineUI wine;
 
+    /**
+     * Constructor
+     * @param b The bottle
+     */
     BottleUI(Bottle b) {
         this.id = b.getId();
         this.number = b.getNumber();

@@ -10,10 +10,16 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Area;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@EqualsAndHashCode(callSuper=true)
-@ToString(callSuper=true)
+/**
+ * UI for area
+ */
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Getter
 @Setter
 public class AreaUI extends AbstractKeyUI {
@@ -23,6 +29,10 @@ public class AreaUI extends AbstractKeyUI {
     private String description;
     private String weblink;
 
+    /**
+     * Constructor
+     * @param a The area
+     */
     AreaUI(Area a) {
         super(toKey(a.getName()));
         this.id = a.getId();

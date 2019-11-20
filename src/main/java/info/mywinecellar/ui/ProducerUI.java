@@ -10,10 +10,16 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Producer;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@EqualsAndHashCode(callSuper=true)
-@ToString(callSuper=true)
+/**
+ * UI for wishlist
+ */
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Getter
 @Setter
 public class ProducerUI extends AbstractKeyUI {
@@ -26,6 +32,10 @@ public class ProducerUI extends AbstractKeyUI {
     private String email;
     private String website;
 
+    /**
+     * Constructor
+     * @param p The producer
+     */
     ProducerUI(Producer p) {
         super(toKey(p.getName()));
         this.id = p.getId();

@@ -10,10 +10,24 @@ package info.mywinecellar.ui;
 
 import java.util.List;
 
+/**
+ * UI factory template
+ * @param <E> The entity
+ * @param <T> The UI type
+ */
 public interface FactoryUI<E, T> {
 
+    /**
+     * Create
+     * @param e The entity
+     * @return The UI
+     */
     T create(E e);
 
+    /**
+     * Create a list
+     * @param es The entities
+     * @return The UIs
+     */
     List<T> createList(List<E> es);
-
 }

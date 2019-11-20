@@ -10,11 +10,17 @@ package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Review;
 
-import lombok.*;
-
 import java.io.Serializable;
 import java.sql.Date;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * UI for wishlist
+ */
 @EqualsAndHashCode
 @ToString
 @Getter
@@ -32,6 +38,10 @@ public class ReviewUI implements Serializable {
     private WineUI wine;
     private UserUI user;
 
+    /**
+     * Constructor
+     * @param r The review
+     */
     ReviewUI(Review r) {
         this.id = r.getId();
         this.stars = r.getStars();

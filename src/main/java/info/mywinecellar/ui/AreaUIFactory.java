@@ -13,15 +13,27 @@ import info.mywinecellar.model.Area;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * AreaUI factory
+ */
 public class AreaUIFactory implements FactoryUI<Area, AreaUI> {
 
     private AreaUIFactory() {
     }
 
+    /**
+     * Create the factory
+     * @return The factory
+     */
     public static FactoryUI<Area, AreaUI> instance() {
         return new AreaUIFactory();
     }
 
+    /**
+     * Create a list of UI objects
+     * @param areas The areas
+     * @return The UI objects
+     */
     public List<AreaUI> createList(List<Area> areas) {
         List<AreaUI> result = new ArrayList<>();
         if (areas != null) {
@@ -32,6 +44,11 @@ public class AreaUIFactory implements FactoryUI<Area, AreaUI> {
         return result;
     }
 
+    /**
+     * Create a UI object
+     * @param a An area
+     * @return The UI
+     */
     public AreaUI create(Area a) {
         if (a == null) {
             return null;

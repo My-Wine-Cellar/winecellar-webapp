@@ -8,12 +8,14 @@
 
 package info.mywinecellar.ui;
 
-import lombok.*;
-
 import java.io.Serializable;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
- * Aging bean
+ * UI for aging
  */
 @EqualsAndHashCode(callSuper = false)
 @Getter
@@ -22,11 +24,18 @@ public class AgingUI implements Comparable<AgingUI>, Serializable {
     private Integer years;
     private Integer months;
     private Integer days;
-    
+
+    /**
+     * Default constructor
+     */
     public AgingUI() {
         this(0, 0, 0);
     }
 
+    /**
+     * Constructor
+     * @param days The number of days
+     */
     public AgingUI(Integer days) {
         int y = 0;
         int m = 0;
@@ -49,12 +58,22 @@ public class AgingUI implements Comparable<AgingUI>, Serializable {
         this.days = d;
     }
 
+    /**
+     * Constructor
+     * @param years The number of years
+     * @param months The number of months
+     * @param days The number of days
+     */
     public AgingUI(Integer years, Integer months, Integer days) {
         this.years = years;
         this.months = months;
         this.days = days;
     }
 
+    /**
+     * Get the number of days
+     * @return The value
+     */
     public Integer toDays() {
         return (365 * years) + (30 * months) + days;
     }
@@ -78,9 +97,10 @@ public class AgingUI implements Comparable<AgingUI>, Serializable {
         }
 
         if (months > 0) {
-            if (sb.length() > 0)
+            if (sb.length() > 0) {
                 sb = sb.append(' ');
-                
+            }
+
             sb = sb.append(months);
             if (months > 1) {
                 sb = sb.append(" months");
@@ -90,9 +110,10 @@ public class AgingUI implements Comparable<AgingUI>, Serializable {
         }
 
         if (days > 0) {
-            if (sb.length() > 0)
+            if (sb.length() > 0) {
                 sb = sb.append(' ');
-                
+            }
+
             sb = sb.append(days);
             if (days > 1) {
                 sb = sb.append(" days");
