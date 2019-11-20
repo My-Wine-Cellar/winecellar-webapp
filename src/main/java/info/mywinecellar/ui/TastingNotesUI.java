@@ -55,20 +55,20 @@ public class TastingNotesUI implements Serializable {
     private String noseWood;
     private String noseOther;
 
-    private String paletteSweetness;
-    private String paletteFruit;
-    private String paletteNonFruit;
-    private String paletteEarth;
-    private String paletteMineral;
-    private String paletteWood;
-    private String paletteTannin;
-    private String paletteAcid;
-    private String paletteAlcohol;
-    private String paletteBody;
-    private String paletteIntensity;
-    private String paletteFinish;
-    private String paletteComplexity;
-    private String paletteOther;
+    private String palateSweetness;
+    private String palateFruit;
+    private String palateNonFruit;
+    private String palateEarth;
+    private String palateMineral;
+    private String palateWood;
+    private String palateTannin;
+    private String palateAcid;
+    private String palateAlcohol;
+    private String palateBody;
+    private String palateIntensity;
+    private String palateFinish;
+    private String palateComplexity;
+    private String palateOther;
 
     private String conclusionDevelopment;
     private String conclusionGrapes;
@@ -125,22 +125,22 @@ public class TastingNotesUI implements Serializable {
         noseOther = getData(nose, GenericTastingNotes.NOSE_OTHER);
         noseWood = getData(nose, GenericTastingNotes.NOSE_WOOD);
 
-        //PALETTE
-        JsonObject palette = new JsonObject(json.getMap(new StringJsonKey(GenericTastingNotes.PALETTE)));
-        paletteAcid = getData(palette, GenericTastingNotes.PALETTE_ACID);
-        paletteAlcohol = getData(palette, GenericTastingNotes.PALETTE_ALCOHOL);
-        paletteBody = getData(palette, GenericTastingNotes.PALETTE_BODY);
-        paletteComplexity = getData(palette, GenericTastingNotes.PALETTE_COMPLEXITY);
-        paletteEarth = getData(palette, GenericTastingNotes.PALETTE_EARTH);
-        paletteFinish = getData(palette, GenericTastingNotes.PALETTE_FINISH);
-        paletteFruit = getData(palette, GenericTastingNotes.PALETTE_FRUIT);
-        paletteIntensity = getData(palette, GenericTastingNotes.PALETTE_INTENSITY);
-        paletteMineral = getData(palette, GenericTastingNotes.PALETTE_MINERAL);
-        paletteNonFruit = getData(palette, GenericTastingNotes.PALETTE_NON_FRUIT);
-        paletteOther = getData(palette, GenericTastingNotes.PALETTE_OTHER);
-        paletteSweetness = getData(palette, GenericTastingNotes.PALETTE_SWEETNESS);
-        paletteTannin = getData(palette, GenericTastingNotes.PALETTE_TANNIN);
-        paletteWood = getData(palette, GenericTastingNotes.PALETTE_WOOD);
+        //PALATE
+        JsonObject palate = new JsonObject(json.getMap(new StringJsonKey(GenericTastingNotes.PALATE)));
+        palateAcid = getData(palate, GenericTastingNotes.PALATE_ACID);
+        palateAlcohol = getData(palate, GenericTastingNotes.PALATE_ALCOHOL);
+        palateBody = getData(palate, GenericTastingNotes.PALATE_BODY);
+        palateComplexity = getData(palate, GenericTastingNotes.PALATE_COMPLEXITY);
+        palateEarth = getData(palate, GenericTastingNotes.PALATE_EARTH);
+        palateFinish = getData(palate, GenericTastingNotes.PALATE_FINISH);
+        palateFruit = getData(palate, GenericTastingNotes.PALATE_FRUIT);
+        palateIntensity = getData(palate, GenericTastingNotes.PALATE_INTENSITY);
+        palateMineral = getData(palate, GenericTastingNotes.PALATE_MINERAL);
+        palateNonFruit = getData(palate, GenericTastingNotes.PALATE_NON_FRUIT);
+        palateOther = getData(palate, GenericTastingNotes.PALATE_OTHER);
+        palateSweetness = getData(palate, GenericTastingNotes.PALATE_SWEETNESS);
+        palateTannin = getData(palate, GenericTastingNotes.PALATE_TANNIN);
+        palateWood = getData(palate, GenericTastingNotes.PALATE_WOOD);
 
         //CONCLUSION
         JsonObject conclusion = new JsonObject(json.getMap(new StringJsonKey(GenericTastingNotes.CONCLUSION)));
@@ -212,23 +212,23 @@ public class TastingNotesUI implements Serializable {
      * Get the palate notes
      * @return The map
      */
-    public Map<String, List<String>> mapPalleteNotes() {
-        Map<String, List<String>> paletteMap = new HashMap<>();
-        paletteMap.put(GenericTastingNotes.PALETTE_ACID, processString(paletteAcid));
-        paletteMap.put(GenericTastingNotes.PALETTE_ALCOHOL, processString(paletteAlcohol));
-        paletteMap.put(GenericTastingNotes.PALETTE_BODY, processString(paletteBody));
-        paletteMap.put(GenericTastingNotes.PALETTE_COMPLEXITY, processString(paletteComplexity));
-        paletteMap.put(GenericTastingNotes.PALETTE_EARTH, processString(paletteEarth));
-        paletteMap.put(GenericTastingNotes.PALETTE_FINISH, processString(paletteFinish));
-        paletteMap.put(GenericTastingNotes.PALETTE_FRUIT, processString(paletteFruit));
-        paletteMap.put(GenericTastingNotes.PALETTE_INTENSITY, processString(paletteIntensity));
-        paletteMap.put(GenericTastingNotes.PALETTE_MINERAL, processString(paletteMineral));
-        paletteMap.put(GenericTastingNotes.PALETTE_NON_FRUIT, processString(paletteNonFruit));
-        paletteMap.put(GenericTastingNotes.PALETTE_OTHER, processString(paletteOther));
-        paletteMap.put(GenericTastingNotes.PALETTE_SWEETNESS, processString(paletteSweetness));
-        paletteMap.put(GenericTastingNotes.PALETTE_TANNIN, processString(paletteTannin));
-        paletteMap.put(GenericTastingNotes.PALETTE_WOOD, processString(paletteWood));
-        return paletteMap;
+    public Map<String, List<String>> mapPalateNotes() {
+        Map<String, List<String>> palateMap = new HashMap<>();
+        palateMap.put(GenericTastingNotes.PALATE_ACID, processString(palateAcid));
+        palateMap.put(GenericTastingNotes.PALATE_ALCOHOL, processString(palateAlcohol));
+        palateMap.put(GenericTastingNotes.PALATE_BODY, processString(palateBody));
+        palateMap.put(GenericTastingNotes.PALATE_COMPLEXITY, processString(palateComplexity));
+        palateMap.put(GenericTastingNotes.PALATE_EARTH, processString(palateEarth));
+        palateMap.put(GenericTastingNotes.PALATE_FINISH, processString(palateFinish));
+        palateMap.put(GenericTastingNotes.PALATE_FRUIT, processString(palateFruit));
+        palateMap.put(GenericTastingNotes.PALATE_INTENSITY, processString(palateIntensity));
+        palateMap.put(GenericTastingNotes.PALATE_MINERAL, processString(palateMineral));
+        palateMap.put(GenericTastingNotes.PALATE_NON_FRUIT, processString(palateNonFruit));
+        palateMap.put(GenericTastingNotes.PALATE_OTHER, processString(palateOther));
+        palateMap.put(GenericTastingNotes.PALATE_SWEETNESS, processString(palateSweetness));
+        palateMap.put(GenericTastingNotes.PALATE_TANNIN, processString(palateTannin));
+        palateMap.put(GenericTastingNotes.PALATE_WOOD, processString(palateWood));
+        return palateMap;
     }
 
     /**

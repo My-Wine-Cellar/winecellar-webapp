@@ -185,7 +185,7 @@ public class TastingNotesController extends AbstractController {
         Wine wine = wineService.findById(tastingNotesUI.getWineId());
         return new GenericTastingNotes(tastingNotesUI.mapSightNotes(),
                 tastingNotesUI.mapNoseNotes(),
-                tastingNotesUI.mapPalleteNotes(),
+                tastingNotesUI.mapPalateNotes(),
                 tastingNotesUI.mapConclusionNotes(),
                 tastingNotesUI.getShow(),
                 date, user, wine);
