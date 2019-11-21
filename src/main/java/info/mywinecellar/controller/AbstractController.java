@@ -31,6 +31,7 @@ import info.mywinecellar.service.ReviewService;
 import info.mywinecellar.service.ShapeService;
 import info.mywinecellar.service.TastedService;
 import info.mywinecellar.service.TastingNotesService;
+import info.mywinecellar.service.TypeService;
 import info.mywinecellar.service.WineService;
 import info.mywinecellar.service.WishlistService;
 import info.mywinecellar.ui.AreaUI;
@@ -68,6 +69,7 @@ public abstract class AbstractController {
     @Inject protected MacerationService macerationService;
     @Inject protected FermentationService fermentationService;
     @Inject protected ColorService colorService;
+    @Inject protected TypeService typeService;
 
     public AbstractController() {
     }

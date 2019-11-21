@@ -54,6 +54,15 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
+                                <label th:for="${type}">Type</label>
+                                <select class="form-control" th:field="*{type}">
+                                    <option class="form-control" th:each="types : ${type}"
+                                            th:text="${types.name}"
+                                            th:value="${types.id}" th:selected="${wine.type}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
                                 <label th:for="${shape}">Shape</label>
                                 <select class="form-control" th:field="*{shape}">
                                     <option class="form-control" th:each="shapes : ${shape}"

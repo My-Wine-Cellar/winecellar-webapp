@@ -51,6 +51,7 @@ public class Attributes {
     public static final String SHAPE = "shape";
 
     public static final String TASTED = "tasted";
+    public static final String TYPE = "type";
 
     public static final String USER = "user";
     public static final String USERS = "users";

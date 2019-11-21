@@ -19,6 +19,14 @@ import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
 import info.mywinecellar.ui.WineUI;
 import info.mywinecellar.ui.WineUIFactory;
+
+import java.security.Principal;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,12 +40,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-
-import javax.validation.Valid;
-import java.security.Principal;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 @Controller
 @SessionAttributes({"wine", "grapeComponent", "barrelComponent", "grapes", "barrels"})
@@ -67,6 +69,7 @@ public class WineController extends AbstractController {
         wine.setProducer(producer);
         model.addAttribute(Attributes.WINE, wine);
         model.addAttribute(Attributes.COLOR, colorService.findAll());
+        model.addAttribute(Attributes.TYPE, typeService.findAll());
         model.addAttribute(Attributes.CLOSURE, closureService.findAll());
         model.addAttribute(Attributes.SHAPE, shapeService.findAll());
         return Paths.WINE_ADD_EDIT_DETAILS;
@@ -234,6 +237,7 @@ public class WineController extends AbstractController {
         principalNull(principal);
         model.addAttribute(Attributes.WINE, wineService.findById(wineId));
         model.addAttribute(Attributes.COLOR, colorService.findAll());
+        model.addAttribute(Attributes.TYPE, typeService.findAll());
         model.addAttribute(Attributes.CLOSURE, closureService.findAll());
         model.addAttribute(Attributes.SHAPE, shapeService.findAll());
         return Paths.WINE_ADD_EDIT_DETAILS;
