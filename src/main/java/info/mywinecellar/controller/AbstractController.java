@@ -19,6 +19,7 @@ import info.mywinecellar.service.BarrelComponentService;
 import info.mywinecellar.service.BarrelService;
 import info.mywinecellar.service.BottleService;
 import info.mywinecellar.service.ClosureService;
+import info.mywinecellar.service.ColorService;
 import info.mywinecellar.service.CountryService;
 import info.mywinecellar.service.FermentationService;
 import info.mywinecellar.service.GrapeComponentService;
@@ -41,8 +42,9 @@ import info.mywinecellar.ui.ProducerUIFactory;
 import info.mywinecellar.ui.RegionUI;
 import info.mywinecellar.ui.RegionUIFactory;
 
-import javax.inject.Inject;
 import java.security.Principal;
+
+import javax.inject.Inject;
 
 public abstract class AbstractController {
 
@@ -65,6 +67,7 @@ public abstract class AbstractController {
     @Inject protected ShapeService shapeService;
     @Inject protected MacerationService macerationService;
     @Inject protected FermentationService fermentationService;
+    @Inject protected ColorService colorService;
 
     public AbstractController() {
     }

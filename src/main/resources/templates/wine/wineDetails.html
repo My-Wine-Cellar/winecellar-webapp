@@ -237,6 +237,10 @@
                                         <td width="25%"><b th:text="#{closure}">Closure</b></td>
                                         <td th:text="*{closure.name}"></td>
                                     </tr>
+                                    <tr th:if="${wine.color}">
+                                        <td width="25%"><b th:text="#{color}">Color</b></td>
+                                        <td><b th:text="*{color.name}"></b></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <br/>

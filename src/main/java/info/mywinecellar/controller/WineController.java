@@ -66,6 +66,7 @@ public class WineController extends AbstractController {
         Wine wine = new Wine();
         wine.setProducer(producer);
         model.addAttribute(Attributes.WINE, wine);
+        model.addAttribute(Attributes.COLOR, colorService.findAll());
         model.addAttribute(Attributes.CLOSURE, closureService.findAll());
         model.addAttribute(Attributes.SHAPE, shapeService.findAll());
         return Paths.WINE_ADD_EDIT_DETAILS;
@@ -232,6 +233,7 @@ public class WineController extends AbstractController {
     public String wineEditGet(@PathVariable Long wineId, Model model, Principal principal) {
         principalNull(principal);
         model.addAttribute(Attributes.WINE, wineService.findById(wineId));
+        model.addAttribute(Attributes.COLOR, colorService.findAll());
         model.addAttribute(Attributes.CLOSURE, closureService.findAll());
         model.addAttribute(Attributes.SHAPE, shapeService.findAll());
         return Paths.WINE_ADD_EDIT_DETAILS;

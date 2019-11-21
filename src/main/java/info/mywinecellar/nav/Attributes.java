@@ -20,6 +20,7 @@ public class Attributes {
     public static final String BOTTLES = "bottles";
 
     public static final String CLOSURE = "closure";
+    public static final String COLOR = "color";
     public static final String COUNTRIES = "countries";
     public static final String COUNTRY = "country";
 
