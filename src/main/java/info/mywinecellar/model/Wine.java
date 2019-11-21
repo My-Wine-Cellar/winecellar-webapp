@@ -8,9 +8,7 @@
 
 package info.mywinecellar.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +20,11 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -118,6 +120,11 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shape_id", referencedColumnName = "id")
     private Shape shape;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "color_id", referencedColumnName = "id")
+    private Color color;
 
     @Override
     public int compareTo(Wine w) {
