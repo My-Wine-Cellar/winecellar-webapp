@@ -11,13 +11,18 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Grape;
 import info.mywinecellar.repository.GrapeRepository;
 import info.mywinecellar.service.GrapeService;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+/**
+ * Grape service implementation
+ */
 @Service
 public class GrapeServiceImpl implements GrapeService {
 

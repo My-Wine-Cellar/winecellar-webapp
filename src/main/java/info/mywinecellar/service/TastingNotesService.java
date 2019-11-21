@@ -10,9 +10,24 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.GenericTastingNotes;
 
+/**
+ * Tasting notes service
+ */
 public interface TastingNotesService extends CrudService<GenericTastingNotes, Long> {
 
+    /**
+     * Find by user
+     * @param userId The user identifier
+     * @param id The tasting notes identifier
+     * @return The tasting notes
+     */
     GenericTastingNotes findByUser(Integer userId, Long id);
 
+    /**
+     * Find by wine
+     * @param userId The user identifier
+     * @param wineId The wine identifier
+     * @return The tasting notes
+     */
     GenericTastingNotes findByWine(Integer userId, Long wineId);
 }

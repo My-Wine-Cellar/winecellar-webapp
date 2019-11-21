@@ -10,9 +10,24 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Review;
 
+/**
+ * Review service
+ */
 public interface ReviewService extends CrudService<Review, Long> {
 
+    /**
+     * Find by user
+     * @param userId The user identifier
+     * @param id The review identifier
+     * @return The review
+     */
     Review findByUser(Integer userId, Long id);
-    Review findByWine(Integer userId, Long wineId);
 
+    /**
+     * Find by wine
+     * @param userId The user identifier
+     * @param wineId The wine identifier
+     * @return The review
+     */
+    Review findByWine(Integer userId, Long wineId);
 }

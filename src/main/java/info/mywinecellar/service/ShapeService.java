@@ -12,7 +12,14 @@ import info.mywinecellar.model.Shape;
 
 import java.util.List;
 
+/**
+ * Shape service
+ */
 public interface ShapeService extends CrudService<Shape, Long> {
 
+    /**
+     * Find all
+     * @return All shapes
+     */
     List<Shape> findAll();
 }

@@ -12,7 +12,14 @@ import info.mywinecellar.model.Closure;
 
 import java.util.List;
 
+/**
+ * Closure service
+ */
 public interface ClosureService extends CrudService<Closure, Long> {
 
+    /**
+     * Find all
+     * @return All closures
+     */
     List<Closure> findAll();
 }

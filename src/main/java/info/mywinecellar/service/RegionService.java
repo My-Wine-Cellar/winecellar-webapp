@@ -10,7 +10,16 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Region;
 
+/**
+ * Region service
+ */
 public interface RegionService extends CrudService<Region, Long> {
 
+    /**
+     * Find by lower case name
+     * @param lcName The lower case name
+     * @param countryId The country identifier
+     * @return The region
+     */
     Region findByLowerCaseName(String lcName, Long countryId);
 }

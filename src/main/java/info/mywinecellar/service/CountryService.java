@@ -12,10 +12,22 @@ import info.mywinecellar.model.Country;
 
 import java.util.List;
 
+/**
+ * Country service
+ */
 public interface CountryService extends CrudService<Country, Long> {
 
+    /**
+     * Find by lower case name
+     * @param lcName The lower case name
+     * @return The country
+     */
     Country findByLowerCaseName(String lcName);
 
+    /**
+     * Find countries with regions
+     * @return The countries
+     */
     List<Country> findWithRegions();
 
 }

@@ -11,10 +11,14 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.GrapeComponent;
 import info.mywinecellar.repository.GrapeComponentRepository;
 import info.mywinecellar.service.GrapeComponentService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * GrapeComponent service implementation
+ */
 @Service
 public class GrapeComponentServiceImpl implements GrapeComponentService {
 

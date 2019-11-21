@@ -11,10 +11,14 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.BarrelComponent;
 import info.mywinecellar.repository.BarrelComponentRepository;
 import info.mywinecellar.service.BarrelComponentService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * BarrelComponent service implementation
+ */
 @Service
 public class BarrelComponentServiceImpl implements BarrelComponentService {
 

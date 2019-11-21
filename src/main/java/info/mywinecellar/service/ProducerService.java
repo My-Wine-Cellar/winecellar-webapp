@@ -10,8 +10,16 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Producer;
 
+/**
+ * Producer service
+ */
 public interface ProducerService extends CrudService<Producer, Long> {
 
+    /**
+     * Find by name
+     * @param name The name
+     * @return The producer
+     */
     Producer findByName(String name);
 
 }

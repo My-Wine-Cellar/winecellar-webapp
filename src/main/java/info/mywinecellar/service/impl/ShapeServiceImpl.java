@@ -11,12 +11,17 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Shape;
 import info.mywinecellar.repository.ShapeRepository;
 import info.mywinecellar.service.ShapeService;
-import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+/**
+ * Shape service implementation
+ */
 @Service
 public class ShapeServiceImpl implements ShapeService {
 

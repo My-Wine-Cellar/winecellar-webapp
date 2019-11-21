@@ -11,20 +11,26 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Bottle;
 import info.mywinecellar.repository.BottleRepository;
 import info.mywinecellar.service.BottleService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * Bottle service implementation
+ */
 @Service
 public class BottleServiceImpl implements BottleService {
 
     @Inject
     private BottleRepository bottleRepository;
 
+    @Override
     public Bottle findByUser(Integer userId, Long id) {
         return bottleRepository.findByUser(userId, id);
     }
 
+    @Override
     public Bottle findByWine(Integer userId, Long wineId) {
         return bottleRepository.findByWine(userId, wineId);
     }

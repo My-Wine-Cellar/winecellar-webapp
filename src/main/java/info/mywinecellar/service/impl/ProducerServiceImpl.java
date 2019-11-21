@@ -11,10 +11,14 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.repository.ProducerRepository;
 import info.mywinecellar.service.ProducerService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * Producer service implementation
+ */
 @Service
 public class ProducerServiceImpl implements ProducerService {
 

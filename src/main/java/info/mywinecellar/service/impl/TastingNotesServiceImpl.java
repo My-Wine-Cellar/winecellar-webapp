@@ -11,10 +11,14 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.GenericTastingNotes;
 import info.mywinecellar.repository.TastingNotesRepository;
 import info.mywinecellar.service.TastingNotesService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * Tasting notes service implementation
+ */
 @Service
 public class TastingNotesServiceImpl implements TastingNotesService {
 

@@ -10,9 +10,25 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Wishlist;
 
+/**
+ * Wishlist service
+ */
 public interface WishlistService extends CrudService<Wishlist, Long> {
 
+    /**
+     * Find by user
+     * @param userId The user identifier
+     * @param id The wishlist identifier
+     * @return The wishlist
+     */
     Wishlist findByUser(Integer userId, Long id);
+
+    /**
+     * Find by wine
+     * @param userId The user identifier
+     * @param wineId The wine identifier
+     * @return The wishlist
+     */
     Wishlist findByWine(Integer userId, Long wineId);
 
 }

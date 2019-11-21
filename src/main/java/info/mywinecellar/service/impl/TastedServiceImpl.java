@@ -11,20 +11,26 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Tasted;
 import info.mywinecellar.repository.TastedRepository;
 import info.mywinecellar.service.TastedService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * Tasted service implementation
+ */
 @Service
 public class TastedServiceImpl implements TastedService {
 
     @Inject
     private TastedRepository tastedRepository;
 
+    @Override
     public Tasted findByUser(Integer userId, Long id) {
         return tastedRepository.findByUser(userId, id);
     }
 
+    @Override
     public Tasted findByWine(Integer userId, Long wineId) {
         return tastedRepository.findByWine(userId, wineId);
     }
