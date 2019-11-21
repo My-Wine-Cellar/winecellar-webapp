@@ -11,20 +11,26 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Wishlist;
 import info.mywinecellar.repository.WishlistRepository;
 import info.mywinecellar.service.WishlistService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * Wishlist service implementation
+ */
 @Service
 public class WishlistServiceImpl implements WishlistService {
 
     @Inject
     private WishlistRepository wishlistRepository;
 
+    @Override
     public Wishlist findByUser(Integer userId, Long id) {
         return wishlistRepository.findByUser(userId, id);
     }
 
+    @Override
     public Wishlist findByWine(Integer userId, Long wineId) {
         return wishlistRepository.findByWine(userId, wineId);
     }

@@ -11,10 +11,14 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Region;
 import info.mywinecellar.repository.RegionRepository;
 import info.mywinecellar.service.RegionService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * Region service implementation
+ */
 @Service
 public class RegionServiceImpl implements RegionService {
 

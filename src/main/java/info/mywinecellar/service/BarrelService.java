@@ -12,9 +12,21 @@ import info.mywinecellar.model.Barrel;
 
 import java.util.List;
 
+/**
+ * Barrel service
+ */
 public interface BarrelService extends CrudService<Barrel, Long> {
 
+    /**
+     * Find by lower case name
+     * @param lcName The lower case name
+     * @return The barrels
+     */
     List<Barrel> findByLowerCaseName(String lcName);
 
+    /**
+     * Find all
+     * @return The barrels
+     */
     List<Barrel> findAll();
 }

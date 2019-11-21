@@ -11,11 +11,16 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Country;
 import info.mywinecellar.repository.CountryRepository;
 import info.mywinecellar.service.CountryService;
-import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+/**
+ * Country service implementation
+ */
 @Service
 public class CountryServiceImpl implements CountryService {
 

@@ -10,7 +10,15 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.GrapeComponent;
 
+/**
+ * GrapeComponent service
+ */
 public interface GrapeComponentService extends CrudService<GrapeComponent, Long> {
 
+    /**
+     * Save all
+     * @param grapes The grape components
+     * @return The updated grape components
+     */
     Iterable<GrapeComponent> saveAll(Iterable<GrapeComponent> grapes);
 }

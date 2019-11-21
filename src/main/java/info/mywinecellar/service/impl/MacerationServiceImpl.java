@@ -11,10 +11,14 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Maceration;
 import info.mywinecellar.repository.MacerationRepository;
 import info.mywinecellar.service.MacerationService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * Maceration service implementation
+ */
 @Service
 public class MacerationServiceImpl implements MacerationService {
 

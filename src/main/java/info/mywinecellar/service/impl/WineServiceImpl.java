@@ -12,11 +12,16 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.repository.WineRepository;
 import info.mywinecellar.service.WineService;
-import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+/**
+ * Wine service implementation
+ */
 @Service
 public class WineServiceImpl implements WineService {
 

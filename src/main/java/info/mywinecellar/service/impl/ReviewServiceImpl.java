@@ -11,20 +11,26 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Review;
 import info.mywinecellar.repository.ReviewRepository;
 import info.mywinecellar.service.ReviewService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * Review service implementation
+ */
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
     @Inject
     private ReviewRepository reviewRepository;
 
+    @Override
     public Review findByUser(Integer userId, Long id) {
         return reviewRepository.findByUser(userId, id);
     }
 
+    @Override
     public Review findByWine(Integer userId, Long wineId) {
         return reviewRepository.findByWine(userId, wineId);
     }

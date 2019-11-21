@@ -10,7 +10,15 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.BarrelComponent;
 
+/**
+ * BarrelComponent service
+ */
 public interface BarrelComponentService extends CrudService<BarrelComponent, Long> {
 
+    /**
+     * Save all
+     * @param barrels The barrel components
+     * @return The updated barrel components
+     */
     Iterable<BarrelComponent> saveAll(Iterable<BarrelComponent> barrels);
 }

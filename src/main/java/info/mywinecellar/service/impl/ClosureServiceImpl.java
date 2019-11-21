@@ -11,12 +11,17 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Closure;
 import info.mywinecellar.repository.ClosureRepository;
 import info.mywinecellar.service.ClosureService;
-import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+/**
+ * Closure service implementation
+ */
 @Service
 public class ClosureServiceImpl implements ClosureService {
 

@@ -11,10 +11,14 @@ package info.mywinecellar.service.impl;
 import info.mywinecellar.model.Fermentation;
 import info.mywinecellar.repository.FermentationRepository;
 import info.mywinecellar.service.FermentationService;
-import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
+/**
+ * Fermentation service implementation
+ */
 @Service
 public class FermentationServiceImpl implements FermentationService {
 

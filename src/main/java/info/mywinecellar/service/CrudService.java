@@ -8,12 +8,31 @@
 
 package info.mywinecellar.service;
 
+/**
+ * Crud service
+ * @param <T> The type
+ * @param <ID> The identifier type
+ */
 public interface CrudService<T, ID> {
 
+    /**
+     * Find by id
+     * @param id The identifier
+     * @return The type
+     */
     T findById(ID id);
 
+    /**
+     * Save
+     * @param object The object
+     * @return The updated object
+     */
     T save(T object);
 
+    /**
+     * Delete
+     * @param object The object
+     */
     void delete(T object);
 
 }
