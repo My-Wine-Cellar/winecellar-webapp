@@ -241,6 +241,10 @@
                                         <td width="25%"><b th:text="#{color}">Color</b></td>
                                         <td><b th:text="*{color.name}"></b></td>
                                     </tr>
+                                    <tr th:if="${wine.type}">
+                                        <td width="25%"><b th:text="#{type}">Type</b></td>
+                                        <td><b th:text="*{type.name}"></b></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <br/>
