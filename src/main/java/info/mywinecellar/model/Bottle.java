@@ -9,7 +9,6 @@
 package info.mywinecellar.model;
 
 import info.mywinecellar.security.model.User;
-import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,16 +16,32 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
 public class Bottle extends BaseEntity implements Comparable<Bottle> {
 
+    /**
+     * Default constructor
+     */
     public Bottle() {
         super();
     }
 
+    /**
+     * Bottle constructor
+     *
+     * @param number   number
+     * @param location location
+     * @param show     show
+     * @param user     user
+     * @param wine     wine
+     */
     public Bottle(Integer number, String location, Boolean show, User user, Wine wine) {
         super();
         this.number = number;

@@ -32,10 +32,31 @@ import lombok.Setter;
 @Entity
 public class Wine extends BaseEntity implements Comparable<Wine> {
 
+    /**
+     * Default constructor
+     */
     public Wine() {
         super();
     }
 
+    /**
+     * Wine constructor
+     *
+     * @param name        name
+     * @param vintage     vintage
+     * @param alcohol     alcohol
+     * @param size        size
+     * @param acid        acid
+     * @param pH          pH
+     * @param bottleAging bottleAging
+     * @param description description
+     * @param weblink     weblink
+     * @param producer    producer
+     * @param closure     closure
+     * @param shape       shape
+     * @param color       color
+     * @param type        type
+     */
     public Wine(String name, Integer vintage, Float alcohol, Float size,
                 Float acid, Float pH, Integer bottleAging, String description, String weblink,
                 Producer producer, Closure closure, Shape shape, Color color, Type type) {

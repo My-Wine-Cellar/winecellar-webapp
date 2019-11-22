@@ -8,9 +8,8 @@
 
 package info.mywinecellar.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,8 +19,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
-import java.util.List;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -30,10 +31,22 @@ import java.util.List;
 @Table(name = "grape_component")
 public class GrapeComponent extends BaseEntity implements Comparable<GrapeComponent> {
 
+    /**
+     * Default constructor
+     */
     public GrapeComponent() {
         super();
     }
 
+    /**
+     * GrapeComponent constructor
+     *
+     * @param percentage   percentage
+     * @param harvestBegin harvestBegin
+     * @param harvestEnd   harvestEnd
+     * @param grape        grape
+     * @param wine         wine
+     */
     public GrapeComponent(Byte percentage, Date harvestBegin, Date harvestEnd, Grape grape, Wine wine) {
         super();
         this.percentage = percentage;
@@ -77,9 +90,9 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
     public int compareTo(GrapeComponent gc) {
         int result = percentage.compareTo(gc.getPercentage());
 
-        if (result == 0)
+        if (result == 0) {
             return grape.getName().compareTo(gc.getGrape().getName());
-
+        }
         return result;
     }
 

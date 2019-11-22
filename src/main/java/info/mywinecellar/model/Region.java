@@ -8,12 +8,21 @@
 
 package info.mywinecellar.model;
 
-import lombok.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -21,10 +30,21 @@ import java.util.List;
 @Entity
 public class Region extends BaseEntity implements Comparable<Region> {
 
+    /**
+     * Default constructor
+     */
     public Region() {
         super();
     }
 
+    /**
+     * Region constructor
+     *
+     * @param name        name
+     * @param description description
+     * @param weblink     weblink
+     * @param country     country
+     */
     public Region(String name, String description, String weblink, Country country) {
         super();
         this.name = name;
@@ -57,6 +77,11 @@ public class Region extends BaseEntity implements Comparable<Region> {
     )
     private List<Area> areas;
 
+    /**
+     * This will find the Area with the same name as the Region at the top of list
+     *
+     * @return areas
+     */
     public List<Area> getAreas() {
         areas.forEach(area -> {
             if (area.getName().equals(this.name)) {
