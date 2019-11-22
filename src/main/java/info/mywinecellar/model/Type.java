@@ -27,10 +27,20 @@ import lombok.Setter;
 @Entity
 public class Type extends BaseEntity implements Comparable<Type> {
 
+    /**
+     * Default constructor
+     */
     public Type() {
         super();
     }
 
+    /**
+     * Type constructor
+     *
+     * @param name        name
+     * @param description description
+     * @param weblink     weblink
+     */
     public Type(String name, String description, String weblink) {
         super();
         this.name = name;

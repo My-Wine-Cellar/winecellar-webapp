@@ -8,10 +8,6 @@
 
 package info.mywinecellar.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -29,10 +29,22 @@ public class BarrelComponent extends BaseEntity implements Comparable<BarrelComp
 
     private static final String NOT_NULL_MESSAGE = "This field is required";
 
+    /**
+     * Default constructor
+     */
     public BarrelComponent() {
         super();
     }
 
+    /**
+     * BarrelComponent constructor
+     *
+     * @param percentage     percentage
+     * @param size           size
+     * @param aging          aging
+     * @param grapeComponent grapeComponent
+     * @param barrel         barrel
+     */
     public BarrelComponent(Byte percentage, Integer size, Integer aging,
                            GrapeComponent grapeComponent, Barrel barrel) {
         super();
@@ -68,8 +80,9 @@ public class BarrelComponent extends BaseEntity implements Comparable<BarrelComp
     public int compareTo(BarrelComponent bc) {
         int result = percentage.compareTo(bc.getPercentage());
 
-        if (result == 0)
+        if (result == 0) {
             return barrel.getName().compareTo(bc.getBarrel().getName());
+        }
 
         return result;
     }

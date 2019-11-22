@@ -8,11 +8,21 @@
 
 package info.mywinecellar.model;
 
-import lombok.*;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -20,10 +30,21 @@ import java.util.List;
 @Entity
 public class Grape extends BaseEntity implements Comparable<Grape> {
 
+    /**
+     * Default constructor
+     */
     public Grape() {
         super();
     }
 
+    /**
+     * Grape constructor
+     *
+     * @param name        name
+     * @param color       color
+     * @param description description
+     * @param weblink     weblink
+     */
     public Grape(String name, String color, String description, String weblink) {
         super();
         this.name = name;

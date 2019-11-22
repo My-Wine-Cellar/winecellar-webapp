@@ -9,13 +9,21 @@
 package info.mywinecellar.model;
 
 import info.mywinecellar.util.WineSorter;
-import lombok.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Setter
@@ -23,10 +31,23 @@ import java.util.List;
 @Entity
 public class Producer extends BaseEntity implements Comparable<Producer> {
 
+    /**
+     * Default constructor
+     */
     public Producer() {
         super();
     }
 
+    /**
+     * Producer constructor
+     *
+     * @param name        name
+     * @param description description
+     * @param phone       phone
+     * @param fax         fax
+     * @param email       email
+     * @param website     website
+     */
     public Producer(String name, String description, String phone, String fax, String email, String website) {
         super();
         this.name = name;
@@ -63,6 +84,11 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
     private List<Wine> wines;
 
+    /**
+     * Sorted by WineSorter
+     *
+     * @return sorted list of wines
+     */
     public List<Wine> getWines() {
         Collections.sort(wines, new WineSorter());
         return wines;
@@ -73,6 +99,13 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
         return name.compareTo(p.getName());
     }
 
+    /**
+     * @deprecated since v1.0.4
+     * @param label label
+     * @param ignoreNew ignoreNew
+     * @return Wine
+     */
+    @Deprecated
     public Wine getWine(String label, boolean ignoreNew) {
         label = label.toLowerCase();
         for (Wine wine : wines) {

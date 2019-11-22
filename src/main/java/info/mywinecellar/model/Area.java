@@ -10,13 +10,21 @@ package info.mywinecellar.model;
 
 import info.mywinecellar.util.ProducerSorter;
 
-import lombok.*;
-
-import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -24,10 +32,20 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Area extends BaseEntity implements Comparable<Area> {
 
+    /**
+     * Default Area constructor
+     */
     public Area() {
         super();
     }
 
+    /**
+     * Area constructor
+     *
+     * @param name        name
+     * @param description description
+     * @param weblink     weblink
+     */
     public Area(String name, String description, String weblink) {
         super();
         this.name = name;
@@ -46,20 +64,25 @@ public class Area extends BaseEntity implements Comparable<Area> {
     private String weblink;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "areas")
-    public List<Region> regions;
+    private List<Region> regions;
 
     @ManyToMany(mappedBy = "areas")
-    public List<Grape> primaryGrapes;
+    private List<Grape> primaryGrapes;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "area_producer",
-               joinColumns =
-               @JoinColumn(name = "area_id", referencedColumnName = "id"),
-               inverseJoinColumns =
-               @JoinColumn(name = "producer_id", referencedColumnName = "id")
+            joinColumns =
+            @JoinColumn(name = "area_id", referencedColumnName = "id"),
+            inverseJoinColumns =
+            @JoinColumn(name = "producer_id", referencedColumnName = "id")
     )
     private List<Producer> producers;
 
+    /**
+     * Sort Producers using ProducerSorter
+     *
+     * @return sorted Producers
+     */
     public List<Producer> getProducers() {
         Collections.sort(producers, new ProducerSorter());
         return producers;

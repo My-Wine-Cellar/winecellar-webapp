@@ -9,12 +9,15 @@
 package info.mywinecellar.model;
 
 import info.mywinecellar.security.model.User;
-import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -22,10 +25,19 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Tasted extends BaseEntity implements Comparable<Tasted> {
 
+    /**
+     * Default constructor
+     */
     public Tasted() {
         super();
     }
 
+    /**
+     * Tasted constructor
+     *
+     * @param user user
+     * @param wine wine
+     */
     public Tasted(User user, Wine wine) {
         super();
         this.user = user;

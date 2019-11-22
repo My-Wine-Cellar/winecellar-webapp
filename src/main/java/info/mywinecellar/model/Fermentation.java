@@ -8,11 +8,16 @@
 
 package info.mywinecellar.model;
 
-import lombok.*;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -20,10 +25,19 @@ import java.util.List;
 @Entity
 public class Fermentation extends BaseEntity implements Comparable<Fermentation> {
 
+    /**
+     * Default constructor
+     */
     public Fermentation() {
         super();
     }
 
+    /**
+     * Fermentation constructor
+     *
+     * @param days        days
+     * @param temperature temperature
+     */
     public Fermentation(Byte days, Float temperature) {
         super();
         this.days = days;
@@ -44,9 +58,9 @@ public class Fermentation extends BaseEntity implements Comparable<Fermentation>
     public int compareTo(Fermentation m) {
         int result = days.compareTo(m.getDays());
 
-        if (result == 0)
+        if (result == 0) {
             return temperature.compareTo(m.getTemperature());
-
+        }
         return result;
     }
 

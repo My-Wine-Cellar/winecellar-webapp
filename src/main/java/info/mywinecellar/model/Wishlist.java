@@ -9,7 +9,8 @@
 package info.mywinecellar.model;
 
 import info.mywinecellar.security.model.User;
-import lombok.*;
+
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import java.sql.Date;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -25,10 +28,20 @@ import java.sql.Date;
 @Entity
 public class Wishlist extends BaseEntity implements Comparable<Wishlist> {
 
+    /**
+     * Default constructor
+     */
     public Wishlist() {
         super();
     }
 
+    /**
+     * Wishlist constructor
+     *
+     * @param date date
+     * @param user user
+     * @param wine wine
+     */
     public Wishlist(Date date, User user, Wine wine) {
         super();
         this.date = date;

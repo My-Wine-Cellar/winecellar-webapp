@@ -8,9 +8,7 @@
 
 package info.mywinecellar.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,7 +16,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -26,10 +27,20 @@ import java.util.List;
 @Entity
 public class Shape extends BaseEntity implements Comparable<Shape> {
 
+    /**
+     * Default constructor
+     */
     public Shape() {
         super();
     }
 
+    /**
+     * Shape constructor
+     *
+     * @param name        name
+     * @param description description
+     * @param weblink     weblink
+     */
     public Shape(String name, String description, String weblink) {
         super();
         this.name = name;

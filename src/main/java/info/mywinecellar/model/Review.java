@@ -9,7 +9,6 @@
 package info.mywinecellar.model;
 
 import info.mywinecellar.security.model.User;
-import lombok.*;
 
 import java.sql.Date;
 
@@ -19,16 +18,32 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
 public class Review extends BaseEntity implements Comparable<Review> {
 
+    /**
+     * Default constructor
+     */
     public Review() {
         super();
     }
 
+    /**
+     * Review constructor
+     *
+     * @param stars   stars
+     * @param comment comment
+     * @param date    date
+     * @param user    user
+     * @param wine    wine
+     */
     public Review(Float stars, String comment, Date date, User user, Wine wine) {
         super();
         this.stars = stars;
@@ -63,13 +78,15 @@ public class Review extends BaseEntity implements Comparable<Review> {
     public int compareTo(Review r) {
         int result;
 
-        if (getId().equals(r.getId()))
+        if (getId().equals(r.getId())) {
             return 0;
+        }
 
         result = getStars().compareTo(r.getStars());
-        if (result != 0)
-            return -result;
 
+        if (result != 0) {
+            return -result;
+        }
         return wine.getName().compareTo(r.getWine().getName());
     }
 

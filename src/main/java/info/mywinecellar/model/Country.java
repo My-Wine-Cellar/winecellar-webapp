@@ -8,13 +8,16 @@
 
 package info.mywinecellar.model;
 
-import lombok.*;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -22,13 +25,25 @@ import java.util.List;
 @Entity
 public class Country extends BaseEntity implements Comparable<Country> {
 
+    /**
+     * Default constructor
+     */
     public Country() {
         super();
     }
 
+    /**
+     * Country constructor
+     *
+     * @param name        name
+     * @param flag        flag
+     * @param description description
+     * @param weblink     weblink
+     */
     public Country(String name, String flag, String description, String weblink) {
         super();
         this.name = name;
+        this.flag = flag;
         this.description = description;
         this.weblink = weblink;
     }

@@ -8,12 +8,18 @@
 
 package info.mywinecellar.model;
 
-import lombok.*;
-
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Getter
@@ -21,10 +27,20 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Barrel extends BaseEntity implements Comparable<Barrel> {
 
+    /**
+     * Default constructor
+     */
     public Barrel() {
         super();
     }
 
+    /**
+     * Barrel constructor
+     *
+     * @param name        name
+     * @param description description
+     * @param weblink     weblink
+     */
     public Barrel(String name, String description, String weblink) {
         super();
         this.name = name;

@@ -27,10 +27,20 @@ import lombok.Setter;
 @Entity
 public class Color extends BaseEntity implements Comparable<Color> {
 
+    /**
+     * Default constructor
+     */
     public Color() {
         super();
     }
 
+    /**
+     * Color constructor
+     *
+     * @param name        name
+     * @param description description
+     * @param weblink     weblink
+     */
     public Color(String name, String description, String weblink) {
         super();
         this.name = name;
