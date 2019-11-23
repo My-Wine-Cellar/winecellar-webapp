@@ -1,12 +1,17 @@
 package info.mywinecellar.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import info.mywinecellar.model.GrapeComponent;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.service.BarrelService;
 import info.mywinecellar.service.ClosureService;
+import info.mywinecellar.service.ColorService;
 import info.mywinecellar.service.GrapeService;
 import info.mywinecellar.service.ShapeService;
+import info.mywinecellar.service.TypeService;
 import info.mywinecellar.service.WineService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,9 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 
 @ExtendWith(MockitoExtension.class)
 class WineControllerTest {
@@ -26,20 +28,13 @@ class WineControllerTest {
     @InjectMocks
     WineController controller;
 
-    @Mock
-    WineService wineService;
-
-    @Mock
-    ShapeService shapeService;
-
-    @Mock
-    ClosureService closureService;
-
-    @Mock
-    GrapeService grapeService;
-
-    @Mock
-    BarrelService barrelService;
+    @Mock WineService wineService;
+    @Mock ShapeService shapeService;
+    @Mock ClosureService closureService;
+    @Mock GrapeService grapeService;
+    @Mock BarrelService barrelService;
+    @Mock ColorService colorService;
+    @Mock TypeService typeService;
 
     private Wine wine;
 
