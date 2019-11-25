@@ -10,11 +10,21 @@ package info.mywinecellar.nav;
 
 public class Actions {
 
-    public final static String ADD_ANOTHER_BARREL = "addAnotherBarrel";
-    public final static String ADD_ANOTHER_GRAPE = "addAnotherGrape";
-    public final static String ADD_BARREL = "addBarrel";
-    public final static String ADD_GRAPE = "addGrape";
-    public final static String CANCEL = "cancel";
-    public final static String SAVE_WINE = "saveWine";
+    /** ADD_ANOTHER_BARREL */
+    public static final String ADD_ANOTHER_BARREL = "addAnotherBarrel";
+    /** ADD_ANOTHER_GRAPE */
+    public static final String ADD_ANOTHER_GRAPE = "addAnotherGrape";
+    /** ADD_BARREL */
+    public static final String ADD_BARREL = "addBarrel";
+    /** ADD_GRAPE */
+    public static final String ADD_GRAPE = "addGrape";
 
+    /** CANCEL */
+    public static final String CANCEL = "cancel";
+
+    /** SAVE_WINE */
+    public static final String SAVE_WINE = "saveWine";
+
+    private Actions() {
+    }
 }
