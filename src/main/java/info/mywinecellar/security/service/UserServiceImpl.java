@@ -12,7 +12,18 @@ import info.mywinecellar.security.model.Authority;
 import info.mywinecellar.security.model.User;
 import info.mywinecellar.security.model.UserDto;
 import info.mywinecellar.security.model.VerificationToken;
-import lombok.extern.slf4j.Slf4j;
+
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+import javax.mail.MessagingException;
+import javax.transaction.Transactional;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,15 +31,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
-import javax.mail.MessagingException;
-import javax.transaction.Transactional;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -59,11 +62,13 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username and password");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getAuthorities()));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+                user.getPassword(), mapRolesToAuthorities(user.getAuthorities()));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Authority> authorities) {
-        return authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.getAuthority())).collect(Collectors.toList());
+        return authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.getAuthority()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -121,9 +126,9 @@ public class UserServiceImpl implements UserService {
         final User user = verificationToken.getUser();
         final Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpirationDate()
-                .getTime()
-                - cal.getTime()
-                .getTime()) <= 0) {
+                .getTime() -
+                cal.getTime()
+                        .getTime()) <= 0) {
             tokenRepository.delete(verificationToken);
             return TOKEN_EXPIRED;
         }

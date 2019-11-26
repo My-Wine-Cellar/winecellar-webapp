@@ -49,28 +49,114 @@ import javax.inject.Inject;
 
 public abstract class AbstractController {
 
+    /**
+     * AreaService
+     */
     @Inject protected AreaService areaService;
+
+    /**
+     * CountryService
+     */
     @Inject protected CountryService countryService;
+
+    /**
+     * ProducerService
+     */
     @Inject protected ProducerService producerService;
+
+    /**
+     * RegionService
+     */
     @Inject protected RegionService regionService;
+
+    /**
+     * UserService
+     */
     @Inject protected UserService userService;
+
+    /**
+     * GrapeService
+     */
     @Inject protected GrapeService grapeService;
+
+    /**
+     * BottleService
+     */
     @Inject protected BottleService bottleService;
+
+    /**
+     * WineService
+     */
     @Inject protected WineService wineService;
+
+    /**
+     * TastedService
+     */
     @Inject protected TastedService tastedService;
+
+    /**
+     * ReviewService
+     */
     @Inject protected ReviewService reviewService;
+
+    /**
+     * BarrelService
+     */
     @Inject protected BarrelService barrelService;
+
+    /**
+     * TastingNotesService
+     */
     @Inject protected TastingNotesService tastingNotesService;
+
+    /**
+     * WishlistService
+     */
     @Inject protected WishlistService wishlistService;
+
+    /**
+     * GrapeComponentService
+     */
     @Inject protected GrapeComponentService grapeComponentService;
+
+    /**
+     * BarrelComponentService
+     */
     @Inject protected BarrelComponentService barrelComponentService;
+
+    /**
+     * ClosureService
+     */
     @Inject protected ClosureService closureService;
+
+    /**
+     * ShapeService
+     */
     @Inject protected ShapeService shapeService;
+
+    /**
+     * MacerationService
+     */
     @Inject protected MacerationService macerationService;
+
+    /**
+     * FermentationService
+     */
     @Inject protected FermentationService fermentationService;
+
+    /**
+     * ColorService
+     */
     @Inject protected ColorService colorService;
+
+    /**
+     * TypeService
+     */
     @Inject protected TypeService typeService;
 
+    /**
+     * Default constructor
+     */
     public AbstractController() {
     }
 

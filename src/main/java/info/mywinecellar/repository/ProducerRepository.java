@@ -9,10 +9,15 @@
 package info.mywinecellar.repository;
 
 import info.mywinecellar.model.Producer;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProducerRepository extends JpaRepository<Producer, Long> {
 
+    /**
+     * @param name name
+     * @return Producer
+     */
     Producer findByName(String name);
 
 }

@@ -27,7 +27,11 @@ checkstyle {
         'configDir': rootProject.file('config/checkstyle'),
         'baseDir': rootDir,
     ]
-    checkstyleMain.exclude '**/info/mywinecellar/util/Regex.java'
+    checkstyleMain.exclude '**/info/mywinecellar/util/Regex.java',
+            '**/info/mywinecellar/email/EmailService.java',
+            '**/info/mywinecellar/WineWebappApplication.java'
+
+    checkstyleTest.enabled = false
 
     toolVersion "8.26"
 }

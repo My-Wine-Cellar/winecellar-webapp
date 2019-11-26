@@ -14,6 +14,12 @@ import info.mywinecellar.model.Producer;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
+
+import java.security.Principal;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,23 +31,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.security.Principal;
-import java.util.List;
-
 @Controller
 @RequestMapping("/area")
 public class AreaController extends AbstractController {
 
+    /**
+     * Default constructor
+     */
     public AreaController() {
         super();
     }
 
+    /**
+     * @param dataBinder dataBinder
+     */
     @InitBinder("area")
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
+    /**
+     * @param areaId    areaId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{areaId}/edit")
     public String areaEditGet(@PathVariable Long areaId, Model model, Principal principal) {
         principalNull(principal);
@@ -50,6 +64,13 @@ public class AreaController extends AbstractController {
         return Paths.AREA_EDIT;
     }
 
+    /**
+     * @param area      area
+     * @param principal principal
+     * @param areaId    areaId
+     * @param action    action
+     * @return View
+     */
     @PostMapping("/{areaId}/edit")
     public String areaEditPost(Area area, Principal principal,
                                @PathVariable Long areaId,
@@ -65,7 +86,12 @@ public class AreaController extends AbstractController {
         }
     }
 
-
+    /**
+     * @param model     model
+     * @param areaId    areaId
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{areaId}/addProducer")
     public String areaAddProducerGet(Model model, @PathVariable Long areaId, Principal principal) {
         principalNull(principal);
@@ -75,6 +101,15 @@ public class AreaController extends AbstractController {
         return Paths.PRODUCER_ADD_EDIT;
     }
 
+    /**
+     * @param producer  producer
+     * @param result    result
+     * @param model     model
+     * @param areaId    areaId
+     * @param principal principal
+     * @param action    action
+     * @return View
+     */
     @PostMapping("/{areaId}/addProducer")
     public String areaAddProducerPost(@Valid Producer producer, BindingResult result, Model model,
                                       @PathVariable Long areaId, Principal principal,
@@ -97,6 +132,12 @@ public class AreaController extends AbstractController {
         return Paths.ERROR_PAGE;
     }
 
+    /**
+     * @param model     model
+     * @param areaId    areaId
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{areaId}/addGrape")
     public String areaAddGrapeGet(Model model, @PathVariable Long areaId, Principal principal) {
         principalNull(principal);
@@ -107,6 +148,13 @@ public class AreaController extends AbstractController {
         return Paths.AREA_ADD_GRAPE;
     }
 
+    /**
+     * @param area      area
+     * @param principal principal
+     * @param areaId    areaId
+     * @param action    action
+     * @return View
+     */
     @PostMapping("/{areaId}/addGrape")
     public String areaAddGrapePost(Area area, Principal principal,
                                    @PathVariable Long areaId,

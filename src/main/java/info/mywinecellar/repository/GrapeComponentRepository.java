@@ -9,6 +9,7 @@
 package info.mywinecellar.repository;
 
 import info.mywinecellar.model.GrapeComponent;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GrapeComponentRepository extends JpaRepository<GrapeComponent, Long> {

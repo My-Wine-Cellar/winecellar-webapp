@@ -8,15 +8,6 @@
 
 package info.mywinecellar.hibernate;
 
-import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SharedSessionContractImplementor;
-import org.hibernate.type.SerializationException;
-import org.hibernate.usertype.UserType;
-//import org.postgresql.util.PGobject;
-import org.springframework.util.ObjectUtils;
-import com.github.cliftonlabs.json_simple.JsonObject;
-import com.github.cliftonlabs.json_simple.Jsoner;
-
 import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +15,17 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.type.SerializationException;
+import org.hibernate.usertype.UserType;
+import org.springframework.util.ObjectUtils;
+
+import com.github.cliftonlabs.json_simple.JsonObject;
+import com.github.cliftonlabs.json_simple.Jsoner;
+
+//import org.postgresql.util.PGobject;
 
 public class JSONB implements UserType {
 
@@ -34,7 +36,7 @@ public class JSONB implements UserType {
         if (value == null) {
             st.setNull(index, Types.OTHER);
         } else {
-            st.setObject(index, new JsonObject((Map<String, ?>)value).toJson(), Types.OTHER);
+            st.setObject(index, new JsonObject((Map<String, ?>) value).toJson(), Types.OTHER);
         }
     }
 
@@ -59,7 +61,7 @@ public class JSONB implements UserType {
         }
 
         Map<String, Serializable> result = new HashMap<>();
-        result.putAll((Map<String, Serializable>)originalValue);
+        result.putAll((Map<String, Serializable>) originalValue);
         return result;
     }
 
@@ -71,7 +73,8 @@ public class JSONB implements UserType {
             return (Serializable) copy;
         }
 
-        throw new SerializationException(String.format("Cannot serialize '%s', %s is not Serializable.", value, value.getClass()), null);
+        throw new SerializationException(String.format("Cannot serialize '%s', %s is not Serializable.",
+                value, value.getClass()), null);
     }
 
     @Override

@@ -9,6 +9,7 @@
 package info.mywinecellar.repository;
 
 import info.mywinecellar.model.Maceration;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MacerationRepository extends JpaRepository<Maceration, Long> {

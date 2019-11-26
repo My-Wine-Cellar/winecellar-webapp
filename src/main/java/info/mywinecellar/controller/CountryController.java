@@ -11,6 +11,11 @@ package info.mywinecellar.controller;
 import info.mywinecellar.model.Country;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+
+import java.security.Principal;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,17 +25,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.security.Principal;
-
 @Controller
 @RequestMapping("/country")
 public class CountryController extends AbstractController {
 
+    /**
+     * Default constructor
+     */
     public CountryController() {
         super();
     }
 
+    /**
+     * @param countryId countryId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{countryId}/edit")
     public String countryEditGet(@PathVariable Long countryId, Model model, Principal principal) {
         principalNull(principal);
@@ -39,6 +50,15 @@ public class CountryController extends AbstractController {
         return Paths.COUNTRY_EDIT;
     }
 
+    /**
+     * @param country   country
+     * @param result    result
+     * @param model     model
+     * @param countryId countryId
+     * @param principal principal
+     * @param action    action
+     * @return View
+     */
     @PostMapping("/{countryId}/edit")
     public String countryEditPost(@Valid Country country, BindingResult result, Model model,
                                   @PathVariable Long countryId, Principal principal,

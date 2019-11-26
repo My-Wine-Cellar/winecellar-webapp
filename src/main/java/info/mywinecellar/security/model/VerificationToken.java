@@ -8,7 +8,9 @@
 
 package info.mywinecellar.security.model;
 
-import lombok.Data;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,9 +19,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.Calendar;
+
+import lombok.Data;
 
 @Data
 @Entity
@@ -27,8 +28,18 @@ public class VerificationToken {
 
     private static final int EXPIRATION = 60 * 24;
 
-    public VerificationToken(){}
+    /**
+     * Default constructor
+     */
+    public VerificationToken() {
+    }
 
+    /**
+     * VerificationToken constructor
+     *
+     * @param token token
+     * @param user  user
+     */
     public VerificationToken(String token, User user) {
         this.token = token;
         this.user = user;

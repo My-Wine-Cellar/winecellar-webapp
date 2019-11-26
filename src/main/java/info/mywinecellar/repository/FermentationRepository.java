@@ -9,6 +9,7 @@
 package info.mywinecellar.repository;
 
 import info.mywinecellar.model.Fermentation;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FermentationRepository extends JpaRepository<Fermentation, Long> {

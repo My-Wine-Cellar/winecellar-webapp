@@ -8,12 +8,15 @@
 
 package info.mywinecellar.hibernate;
 
-import org.hibernate.dialect.PostgreSQL95Dialect;
-
 import java.sql.Types;
+
+import org.hibernate.dialect.PostgreSQL95Dialect;
 
 public class CustomDialect extends PostgreSQL95Dialect {
 
+    /**
+     * CustomDialect constructor
+     */
     public CustomDialect() {
         this.registerColumnType(Types.JAVA_OBJECT, "jsonb");
     }

@@ -39,17 +39,19 @@ import info.mywinecellar.ui.GrapeUISorter;
 import info.mywinecellar.ui.ProducerUIFactory;
 import info.mywinecellar.ui.RegionUIFactory;
 import info.mywinecellar.ui.WineUIFactory;
+
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.inject.Inject;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Controller
 @RequestMapping("/d")
@@ -62,14 +64,22 @@ public class DataController extends AbstractController {
     private ReviewService reviewService;
 
     @Inject
-    private TastingNotesService tastingNotesService; 
+    private TastingNotesService tastingNotesService;
 
     @Inject
     private WishlistService wishlistService;
 
+    /**
+     * Default constructor
+     */
     public DataController() {
+        super();
     }
 
+    /**
+     * @param model model
+     * @return View
+     */
     @GetMapping("/")
     public String dataRootGet(Model model) {
         List<Country> countries = countryService.findWithRegions();
@@ -80,6 +90,11 @@ public class DataController extends AbstractController {
         return Paths.COUNTRY_LIST;
     }
 
+    /**
+     * @param country country
+     * @param model   model
+     * @return View
+     */
     @GetMapping("/{country}")
     public String dataCountryGet(@PathVariable String country, Model model) {
         Country c = null;
@@ -95,7 +110,7 @@ public class DataController extends AbstractController {
         if (c.getRegions() == null || c.getRegions().size() == 0) {
             return Paths.REDIRECT_ROOT;
         }
-        
+
         model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
         model.addAttribute(Attributes.REGIONS, RegionUIFactory.instance().createList(c.getRegions()));
 
@@ -104,6 +119,12 @@ public class DataController extends AbstractController {
         return Paths.COUNTRY_DETAILS;
     }
 
+    /**
+     * @param country country
+     * @param region  region
+     * @param model   model
+     * @return View
+     */
     @GetMapping("/{country}/{region}")
     public String dataRegionGet(@PathVariable String country, @PathVariable String region, Model model) {
         Country c = null;
@@ -117,7 +138,7 @@ public class DataController extends AbstractController {
         if (c == null) {
             return Paths.REDIRECT_ROOT;
         }
-        
+
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
             return Paths.REDIRECT_ROOT;
@@ -132,6 +153,13 @@ public class DataController extends AbstractController {
         return Paths.REGION_DETAILS;
     }
 
+    /**
+     * @param country country
+     * @param region  region
+     * @param area    area
+     * @param model   model
+     * @return View
+     */
     @GetMapping("/{country}/{region}/{area}")
     public String dataAreaGet(@PathVariable String country, @PathVariable String region,
                               @PathVariable String area, Model model) {
@@ -147,7 +175,7 @@ public class DataController extends AbstractController {
         if (c == null) {
             return Paths.REDIRECT_ROOT;
         }
-        
+
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
             return Paths.REDIRECT_ROOT;
@@ -162,7 +190,7 @@ public class DataController extends AbstractController {
         if (a == null) {
             return Paths.REDIRECT_ROOT;
         }
-        
+
         model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
         model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
         model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
@@ -174,6 +202,14 @@ public class DataController extends AbstractController {
         return Paths.AREA_DETAILS;
     }
 
+    /**
+     * @param country  country
+     * @param region   region
+     * @param area     area
+     * @param producer producer
+     * @param model    model
+     * @return View
+     */
     @GetMapping("/{country}/{region}/{area}/{producer}")
     public String dataProducerGet(@PathVariable String country, @PathVariable String region,
                                   @PathVariable String area, @PathVariable String producer, Model model) {
@@ -190,7 +226,7 @@ public class DataController extends AbstractController {
         if (c == null) {
             return Paths.REDIRECT_ROOT;
         }
-        
+
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
             return Paths.REDIRECT_ROOT;
@@ -215,7 +251,7 @@ public class DataController extends AbstractController {
         if (p == null) {
             return Paths.REDIRECT_ROOT;
         }
-        
+
         model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
         model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
         model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
@@ -227,6 +263,18 @@ public class DataController extends AbstractController {
         return Paths.PRODUCER_DETAILS;
     }
 
+    /**
+     * @param country   country
+     * @param region    region
+     * @param area      area
+     * @param producer  producer
+     * @param wine      wine
+     * @param vintage   vintage
+     * @param size      size
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{country}/{region}/{area}/{producer}/{wine}/{vintage}/{size}")
     public String dataWineGet(@PathVariable String country, @PathVariable String region,
                               @PathVariable String area, @PathVariable String producer,
@@ -244,7 +292,7 @@ public class DataController extends AbstractController {
         Wishlist wishlist = null;
 
         if (guard(country) || guard(region) || guard(area) || guard(producer) ||
-            guard(wine) || guard(vintage) || guard(size)) {
+                guard(wine) || guard(vintage) || guard(size)) {
             return Paths.REDIRECT_ROOT;
         }
 
@@ -252,7 +300,7 @@ public class DataController extends AbstractController {
         if (c == null) {
             return Paths.REDIRECT_ROOT;
         }
-        
+
         r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
         if (r == null) {
             return Paths.REDIRECT_ROOT;
@@ -280,7 +328,7 @@ public class DataController extends AbstractController {
 
         for (Wine wi : p.getWines()) {
             if (AbstractKeyUI.toKey(wi.getName()).equals(wine) &&
-                wi.getVintage().equals(vintage) && wi.getSize().equals(size)) {
+                    wi.getVintage().equals(vintage) && wi.getSize().equals(size)) {
                 w = wi;
                 break;
             }
@@ -288,7 +336,7 @@ public class DataController extends AbstractController {
         if (w == null) {
             return Paths.REDIRECT_ROOT;
         }
-        
+
         if (principal != null) {
             user = userService.findByUsername(principal.getName());
             bottle = bottleService.findByWine(user.getId(), w.getId());
@@ -304,23 +352,23 @@ public class DataController extends AbstractController {
             if (gc.getBarrelComponents() != null) {
                 for (BarrelComponent bc : gc.getBarrelComponents()) {
                     barrels.add(new BarrelUI(bc.getPercentage(),
-                                             bc.getBarrel().getName(), bc.getBarrel().getId(),
-                                             bc.getSize(), new AgingUI(bc.getAging())
-                                             ));
+                            bc.getBarrel().getName(), bc.getBarrel().getId(),
+                            bc.getSize(), new AgingUI(bc.getAging())
+                    ));
                 }
             }
 
             Collections.sort(barrels, new BarrelUISorter());
 
             winegrapes.add(new GrapeUI(gc.getPercentage(),
-                                       gc.getGrape().getName(), gc.getGrape().getId(),
-                                       gc.getHarvestBegin(), gc.getHarvestEnd(),
-                                       gc.getMaceration() != null ? gc.getMaceration().getDays() : null,
-                                       gc.getMaceration() != null ? gc.getMaceration().getTemperature() : null,
-                                       gc.getFermentation() != null ? gc.getFermentation().getDays() : null,
-                                       gc.getFermentation() != null ? gc.getFermentation().getTemperature() : null,
-                                       barrels
-                                       ));
+                    gc.getGrape().getName(), gc.getGrape().getId(),
+                    gc.getHarvestBegin(), gc.getHarvestEnd(),
+                    gc.getMaceration() != null ? gc.getMaceration().getDays() : null,
+                    gc.getMaceration() != null ? gc.getMaceration().getTemperature() : null,
+                    gc.getFermentation() != null ? gc.getFermentation().getDays() : null,
+                    gc.getFermentation() != null ? gc.getFermentation().getTemperature() : null,
+                    barrels
+            ));
         }
         Collections.sort(winegrapes, new GrapeUISorter());
 
@@ -339,13 +387,13 @@ public class DataController extends AbstractController {
 
         return Paths.WINE_DETAILS;
     }
-    
-    private boolean guard(Object o) {
-        if (o == null)
-            return true;
 
+    private boolean guard(Object o) {
+        if (o == null) {
+            return true;
+        }
         if (o instanceof String) {
-            String s = (String)o;
+            String s = (String) o;
             return "".equals(s);
         }
 

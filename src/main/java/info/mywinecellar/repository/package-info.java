@@ -6,11 +6,7 @@
  * http://www.eclipse.org/legal/epl-2.0
  */
 
+/**
+ * This package contains repository interfaces.
+ */
 package info.mywinecellar.repository;
-
-import info.mywinecellar.model.Shape;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface ShapeRepository extends JpaRepository<Shape, Long> {
-}
