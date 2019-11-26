@@ -9,9 +9,15 @@
 package info.mywinecellar.repository;
 
 import info.mywinecellar.model.Area;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AreaRepository extends JpaRepository<Area, Long> {
 
+    /**
+     * @param name name
+     * @return Area entity
+     */
     Area findByName(String name);
+
 }

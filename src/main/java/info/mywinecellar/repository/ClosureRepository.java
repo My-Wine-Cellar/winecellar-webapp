@@ -9,6 +9,7 @@
 package info.mywinecellar.repository;
 
 import info.mywinecellar.model.Closure;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClosureRepository extends JpaRepository<Closure, Long> {

@@ -10,12 +10,21 @@ package info.mywinecellar.security.service;
 
 import info.mywinecellar.security.model.User;
 import info.mywinecellar.security.model.VerificationToken;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, Long> {
 
+    /**
+     * @param token token
+     * @return VerificationToken
+     */
     VerificationToken findByToken(String token);
 
+    /**
+     * @param user user
+     * @return VerificationToken
+     */
     VerificationToken findByUser(User user);
 
 }

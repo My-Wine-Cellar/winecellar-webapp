@@ -14,6 +14,10 @@ import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.security.model.User;
 import info.mywinecellar.ui.WishlistUIFactory;
+
+import java.security.Principal;
+import java.sql.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,22 +27,31 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
-import java.sql.Date;
-
 @Controller
 @RequestMapping("/wishlist")
 public class WishlistController extends AbstractController {
 
+    /**
+     * Default constructor
+     */
     public WishlistController() {
         super();
     }
 
+    /**
+     * @param dataBinder dataBinder
+     */
     @InitBinder("wishlist")
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
+    /**
+     * @param wineId    wineId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/new")
     public String wishlistNewGet(@RequestParam Long wineId, Model model, Principal principal) {
         if (principal == null) {
@@ -60,6 +73,12 @@ public class WishlistController extends AbstractController {
         return Paths.REDIRECT_WISHLIST_LIST;
     }
 
+    /**
+     * @param wishlistId wishlistId
+     * @param model      model
+     * @param principal  principal
+     * @return View
+     */
     @GetMapping("/{wishlistId}/delete")
     public String wishlistDeleteGet(@PathVariable Long wishlistId, Model model, Principal principal) {
         if (principal == null) {
@@ -76,6 +95,11 @@ public class WishlistController extends AbstractController {
         return Paths.REDIRECT_WISHLIST_LIST;
     }
 
+    /**
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/list")
     public String wishlistList(Model model, Principal principal) {
         if (principal == null) {

@@ -14,6 +14,12 @@ import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.security.model.User;
 import info.mywinecellar.ui.ReviewUIFactory;
+
+import java.security.Principal;
+import java.sql.Date;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,23 +31,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.security.Principal;
-import java.sql.Date;
-
 @Controller
 @RequestMapping("/review")
 public class ReviewController extends AbstractController {
 
+    /**
+     * Default constructor
+     */
     public ReviewController() {
         super();
     }
 
+    /**
+     * @param dataBinder dataBinder
+     */
     @InitBinder("review")
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
+    /**
+     * @param wineId    wineId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/new")
     public String reviewNewGet(@RequestParam Long wineId, Model model, Principal principal) {
         if (principal == null) {
@@ -63,6 +77,15 @@ public class ReviewController extends AbstractController {
         return Paths.REVIEW_ADD_EDIT;
     }
 
+    /**
+     * @param review    review
+     * @param result    result
+     * @param model     model
+     * @param wineId    wineId
+     * @param principal principal
+     * @param action    action
+     * @return View
+     */
     @PostMapping("/new")
     public String reviewNewPost(@Valid Review review, BindingResult result, Model model,
                                 @RequestParam Long wineId, Principal principal,
@@ -103,6 +126,12 @@ public class ReviewController extends AbstractController {
         }
     }
 
+    /**
+     * @param reviewId  reviewId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{reviewId}")
     public String reviewDetailsGet(@PathVariable Long reviewId, Model model, Principal principal) {
 
@@ -122,6 +151,12 @@ public class ReviewController extends AbstractController {
         return Paths.REVIEW_VIEW;
     }
 
+    /**
+     * @param reviewId  reviewId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{reviewId}/edit")
     public String reviewEditGet(@PathVariable Long reviewId, Model model, Principal principal) {
         if (principal == null) {
@@ -141,6 +176,16 @@ public class ReviewController extends AbstractController {
         return Paths.REVIEW_ADD_EDIT;
     }
 
+    /**
+     * @param review    review
+     * @param result    result
+     * @param reviewId  reviewId
+     * @param wineId    wineId
+     * @param model     model
+     * @param principal principal
+     * @param action    action
+     * @return View
+     */
     @PostMapping("/{reviewId}/edit")
     public String reviewEditPost(@Valid Review review, BindingResult result,
                                  @PathVariable Long reviewId, @RequestParam Long wineId,
@@ -162,13 +207,21 @@ public class ReviewController extends AbstractController {
                 r.setComment(review.getComment());
                 r.setDate(new Date(System.currentTimeMillis()));
 
-                if (action.equals("save")) reviewService.save(r);
+                if (action.equals("save")) {
+                    reviewService.save(r);
+                }
                 return Paths.REDIRECT_REVIEW_LIST;
             }
             return Paths.REDIRECT_ROOT;
         }
     }
 
+    /**
+     * @param reviewId  reviewId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{reviewId}/delete")
     public String reviewDeleteGet(@PathVariable Long reviewId, Model model, Principal principal) {
         if (principal == null) {
@@ -187,6 +240,11 @@ public class ReviewController extends AbstractController {
         return Paths.REDIRECT_ROOT;
     }
 
+    /**
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/list")
     public String reviewListGet(Model model, Principal principal) {
         if (principal == null) {

@@ -9,9 +9,14 @@
 package info.mywinecellar.security.service;
 
 import info.mywinecellar.security.model.Authority;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AuthorityRepository extends JpaRepository<Authority, Integer> {
 
+    /**
+     * @param authority authority
+     * @return Authority
+     */
     Authority findByAuthority(String authority);
 }

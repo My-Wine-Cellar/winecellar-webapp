@@ -9,6 +9,7 @@
 package info.mywinecellar.repository;
 
 import info.mywinecellar.model.BarrelComponent;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BarrelComponentRepository extends JpaRepository<BarrelComponent, Long> {

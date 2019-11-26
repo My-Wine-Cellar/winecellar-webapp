@@ -14,6 +14,12 @@ import info.mywinecellar.nav.Paths;
 import info.mywinecellar.ui.AbstractKeyUI;
 import info.mywinecellar.ui.BarrelUI;
 import info.mywinecellar.ui.BarrelUIFactory;
+
+import java.security.Principal;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,34 +31,48 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.security.Principal;
-import java.util.List;
-
 @Controller
 @RequestMapping("/barrel")
 public class BarrelController extends AbstractController {
 
+    /**
+     * Default constructor
+     */
     public BarrelController() {
         super();
     }
 
+    /**
+     * @param dataBinder dataBinder
+     */
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
+    /**
+     * @param barrel barrel
+     * @param model  model
+     * @return View
+     */
     @GetMapping("/{barrel}")
     public String barrelDetails(@PathVariable String barrel, Model model) {
         List<Barrel> barrels = barrelService.findByLowerCaseName(AbstractKeyUI.fromKey(barrel) + "%");
 
-        if (barrels == null || barrels.isEmpty())
+        if (barrels == null || barrels.isEmpty()) {
             return Paths.REDIRECT_ROOT;
+        }
 
         model.addAttribute(Attributes.BARREL, BarrelUIFactory.instance().create(barrels.get(0)));
         return Paths.BARREL_DETAILS;
     }
 
+    /**
+     * @param barrelId  barrelId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{barrelId}/edit")
     public String barrelEditGet(@PathVariable Long barrelId, Model model, Principal principal) {
         if (principal == null) {
@@ -61,13 +81,23 @@ public class BarrelController extends AbstractController {
 
         Barrel barrel = barrelService.findById(barrelId);
 
-        if (barrel == null)
+        if (barrel == null) {
             return Paths.REDIRECT_ROOT;
+        }
 
         model.addAttribute(Attributes.BARREL, BarrelUIFactory.instance().create(barrel));
         return Paths.BARREL_EDIT;
     }
 
+    /**
+     * @param barrel    barrel
+     * @param result    result
+     * @param model     model
+     * @param barrelId  barrelId
+     * @param principal principal
+     * @param action    action
+     * @return View
+     */
     @PostMapping("/{barrelId}/edit")
     public String barrelEditPost(@Valid BarrelUI barrel, BindingResult result, Model model,
                                  @PathVariable Long barrelId, Principal principal,

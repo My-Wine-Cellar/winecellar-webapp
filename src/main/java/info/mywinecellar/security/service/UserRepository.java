@@ -9,12 +9,21 @@
 package info.mywinecellar.security.service;
 
 import info.mywinecellar.security.model.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
+    /**
+     * @param username username
+     * @return User
+     */
     User findUserByUsername(String username);
 
+    /**
+     * @param email email
+     * @return User
+     */
     User findUserByEmail(String email);
 
 }

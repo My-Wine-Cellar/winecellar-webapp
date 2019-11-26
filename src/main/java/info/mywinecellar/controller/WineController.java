@@ -46,11 +46,24 @@ import org.springframework.web.bind.support.SessionStatus;
 @RequestMapping("/wine")
 public class WineController extends AbstractController {
 
+    /**
+     * Default constructor
+     */
+    public WineController() {
+        super();
+    }
+
+    /**
+     * @param dataBinder dataBinder
+     */
     @InitBinder("wine")
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
+    /**
+     * @param dataBinder dataBinder
+     */
     @InitBinder
     public void allowEmptyDates(WebDataBinder dataBinder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -58,6 +71,13 @@ public class WineController extends AbstractController {
         dataBinder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
+    /**
+     * @param producer  producer
+     * @param model     model
+     * @param status    status
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/new")
     public String wineAddRequiredGet(Producer producer, Model model,
                                      SessionStatus status, Principal principal) {
@@ -75,6 +95,15 @@ public class WineController extends AbstractController {
         return Paths.WINE_ADD_EDIT_DETAILS;
     }
 
+    /**
+     * @param wine       wine
+     * @param result     result
+     * @param principal  principal
+     * @param status     status
+     * @param producerId producerId
+     * @param action     action
+     * @return View
+     */
     @PostMapping(value = "/new")
     public String wineAddRequiredPost(@Valid Wine wine, BindingResult result,
                                       Principal principal, SessionStatus status,
@@ -111,6 +140,12 @@ public class WineController extends AbstractController {
         }
     }
 
+    /**
+     * @param wine      wine
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/grape")
     public String wineAddGrapeComponentsGet(Wine wine, Model model, Principal principal) {
         principalNull(principal);
@@ -122,6 +157,15 @@ public class WineController extends AbstractController {
         return Paths.WINE_ADD_GRAPE;
     }
 
+    /**
+     * @param status         status
+     * @param principal      principal
+     * @param model          model
+     * @param grapeComponent grapeComponent
+     * @param result         result
+     * @param action         action
+     * @return View
+     */
     @PostMapping("/grape")
     public String wineAddGrapeComponentsPost(SessionStatus status, Principal principal, Model model,
                                              @Valid GrapeComponent grapeComponent, BindingResult result,
@@ -169,6 +213,13 @@ public class WineController extends AbstractController {
         }
     }
 
+    /**
+     * @param grapeId   grapeId
+     * @param wine      wine
+     * @param principal principal
+     * @param model     model
+     * @return View
+     */
     @GetMapping("/grape/{grapeId}/barrel")
     public String wineAddGrapeBarrelGet(@PathVariable Long grapeId, Wine wine,
                                         Principal principal, Model model) {
@@ -183,6 +234,16 @@ public class WineController extends AbstractController {
         return Paths.WINE_ADD_GRAPE_BARREL;
     }
 
+    /**
+     * @param principal       principal
+     * @param status          status
+     * @param grapeId         grapeId
+     * @param model           model
+     * @param barrelComponent barrelComponent
+     * @param result          result
+     * @param action          action
+     * @return View
+     */
     @PostMapping("/grape/{grapeId}/barrel")
     public String wineAddGrapeBarrelPost(Principal principal, SessionStatus status,
                                          @PathVariable Long grapeId, Model model,
@@ -229,9 +290,14 @@ public class WineController extends AbstractController {
                     return Paths.ERROR_PAGE;
             }
         }
-
     }
 
+    /**
+     * @param wineId    wineId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{wineId}/edit")
     public String wineEditGet(@PathVariable Long wineId, Model model, Principal principal) {
         principalNull(principal);
@@ -243,6 +309,17 @@ public class WineController extends AbstractController {
         return Paths.WINE_ADD_EDIT_DETAILS;
     }
 
+    /**
+     * @param wine       wine
+     * @param result     result
+     * @param model      model
+     * @param principal  principal
+     * @param status     status
+     * @param action     action
+     * @param wineId     wineId
+     * @param producerId producerId
+     * @return View
+     */
     @PostMapping("/{wineId}/edit")
     public String wineEditPost(@Valid Wine wine, BindingResult result,
                                Model model, Principal principal, SessionStatus status,

@@ -13,6 +13,11 @@ import info.mywinecellar.model.Producer;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
+
+import java.security.Principal;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,22 +29,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.security.Principal;
-
 @Controller
 @RequestMapping("/producer")
 public class ProducerController extends AbstractController {
 
+    /**
+     * Default constructor
+     */
     public ProducerController() {
         super();
     }
 
+    /**
+     * @param dataBinder dataBinder
+     */
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
+    /**
+     * @param producerId producerId
+     * @param model      model
+     * @param principal  principal
+     * @return View
+     */
     @GetMapping("/{producerId}/edit")
     public String producerEditGet(@PathVariable Long producerId, Model model, Principal principal) {
         principalNull(principal);
@@ -53,6 +67,14 @@ public class ProducerController extends AbstractController {
         return Paths.PRODUCER_ADD_EDIT;
     }
 
+    /**
+     * @param producer   producer
+     * @param result     result
+     * @param principal  principal
+     * @param producerId producerId
+     * @param action     action
+     * @return View
+     */
     @PostMapping("/{producerId}/edit")
     public String producerEditPost(@Valid Producer producer, BindingResult result, Principal principal,
                                    @PathVariable Long producerId,

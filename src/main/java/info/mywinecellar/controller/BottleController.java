@@ -15,6 +15,11 @@ import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.security.model.User;
 import info.mywinecellar.ui.BottleUIFactory;
+
+import java.security.Principal;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,22 +31,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.security.Principal;
-
 @Controller
 @RequestMapping("/bottle")
 public class BottleController extends AbstractController {
 
+    /**
+     * Default constructor
+     */
     public BottleController() {
         super();
     }
 
+    /**
+     * @param dataBinder dataBinder
+     */
     @InitBinder("bottle")
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
+    /**
+     * @param wineId    wineId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/new")
     public String bottleNewGet(@RequestParam Long wineId, Model model, Principal principal) {
         if (principal == null) {
@@ -55,6 +69,15 @@ public class BottleController extends AbstractController {
         return Paths.BOTTLE_ADD_EDIT;
     }
 
+    /**
+     * @param bottle    bottle
+     * @param result    result
+     * @param model     model
+     * @param wineId    wineId
+     * @param principal principal
+     * @param action    action
+     * @return View
+     */
     @PostMapping("/new")
     public String bottleNewPost(@Valid Bottle bottle, BindingResult result, Model model,
                                 @RequestParam Long wineId, Principal principal,
@@ -86,9 +109,9 @@ public class BottleController extends AbstractController {
                     bottleService.save(b);
                 }
 
-                if (tasted != null)
+                if (tasted != null) {
                     tastedService.delete(tasted);
-
+                }
                 return Paths.REDIRECT_BOTTLE_LIST;
             } else {
                 return Paths.REDIRECT_WELCOME;
@@ -96,6 +119,12 @@ public class BottleController extends AbstractController {
         }
     }
 
+    /**
+     * @param bottleId  bottleId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{bottleId}/edit")
     public String bottleEditGet(@PathVariable Long bottleId, Model model, Principal principal) {
         if (principal == null) {
@@ -105,13 +134,24 @@ public class BottleController extends AbstractController {
         User user = userService.findByUsername(principal.getName());
         Bottle bottle = bottleService.findByUser(user.getId(), bottleId);
 
-        if (bottle == null)
+        if (bottle == null) {
             return Paths.REDIRECT_ROOT;
+        }
 
         model.addAttribute(Attributes.BOTTLE, bottle);
         return Paths.BOTTLE_ADD_EDIT;
     }
 
+    /**
+     * @param bottle    bottle
+     * @param result    result
+     * @param model     model
+     * @param bottleId  bottleId
+     * @param wineId    wineId
+     * @param principal principal
+     * @param action    action
+     * @return View
+     */
     @PostMapping("/{bottleId}/edit")
     public String bottleEditPost(@Valid Bottle bottle, BindingResult result, Model model,
                                  @PathVariable Long bottleId, @RequestParam Long wineId, Principal principal,
@@ -133,7 +173,9 @@ public class BottleController extends AbstractController {
                     b.setLocation(bottle.getLocation());
                     b.setShow(bottle.getShow());
 
-                    if (action.equals("save")) bottleService.save(b);
+                    if (action.equals("save")) {
+                        bottleService.save(b);
+                    }
                     return Paths.REDIRECT_BOTTLE_LIST;
 
                 } else {
@@ -152,6 +194,11 @@ public class BottleController extends AbstractController {
         }
     }
 
+    /**
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/list")
     public String bottleListGet(Model model, Principal principal) {
         if (principal == null) {

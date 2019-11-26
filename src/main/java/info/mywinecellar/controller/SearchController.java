@@ -20,8 +20,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
+
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,27 +46,29 @@ public class SearchController {
 
     /**
      * Is the token valid - keywords and guard against SQL injection
+     *
      * @param token The token
      * @return True if valid, other false
      */
     private boolean isValidToken(String token) {
-        if (token == null || "".equals(token))
+        if (token == null || "".equals(token)) {
             return false;
-
-        if ("AND".equalsIgnoreCase(token) || "OR".equalsIgnoreCase(token) || "NOT".equalsIgnoreCase(token))
+        }
+        if ("AND".equalsIgnoreCase(token) || "OR".equalsIgnoreCase(token) || "NOT".equalsIgnoreCase(token)) {
             return false;
-
-        if (token.startsWith("\'"))
+        }
+        if (token.startsWith("\'")) {
             return false;
-
+        }
         return true;
     }
 
     /**
      * Search a table
+     *
      * @param input The search input
      * @param table The table name
-     * @param type The search type
+     * @param type  The search type
      * @return The list of results
      * @throws Exception In case of an error
      */
@@ -161,6 +165,7 @@ public class SearchController {
 
     /**
      * Search area
+     *
      * @param input The search input
      * @return The list of results
      * @throws Exception In case of an error
@@ -171,6 +176,7 @@ public class SearchController {
 
     /**
      * Search country
+     *
      * @param input The search input
      * @return The list of results
      * @throws Exception In case of an error
@@ -181,6 +187,7 @@ public class SearchController {
 
     /**
      * Search producer
+     *
      * @param input The search input
      * @return The list of results
      * @throws Exception In case of an error
@@ -191,6 +198,7 @@ public class SearchController {
 
     /**
      * Search region
+     *
      * @param input The search input
      * @return The list of results
      * @throws Exception In case of an error
@@ -201,6 +209,7 @@ public class SearchController {
 
     /**
      * Search wine
+     *
      * @param input The search input
      * @return The list of results
      * @throws Exception In case of an error
@@ -211,6 +220,7 @@ public class SearchController {
 
     /**
      * Search
+     *
      * @return The page identifier
      */
     @GetMapping("/new")

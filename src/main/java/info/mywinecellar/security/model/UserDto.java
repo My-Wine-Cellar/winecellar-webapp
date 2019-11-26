@@ -10,13 +10,15 @@ package info.mywinecellar.security.model;
 
 import info.mywinecellar.security.password.ValidPassword;
 import info.mywinecellar.util.Regex;
-import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.apache.commons.lang3.StringUtils;
+
+import lombok.Data;
 
 @Data
 public class UserDto {
@@ -46,10 +48,16 @@ public class UserDto {
     @Pattern(message = "This email does not fit our requirements", regexp = Regex.EMAIL_PATTERN)
     private String email;
 
+    /**
+     * @return firstName
+     */
     public String getFirstName() {
         return StringUtils.capitalize(firstName);
     }
 
+    /**
+     * @return lastName
+     */
     public String getLastName() {
         return StringUtils.capitalize(lastName);
     }

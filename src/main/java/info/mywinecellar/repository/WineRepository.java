@@ -9,14 +9,23 @@
 package info.mywinecellar.repository;
 
 import info.mywinecellar.model.Wine;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 public interface WineRepository extends JpaRepository<Wine, Long> {
 
+    /**
+     * @param name name
+     * @return Wine
+     */
     Wine findByName(String name);
 
+    /**
+     * @param name name
+     * @return Wine list
+     */
     List<Wine> findAllByName(String name);
 
 }

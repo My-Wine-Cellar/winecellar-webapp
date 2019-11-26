@@ -14,6 +14,11 @@ import info.mywinecellar.nav.Paths;
 import info.mywinecellar.ui.AbstractKeyUI;
 import info.mywinecellar.ui.GrapeUI;
 import info.mywinecellar.ui.GrapeUIFactory;
+
+import java.security.Principal;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,40 +30,60 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.security.Principal;
-
 @Controller
 @RequestMapping("/grape")
 public class GrapeController extends AbstractController {
 
+    /**
+     * Default constructor
+     */
     public GrapeController() {
         super();
     }
 
+    /**
+     * @param dataBinder dataBinder
+     */
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
     }
 
+    /**
+     * @param model model
+     * @return View
+     */
     @GetMapping("/list")
     public String grapeListGet(Model model) {
-        model.addAttribute(Attributes.RED_GRAPES, GrapeUIFactory.instance().createList(grapeService.getRedGrapes()));
-        model.addAttribute(Attributes.WHITE_GRAPES, GrapeUIFactory.instance().createList(grapeService.getWhiteGrapes()));
+        model.addAttribute(Attributes.RED_GRAPES, GrapeUIFactory.instance()
+                .createList(grapeService.getRedGrapes()));
+        model.addAttribute(Attributes.WHITE_GRAPES, GrapeUIFactory.instance()
+                .createList(grapeService.getWhiteGrapes()));
         return Paths.GRAPE_LIST;
     }
 
+    /**
+     * @param grape grape
+     * @param model model
+     * @return View
+     */
     @GetMapping("/{grape}")
     public String grapeDetails(@PathVariable String grape, Model model) {
         Grape g = grapeService.findByLowerCaseName(AbstractKeyUI.fromKey(grape));
 
-        if (g == null)
+        if (g == null) {
             return Paths.REDIRECT_ROOT;
-
+        }
         model.addAttribute(Attributes.GRAPE, GrapeUIFactory.instance().create(g));
         return Paths.GRAPE_DETAILS;
     }
 
+    /**
+     * @param grapeId   grapeId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{grapeId}/edit")
     public String grapeEditGet(@PathVariable Long grapeId, Model model, Principal principal) {
         if (principal == null) {
@@ -67,13 +92,22 @@ public class GrapeController extends AbstractController {
 
         Grape grape = grapeService.findById(grapeId);
 
-        if (grape == null)
+        if (grape == null) {
             return Paths.REDIRECT_ROOT;
-
+        }
         model.addAttribute(Attributes.GRAPE, grape);
         return Paths.GRAPE_EDIT;
     }
 
+    /**
+     * @param grape     grape
+     * @param result    result
+     * @param model     model
+     * @param grapeId   grapeId
+     * @param principal principal
+     * @param action    action
+     * @return View
+     */
     @PostMapping("/{grapeId}/edit")
     public String grapeEditPost(@Valid Grape grape, BindingResult result, Model model,
                                 @PathVariable Long grapeId, Principal principal,

@@ -11,12 +11,13 @@ package info.mywinecellar.security.controller;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.security.service.UserService;
+
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.inject.Inject;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,6 +26,10 @@ public class AdminController {
     @Inject
     private UserService userService;
 
+    /**
+     * @param model model
+     * @return View
+     */
     @GetMapping("/userlist")
     public String getAllUsers(Model model) {
         model.addAttribute(Attributes.USERS, userService.findAll());

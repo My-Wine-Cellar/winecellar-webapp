@@ -19,6 +19,12 @@ import info.mywinecellar.ui.TastingNotesUI;
 import info.mywinecellar.ui.TastingNotesUIFactory;
 import info.mywinecellar.ui.UserUIFactory;
 import info.mywinecellar.ui.WineUIFactory;
+
+import java.security.Principal;
+import java.sql.Date;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,18 +34,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-import java.security.Principal;
-import java.sql.Date;
-
 @Controller
 @RequestMapping("/tastingnotes")
 public class TastingNotesController extends AbstractController {
 
+    /**
+     * Default constructor
+     */
     public TastingNotesController() {
         super();
     }
 
+    /**
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/list")
     public String tastingNotesListGet(Model model, Principal principal) {
         if (principal == null) {
@@ -47,10 +57,17 @@ public class TastingNotesController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.NOTES, TastingNotesUIFactory.instance().createList(user.getGenericTastingNotes()));
+        model.addAttribute(Attributes.NOTES, TastingNotesUIFactory.instance()
+                .createList(user.getGenericTastingNotes()));
         return Paths.TASTING_NOTES_LIST;
     }
 
+    /**
+     * @param wineId    wineId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/new")
     public String tastingNotesNewGet(@RequestParam Long wineId, Model model, Principal principal) {
         if (principal == null) {
@@ -76,6 +93,14 @@ public class TastingNotesController extends AbstractController {
         return Paths.TASTING_NOTES_ADD_EDIT;
     }
 
+    /**
+     * @param tastingNotesUI tastingNotesUI
+     * @param model          model
+     * @param result         result
+     * @param principal      principal
+     * @param action         action
+     * @return View
+     */
     @PostMapping("/new")
     public String tastingNotesNewPost(@Valid TastingNotesUI tastingNotesUI, Model model,
                                       BindingResult result, Principal principal,
@@ -88,7 +113,7 @@ public class TastingNotesController extends AbstractController {
             model.addAttribute(Attributes.NOTE, tastingNotesUI);
             return Paths.TASTING_NOTES_ADD_EDIT;
         } else {
-            if(action.equals("save")) {
+            if (action.equals("save")) {
                 GenericTastingNotes gtn = prepForSave(principal, tastingNotesUI);
                 tastingNotesService.save(gtn);
                 return Paths.REDIRECT_TASTINGNOTES_LIST;
@@ -99,6 +124,12 @@ public class TastingNotesController extends AbstractController {
         }
     }
 
+    /**
+     * @param tastedId  tastedId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{tastedId}")
     public String tastingNotesDetailsGet(@PathVariable Long tastedId, Model model, Principal principal) {
         User user = null;
@@ -126,6 +157,12 @@ public class TastingNotesController extends AbstractController {
         return Paths.TASTING_NOTES_VIEW;
     }
 
+    /**
+     * @param tastedId  tastedId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{tastedId}/edit")
     public String tastingNotesEditGet(@PathVariable Long tastedId, Model model, Principal principal) {
         if (principal == null) {
@@ -141,6 +178,15 @@ public class TastingNotesController extends AbstractController {
         return Paths.TASTING_NOTES_ADD_EDIT;
     }
 
+    /**
+     * @param tastingNotesUI tastingNotesUI
+     * @param result         result
+     * @param tastedId       tastedId
+     * @param model          model
+     * @param principal      principal
+     * @param action         action
+     * @return View
+     */
     @PostMapping("/{tastedId}/edit")
     public String tastingNotesEditPost(@Valid TastingNotesUI tastingNotesUI, BindingResult result,
                                        @PathVariable Long tastedId, Model model, Principal principal,
@@ -163,6 +209,11 @@ public class TastingNotesController extends AbstractController {
         }
     }
 
+    /**
+     * @param tastedId  tastedId
+     * @param principal principal
+     * @return View
+     */
     @GetMapping("/{tastedId}/delete")
     public String tastingNotesDeleteGet(@PathVariable Long tastedId, Principal principal) {
         if (principal == null) {

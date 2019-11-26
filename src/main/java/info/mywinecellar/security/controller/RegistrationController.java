@@ -8,12 +8,14 @@
 
 package info.mywinecellar.security.controller;
 
-
 import info.mywinecellar.controller.AbstractController;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.security.model.User;
 import info.mywinecellar.security.model.UserDto;
+
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,20 +25,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
-
 @Controller
 @RequestMapping("/register")
 public class RegistrationController extends AbstractController {
 
+    /**
+     * @param model model
+     * @return View
+     */
     @GetMapping
     public String userRegistrationGet(Model model) {
         model.addAttribute(Attributes.USER, new UserDto());
         return Paths.SECURITY_REGISTER;
     }
 
+    /**
+     * @param user   user
+     * @param result result
+     * @return View
+     * @throws Exception exception
+     */
     @PostMapping
-    public String userRegistrationPost(@ModelAttribute("user") @Valid UserDto user, BindingResult result) throws Exception {
+    public String userRegistrationPost(@ModelAttribute("user") @Valid UserDto user, BindingResult result)
+            throws Exception {
         if (emailExists(user.getEmail())) {
             result.rejectValue("email", "error.email");
             return Paths.SECURITY_REGISTER;
@@ -54,11 +65,18 @@ public class RegistrationController extends AbstractController {
         return Paths.REDIRECT_REGISTER_SUCCESS;
     }
 
+    /**
+     * @return View
+     */
     @GetMapping("/success")
     public String userRegistrationSuccess() {
         return Paths.SECURITY_SUCCESS;
     }
 
+    /**
+     * @param token token
+     * @return View
+     */
     @GetMapping("/confirm")
     public String userRegistrationVerificationGet(@RequestParam("token") String token) {
 
