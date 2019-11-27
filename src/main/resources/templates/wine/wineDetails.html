@@ -229,6 +229,14 @@
                             <div class="card-body" th:object="${wine}">
                                 <table class="table table-hover table-sm text-left">
                                     <tbody>
+                                    <tr th:if="${wine.color}">
+                                        <td width="25%"><b th:text="#{color}">Color</b></td>
+                                        <td th:text="*{color.name}"></td>
+                                    </tr>
+                                    <tr th:if="${wine.type}">
+                                        <td width="25%"><b th:text="#{type}">Type</b></td>
+                                        <td th:text="*{type.name}"></td>
+                                    </tr>
                                     <tr th:if="${wine.shape}">
                                         <td width="25%"><b th:text="#{shape}">Shape</b></td>
                                         <td th:text="*{shape.name}"></td>
@@ -236,14 +244,6 @@
                                     <tr th:if="${wine.closure}">
                                         <td width="25%"><b th:text="#{closure}">Closure</b></td>
                                         <td th:text="*{closure.name}"></td>
-                                    </tr>
-                                    <tr th:if="${wine.color}">
-                                        <td width="25%"><b th:text="#{color}">Color</b></td>
-                                        <td><b th:text="*{color.name}"></b></td>
-                                    </tr>
-                                    <tr th:if="${wine.type}">
-                                        <td width="25%"><b th:text="#{type}">Type</b></td>
-                                        <td><b th:text="*{type.name}"></b></td>
                                     </tr>
                                     </tbody>
                                 </table>
