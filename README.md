@@ -1,4 +1,4 @@
-# Winecellar [![Build Status](https://codebuild.us-east-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiQ0xsMER4WjIrL08rTForL2NFQ3hkSzhtVkNkWkQ2YkVsblhCbjlSYW53U3UvRklmajhNVm5nMWg5US9iUnQ1dmxubHdtUkd5S1dWYVIrNHNxWTF1M2VRPSIsIml2UGFyYW1ldGVyU3BlYyI6ImFlV3gzV0lGSmpTVDBhQzIiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)](https://aws.amazon.com/console/) [![SonarQube](https://sonarcloud.io/api/project_badges/measure?project=pauldpearson_winecellar-webapp&metric=alert_status)](https://sonarcloud.io/dashboard?id=pauldpearson_winecellar-webapp)
+# Winecellar
 
 ## Table of contents
 * [General info](#general-info)
@@ -10,9 +10,10 @@
 * [Contact](#contact)
 
 ## General info
-> Webapp for keeping track of wines, their tasting notes, and reviews. Goal is to be the premier open-source winecellar application.
+Webapp for keeping track of wines, their tasting notes, and reviews. Goal is to be the premier open-source winecellar application.
 
 ## Technologies
+* Java 8+
 * Spring Boot
 * Spring Security
 * Gradle (v4.10)
@@ -23,22 +24,37 @@
 * Docker
 * PostgreSQL (v9.4 or higher is required)
 
-## Docker
+## PostgreSQL
 
-> You will need to have [Docker Engine](https://docs.docker.com/install/) installed before proceeding
+You will need to have either
 
+* [Docker Engine](https://docs.docker.com/install/)
+* [podman](https://podman.io/)
+* Bare metal [PostgreSQL](https://www.postgresql.org/) instance
+
+installed before proceeding
+
+*Docker*
 ```
 $ docker run --name winecellar -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
 ```
-> This will pull down the latest PostgreSQL image and run the container with all necessary Spring Boot properties for connection. 
+
+*podman*
+```
+$ podman run --name winecellar -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
+```
+
+This will pull down the latest PostgreSQL image and run the container with all necessary Spring Boot properties for getting a connection. 
 
 ## Project Setup
+
 ```
 $ git clone https://github.com/pauldpearson/winecellar-webapp
 $ cd winecellar-webapp
 $ ./gradlew bootRun
 ```
-> Access here: http://localhost:8080/
+
+Access here: http://localhost:8080/
 
 | Account | Type  | Password |
 | ------- | ----- | -------- |
@@ -47,14 +63,14 @@ $ ./gradlew bootRun
 | admin   | admin | password |
 
 ## Contribution
-> Feel free!  There are issues and a project board.  Contact info is below.
 
-## Status
-> *Once v2.0 is ready and in production this will be updated*
+Feel free!  There are issues and a project board.  Contact info is below.
 
 ## License
+
 [![License](https://img.shields.io/badge/License-EPL%202.0-orange.svg)](https://www.eclipse.org/legal/epl-2.0/)
-> Wincellar is released under version 2.0 of the Eclipse Public License
+Winecellar is released under Eclipse Public License version 2.0
 
 ## Contact
-> Created by [Paul Pearson](mailto:paul.darlington.pearson@gmail.com) & Jesper Pedersen
+
+Created by [Paul Pearson](mailto:paul.darlington.pearson@gmail.com) & Jesper Pedersen
