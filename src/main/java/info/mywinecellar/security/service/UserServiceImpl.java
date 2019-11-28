@@ -8,6 +8,9 @@
 
 package info.mywinecellar.security.service;
 
+import info.mywinecellar.security.exception.EmailException;
+import info.mywinecellar.security.exception.PasswordException;
+import info.mywinecellar.security.exception.UsernameException;
 import info.mywinecellar.security.model.Authority;
 import info.mywinecellar.security.model.User;
 import info.mywinecellar.security.model.UserDto;
@@ -23,6 +26,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,11 +34,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@Validated
 public class UserServiceImpl implements UserService {
 
     @Inject private UserRepository userRepository;
@@ -82,6 +88,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Deprecated
     public void createUser(User user) throws MessagingException {
         user.setUsername(user.getUsername().toLowerCase());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -93,7 +100,19 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void registerNewUserAccount(UserDto accountDto) throws MessagingException {
+    public void registerNewUserAccount(@Valid UserDto accountDto) throws MessagingException {
+
+        if (!accountDto.getPassword().equals(accountDto.getMatchingPassword())) {
+            throw new PasswordException();
+        }
+
+        if (this.emailExists(accountDto.getEmail())) {
+            throw new EmailException();
+        }
+
+        if (this.usernameExists(accountDto.getUserName())) {
+            throw new UsernameException();
+        }
 
         final User user = new User();
         user.setFirstName(accountDto.getFirstName());
@@ -139,4 +158,13 @@ public class UserServiceImpl implements UserService {
         return TOKEN_VALID;
     }
 
+    private boolean emailExists(String email) {
+        User user = userRepository.findUserByEmail(email);
+        return user != null;
+    }
+
+    private boolean usernameExists(String username) {
+        User user = userRepository.findUserByUsername(username);
+        return user != null;
+    }
 }
