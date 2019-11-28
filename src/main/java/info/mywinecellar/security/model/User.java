@@ -27,7 +27,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -36,6 +35,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -53,7 +54,16 @@ import lombok.NoArgsConstructor;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+        name = "sequence-generator",
+        strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+        parameters = {
+            @Parameter(name = "sequence_name", value = "user_sequence"),
+            @Parameter(name = "initial_value", value = "4"),
+            @Parameter(name = "increment_size", value = "1")
+        }
+    )
     private int id;
 
     @Column(name = "password")
