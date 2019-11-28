@@ -13,6 +13,8 @@ import info.mywinecellar.security.model.UserDto;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
@@ -49,7 +51,7 @@ public interface UserService extends UserDetailsService {
      * @param accountDto accountDto
      * @throws Exception exception
      */
-    void registerNewUserAccount(UserDto accountDto) throws Exception;
+    void registerNewUserAccount(@Valid UserDto accountDto) throws Exception;
 
     /**
      * @param user user

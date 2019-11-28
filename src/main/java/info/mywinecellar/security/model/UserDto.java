@@ -17,10 +17,12 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.validation.annotation.Validated;
 
 import lombok.Data;
 
 @Data
+@Validated
 public class UserDto {
 
     @NotNull
