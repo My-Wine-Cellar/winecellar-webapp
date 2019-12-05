@@ -126,7 +126,8 @@
           <property name="groups" value="info.mywinecellar,java,javax,org"/>
           <property name="ordered" value="true"/>
           <property name="separated" value="true"/>
-          <property name="option" value="above"/>
+          <property name="separatedStaticGroups" value="true"/>
+          <property name="option" value="bottom"/>
           <property name="sortStaticImportsAlphabetically" value="true"/>
         </module> 
 

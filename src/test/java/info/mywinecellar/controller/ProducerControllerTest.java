@@ -1,9 +1,18 @@
+/*
+ * My-Wine-Cellar, copyright 2019
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0
+ */
+
 package info.mywinecellar.controller;
 
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.service.AreaService;
 import info.mywinecellar.service.ProducerService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +26,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @ExtendWith(MockitoExtension.class)
 class ProducerControllerTest {

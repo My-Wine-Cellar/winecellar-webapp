@@ -31,8 +31,6 @@ checkstyle {
             '**/info/mywinecellar/email/EmailService.java',
             '**/info/mywinecellar/WineWebappApplication.java'
 
-    checkstyleTest.enabled = false
-
     toolVersion "8.26"
 }
 

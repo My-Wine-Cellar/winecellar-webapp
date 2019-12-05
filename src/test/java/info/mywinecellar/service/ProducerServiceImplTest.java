@@ -1,8 +1,19 @@
+/*
+ * My-Wine-Cellar, copyright 2019
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0
+ */
+
 package info.mywinecellar.service;
 
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.repository.ProducerRepository;
 import info.mywinecellar.service.impl.ProducerServiceImpl;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,9 +21,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
