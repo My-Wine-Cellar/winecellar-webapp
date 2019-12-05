@@ -18,8 +18,6 @@ import info.mywinecellar.ui.ReviewUIFactory;
 import java.security.Principal;
 import java.sql.Date;
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -87,7 +85,7 @@ public class ReviewController extends AbstractController {
      * @return View
      */
     @PostMapping("/new")
-    public String reviewNewPost(@Valid Review review, BindingResult result, Model model,
+    public String reviewNewPost(Review review, BindingResult result, Model model,
                                 @RequestParam Long wineId, Principal principal,
                                 @RequestParam("action") String action) {
         if (principal == null) {
@@ -187,7 +185,7 @@ public class ReviewController extends AbstractController {
      * @return View
      */
     @PostMapping("/{reviewId}/edit")
-    public String reviewEditPost(@Valid Review review, BindingResult result,
+    public String reviewEditPost(Review review, BindingResult result,
                                  @PathVariable Long reviewId, @RequestParam Long wineId,
                                  Model model, Principal principal,
                                  @RequestParam("action") String action) {

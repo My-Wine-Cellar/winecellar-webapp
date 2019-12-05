@@ -18,8 +18,6 @@ import info.mywinecellar.ui.BottleUIFactory;
 
 import java.security.Principal;
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -79,7 +77,7 @@ public class BottleController extends AbstractController {
      * @return View
      */
     @PostMapping("/new")
-    public String bottleNewPost(@Valid Bottle bottle, BindingResult result, Model model,
+    public String bottleNewPost(Bottle bottle, BindingResult result, Model model,
                                 @RequestParam Long wineId, Principal principal,
                                 @RequestParam("action") String action) {
         if (principal == null) {
@@ -153,7 +151,7 @@ public class BottleController extends AbstractController {
      * @return View
      */
     @PostMapping("/{bottleId}/edit")
-    public String bottleEditPost(@Valid Bottle bottle, BindingResult result, Model model,
+    public String bottleEditPost(Bottle bottle, BindingResult result, Model model,
                                  @PathVariable Long bottleId, @RequestParam Long wineId, Principal principal,
                                  @RequestParam("action") String action) {
         if (principal == null) {
