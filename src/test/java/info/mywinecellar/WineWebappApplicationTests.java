@@ -1,4 +1,14 @@
+/*
+ * My-Wine-Cellar, copyright 2019
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0
+ */
+
 package info.mywinecellar;
+
+import javax.inject.Inject;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,8 +19,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import javax.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -28,6 +36,9 @@ public class WineWebappApplicationTests {
         mockMvc = MockMvcBuilders.standaloneSetup(wac).build();
     }
 
+    /**
+     * Test for mock context
+     */
     @Test
     public void contextLoads() {
         assertTrue(wac.getServletContext() instanceof MockServletContext);
