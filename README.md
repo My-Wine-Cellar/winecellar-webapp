@@ -1,4 +1,4 @@
-# Winecellar
+# Winecellar ![Github Actions Status](https://github.com/My-Wine-Cellar/winecellar-webapp/workflows/CI/badge.svg)
 
 ## Table of contents
 * [General info](#general-info)
