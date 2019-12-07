@@ -11,6 +11,7 @@ package info.mywinecellar.ui;
 import info.mywinecellar.model.Area;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,6 +41,7 @@ public class AreaUIFactory implements FactoryUI<Area, AreaUI> {
             for (Area a : areas) {
                 result.add(create(a));
             }
+            Collections.sort(result, new AreaUISorter());
         }
         return result;
     }

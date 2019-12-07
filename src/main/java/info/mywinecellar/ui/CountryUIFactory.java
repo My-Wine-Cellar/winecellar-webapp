@@ -11,6 +11,7 @@ package info.mywinecellar.ui;
 import info.mywinecellar.model.Country;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,6 +41,7 @@ public class CountryUIFactory implements FactoryUI<Country, CountryUI> {
             for (Country c : countries) {
                 result.add(create(c));
             }
+            Collections.sort(result, new CountryUISorter());
         }
         return result;
     }

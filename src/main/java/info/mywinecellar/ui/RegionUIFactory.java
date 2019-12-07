@@ -11,6 +11,7 @@ package info.mywinecellar.ui;
 import info.mywinecellar.model.Region;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,6 +41,7 @@ public class RegionUIFactory implements FactoryUI<Region, RegionUI> {
             for (Region r : regions) {
                 result.add(create(r));
             }
+            Collections.sort(result, new RegionUISorter());
         }
         return result;
     }

@@ -11,6 +11,7 @@ package info.mywinecellar.ui;
 import info.mywinecellar.model.Wine;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,6 +41,7 @@ public class WineUIFactory implements FactoryUI<Wine, WineUI> {
             for (Wine w : wines) {
                 result.add(create(w));
             }
+            Collections.sort(result, new WineUISorter());
         }
         return result;
     }
