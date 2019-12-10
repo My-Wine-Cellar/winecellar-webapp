@@ -33,7 +33,7 @@ jobs:
       run: chmod +x gradlew
       working-directory: ./
     - name: Build with Gradle
-      run: ./gradlew test
+      run: ./gradlew check
       working-directory: ./
       env:
         POSTGRES_HOST: postgres
