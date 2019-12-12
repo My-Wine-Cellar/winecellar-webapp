@@ -115,8 +115,12 @@
                 <!-- TABS -->
                 <div class="container">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="data-sheet-tab" data-toggle="tab" href="#data-sheet" role="tab"
+                               aria-controls="data-sheet" aria-selected="false">Data Sheet</a>
+                        </li>
                         <li th:if="${! #lists.isEmpty(wine.reviews)}" class="nav-item">
-                            <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab"
+                            <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab"
                                aria-controls="review" aria-selected="true" th:text="#{reviews}">Reviews</a>
                         </li>
                         <li th:if="${! #lists.isEmpty(wine.genericTastingNotes)}" class="nav-item">
@@ -127,105 +131,11 @@
                             <a class="nav-link" id="cellar-tab" data-toggle="tab" href="#cellar" role="tab"
                                aria-controls="cellar" aria-selected="false" th:text="#{cellar}">Cellar</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="data-sheet-tab" data-toggle="tab" href="#data-sheet" role="tab"
-                               aria-controls="data-sheet" aria-selected="false">Data Sheet</a>
-                        </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                        <!-- Reviews -->
-                        <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
-                            <div class="card-body">
-                                <div class="container">
-                                    <table class="table table-hover table-sm text-center">
-                                        <thead>
-                                        <tr>
-                                            <th th:text="#{stars}">Stars</th>
-                                            <th th:text="#{comment}">Comment</th>
-                                            <th th:text="#{date}">Date</th>
-                                            <th th:text="#{user}">User</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr th:each="review : ${wine.reviews}">
-                                            <td>
-                                                <a th:href="@{/review/__${review.id}__}" th:text="${review.stars}"></a>
-                                            </td>
-                                            <td th:text="${review.comment}"></td>
-                                            <td th:text="${#dates.format(review.date, 'MMM dd, yyyy')}"></td>
-                                            <td>
-                                                <a th:href="@{/users/__${review.user.id}__}"
-                                                   th:text="${review.user.username}"></a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tasting Notes -->
-                        <div class="tab-pane fade show" id="tastingnotes" role="tabpanel"
-                             aria-labelledby="tastingnotes-tab">
-                            <div class="card-body">
-                                <div class="container">
-                                    <table class="table table-hover table-sm text-center">
-                                        <thead>
-                                        <tr>
-                                            <th th:text="#{notes}">Notes</th>
-                                            <th th:text="#{date}">Date</th>
-                                            <th th:text="#{user}">User</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr th:each="tn : ${wine.genericTastingNotes}">
-                                            <td th:if="${tn.show}">
-                                                <a th:href="@{/tastingnotes/__${tn.id}__}" th:title="#{view}"><span
-                                                        class="fas fa-eye"></span></a>
-                                            </td>
-                                            <td th:if="${tn.show}"
-                                                th:text="${#dates.format(tn.date, 'MMM dd, yyyy')}"></td>
-                                            <td th:if="${tn.show}">
-                                                <a th:href="@{/users/__${tn.user.id}__}"
-                                                   th:text="${tn.user.username}"></a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Cellar -->
-                        <div class="tab-pane fade" id="cellar" role="tabpanel" aria-labelledby="cellar-tab">
-                            <div class="card-body">
-                                <div th:if="${mybottle != null}" class="container">
-                                    <table class="table table-hover table-sm text-center">
-                                        <thead>
-                                        <tr>
-                                            <th th:text="#{bottleNumber}">Bottle #</th>
-                                            <th th:text="#{location}">Location</th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td th:text="${mybottle.number}">Bottle #</td>
-                                            <td th:text="${mybottle.location}">Location</td>
-                                            <td>
-                                                <a th:href="@{/bottle/__${mybottle.id}__/edit}" th:title="#{edit}">
-                                                    <span class="fas fa-edit"></span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- Data Sheet -->
-                        <div class="tab-pane fade" id="data-sheet" role="tabpanel" aria-labelledby="data-sheet-tab">
+                        <div class="tab-pane fade show active" id="data-sheet" role="tabpanel" aria-labelledby="data-sheet-tab">
                             <div class="card-body" th:object="${wine}">
                                 <table class="table table-hover table-sm text-left">
                                     <tbody>
@@ -267,7 +177,7 @@
                                 </table>
                                 <br/>
                                 <br/>
-                                <h4 th:text="#{grapes}">Grapes</h4>
+                                <h4 th:if="${! #lists.isEmpty(winegrapes)}" th:text="#{grapes}">Grapes</h4>
                                 <div th:each="winegrape : ${winegrapes}">
                                     <table class="table table-hover table-sm text-left">
                                         <thead>
@@ -334,6 +244,98 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Reviews -->
+                        <div class="tab-pane fade show" id="review" role="tabpanel" aria-labelledby="review-tab">
+                            <div class="card-body">
+                                <div class="container">
+                                    <table class="table table-hover table-sm text-center">
+                                        <thead>
+                                        <tr>
+                                            <th th:text="#{stars}">Stars</th>
+                                            <th th:text="#{comment}">Comment</th>
+                                            <th th:text="#{date}">Date</th>
+                                            <th th:text="#{user}">User</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="review : ${wine.reviews}">
+                                            <td>
+                                                <a th:href="@{/review/__${review.id}__}" th:text="${review.stars}"></a>
+                                            </td>
+                                            <td th:text="${review.comment}"></td>
+                                            <td th:text="${#dates.format(review.date, 'MMM dd, yyyy')}"></td>
+                                            <td>
+                                                <a th:href="@{/users/__${review.user.id}__}"
+                                                   th:text="${review.user.username}"></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tasting Notes -->
+                        <div class="tab-pane fade show" id="tastingnotes" role="tabpanel"
+                             aria-labelledby="tastingnotes-tab">
+                            <div class="card-body">
+                                <div class="container">
+                                    <table class="table table-hover table-sm text-center">
+                                        <thead>
+                                        <tr>
+                                            <th th:text="#{notes}">Notes</th>
+                                            <th th:text="#{date}">Date</th>
+                                            <th th:text="#{user}">User</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="tn : ${wine.genericTastingNotes}">
+                                            <td th:if="${tn.show}">
+                                                <a th:href="@{/tastingnotes/__${tn.id}__}" th:title="#{view}"><span
+                                                        class="fas fa-eye"></span></a>
+                                            </td>
+                                            <td th:if="${tn.show}"
+                                                th:text="${#dates.format(tn.date, 'MMM dd, yyyy')}"></td>
+                                            <td th:if="${tn.show}">
+                                                <a th:href="@{/users/__${tn.user.id}__}"
+                                                   th:text="${tn.user.username}"></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cellar -->
+                        <div class="tab-pane fade show" id="cellar" role="tabpanel" aria-labelledby="cellar-tab">
+                            <div class="card-body">
+                                <div th:if="${mybottle != null}" class="container">
+                                    <table class="table table-hover table-sm text-center">
+                                        <thead>
+                                        <tr>
+                                            <th th:text="#{bottleNumber}">Bottle #</th>
+                                            <th th:text="#{location}">Location</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td th:text="${mybottle.number}">Bottle #</td>
+                                            <td th:text="${mybottle.location}">Location</td>
+                                            <td>
+                                                <a th:href="@{/bottle/__${mybottle.id}__/edit}" th:title="#{edit}">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
