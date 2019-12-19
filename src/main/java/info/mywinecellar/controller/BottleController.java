@@ -21,6 +21,7 @@ import java.security.Principal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 @Controller
 @RequestMapping("/bottle")
@@ -46,6 +48,14 @@ public class BottleController extends AbstractController {
     @InitBinder("bottle")
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
+    }
+
+    /**
+     * @param binder binder
+     */
+    @InitBinder
+    public void imageBinder(ServletRequestDataBinder binder) {
+        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
     }
 
     /**
@@ -189,6 +199,58 @@ public class BottleController extends AbstractController {
                 }
             }
             return Paths.REDIRECT_ROOT;
+        }
+    }
+
+    /**
+     * @param bottleId  bottleId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
+    @GetMapping("/{bottleId}/image")
+    public String bottleImageGet(@PathVariable Long bottleId, Model model, Principal principal) {
+        principalNull(principal);
+
+        User user = userService.findByUsername(principal.getName());
+        Bottle bottle = bottleService.findByUser(user.getId(), bottleId);
+
+        if (bottle == null) {
+            return Paths.REDIRECT_ROOT;
+        }
+
+        model.addAttribute(Attributes.BOTTLE, bottle);
+        return Paths.BOTTLE_IMAGE;
+    }
+
+    /**
+     * @param bottle    bottle
+     * @param result    result
+     * @param model     model
+     * @param bottleId  bottleId
+     * @param principal principal
+     * @param action    action
+     * @return View
+     */
+    @PostMapping("/{bottleId}/image")
+    public String bottleImagePost(Bottle bottle, BindingResult result, Model model,
+                                  @PathVariable Long bottleId, Principal principal,
+                                  @RequestParam("action") String action) {
+        principalNull(principal);
+
+        if (result.hasErrors()) {
+            model.addAttribute(Attributes.BOTTLE, bottle);
+            return Paths.BOTTLE_IMAGE;
+        } else {
+            User user = userService.findByUsername(principal.getName());
+            Bottle b = bottleService.findByUser(user.getId(), bottleId);
+
+            b.setImage(bottle.getImage());
+
+            if (action.equals("save")) {
+                bottleService.save(b);
+            }
+            return Paths.REDIRECT_BOTTLE_LIST;
         }
     }
 

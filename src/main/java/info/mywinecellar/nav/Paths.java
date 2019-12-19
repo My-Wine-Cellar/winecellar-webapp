@@ -33,6 +33,8 @@ public class Paths {
     public static final String BARREL_EDIT = "barrel/barrelEdit";
     /** BOTTLE_ADD_EDIT */
     public static final String BOTTLE_ADD_EDIT = "bottle/bottleAddEdit";
+    /** BOTTLE_IMAGE */
+    public static final String BOTTLE_IMAGE = "bottle/bottleImage";
     /** BOTTLE_LIST */
     public static final String BOTTLE_LIST = "bottle/bottleList";
 
@@ -60,6 +62,8 @@ public class Paths {
     public static final String PRODUCER_DETAILS = "producer/producerDetails";
     /** PRODUCER_ADD_EDIT */
     public static final String PRODUCER_ADD_EDIT = "producer/producerAddEdit";
+    /** PRODUCER_IMAGE */
+    public static final String PRODUCER_IMAGE = "producer/producerImage";
 
     /** REDIRECT_ADMIN_USER_LIST */
     public static final String REDIRECT_ADMIN_USER_LIST = "redirect:/admin/userlist";

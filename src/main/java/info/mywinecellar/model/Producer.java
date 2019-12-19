@@ -16,10 +16,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Type;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -47,8 +50,10 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
      * @param fax         fax
      * @param email       email
      * @param website     website
+     * @param image       image
      */
-    public Producer(String name, String description, String phone, String fax, String email, String website) {
+    public Producer(String name, String description, String phone, String fax,
+                    String email, String website, byte[] image) {
         super();
         this.name = name;
         this.description = description;
@@ -56,6 +61,7 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
         this.fax = fax;
         this.email = email;
         this.website = website;
+        this.image = image;
     }
 
     @NotNull
@@ -77,6 +83,10 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
 
     @Column(name = "website")
     private String website;
+
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] image;
 
     @ManyToMany(mappedBy = "producers")
     private List<Area> areas;
@@ -100,10 +110,10 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
     }
 
     /**
-     * @deprecated since v1.0.4
-     * @param label label
+     * @param label     label
      * @param ignoreNew ignoreNew
      * @return Wine
+     * @deprecated since v1.0.4
      */
     @Deprecated
     public Wine getWine(String label, boolean ignoreNew) {

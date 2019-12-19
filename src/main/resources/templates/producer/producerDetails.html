@@ -23,6 +23,9 @@
             <div class="card text-center">
                 <div class="card-body" th:object="${producer}">
                     <h2 class="card-header" th:text="*{name}"></h2>
+                    <div th:if="${producer.image != null}" class="container p-2">
+                        <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + producer.image}" height="150" width="150">
+                    </div>
                 </div>
             </div>
             <br/>
@@ -60,6 +63,8 @@
                 <div class="text-right" sec:authorize="isAuthenticated()">
                     <a th:href="@{/producer/__${producer.id}__/edit}" th:title="#{edit}"><span
                             class="fas fa-edit"></span></a>
+                    <a th:href="@{/producer/__${producer.id}__/image}" th:title="#{uploadProducerImage}">
+                        <span class="fas fa-camera"></span></a>
                 </div>
             </div>
             <br/>
