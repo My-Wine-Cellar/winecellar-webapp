@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body class="bottle-background">
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/><br/><br/>
+<div class="container">
+    <div class="card p-2 shadow">
+        <div class="container">
+            <div class="card shadow p-4 m-3">
+                <form th:object="${producer}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" th:value="*{id}"/>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile" th:field="${producer.image}">
+                                <label class="custom-file-label" for="customFile" th:text="#{uploadProducerImage}">Upload producer
+                                    image</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ml-2 col-sm-8">
+                        <img src="https://placehold.it/120x120" id="preview" class="img-thumbnail">
+                    </div>
+                    <div th:insert="~{fragments/button :: btn-toolbar-cancel-save}"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br/><br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+<script>
+    $(document).on("click", ".custom-file-input", "custom-file-label", function() {
+        var file = $(this).parents().find(".file");
+        file.trigger("click");
+    });
+    $('input[type="file"]').change(function(e) {
+        var fileName = e.target.files[0].name;
+        $("#file").val(fileName);
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            // get loaded data and render thumbnail.
+            document.getElementById("preview").src = e.target.result;
+        };
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+    });
+</script>
+</body>
+</html>

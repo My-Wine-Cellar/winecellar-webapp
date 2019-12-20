@@ -13,8 +13,11 @@ import info.mywinecellar.security.model.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Type;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,14 +44,16 @@ public class Bottle extends BaseEntity implements Comparable<Bottle> {
      * @param show     show
      * @param user     user
      * @param wine     wine
+     * @param image    image
      */
-    public Bottle(Integer number, String location, Boolean show, User user, Wine wine) {
+    public Bottle(Integer number, String location, Boolean show, User user, Wine wine, byte[] image) {
         super();
         this.number = number;
         this.location = location;
         this.show = show;
         this.user = user;
         this.wine = wine;
+        this.image = image;
     }
 
     @NotNull
@@ -60,6 +65,10 @@ public class Bottle extends BaseEntity implements Comparable<Bottle> {
 
     @Column(name = "show")
     private Boolean show;
+
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] image;
 
     @NotNull
     @ManyToOne

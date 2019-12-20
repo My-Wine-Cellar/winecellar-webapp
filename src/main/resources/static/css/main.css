@@ -59,6 +59,11 @@
     margin: 4px;
 }
 
+.file {
+    visibility: hidden;
+    position: absolute;
+}
+
 /* Removes the Select arrow on dropdowns */
 select {
     /* for Firefox */

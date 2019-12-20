@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 @Controller
 @RequestMapping("/producer")
@@ -46,6 +48,14 @@ public class ProducerController extends AbstractController {
     @InitBinder
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
+    }
+
+    /**
+     * @param binder binder
+     */
+    @InitBinder
+    public void imageBinder(ServletRequestDataBinder binder) {
+        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
     }
 
     /**
@@ -90,6 +100,52 @@ public class ProducerController extends AbstractController {
             if (action.equals("save")) {
                 producer.setId(producerId);
                 producerService.save(producer);
+                return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
+            }
+        }
+        return Paths.ERROR_PAGE;
+    }
+
+    /**
+     * @param producerId producerId
+     * @param model      model
+     * @param principal  principal
+     * @return View
+     */
+    @GetMapping("/{producerId}/image")
+    public String producerImageGet(@PathVariable Long producerId, Model model, Principal principal) {
+        principalNull(principal);
+
+        Producer producer = producerService.findById(producerId);
+
+        model.addAttribute(Attributes.PRODUCER, producer);
+
+        return Paths.PRODUCER_IMAGE;
+    }
+
+    /**
+     * @param producer   producer
+     * @param result     result
+     * @param principal  principal
+     * @param producerId producerId
+     * @param action     action
+     * @return View
+     */
+    @PostMapping("/{producerId}/image")
+    public String producerImagePost(Producer producer, BindingResult result, Principal principal,
+                                    @PathVariable Long producerId,
+                                    @RequestParam("action") String action) {
+        principalNull(principal);
+        Producer saveProducer = producerService.findById(producerId);
+        if (action.equals("cancel")) {
+            return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
+        }
+        if (result.hasErrors()) {
+            return Paths.PRODUCER_IMAGE;
+        } else {
+            if (action.equals("save")) {
+                saveProducer.setImage(producer.getImage());
+                producerService.save(saveProducer);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
             }
         }
