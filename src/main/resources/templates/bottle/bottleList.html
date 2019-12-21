@@ -13,7 +13,6 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th></th>
                     <th th:text="#{bottleNumber}"></th>
                     <th th:text="#{producer}"></th>
                     <th th:text="#{wine}"></th>
@@ -25,10 +24,6 @@
                 </thead>
                 <tbody>
                 <tr th:each="bottle : ${bottles}">
-                    <td th:if="${bottle.image == null}"></td>
-                    <td th:if="${bottle.image != null}">
-                        <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + bottle.image}"
-                             width="80" height="80"></td>
                     <td th:text="${bottle.number}"></td>
                     <td>
                         <a th:href="@{/d/__${bottle.country.key}__/__${bottle.region.key}__/__${bottle.area.key}__/__${bottle.producer.key}__/}"
@@ -41,7 +36,6 @@
                     <td th:text="${bottle.location}"></td>
                     <td>
                         <a th:href="@{/bottle/__${bottle.id}__/edit}" th:title="#{edit}"><span class="fas fa-edit"></span></a>
-                        <a th:href="@{/bottle/__${bottle.id}__/image}" th:title="#{image}"><span class="fas fa-camera"></span></a>
                     </td>
                 </tr>
                 </tbody>

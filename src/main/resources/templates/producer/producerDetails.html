@@ -23,47 +23,53 @@
             <div class="card text-center">
                 <div class="card-body" th:object="${producer}">
                     <h2 class="card-header" th:text="*{name}"></h2>
-                    <div th:if="${producer.image != null}" class="container p-2">
-                        <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + producer.image}" height="150" width="150">
-                    </div>
                 </div>
             </div>
             <br/>
-            <div class="container justify-content-left">
-                <div class="card text-left">
-                    <div class="card-body" th:object="${producer}">
-                        <p class="card-text" th:text="*{description}"></p>
-                        <table class="table table-hover">
-                            <tbody>
-                            <tr th:if="${producer.phone != null && !producer.phone.isEmpty()}">
-                                <td><b th:text="#{phone}">Phone</b></td>
-                                <td th:text="*{phone}"></td>
-                            </tr>
-                            <tr th:if="${producer.fax != null && !producer.fax.isEmpty()}">
-                                <td><b th:text="#{fax}">Fax</b></td>
-                                <td th:text="*{fax}"></td>
-                            </tr>
-                            <tr th:if="${producer.email != null && !producer.email.isEmpty()}">
-                                <td><b th:text="#{email}">Email</b></td>
-                                <td><a th:href="|mailto:*{email}|">
-                                    <div th:text="*{email}"></div>
-                                </a></td>
-                            </tr>
-                            <tr th:if="${producer.website != null && !producer.website.isEmpty()}">
-                                <td><b th:text="#{web}">Web</b></td>
-                                <td><a th:href="*{website}" target="_blank">
-                                    <div th:text="*{website}"></div>
-                                </a></td>
-                            </tr>
-                            </tbody>
-                        </table>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <div class="card">
+                            <div class="card-horizontal">
+                                <div class="img-square-wrapper p-2" th:if="${producer.image != null}">
+                                    <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + producer.image}" height="150" width="150">
+                                </div>
+                                <div class="card-body" th:object="${producer}">
+                                    <p class="card-text" th:text="*{description}"></p>
+                                    <table class="table table-hover">
+                                        <tbody>
+                                        <tr th:if="${producer.phone != null && !producer.phone.isEmpty()}">
+                                            <td><b th:text="#{phone}">Phone</b></td>
+                                            <td th:text="*{phone}"></td>
+                                        </tr>
+                                        <tr th:if="${producer.fax != null && !producer.fax.isEmpty()}">
+                                            <td><b th:text="#{fax}">Fax</b></td>
+                                            <td th:text="*{fax}"></td>
+                                        </tr>
+                                        <tr th:if="${producer.email != null && !producer.email.isEmpty()}">
+                                            <td><b th:text="#{email}">Email</b></td>
+                                            <td><a th:href="|mailto:*{email}|">
+                                                <div th:text="*{email}"></div>
+                                            </a></td>
+                                        </tr>
+                                        <tr th:if="${producer.website != null && !producer.website.isEmpty()}">
+                                            <td><b th:text="#{web}">Web</b></td>
+                                            <td><a th:href="*{website}" target="_blank">
+                                                <div th:text="*{website}"></div>
+                                            </a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br/>
                 <div class="text-right" sec:authorize="isAuthenticated()">
                     <a th:href="@{/producer/__${producer.id}__/edit}" th:title="#{edit}"><span
                             class="fas fa-edit"></span></a>
-                    <a th:href="@{/producer/__${producer.id}__/image}" th:title="#{uploadProducerImage}">
+                    <a th:href="@{/producer/__${producer.id}__/image}" th:title="#{image}">
                         <span class="fas fa-camera"></span></a>
                 </div>
             </div>
