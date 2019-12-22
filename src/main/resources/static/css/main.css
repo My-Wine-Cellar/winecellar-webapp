@@ -59,9 +59,9 @@
     margin: 4px;
 }
 
-.file {
-    visibility: hidden;
-    position: absolute;
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
 }
 
 /* Removes the Select arrow on dropdowns */

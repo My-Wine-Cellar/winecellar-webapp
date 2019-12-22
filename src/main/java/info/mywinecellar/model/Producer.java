@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 
 import lombok.EqualsAndHashCode;
@@ -32,6 +33,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
+@DynamicUpdate
 public class Producer extends BaseEntity implements Comparable<Producer> {
 
     /**

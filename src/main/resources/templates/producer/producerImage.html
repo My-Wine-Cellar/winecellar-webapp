@@ -7,23 +7,25 @@
 <div class="container">
     <div class="card p-2 shadow">
         <div class="container">
-            <div class="card shadow p-4 m-3">
-                <form th:object="${producer}" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="id" th:value="*{id}"/>
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile" th:field="${producer.image}">
-                                <label class="custom-file-label" for="customFile" th:text="#{uploadProducerImage}">Upload producer
-                                    image</label>
-                            </div>
+            <div class="card shadow p-2 m-3 ">
+                <div class="container" align="center">
+                    <div class="card-body" th:object="${producer}">
+                        <h3 class="card-header" th:text="|Add an image to *{name}|"></h3>
+                        <p class="card-text mt-2"><i>Image size cannot be larger than 5MB</i></p>
+                    </div>
+                    <form th:object="${producer}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id" th:value="*{id}"/>
+                        <div class="col-sm-6 custom-file">
+                            <input type="file" class="custom-file-input" id="customFile" th:field="${producer.image}">
+                            <label class="custom-file-label" for="customFile"></label>
                         </div>
-                    </div>
-                    <div class="ml-2 col-sm-8">
-                        <img src="https://placehold.it/120x120" id="preview" class="img-thumbnail">
-                    </div>
-                    <div th:insert="~{fragments/button :: btn-toolbar-cancel-save}"/>
-                </form>
+                        <div class="col-sm-4 mt-2">
+                            <p class="alert-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></p>
+                        </div>
+                        <img class="img-thumbnail mt-2" src="https://placehold.it/120x120" id="preview">
+                        <div th:insert="~{fragments/button :: btn-toolbar-cancel-save}"/>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -32,16 +34,20 @@
 <div th:replace="~{fragments/layout :: footer}"/>
 <div th:replace="~{fragments/layout :: scripts}"/>
 <script>
-    $(document).on("click", ".custom-file-input", "custom-file-label", function() {
-        var file = $(this).parents().find(".file");
-        file.trigger("click");
+
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
-    $('input[type="file"]').change(function(e) {
+
+    // Sets up the img preview
+    $('input[type="file"]').change(function (e) {
         var fileName = e.target.files[0].name;
         $("#file").val(fileName);
 
         var reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             // get loaded data and render thumbnail.
             document.getElementById("preview").src = e.target.result;
         };

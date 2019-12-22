@@ -90,7 +90,7 @@ public class ProducerController extends AbstractController {
                                    @PathVariable Long producerId,
                                    @RequestParam("action") String action) {
         principalNull(principal);
-
+        Producer saveProducer = producerService.findById(producerId);
         if (action.equals("cancel")) {
             return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
         }
@@ -98,8 +98,7 @@ public class ProducerController extends AbstractController {
             return Paths.PRODUCER_ADD_EDIT;
         } else {
             if (action.equals("save")) {
-                producer.setId(producerId);
-                producerService.save(producer);
+                producerService.update(producer, saveProducer);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
             }
         }
@@ -115,11 +114,7 @@ public class ProducerController extends AbstractController {
     @GetMapping("/{producerId}/image")
     public String producerImageGet(@PathVariable Long producerId, Model model, Principal principal) {
         principalNull(principal);
-
-        Producer producer = producerService.findById(producerId);
-
-        model.addAttribute(Attributes.PRODUCER, producer);
-
+        model.addAttribute(Attributes.PRODUCER, producerService.findById(producerId));
         return Paths.PRODUCER_IMAGE;
     }
 
@@ -145,6 +140,10 @@ public class ProducerController extends AbstractController {
         } else {
             if (action.equals("save")) {
                 saveProducer.setImage(producer.getImage());
+                if (saveProducer.getImage().length >= 5242880L) {
+                    result.rejectValue("image", "error.imageSize");
+                    return Paths.PRODUCER_IMAGE;
+                }
                 producerService.save(saveProducer);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
             }

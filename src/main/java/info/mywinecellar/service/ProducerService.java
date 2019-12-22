@@ -17,9 +17,18 @@ public interface ProducerService extends CrudService<Producer, Long> {
 
     /**
      * Find by name
+     *
      * @param name The name
      * @return The producer
      */
     Producer findByName(String name);
+
+    /**
+     * Update Producer
+     *
+     * @param model producer
+     * @param save  producer
+     */
+    void update(Producer model, Producer save);
 
 }

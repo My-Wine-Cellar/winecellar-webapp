@@ -33,8 +33,6 @@ public class Paths {
     public static final String BARREL_EDIT = "barrel/barrelEdit";
     /** BOTTLE_ADD_EDIT */
     public static final String BOTTLE_ADD_EDIT = "bottle/bottleAddEdit";
-    /** BOTTLE_IMAGE */
-    public static final String BOTTLE_IMAGE = "bottle/bottleImage";
     /** BOTTLE_LIST */
     public static final String BOTTLE_LIST = "bottle/bottleList";
 

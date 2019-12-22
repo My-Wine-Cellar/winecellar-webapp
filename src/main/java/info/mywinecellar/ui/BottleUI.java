@@ -11,7 +11,6 @@ package info.mywinecellar.ui;
 import info.mywinecellar.model.Bottle;
 
 import java.io.Serializable;
-import java.util.Base64;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,7 +35,6 @@ public class BottleUI implements Serializable {
     private AreaUI area;
     private ProducerUI producer;
     private WineUI wine;
-    private String image;
 
     /**
      * Constructor
@@ -53,14 +51,5 @@ public class BottleUI implements Serializable {
         this.area = new AreaUI(b.getWine().getProducer().getAreas().get(0));
         this.producer = new ProducerUI(b.getWine().getProducer());
         this.wine = new WineUI(b.getWine());
-        this.image = this.encodeImage(b);
-    }
-
-    private String encodeImage(Bottle b) {
-        String encodeToString = null;
-        if (b.getImage() != null) {
-            encodeToString = Base64.getEncoder().encodeToString(b.getImage());
-        }
-        return encodeToString;
     }
 }

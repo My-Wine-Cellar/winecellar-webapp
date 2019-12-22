@@ -47,7 +47,12 @@ import java.security.Principal;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class AbstractController {
+
+    final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
      * AreaService
@@ -224,6 +229,7 @@ public abstract class AbstractController {
     }
 
     protected String principalNull(Principal principal) {
+        log.debug("Principal is null");
         return principal == null ? Paths.REDIRECT_ROOT : Paths.ERROR_PAGE;
     }
 }

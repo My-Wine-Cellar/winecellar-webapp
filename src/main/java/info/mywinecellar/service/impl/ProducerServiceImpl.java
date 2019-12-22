@@ -36,6 +36,17 @@ public class ProducerServiceImpl implements ProducerService {
     }
 
     @Override
+    public void update(Producer model, Producer save) {
+        save.setName(model.getName());
+        save.setDescription(model.getDescription());
+        save.setEmail(model.getEmail());
+        save.setWebsite(model.getWebsite());
+        save.setPhone(model.getPhone());
+        save.setFax(model.getFax());
+        producerRepository.save(save);
+    }
+
+    @Override
     public void delete(Producer object) {
         producerRepository.delete(object);
     }
