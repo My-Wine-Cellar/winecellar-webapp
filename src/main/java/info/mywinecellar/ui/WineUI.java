@@ -31,6 +31,7 @@ public class WineUI extends AbstractKeyUI {
 
     /**
      * Constructor
+     *
      * @param w The wine
      */
     WineUI(Wine w) {
@@ -40,4 +41,5 @@ public class WineUI extends AbstractKeyUI {
         this.vintage = w.getVintage();
         this.size = w.getSize();
     }
+
 }

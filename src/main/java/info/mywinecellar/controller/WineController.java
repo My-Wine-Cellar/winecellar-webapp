@@ -31,6 +31,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -40,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 @Controller
 @SessionAttributes({"wine", "grapeComponent", "barrelComponent", "grapes", "barrels"})
@@ -59,6 +61,14 @@ public class WineController extends AbstractController {
     @InitBinder("wine")
     public void initBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
+    }
+
+    /**
+     * @param binder binder
+     */
+    @InitBinder
+    public void imageBinder(ServletRequestDataBinder binder) {
+        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
     }
 
     /**
@@ -359,6 +369,61 @@ public class WineController extends AbstractController {
             }
         }
     }
+
+    /**
+     * @param wineId    wineId
+     * @param model     model
+     * @param principal principal
+     * @return View
+     */
+    @GetMapping("/{wineId}/image")
+    public String wineImageGet(@PathVariable Long wineId, Model model, Principal principal) {
+        principalNull(principal);
+        model.addAttribute(Attributes.WINE, wineService.findById(wineId));
+        return Paths.WINE_IMAGE;
+    }
+
+    /**
+     * @param wine      wine
+     * @param result    result
+     * @param principal principal
+     * @param status    status
+     * @param action    action
+     * @param wineId    wineId
+     * @return View
+     */
+    @PostMapping("/{wineId}/image")
+    public String wineImagePost(@Valid Wine wine, BindingResult result, Principal principal, SessionStatus status,
+                                @RequestParam(value = "action") String action, @PathVariable Long wineId) {
+        principalNull(principal);
+
+        if (result.hasErrors()) {
+            return Paths.WINE_IMAGE;
+        } else {
+            if (action.equals("save")) {
+                Wine saveWine = wineService.findById(wineId);
+                saveWine.setImage(wine.getImage());
+                if (saveWine.getImage().length >= 5242880L) {
+                    result.rejectValue("image", "error.imageSize");
+                    return Paths.WINE_IMAGE;
+                }
+                wineService.save(saveWine);
+                WineUI wineUI = WineUIFactory.instance().create(saveWine);
+                Session.clear(status);
+                return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(),
+                        Session.getProducerId()) + "/" + wineUI.getKey() + "/" +
+                        wineUI.getVintage() + "/" + wineUI.getSize();
+            } else if (action.equals("cancel")) {
+                WineUI wineUI = WineUIFactory.instance().create(wine);
+                Session.clear(status);
+                return redirectProducer(Session.getCountryId(), Session.getRegionId(),
+                        Session.getAreaId(), Session.getProducerId()) +
+                        "/" + wineUI.getKey() + "/" + wineUI.getVintage() + "/" + wineUI.getSize();
+            }
+        }
+        return Paths.ERROR_PAGE;
+    }
+
 
     private void saveOrNullMaceration(List<GrapeComponent> grapes) {
         grapes.forEach(grapeComponent -> {

@@ -15,11 +15,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,6 +33,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@DynamicUpdate
 public class Wine extends BaseEntity implements Comparable<Wine> {
 
     /**
@@ -56,10 +60,11 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
      * @param shape       shape
      * @param color       color
      * @param type        type
+     * @param image       image
      */
     public Wine(String name, Integer vintage, Float alcohol, Float size,
                 Float acid, Float pH, Integer bottleAging, String description, String weblink,
-                Producer producer, Closure closure, Shape shape, Color color, Type type) {
+                Producer producer, Closure closure, Shape shape, Color color, Type type, byte[] image) {
         super();
         this.name = name;
         this.vintage = vintage;
@@ -75,6 +80,7 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
         this.shape = shape;
         this.color = color;
         this.type = type;
+        this.image = image;
     }
 
     @NotNull
@@ -111,6 +117,10 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
 
     @Column(name = "subarea")
     private String subarea;
+
+    @Lob
+    @org.hibernate.annotations.Type(type = "org.hibernate.type.ImageType")
+    private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "producer_id", referencedColumnName = "id")

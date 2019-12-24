@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="~{fragments/layout :: head}"/>
+<body class="bottle-background">
+<div th:replace="~{fragments/layout :: nav}"/>
+<br/><br/><br/>
+<div class="container">
+    <div class="card p-2 shadow">
+        <div class="container">
+            <div class="card shadow p-2 m-3 ">
+                <div class="container" align="center">
+                    <div class="card-body" th:object="${wine}">
+                        <h3 class="card-header" th:text="|Add an image to *{name}|"></h3>
+                        <p class="card-text mt-2"><i>Image size cannot be larger than 5MB</i></p>
+                    </div>
+                    <form th:object="${wine}" method="post" enctype="multipart/form-data">
+                        <div class="col-sm-6 custom-file">
+                            <input type="file" class="custom-file-input" id="customFile" th:field="${wine.image}">
+                            <label class="custom-file-label" for="customFile"></label>
+                        </div>
+                        <div class="col-sm-4 mt-2">
+                            <p class="alert-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></p>
+                        </div>
+                        <img class="img-thumbnail mt-2" src="https://placehold.it/120x120" id="preview">
+                        <div th:insert="~{fragments/button :: btn-toolbar-cancel-save}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/><br/>
+<div th:replace="~{fragments/layout :: footer}"/>
+<div th:replace="~{fragments/layout :: scripts}"/>
+<script>
+
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+    // Sets up the img preview
+    $('input[type="file"]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $("#file").val(fileName);
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            // get loaded data and render thumbnail.
+            document.getElementById("preview").src = e.target.result;
+        };
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+    });
+</script>
+</body>
+</html>
