@@ -35,6 +35,9 @@ public class Attributes {
     /** COUNTRY */
     public static final String COUNTRY = "country";
 
+    /** ENCODED_IMAGE */
+    public static final String ENCODED_IMAGE = "encodedImage";
+
     /** FERMENTATION */
     public static final String FERMENTATION = "fermentation";
 

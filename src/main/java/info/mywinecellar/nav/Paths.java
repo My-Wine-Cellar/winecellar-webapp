@@ -135,6 +135,8 @@ public class Paths {
     public static final String WINE_DETAILS = "wine/wineDetails";
     /** WINE_ADD_EDIT_DETAILS */
     public static final String WINE_ADD_EDIT_DETAILS = "wine/wineAddEditDetails";
+    /** WINE_IMAGE */
+    public static final String WINE_IMAGE = "wine/wineImage";
     /** WISHLIST_LIST */
     public static final String WISHLIST_LIST = "wishlist/wishlistList";
 

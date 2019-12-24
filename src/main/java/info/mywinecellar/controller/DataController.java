@@ -42,6 +42,7 @@ import info.mywinecellar.ui.WineUIFactory;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
@@ -377,6 +378,7 @@ public class DataController extends AbstractController {
         model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
         model.addAttribute(Attributes.PRODUCER, ProducerUIFactory.instance().create(p));
         model.addAttribute(Attributes.WINE, w);
+        model.addAttribute(Attributes.ENCODED_IMAGE, encodedImage(w.getImage()));
         model.addAttribute(Attributes.WINEGRAPES, winegrapes);
         model.addAttribute(Attributes.MYBOTTLE, bottle);
         model.addAttribute(Attributes.MYREVIEW, review);
@@ -399,4 +401,13 @@ public class DataController extends AbstractController {
 
         return false;
     }
+
+    private String encodedImage(byte[] image) {
+        String encodeToString = null;
+        if (image != null) {
+            encodeToString = Base64.getEncoder().encodeToString(image);
+        }
+        return encodeToString;
+    }
+
 }
