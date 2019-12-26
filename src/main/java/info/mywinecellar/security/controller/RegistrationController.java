@@ -11,7 +11,6 @@ package info.mywinecellar.security.controller;
 import info.mywinecellar.controller.AbstractController;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
-import info.mywinecellar.security.model.User;
 import info.mywinecellar.security.model.UserDto;
 
 import javax.validation.Valid;
@@ -48,10 +47,10 @@ public class RegistrationController extends AbstractController {
     @PostMapping
     public String userRegistrationPost(@ModelAttribute("user") @Valid UserDto user, BindingResult result)
             throws Exception {
-        if (emailExists(user.getEmail())) {
+        if (userService.emailExists(user.getEmail())) {
             result.rejectValue("email", "error.email");
             return Paths.SECURITY_REGISTER;
-        } else if (usernameExists(user.getUserName())) {
+        } else if (userService.usernameExists(user.getUserName())) {
             result.rejectValue("userName", "error.username");
             return Paths.SECURITY_REGISTER;
         } else if (!user.getPassword().equals(user.getMatchingPassword())) {
@@ -87,16 +86,6 @@ public class RegistrationController extends AbstractController {
             return Paths.SECURITY_BAD_TOKEN;
         }
         return Paths.ERROR_PAGE;
-    }
-
-    private boolean emailExists(String email) {
-        User user = userService.findUserByEmail(email);
-        return user != null;
-    }
-
-    private boolean usernameExists(String username) {
-        User user = userService.findByUsername(username);
-        return user != null;
     }
 
 }
