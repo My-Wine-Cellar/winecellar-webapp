@@ -114,6 +114,8 @@ public class Paths {
     public static final String SECURITY_SUCCESS = "security/success";
     /** SECURITY_USER_REGISTRATION */
     public static final String SECURITY_USER_REGISTRATION = "security/registerUser";
+    /** SECURITY_PASSWORD_RESET */
+    public static final String SECURITY_PASSWORD_RESET = "security/passwordReset";
 
     /** TASTED_LIST */
     public static final String TASTED_LIST = "tasted/tastedList";

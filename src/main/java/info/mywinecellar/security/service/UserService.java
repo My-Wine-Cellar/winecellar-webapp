@@ -64,4 +64,21 @@ public interface UserService extends UserDetailsService {
      * @return String
      */
     String validateVerificationToken(String token);
+
+    /**
+     * @param userDto user
+     */
+    void update(UserDto userDto);
+
+    /**
+     * @param username username
+     * @return true
+     */
+    boolean usernameExists(String username);
+
+    /**
+     * @param email email
+     * @return true
+     */
+    boolean emailExists(String email);
 }

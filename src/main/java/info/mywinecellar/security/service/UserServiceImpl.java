@@ -62,6 +62,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUserByEmail(email);
     }
 
+    /**
+     * @param username username
+     * @return UserDetails
+     * @deprecated since forever
+     */
+    @Deprecated
     @Override
     public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findUserByUsername(username);
@@ -87,6 +93,11 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(userId.intValue());
     }
 
+    /**
+     * @param user user
+     * @throws MessagingException exception
+     * @deprecated since v1.0.4
+     */
     @Override
     @Deprecated
     public void createUser(User user) throws MessagingException {
@@ -158,13 +169,22 @@ public class UserServiceImpl implements UserService {
         return TOKEN_VALID;
     }
 
-    private boolean emailExists(String email) {
+    @Override
+    public boolean emailExists(String email) {
         User user = userRepository.findUserByEmail(email);
         return user != null;
     }
 
-    private boolean usernameExists(String username) {
+    @Override
+    public boolean usernameExists(String username) {
         User user = userRepository.findUserByUsername(username);
         return user != null;
+    }
+
+    @Override
+    public void update(UserDto userDto) {
+        User user = userRepository.findUserByUsername(userDto.getUserName());
+        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        userRepository.save(user);
     }
 }
