@@ -61,4 +61,12 @@ public class AboutController {
     public String contactUs() {
         return Paths.ABOUT_CONTACT_US;
     }
+
+    /**
+     * @return View
+     */
+    @RequestMapping("/about/wset")
+    public String wset() {
+        return Paths.ABOUT_WSET;
+    }
 }

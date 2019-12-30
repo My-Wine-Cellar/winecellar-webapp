@@ -20,6 +20,8 @@ public class Paths {
     public static final String ABOUT_LICENSE = "about/license";
     /** ABOUT_PEOPLE */
     public static final String ABOUT_PEOPLE = "about/people";
+    /** ABOUT_WSET */
+    public static final String ABOUT_WSET = "about/wset";
     /** AREA_ADD_GRAPE */
     public static final String AREA_ADD_GRAPE = "area/areaAddGrape";
     /** AREA_DETAILS */
@@ -91,6 +93,8 @@ public class Paths {
     public static final String REDIRECT_WISHLIST_LIST = "redirect:/wishlist/list";
     /** REDIRECT_WELCOME */
     public static final String REDIRECT_WELCOME = "redirect:/welcome";
+    /** REDIRECT_WSET_LIST */
+    public static final String REDIRECT_WSET_LIST = "redirect:/wset/list";
 
     /** REGION_DETAILS */
     public static final String REGION_DETAILS = "region/regionDetails";
@@ -143,6 +147,13 @@ public class Paths {
     public static final String WINE_IMAGE = "wine/wineImage";
     /** WISHLIST_LIST */
     public static final String WISHLIST_LIST = "wishlist/wishlistList";
+
+    /** WSET_ADD_EDIT */
+    public static final String WSET_ADD_EDIT = "wset/wsetAddEdit";
+    /** WSET_LIST */
+    public static final String WSET_LIST = "wset/wsetList";
+    /** WSET_VIEW */
+    public static final String WSET_VIEW = "wset/wsetView";
 
     private Paths() {
     }

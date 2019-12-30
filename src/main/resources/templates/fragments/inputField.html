@@ -2,6 +2,37 @@
 <body>
 
 <form>
+    <th:block th:fragment="nametype (name, type)">
+        <div th:switch="${type}">
+            <input th:case="'text'" class="form-control" autocomplete="off" type="text"
+                   th:placeholder="#{__${name}__}"
+                   th:field="*{__${name}__}"/>
+            <input th:case="'tel'" class="form-control" autocomplete="off" type="tel"
+                   th:placeholder="#{__${name}__}"
+                   th:field="*{__${name}__}"
+                   pattern="^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$"/>
+            <input th:case="'url'" class="form-control" autocomplete="off" type="url"
+                   th:placeholder="#{__${name}__}"
+                   th:field="*{__${name}__}"/>
+            <input th:case="'email'" class="form-control" type="email"
+                   th:placeholder="#{__${name}__}"
+                   th:field="*{__${name}__}"/>
+            <input th:case="'password'" class="form-control" type="password"
+                   th:placeholder="#{__${name}__}"
+                   th:field="*{__${name}__}"/>
+            <input th:case="'number'" class="form-control" autocomplete="off" type="number"
+                   th:placeholder="#{__${name}__}"
+                   th:field="*{__${name}__}" pattern="^\d*\.?\d*$"/>
+        </div>
+        <ul class="text-danger" th:each="error: ${#fields.errors(name)}">
+            <li th:each="message : ${error.split(',')}">
+                <p class="error-message" th:text="${message}"></p>
+            </li>
+        </ul>
+    </th:block>
+</form>
+
+<form>
     <th:block th:fragment="input (label, name, type)">
         <label class="control-label" th:text="${label}">Label</label>
         <div th:switch="${type}">

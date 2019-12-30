@@ -35,6 +35,9 @@ public class Attributes {
     /** COUNTRY */
     public static final String COUNTRY = "country";
 
+    /** DATA */
+    public static final String DATA = "data";
+
     /** ENCODED_IMAGE */
     public static final String ENCODED_IMAGE = "encodedImage";
 
@@ -54,6 +57,8 @@ public class Attributes {
     public static final String MYREVIEW = "myreview";
     /** MYTASTINGNOTES */
     public static final String MYTASTINGNOTES = "mytastingnotes";
+    /** MYWSET */
+    public static final String MYWSET = "mywset";
     /** MYWISHLIST */
     public static final String MYWISHLIST = "mywishlist";
 
@@ -103,6 +108,8 @@ public class Attributes {
     public static final String WINES = "wines";
     /** WISHLIST */
     public static final String WISHLIST = "wishlist";
+    /** WSET */
+    public static final String WSET = "wset";
 
     private Attributes() {
     }

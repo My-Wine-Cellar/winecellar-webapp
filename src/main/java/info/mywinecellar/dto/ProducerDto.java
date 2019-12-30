@@ -8,8 +8,12 @@
 
 package info.mywinecellar.dto;
 
+import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.util.Image;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -47,10 +51,13 @@ public class ProducerDto extends AbstractKeyDto {
     @Size(max = 50)
     private String website;
 
+    private List<Long> areas;
+
     /**
      * Default constructor
      */
     public ProducerDto() {
+        this.areas = new ArrayList<>();
     }
 
     /**
@@ -68,5 +75,10 @@ public class ProducerDto extends AbstractKeyDto {
         this.email = p.getEmail();
         this.website = p.getWebsite();
         this.image = Image.encode(p.getImage());
+        this.areas = new ArrayList<>();
+
+        for (Area a : p.getAreas()) {
+            this.areas.add(a.getId());
+        }
     }
 }

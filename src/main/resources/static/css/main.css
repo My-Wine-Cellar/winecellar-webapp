@@ -198,6 +198,31 @@ select::-ms-expand {
     -o-background-size: cover;
 }
 
+.pct25 {
+    width: 25%;
+}
+
+.pct75 {
+    width: 75%;
+}
+
+.pct100 {
+    width: 100%;
+}
+
+.wsetSolid {
+    color: #ffffff;
+    background-color: #a9123e;
+}
+
+.wsetOdd {
+    background-color: #f2c2ca;
+}
+
+.wsetEven {
+    background-color: #ffffff;
+}
+
 /*
 Are ya yellow?!: #feda6a
 

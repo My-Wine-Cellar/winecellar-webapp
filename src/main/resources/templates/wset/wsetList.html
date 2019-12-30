@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:include="~{fragments/layout :: head}"/>
+  <body class="tasting-background">
+    <div th:replace="~{fragments/layout :: nav}"/>
+    <br/><br/>
+    <div class="container">
+      <div class="card p-2 shadow">
+        <div class="container justify-content-center">
+          <br/>
+          <h2 align="center" th:title="#{myTastingNotesWSET}">My WSET Tasting Notes</h2>
+          <br/>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th th:text="#{producer}">Producer</th>
+                <th th:text="#{wine}">Wine</th>
+                <th th:text="#{vintage}">Vintage</th>
+                <th th:text="#{date}">Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="w : ${data.wset}">
+                <td>
+                  <a th:href="@{/d/__${data.find('country', w).key}__/__${data.find('region', w).key}__/__${data.find('area', w).key}__/__${data.find('producer', w).key}__/}"
+                     th:text="${data.find('producer', w).name}"></a>
+                </td>
+                <td>
+                  <a th:href="@{/d/__${data.find('country', w).key}__/__${data.find('region', w).key}__/__${data.find('area', w).key}__/__${data.find('producer', w).key}__/__${data.find('wine', w).key}__/__${data.find('wine', w).vintage}__/__${data.find('wine', w).size}__}"
+                     th:text="${data.find('wine', w).name}"></a>
+                </td>
+                <td th:text="${data.find('wine', w).vintage}"></td>
+                <td th:text="${#dates.format(w.date, 'MMM dd, yyyy')}"></td>
+                <td>
+                  <a th:href="@{__${w.id}__}" th:title="#{view}"><span class="fas fa-eye"></span></a>
+                  <a th:href="@{__${w.id}__/edit}" th:title="#{edit}"><span class="fas fa-edit"></span></a>
+                  <a th:href="@{__${w.id}__/delete}" onclick="return confirm('Are you sure?');" th:title="#{delete}"><span class="fas fa-trash"></span></a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p/>
+          <table class="pct100">
+            <tbody>
+              <tr>
+                <td><img src="/images/wset100.png" alt="WSET logo"/></td>
+                <td>Copyright Wine & Spirit Education Trust 2020. For more information see <a th:href="@{/about/wset}">WSET</a>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br/><br/>
+    <div th:replace="~{fragments/layout :: footer}"/>
+    <div th:replace="~{fragments/layout :: scripts}"/>
+  </body>
+</html>

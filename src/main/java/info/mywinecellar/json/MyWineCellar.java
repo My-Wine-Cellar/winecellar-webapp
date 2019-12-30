@@ -17,7 +17,9 @@ import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.dto.ShapeDto;
 import info.mywinecellar.dto.TypeDto;
+import info.mywinecellar.dto.UserDto;
 import info.mywinecellar.dto.WineDto;
+import info.mywinecellar.wset.WSETDto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -51,6 +53,12 @@ public class MyWineCellar implements Serializable {
 
     @JsonSerialize(using = GenericSerializer.class)
     private List<WineDto> wines;
+
+    @JsonSerialize(using = GenericSerializer.class)
+    private List<UserDto> users;
+
+    @JsonSerialize(using = GenericSerializer.class)
+    private List<WSETDto> wset;
 
     @JsonSerialize(using = GenericSerializer.class)
     private List<ClosureDto> closures;
@@ -116,6 +124,14 @@ public class MyWineCellar implements Serializable {
     }
 
     /**
+     * Get the users
+     * @return The list
+     */
+    public List<UserDto> getUsers() {
+        return users;
+    }
+
+    /**
      * Get the wines
      *
      * @return The list
@@ -160,6 +176,110 @@ public class MyWineCellar implements Serializable {
         return types;
     }
 
+    /**
+     * Get the WSET instances
+     * @return The list
+     */
+    public List<WSETDto> getWset() {
+        return wset;
+    }
+
+    /**
+     * Find
+     * @param what What to find
+     * @param from The from object
+     * @return The result
+     */
+    public Serializable find(String what, Serializable from) {
+        Serializable result = null;
+
+        if ("country".equals(what)) {
+            if (from instanceof WSETDto) {
+                WSETDto ws = (WSETDto) from;
+                from = findWine(ws.getWineId());
+            }
+            if (from instanceof WineDto) {
+                WineDto wine = (WineDto) from;
+                from = findProducer(wine.getProducerId());
+            }
+            if (from instanceof ProducerDto) {
+                ProducerDto producer = (ProducerDto) from;
+                from = findArea(producer.getAreas().iterator().next());
+            }
+            if (from instanceof AreaDto) {
+                AreaDto area = (AreaDto) from;
+                from = findRegion(area.getRegions().iterator().next());
+            }
+            if (from instanceof RegionDto) {
+                RegionDto region = (RegionDto) from;
+                from = findCountry(region.getCountryId());
+            }
+            if (from instanceof CountryDto) {
+                result = from;
+            }
+        } else if ("region".equals(what)) {
+            if (from instanceof WSETDto) {
+                WSETDto ws = (WSETDto) from;
+                from = findWine(ws.getWineId());
+            }
+            if (from instanceof WineDto) {
+                WineDto wine = (WineDto) from;
+                from = findProducer(wine.getProducerId());
+            }
+            if (from instanceof ProducerDto) {
+                ProducerDto producer = (ProducerDto) from;
+                from = findArea(producer.getAreas().iterator().next());
+            }
+            if (from instanceof AreaDto) {
+                AreaDto area = (AreaDto) from;
+                from = findRegion(area.getRegions().iterator().next());
+            }
+            if (from instanceof RegionDto) {
+                result = from;
+            }
+        } else if ("area".equals(what)) {
+            if (from instanceof WSETDto) {
+                WSETDto ws = (WSETDto) from;
+                from = findWine(ws.getWineId());
+            }
+            if (from instanceof WineDto) {
+                WineDto wine = (WineDto) from;
+                from = findProducer(wine.getProducerId());
+            }
+            if (from instanceof ProducerDto) {
+                ProducerDto producer = (ProducerDto) from;
+                from = findArea(producer.getAreas().iterator().next());
+            }
+            if (from instanceof AreaDto) {
+                result = from;
+            }
+        } else if ("producer".equals(what)) {
+            if (from instanceof WSETDto) {
+                WSETDto ws = (WSETDto) from;
+                from = findWine(ws.getWineId());
+            }
+            if (from instanceof WineDto) {
+                WineDto wine = (WineDto) from;
+                from = findProducer(wine.getProducerId());
+            }
+            if (from instanceof ProducerDto) {
+                result = from;
+            }
+        } else if ("wine".equals(what)) {
+            if (from instanceof WSETDto) {
+                WSETDto ws = (WSETDto) from;
+                from = findWine(ws.getWineId());
+            }
+            if (from instanceof WineDto) {
+                result = from;
+            }
+        } else {
+            System.out.println("Unknown " + what + " from " + from.getClass().getName());
+        }
+
+        return result;
+    }
+
     void addArea(AreaDto a) {
         if (areas == null) {
             areas = new ArrayList<>();
@@ -175,14 +295,7 @@ public class MyWineCellar implements Serializable {
     }
 
     boolean hasArea(Long id) {
-        if (areas != null) {
-            for (AreaDto a : areas) {
-                if (a.getId().equals(id)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return findArea(id) != null;
     }
 
     void addCountry(CountryDto c) {
@@ -200,14 +313,7 @@ public class MyWineCellar implements Serializable {
     }
 
     boolean hasCountry(Long id) {
-        if (countries != null) {
-            for (CountryDto c : countries) {
-                if (c.getId().equals(id)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return findCountry(id) != null;
     }
 
     void addGrape(GrapeDto g) {
@@ -225,14 +331,7 @@ public class MyWineCellar implements Serializable {
     }
 
     boolean hasGrape(Long id) {
-        if (grapes != null) {
-            for (GrapeDto g : grapes) {
-                if (g.getId().equals(id)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return findGrape(id) != null;
     }
 
     void addProducer(ProducerDto p) {
@@ -250,14 +349,14 @@ public class MyWineCellar implements Serializable {
     }
 
     boolean hasProducer(Long id) {
-        if (producers != null) {
-            for (ProducerDto p : producers) {
-                if (p.getId().equals(id)) {
-                    return true;
-                }
-            }
+        return findProducer(id) != null;
+    }
+
+    void addUser(UserDto u) {
+        if (users == null) {
+            users = new ArrayList<>();
         }
-        return false;
+        users.add(u);
     }
 
     void addRegion(RegionDto r) {
@@ -275,14 +374,11 @@ public class MyWineCellar implements Serializable {
     }
 
     boolean hasRegion(Long id) {
-        if (regions != null) {
-            for (RegionDto r : regions) {
-                if (r.getId().equals(id)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return findRegion(id) != null;
+    }
+
+    boolean hasUser(int id) {
+        return findUser(id) != null;
     }
 
     void addWine(WineDto w) {
@@ -300,14 +396,114 @@ public class MyWineCellar implements Serializable {
     }
 
     boolean hasWine(Long id) {
-        if (wines != null) {
-            for (WineDto w : wines) {
-                if (w.getId().equals(id)) {
-                    return true;
+        return findWine(id) != null;
+    }
+
+    void addWSET(WSETDto w) {
+        if (wset == null) {
+            wset = new ArrayList<>();
+        }
+
+        wset.add(w);
+    }
+
+    boolean hasWSET(Long id) {
+        return findWSET(id) != null;
+    }
+
+    private UserDto findUser(int id) {
+        if (users != null) {
+            for (UserDto u : users) {
+                if (u.getId() == id) {
+                    return u;
                 }
             }
         }
-        return false;
+
+        return null;
+    }
+
+    private WineDto findWine(Long id) {
+        if (wines != null) {
+            for (WineDto w : wines) {
+                if (w.getId().equals(id)) {
+                    return w;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private ProducerDto findProducer(Long id) {
+        if (producers != null) {
+            for (ProducerDto p : producers) {
+                if (p.getId().equals(id)) {
+                    return p;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private AreaDto findArea(Long id) {
+        if (areas != null) {
+            for (AreaDto a : areas) {
+                if (a.getId().equals(id)) {
+                    return a;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private RegionDto findRegion(Long id) {
+        if (regions != null) {
+            for (RegionDto r : regions) {
+                if (r.getId().equals(id)) {
+                    return r;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private CountryDto findCountry(Long id) {
+        if (countries != null) {
+            for (CountryDto c : countries) {
+                if (c.getId().equals(id)) {
+                    return c;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private WSETDto findWSET(Long id) {
+        if (wset != null) {
+            for (WSETDto w : wset) {
+                if (w.getId().equals(id)) {
+                    return w;
+                }
+            }
+        }
+        return null;
+    }
+
+    private GrapeDto findGrape(Long id) {
+        if (grapes != null) {
+            for (GrapeDto g : grapes) {
+                if (g.getId().equals(id)) {
+                    return g;
+                }
+            }
+        }
+
+        return null;
     }
 
     void addClosure(ClosureDto c) {
@@ -409,5 +605,4 @@ public class MyWineCellar implements Serializable {
         }
         return false;
     }
-
 }

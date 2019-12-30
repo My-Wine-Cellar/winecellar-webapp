@@ -34,6 +34,8 @@ import info.mywinecellar.service.ReviewService;
 import info.mywinecellar.service.TastingNotesService;
 import info.mywinecellar.service.WishlistService;
 import info.mywinecellar.util.Image;
+import info.mywinecellar.wset.WSET;
+import info.mywinecellar.wset.WSETService;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -60,6 +62,9 @@ public class DataController extends AbstractController {
 
     @Inject
     private TastingNotesService tastingNotesService;
+
+    @Inject
+    private WSETService wsetService;
 
     @Inject
     private WishlistService wishlistService;
@@ -284,6 +289,7 @@ public class DataController extends AbstractController {
         Bottle bottle = null;
         Review review = null;
         GenericTastingNotes tastingnotes = null;
+        WSET wset = null;
         Wishlist wishlist = null;
 
         if (guard(country) || guard(region) || guard(area) || guard(producer) ||
@@ -337,6 +343,7 @@ public class DataController extends AbstractController {
             bottle = bottleService.findByWine(user.getId(), w.getId());
             review = reviewService.findByWine(user.getId(), w.getId());
             tastingnotes = tastingNotesService.findByWine(user.getId(), w.getId());
+            wset = wsetService.findByWine(user.getId(), w.getId());
             wishlist = wishlistService.findByWine(user.getId(), w.getId());
         }
 
@@ -377,6 +384,7 @@ public class DataController extends AbstractController {
         model.addAttribute(Attributes.MYBOTTLE, bottle);
         model.addAttribute(Attributes.MYREVIEW, review);
         model.addAttribute(Attributes.MYTASTINGNOTES, tastingnotes);
+        model.addAttribute(Attributes.MYWSET, wset);
         model.addAttribute(Attributes.MYWISHLIST, wishlist);
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), w.getId());

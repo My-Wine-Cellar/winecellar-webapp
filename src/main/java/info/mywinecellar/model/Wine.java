@@ -8,6 +8,8 @@
 
 package info.mywinecellar.model;
 
+import info.mywinecellar.wset.WSET;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -171,6 +173,9 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "color_id", referencedColumnName = "id")
     private Color color;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
+    private Set<WSET> wset;
 
     @Override
     public int compareTo(Wine w) {

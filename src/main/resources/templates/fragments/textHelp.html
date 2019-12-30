@@ -1,0 +1,22 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<form>
+    <th:block th:fragment="text (label, help)">
+        <div>
+            <label class="control-label" th:text="#{__${label}__}">Label</label>
+            <span data-toggle="tooltip" th:title="#{__${help}__}" class="fas fa-question-circle"></span>
+        </div>
+    </th:block>
+</form>
+
+<form>
+    <th:block th:fragment="textarea (name)">
+        <textarea rows="5" autocomplete="off" type="text" class="pct100"
+                  th:field="*{__${name}__}">
+        </textarea>
+    </th:block>
+</form>
+
+</body>
+</html>

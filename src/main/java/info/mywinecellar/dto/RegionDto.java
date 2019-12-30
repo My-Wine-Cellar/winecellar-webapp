@@ -8,7 +8,11 @@
 
 package info.mywinecellar.dto;
 
+import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Region;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -39,12 +43,15 @@ public class RegionDto extends AbstractKeyDto {
     @Size(max = 50)
     private String weblink;
 
+    private List<Long> areas;
+
     private Long countryId;
 
     /**
      * Default constructor
      */
     public RegionDto() {
+        this.areas = new ArrayList<>();
     }
 
     /**
@@ -59,5 +66,10 @@ public class RegionDto extends AbstractKeyDto {
         this.description = r.getDescription();
         this.weblink = r.getWeblink();
         this.countryId = r.getCountry().getId();
+        this.areas = new ArrayList<>();
+
+        for (Area a : r.getAreas()) {
+            this.areas.add(a.getId());
+        }
     }
 }
