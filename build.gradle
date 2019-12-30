@@ -34,7 +34,8 @@ checkstyle {
     ]
     checkstyleMain.exclude '**/info/mywinecellar/util/Regex.java',
             '**/info/mywinecellar/email/EmailService.java',
-            '**/info/mywinecellar/WineWebappApplication.java'
+            '**/info/mywinecellar/WineWebappApplication.java',
+            '**/info/mywinecellar/config/SpringConfig.java'
 
     toolVersion "8.26"
 }

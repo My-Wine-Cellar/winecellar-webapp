@@ -26,28 +26,27 @@ import lombok.Data;
 public class UserDto {
 
     @NotNull
-    @NotEmpty(message = "Don't you have a name?!?!")
-    @Size(max = 30, message = "No name is that long!")
+    @NotEmpty(message = "{validation.firstName.notEmpty}")
+    @Size(max = 30, message = "{validation.name.size}")
     private String firstName;
-
+git c
     @NotNull
-    @NotEmpty(message = "What, no surname?")
-    @Size(max = 30, message = "No name is is that long!")
+    @NotEmpty(message = "{validation.lastName.notEmpty}")
+    @Size(max = 30, message = "{validation.name.size}")
     private String lastName;
 
     @NotNull
-    @NotEmpty(message = "You can't login without a Username")
-    @Size(min = 6, max = 30, message = "Let's make that Username 6 characters or more")
+    @NotEmpty(message = "{validation.username.notEmpty}")
+    @Size(min = 6, max = 30, message = "{validation.username.size}")
     private String userName;
 
     @ValidPassword
     private String password;
 
-    @NotNull
     @NotEmpty
     private String matchingPassword;
 
-    @Pattern(message = "This email does not fit our requirements", regexp = Regex.EMAIL_PATTERN)
+    @Pattern(message = "{validation.email}", regexp = Regex.EMAIL_PATTERN)
     private String email;
 
     /**
