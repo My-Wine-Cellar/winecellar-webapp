@@ -29,7 +29,7 @@ public class UserDto {
     @NotEmpty(message = "{validation.firstName.notEmpty}")
     @Size(max = 30, message = "{validation.name.size}")
     private String firstName;
-git c
+
     @NotNull
     @NotEmpty(message = "{validation.lastName.notEmpty}")
     @Size(max = 30, message = "{validation.name.size}")
