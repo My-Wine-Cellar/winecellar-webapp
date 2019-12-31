@@ -55,7 +55,6 @@ public class RegistrationController extends AbstractController {
             return Paths.SECURITY_REGISTER;
         } else if (!user.getPassword().equals(user.getMatchingPassword())) {
             result.rejectValue("password", "error.password");
-            result.rejectValue("matchingPassword", "error.password");
             return Paths.SECURITY_REGISTER;
         } else if (result.hasErrors()) {
             return Paths.SECURITY_REGISTER;

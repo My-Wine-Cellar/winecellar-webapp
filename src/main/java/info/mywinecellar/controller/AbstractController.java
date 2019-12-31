@@ -52,7 +52,10 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractController {
 
-    final Logger log = LoggerFactory.getLogger(this.getClass());
+    /**
+     * Logger
+     */
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
      * AreaService
