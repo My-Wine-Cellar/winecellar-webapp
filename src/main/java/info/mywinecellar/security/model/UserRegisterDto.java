@@ -8,7 +8,6 @@
 
 package info.mywinecellar.security.model;
 
-import info.mywinecellar.security.password.ValidPassword;
 import info.mywinecellar.util.Regex;
 
 import javax.validation.constraints.NotEmpty;
@@ -20,10 +19,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Validated
-public class UserDto {
+public class UserRegisterDto extends UserResetDto {
 
     @NotNull
     @NotEmpty(message = "{validation.firstName.notEmpty}")
@@ -34,16 +35,6 @@ public class UserDto {
     @NotEmpty(message = "{validation.lastName.notEmpty}")
     @Size(max = 30, message = "{validation.name.size}")
     private String lastName;
-
-    @NotNull
-    @NotEmpty(message = "{validation.username.notEmpty}")
-    @Size(min = 6, max = 30, message = "{validation.username.size}")
-    private String userName;
-
-    @ValidPassword
-    private String password;
-
-    private String matchingPassword;
 
     @Pattern(message = "{validation.email}", regexp = Regex.EMAIL_PATTERN)
     private String email;

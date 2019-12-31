@@ -71,6 +71,8 @@ public class Paths {
     public static final String REDIRECT_BOTTLE_LIST = "redirect:/bottle/list";
     /** REDIRECT_GRAPE */
     public static final String REDIRECT_GRAPE = "redirect:/grape/";
+    /** REDIRECT_PASSWORD_RESET_SUCCESS */
+    public static final String REDIRECT_PASSWORD_RESET_SUCCESS = "redirect:/password-reset/success";
     /** REDIRECT_REGISTER_SUCCESS */
     public static final String REDIRECT_REGISTER_SUCCESS = "redirect:/register/success";
     /** REDIRECT_REVIEW_LIST */

@@ -11,7 +11,10 @@ package info.mywinecellar.security.controller;
 import info.mywinecellar.controller.AbstractController;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
-import info.mywinecellar.security.model.UserDto;
+import info.mywinecellar.security.model.UserRegisterDto;
+import info.mywinecellar.security.model.UserResetDto;
+
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,27 +34,36 @@ public class PasswordResetController extends AbstractController {
      */
     @GetMapping
     public String userPasswordResetGet(Model model) {
-        model.addAttribute(Attributes.USER, new UserDto());
+        model.addAttribute(Attributes.USER, new UserRegisterDto());
         return Paths.SECURITY_PASSWORD_RESET;
     }
 
     /**
-     * @param user   userDto
+     * @param user   userPwResetDto
      * @param result result
      * @return View
      */
     @PostMapping
-    public String userPasswordResetPost(@ModelAttribute("user") UserDto user, BindingResult result) {
+    public String userPasswordResetPost(@ModelAttribute("user") @Valid UserResetDto user, BindingResult result) {
 
         if (!userService.usernameExists(user.getUserName())) {
             result.rejectValue("userName", "error.reset");
             return Paths.SECURITY_PASSWORD_RESET;
         } else if (!user.getPassword().equals(user.getMatchingPassword())) {
             result.rejectValue("password", "error.password");
-            result.rejectValue("matchingPassword", "error.password");
+            return Paths.SECURITY_PASSWORD_RESET;
+        } else if (result.hasErrors()) {
             return Paths.SECURITY_PASSWORD_RESET;
         }
-        userService.update(user);
+        userService.resetPassword(user);
+        return Paths.REDIRECT_PASSWORD_RESET_SUCCESS;
+    }
+
+    /**
+     * @return View
+     */
+    @GetMapping("/success")
+    public String userRegistrationSuccess() {
         return Paths.SECURITY_SUCCESS;
     }
 }

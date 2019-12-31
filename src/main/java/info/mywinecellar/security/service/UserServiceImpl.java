@@ -13,7 +13,8 @@ import info.mywinecellar.security.exception.PasswordException;
 import info.mywinecellar.security.exception.UsernameException;
 import info.mywinecellar.security.model.Authority;
 import info.mywinecellar.security.model.User;
-import info.mywinecellar.security.model.UserDto;
+import info.mywinecellar.security.model.UserRegisterDto;
+import info.mywinecellar.security.model.UserResetDto;
 import info.mywinecellar.security.model.VerificationToken;
 
 import java.util.Calendar;
@@ -111,7 +112,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void registerNewUserAccount(@Valid UserDto accountDto) throws MessagingException {
+    public void registerNewUserAccount(@Valid UserRegisterDto accountDto) throws MessagingException {
 
         if (!accountDto.getPassword().equals(accountDto.getMatchingPassword())) {
             throw new PasswordException();
@@ -182,7 +183,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(UserDto userDto) {
+    public void resetPassword(UserResetDto userDto) {
         User user = userRepository.findUserByUsername(userDto.getUserName());
         user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         userRepository.save(user);
