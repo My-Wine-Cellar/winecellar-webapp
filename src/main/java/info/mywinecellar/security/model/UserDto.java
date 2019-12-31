@@ -43,7 +43,6 @@ public class UserDto {
     @ValidPassword
     private String password;
 
-    @NotEmpty
     private String matchingPassword;
 
     @Pattern(message = "{validation.email}", regexp = Regex.EMAIL_PATTERN)

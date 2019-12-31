@@ -58,9 +58,9 @@ Access here: http://localhost:8080/
 
 | Account | Type  | Password |
 | ------- | ----- | -------- |
-| user1   | user  | password |
-| user2   | user  | password |
-| admin   | admin | password |
+| wineuser1   | user  | password |
+| wineuser2   | user  | password |
+| wineadmin   | admin | password |
 
 ## Contribution
 
