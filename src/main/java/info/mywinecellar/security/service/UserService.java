@@ -9,7 +9,8 @@
 package info.mywinecellar.security.service;
 
 import info.mywinecellar.security.model.User;
-import info.mywinecellar.security.model.UserDto;
+import info.mywinecellar.security.model.UserRegisterDto;
+import info.mywinecellar.security.model.UserResetDto;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public interface UserService extends UserDetailsService {
      * @param accountDto accountDto
      * @throws Exception exception
      */
-    void registerNewUserAccount(@Valid UserDto accountDto) throws Exception;
+    void registerNewUserAccount(@Valid UserRegisterDto accountDto) throws Exception;
 
     /**
      * @param user user
@@ -68,7 +69,7 @@ public interface UserService extends UserDetailsService {
     /**
      * @param userDto user
      */
-    void update(UserDto userDto);
+    void resetPassword(UserResetDto userDto);
 
     /**
      * @param username username

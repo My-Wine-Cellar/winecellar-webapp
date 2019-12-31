@@ -11,7 +11,7 @@ package info.mywinecellar.security.controller;
 import info.mywinecellar.controller.AbstractController;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
-import info.mywinecellar.security.model.UserDto;
+import info.mywinecellar.security.model.UserRegisterDto;
 
 import javax.validation.Valid;
 
@@ -34,7 +34,7 @@ public class RegistrationController extends AbstractController {
      */
     @GetMapping
     public String userRegistrationGet(Model model) {
-        model.addAttribute(Attributes.USER, new UserDto());
+        model.addAttribute(Attributes.USER, new UserRegisterDto());
         return Paths.SECURITY_REGISTER;
     }
 
@@ -45,7 +45,7 @@ public class RegistrationController extends AbstractController {
      * @throws Exception exception
      */
     @PostMapping
-    public String userRegistrationPost(@ModelAttribute("user") @Valid UserDto user, BindingResult result)
+    public String userRegistrationPost(@ModelAttribute("user") @Valid UserRegisterDto user, BindingResult result)
             throws Exception {
         if (userService.emailExists(user.getEmail())) {
             result.rejectValue("email", "error.email");

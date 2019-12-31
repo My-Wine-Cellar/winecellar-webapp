@@ -33,12 +33,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
@@ -69,12 +67,9 @@ public class User implements UserDetails {
     private int id;
 
     @Column(name = "password")
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
-    @NotEmpty(message = "*Please provide your password")
     private String password;
 
     @Column(name = "username")
-    @NotEmpty(message = "*Please provide your name")
     private String username;
 
     @Column(name = "first_name")
@@ -89,7 +84,7 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "last_login")
+    @Column(name = "last_login", insertable = false)
     private Date lastLogin;
 
     @Column(name = "enabled")
