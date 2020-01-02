@@ -8,8 +8,11 @@
 
 package info.mywinecellar.security;
 
-import javax.sql.DataSource;
+import info.mywinecellar.security.service.UserService;
 
+import javax.inject.Inject;
+
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,32 +20,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private DataSource dataSource;
-
-    /**
-     * WebSecurityConfig constructor
-     *
-     * @param bCryptPasswordEncoder bCryptPasswordEncoder
-     * @param dataSource            dataSource
-     */
-    public WebSecurityConfig(BCryptPasswordEncoder bCryptPasswordEncoder, DataSource dataSource) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.dataSource = dataSource;
-    }
+    @Inject BCryptPasswordEncoder passwordEncoder;
+    @Inject UserService userService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .usersByUsernameQuery("select username, password, enabled from users where username=?")
-                .authoritiesByUsernameQuery("select u.username, a.authority from users u inner join " +
-                        "user_authority ua on (u.id=ua.user_id) inner join authority a " +
-                        "on(ua.authority_id=a.id) where u.username=?")
-                .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 
     @Override

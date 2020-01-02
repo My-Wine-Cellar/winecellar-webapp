@@ -17,6 +17,7 @@ import info.mywinecellar.security.model.UserRegisterDto;
 import info.mywinecellar.security.model.UserResetDto;
 import info.mywinecellar.security.model.VerificationToken;
 
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -37,9 +38,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 @Validated
 public class UserServiceImpl implements UserService {
@@ -63,18 +61,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUserByEmail(email);
     }
 
-    /**
-     * @param username username
-     * @return UserDetails
-     * @deprecated since forever
-     */
-    @Deprecated
+    @Transactional
     @Override
-    public UserDetails loadUserByUsername(String username) {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username and password");
         }
+        user.setLastLogin(new Date(System.currentTimeMillis()));
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(), mapRolesToAuthorities(user.getAuthorities()));
     }
