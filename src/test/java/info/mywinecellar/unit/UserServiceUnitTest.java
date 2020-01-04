@@ -74,21 +74,6 @@ class UserServiceUnitTest {
     }
 
     @Test
-    void registerNewUserWithNameLongerThan30CharsAndGetAnException() throws Exception {
-        UserRegisterDto userRegisterDto = new UserRegisterDto();
-        userRegisterDto.setFirstName("WinecellarWineCellarWineCellarWine");
-        userRegisterDto.setLastName("Cellar");
-        userRegisterDto.setPassword("123456ABab$$");
-        userRegisterDto.setMatchingPassword("123456ABab$$");
-        userRegisterDto.setEmail("mywinecellarinfo@gmail.com");
-        userRegisterDto.setUserName("mywinecellaruser");
-
-        Assertions.assertThrows(ConstraintViolationException.class, () -> {
-            userServiceImpl.registerNewUserAccount(userRegisterDto);
-        });
-    }
-
-    @Test
     void registerNewUserWithEmptyNameAndGetAnException() throws Exception {
         UserRegisterDto userRegisterDto = new UserRegisterDto();
         userRegisterDto.setFirstName("");
@@ -119,21 +104,6 @@ class UserServiceUnitTest {
     }
 
     @Test
-    void registerNewUserWithLastNameLongerThan30CharsAndGetAnException() throws Exception {
-        UserRegisterDto userRegisterDto = new UserRegisterDto();
-        userRegisterDto.setFirstName("Wine");
-        userRegisterDto.setLastName("WinecellarWineCellarWineCellarWine");
-        userRegisterDto.setPassword("123456ABab$$");
-        userRegisterDto.setMatchingPassword("123456ABab$$");
-        userRegisterDto.setEmail("mywinecellarinfo@gmail.com");
-        userRegisterDto.setUserName("mywinecellaruser");
-
-        Assertions.assertThrows(ConstraintViolationException.class, () -> {
-            userServiceImpl.registerNewUserAccount(userRegisterDto);
-        });
-    }
-
-    @Test
     void registerNewUserWithEmptyLastNameAndGetAnException() throws Exception {
         UserRegisterDto userRegisterDto = new UserRegisterDto();
         userRegisterDto.setFirstName("Wine");
@@ -150,57 +120,12 @@ class UserServiceUnitTest {
 
 
     @Test
-    void registerNewUserWithUserNameLesserThan6CharsAndGetAnException() throws Exception {
-        UserRegisterDto userRegisterDto = new UserRegisterDto();
-        userRegisterDto.setFirstName("Wine");
-        userRegisterDto.setLastName("Cellar");
-        userRegisterDto.setPassword("123456ABab$$");
-        userRegisterDto.setMatchingPassword("123456ABab$$");
-        userRegisterDto.setEmail("mywinecellarinfo@gmail.com");
-        userRegisterDto.setUserName("mywin");
-
-        Assertions.assertThrows(ConstraintViolationException.class, () -> {
-            userServiceImpl.registerNewUserAccount(userRegisterDto);
-        });
-    }
-
-    @Test
-    void registerNewUserWithUserNameLongerThan30CharsAndGetAnException() throws Exception {
-        UserRegisterDto userRegisterDto = new UserRegisterDto();
-        userRegisterDto.setFirstName("Wine");
-        userRegisterDto.setLastName("Cellar");
-        userRegisterDto.setPassword("123456ABab$$");
-        userRegisterDto.setMatchingPassword("123456ABab$$");
-        userRegisterDto.setEmail("mywinecellarinfo@gmail.com");
-        userRegisterDto.setUserName("WinecellarWineCellarWineCellarWine");
-
-        Assertions.assertThrows(ConstraintViolationException.class, () -> {
-            userServiceImpl.registerNewUserAccount(userRegisterDto);
-        });
-    }
-
-    @Test
     void registerNewUserWithPasswordLesserThan8CharsAndGetAnException() throws Exception {
         UserRegisterDto userRegisterDto = new UserRegisterDto();
         userRegisterDto.setFirstName("Wine");
         userRegisterDto.setLastName("Cellar");
         userRegisterDto.setPassword("16ABa$");
         userRegisterDto.setMatchingPassword("16ABa$");
-        userRegisterDto.setEmail("mywinecellarinfo@gmail.com");
-        userRegisterDto.setUserName("winecellar");
-
-        Assertions.assertThrows(ConstraintViolationException.class, () -> {
-            userServiceImpl.registerNewUserAccount(userRegisterDto);
-        });
-    }
-
-    @Test
-    void registerNewUserWithPasswordLongerThan30CharsAndGetAnException() throws Exception {
-        UserRegisterDto userRegisterDto = new UserRegisterDto();
-        userRegisterDto.setFirstName("Wine");
-        userRegisterDto.setLastName("Cellar");
-        userRegisterDto.setPassword("16ABa$16ABa$16ABa$16ABa$16ABa$16ABa$");
-        userRegisterDto.setMatchingPassword("16ABa$16ABa$16ABa$16ABa$16ABa$16ABa$");
         userRegisterDto.setEmail("mywinecellarinfo@gmail.com");
         userRegisterDto.setUserName("winecellar");
 

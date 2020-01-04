@@ -21,7 +21,7 @@ public class UserResetDto {
 
     @NotNull
     @NotEmpty(message = "{validation.username.notEmpty}")
-    @Size(min = 6, max = 30, message = "{validation.username.size}")
+    @Size(max = 255, message = "{validation.username.size}")
     private String userName;
 
     @ValidPassword
