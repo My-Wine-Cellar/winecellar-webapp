@@ -28,12 +28,15 @@ public class UserRegisterDto extends UserResetDto {
 
     @NotNull
     @NotEmpty(message = "{validation.firstName.notEmpty}")
-    @Size(max = 30, message = "{validation.name.size}")
+    @Size(max = 255, message = "{validation.name.size}")
     private String firstName;
+
+    @Size(max = 255, message = "{validation.name.size}")
+    private String middleName;
 
     @NotNull
     @NotEmpty(message = "{validation.lastName.notEmpty}")
-    @Size(max = 30, message = "{validation.name.size}")
+    @Size(max = 255, message = "{validation.name.size}")
     private String lastName;
 
     @Pattern(message = "{validation.email}", regexp = Regex.EMAIL_PATTERN)
@@ -44,6 +47,13 @@ public class UserRegisterDto extends UserResetDto {
      */
     public String getFirstName() {
         return StringUtils.capitalize(firstName);
+    }
+
+    /**
+     * @return middleName
+     */
+    public String getMiddleName() {
+        return StringUtils.isAllEmpty(middleName) ? "" : middleName;
     }
 
     /**

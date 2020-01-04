@@ -122,6 +122,7 @@ public class UserServiceImpl implements UserService {
 
         final User user = new User();
         user.setFirstName(accountDto.getFirstName());
+        user.setMiddleName(accountDto.getMiddleName());
         user.setLastName(accountDto.getLastName());
         user.setPassword(bCryptPasswordEncoder.encode(accountDto.getPassword()));
         user.setEmail(accountDto.getEmail());
