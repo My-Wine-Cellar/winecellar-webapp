@@ -70,4 +70,5 @@ public class GrapeServiceImpl implements GrapeService {
     public Grape findByLowerCaseName(String lcName) {
         return grapeRepository.findByLowerCaseName(lcName);
     }
+
 }

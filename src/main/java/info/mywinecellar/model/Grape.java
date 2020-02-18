@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -67,9 +68,11 @@ public class Grape extends BaseEntity implements Comparable<Grape> {
     @Column(name = "weblink")
     private String weblink;
 
+    @JsonIgnore
     @OneToMany
     private List<Grape> alternativeNames;
 
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "grape_area",
             joinColumns =
@@ -79,6 +82,7 @@ public class Grape extends BaseEntity implements Comparable<Grape> {
     )
     private List<Area> areas;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "grape")
     private List<GrapeComponent> grapeComponents;
 
