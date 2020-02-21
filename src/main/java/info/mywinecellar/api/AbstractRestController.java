@@ -13,6 +13,7 @@ import info.mywinecellar.service.CountryService;
 import info.mywinecellar.service.GrapeService;
 import info.mywinecellar.service.ProducerService;
 import info.mywinecellar.service.RegionService;
+import info.mywinecellar.service.WineService;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ abstract class AbstractRestController {
     @Inject RegionService regionService;
     @Inject AreaService areaService;
     @Inject ProducerService producerService;
+    @Inject WineService wineService;
 
     void checkObjectNull(Object o) {
         if (o == null) {
