@@ -8,6 +8,7 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.api.service.ProducerRestService;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.service.ProducerService;
 
@@ -46,6 +47,9 @@ class ProducerRestControllerTest {
 
     @Mock
     ProducerService service;
+
+    @Mock
+    ProducerRestService restService;
 
     Producer opusOne;
 

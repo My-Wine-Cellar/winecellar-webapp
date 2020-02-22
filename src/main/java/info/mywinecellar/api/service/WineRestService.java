@@ -108,14 +108,36 @@ public class WineRestService {
         } else {
             update.setClosure(request.getClosure());
         }
-
-        update.setDescription(request.getDescription());
-        update.setWeblink(request.getWeblink());
-        update.setAlcohol(request.getAlcohol());
-        update.setPH(request.getPH());
-        update.setAcid(request.getAcid());
-        update.setBottleAging(request.getBottleAging());
-
+        if (request.getDescription() == null) {
+            update.setDescription(update.getDescription());
+        } else {
+            update.setDescription(request.getDescription());
+        }
+        if (request.getWeblink() == null) {
+            update.setWeblink(update.getWeblink());
+        } else {
+            update.setWeblink(request.getWeblink());
+        }
+        if (request.getAlcohol() == null) {
+            update.setAlcohol(update.getAlcohol());
+        } else {
+            update.setAlcohol(request.getAlcohol());
+        }
+        if (request.getPH() == null) {
+            update.setPH(update.getPH());
+        } else {
+            update.setPH(request.getPH());
+        }
+        if (request.getAcid() == null) {
+            update.setAcid(update.getAcid());
+        } else {
+            update.setAcid(request.getAcid());
+        }
+        if (request.getBottleAging() == null) {
+            update.setBottleAging(update.getBottleAging());
+        } else {
+            update.setBottleAging(request.getBottleAging());
+        }
         wineService.save(update);
         log.info("Updated {} ", update.toString());
     }
