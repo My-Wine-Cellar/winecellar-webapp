@@ -8,34 +8,36 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.api.service.RegionRestService;
 import info.mywinecellar.model.Region;
 
-import org.springframework.http.HttpStatus;
+import javax.inject.Inject;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/region")
 public class RegionRestController extends AbstractRestController {
 
+    @Inject RegionRestService restService;
+
     /**
-     * PUT mapping
+     * PUT mapping to update a Region
      *
-     * @param region   region
-     * @param regionId regionId
+     * @param request  Region request
+     * @param regionId Long regionId
+     * @return ResponseEntity.ACCEPTED
      */
-    @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{regionId}/edit")
-    public void regionEditPut(@RequestBody Region region, @PathVariable Long regionId) {
-        Region updateRegion = regionService.findById(regionId);
-        checkObjectNull(updateRegion);
-        updateRegion.setDescription(region.getDescription());
-        updateRegion.setWeblink(region.getWeblink());
-        log.info("==== Updating region -> " + updateRegion.getName() + " ====");
-        regionService.save(updateRegion);
+    public ResponseEntity<?> regionEditPut(@RequestBody Region request, @PathVariable Long regionId) {
+        Region update = regionService.findById(regionId);
+        checkObjectNull(update);
+        restService.updateRegion(update, request);
+        return ResponseEntity.accepted().body("Updated " + update.toString());
     }
 }

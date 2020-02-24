@@ -31,14 +31,14 @@ public class DataRestController extends AbstractRestController {
     /**
      * GET mapping
      *
-     * @return Countries that have wine producing regions
+     * @return List of Countries that have wine producing regions
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<Country> dataApiRootGet() {
         List<Country> countries = countryService.findWithRegions();
         checkObjectListNull(countries);
-        log.info("==== Countries that have a wine producing region: " + countries);
+        log.info("==== Countries that have a wine producing region {} ", countries);
         return countries;
     }
 
@@ -49,7 +49,7 @@ public class DataRestController extends AbstractRestController {
      * Country's like 'United States' and 'New Zealand' will be separated by an underscore(_)
      * ie united_states and new_zealand
      *
-     * @param country country lowercase name
+     * @param country String country lowercase name
      * @return Country
      */
     @ResponseStatus(HttpStatus.OK)
@@ -62,8 +62,8 @@ public class DataRestController extends AbstractRestController {
      * GET Mapping
      * A region's name will be interpreted as lowercase
      *
-     * @param country country
-     * @param region  region
+     * @param country String country
+     * @param region  String region
      * @return Region
      */
     @ResponseStatus(HttpStatus.OK)
@@ -77,9 +77,9 @@ public class DataRestController extends AbstractRestController {
      * Area's name will be interpreted as lowercase
      * Need to account for things like ava, doc, aoc
      *
-     * @param country country
-     * @param region  region
-     * @param area    area
+     * @param country String country
+     * @param region  String region
+     * @param area    String area
      * @return Area
      */
     @ResponseStatus(HttpStatus.OK)
@@ -92,10 +92,10 @@ public class DataRestController extends AbstractRestController {
      * GET mapping
      * Gives us a bookmarkable url for a producer's name
      *
-     * @param country  country
-     * @param region   region
-     * @param area     area
-     * @param producer producer
+     * @param country  String country
+     * @param region   String region
+     * @param area     String area
+     * @param producer String producer
      * @return Producer
      */
     @ResponseStatus(HttpStatus.OK)
@@ -107,14 +107,15 @@ public class DataRestController extends AbstractRestController {
 
     /**
      * GET Mapping
+     * Gives us a bookmarkable url for a wine
      *
-     * @param country  country
-     * @param region   region
-     * @param area     area
-     * @param producer producer
-     * @param wine     wine
-     * @param vintage  vintage
-     * @param size     size
+     * @param country  String country
+     * @param region   String region
+     * @param area     String area
+     * @param producer String producer
+     * @param wine     String wine
+     * @param vintage  Integer vintage
+     * @param size     Float size
      * @return Wine
      */
     @ResponseStatus(HttpStatus.OK)
@@ -128,7 +129,7 @@ public class DataRestController extends AbstractRestController {
     private Country setupCountry(String countryName) {
         Country country = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(countryName));
         checkObjectNull(country);
-        log.info("==== Country -> " + countryName + " ====");
+        log.info("==== Country {} ", countryName);
         return country;
     }
 
@@ -136,7 +137,7 @@ public class DataRestController extends AbstractRestController {
         Country country = setupCountry(countryName);
         Region region = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(regionName), country.getId());
         checkObjectNull(region);
-        log.info("==== Region -> " + regionName + " ====");
+        log.info("==== Region {} ", regionName);
         return region;
     }
 
@@ -150,7 +151,7 @@ public class DataRestController extends AbstractRestController {
             }
         }
         checkObjectNull(area);
-        log.info("==== Area -> " + areaName + " ====");
+        log.info("==== Area {} ", areaName);
         return area;
     }
 
@@ -163,7 +164,7 @@ public class DataRestController extends AbstractRestController {
                 break;
             }
         }
-        log.info("==== Producer -> " + producerName + " ====");
+        log.info("==== Producer {} ", producerName);
         return producer;
     }
 
@@ -178,7 +179,7 @@ public class DataRestController extends AbstractRestController {
                 break;
             }
         }
-        log.info("==== Wine -> " + wineName + " ====");
+        log.info("==== Wine {} ", wineName);
         return wine;
     }
 
