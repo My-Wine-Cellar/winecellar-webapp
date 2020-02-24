@@ -8,12 +8,16 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.api.service.GrapeRestService;
 import info.mywinecellar.model.Grape;
 import info.mywinecellar.ui.AbstractKeyUI;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/grape")
 public class GrapeRestController extends AbstractRestController {
 
+    @Inject GrapeRestService restService;
+
     /**
      * GET mapping
      *
@@ -36,7 +42,7 @@ public class GrapeRestController extends AbstractRestController {
     public List<Grape> grapeRedGet() {
         List<Grape> redGrapes = grapeService.getRedGrapes();
         checkObjectListNull(redGrapes);
-        log.info("==== Show me red grapes ==== ");
+        log.info("==== Red grapes ==== ");
         return redGrapes;
     }
 
@@ -50,7 +56,7 @@ public class GrapeRestController extends AbstractRestController {
     public List<Grape> grapeWhiteGet() {
         List<Grape> whiteGrapes = grapeService.getWhiteGrapes();
         checkObjectListNull(whiteGrapes);
-        log.info("==== Show me white grapes ====");
+        log.info("==== White grapes ====");
         return whiteGrapes;
     }
 
@@ -64,39 +70,37 @@ public class GrapeRestController extends AbstractRestController {
     public List<Grape> grapeListGet() {
         List<Grape> allGrapes = grapeService.findAll();
         checkObjectListNull(allGrapes);
-        log.info("==== Show me all grapes ====");
+        log.info("==== All grapes ====");
         return allGrapes;
     }
 
     /**
      * GET mapping
      *
-     * @param grape grape
-     * @return grape
+     * @param grape String grape
+     * @return grape Grape
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{grape}")
     public Grape grapeDetailsGet(@PathVariable String grape) {
         Grape grapeDetails = grapeService.findByLowerCaseName(AbstractKeyUI.fromKey(grape));
         checkObjectNull(grapeDetails);
-        log.info("==== Grape -> " + grapeDetails.getName() + " ====");
+        log.info("==== Grape {} ", grapeDetails.toString());
         return grapeDetails;
     }
 
     /**
-     * PUT mapping
+     * PUT mapping to update a Grape
      *
-     * @param grape   grape
-     * @param grapeId grapeId
+     * @param request Grape request
+     * @param grapeId Long grapeId
+     * @return ResponseEntity.ACCEPTED
      */
-    @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{grapeId}/edit")
-    public void grapeEditPut(@RequestBody Grape grape, @PathVariable Long grapeId) {
-        Grape updateGrape = grapeService.findById(grapeId);
-        checkObjectNull(updateGrape);
-        updateGrape.setDescription(grape.getDescription());
-        updateGrape.setWeblink(grape.getWeblink());
-        log.info("==== Updated grape -> " + updateGrape.getName() + " ====");
-        grapeService.save(updateGrape);
+    public ResponseEntity<?> grapeEditPut(@RequestBody Grape request, @PathVariable Long grapeId) {
+        Grape update = grapeService.findById(grapeId);
+        checkObjectNull(update);
+        restService.updateGrape(update, request);
+        return ResponseEntity.accepted().body("Updated " + update.toString());
     }
 }
