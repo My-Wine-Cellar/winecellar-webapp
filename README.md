@@ -36,7 +36,7 @@ installed before proceeding
 
 *Docker*
 ```
-$ docker run --name winecellar -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
+$ docker run --name winecellar-postgres -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
 ```
 
 *podman*
