@@ -14,8 +14,10 @@ import info.mywinecellar.model.Producer;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,14 +49,15 @@ public class AreaRestController extends AbstractRestController {
      *
      * @param producer Producer producer
      * @param areaId   Long areaId
-     * @return ResponseEntity.ACCEPTED
+     * @return ResponseEntity.CREATED
      */
-    @PutMapping("/addProducer")
-    public ResponseEntity<?> areaAddProducerPut(@RequestBody Producer producer, @PathVariable Long areaId) {
+    @PostMapping("/addProducer")
+    public ResponseEntity<?> areaAddProducerPost(@RequestBody Producer producer, @PathVariable Long areaId) {
         Area area = areaService.findById(areaId);
         area.getProducers().add(producer);
         producerService.save(producer);
-        return ResponseEntity.accepted().body("Added " + producer.toString() + " to " + area.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body("Added " + producer.toString() +
+                " to " + area.toString());
     }
 
     // TODO add endpoint for addGrape

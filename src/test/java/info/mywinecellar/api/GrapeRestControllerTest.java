@@ -92,7 +92,7 @@ class GrapeRestControllerTest {
 
     @Test
     void grapeListGet() throws Exception {
-        
+
         MockHttpServletResponse response = mockMvc.perform(get("/api/grape/list")
                 .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
