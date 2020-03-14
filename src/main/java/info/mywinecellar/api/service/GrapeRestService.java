@@ -41,6 +41,6 @@ public class GrapeRestService {
             update.setWeblink(request.getWeblink());
         }
         grapeService.save(update);
-        log.info("Updated {} ", update.toString());
+        log.info("==== Updated {} ====", update.toString());
     }
 }

@@ -67,7 +67,7 @@ public class ProducerRestService {
             update.setFax(request.getFax());
         }
         producerService.save(update);
-        log.info("Updated {} ", update.toString());
+        log.info("==== Updated {} ====", update.toString());
     }
 
     /**
@@ -83,7 +83,7 @@ public class ProducerRestService {
         }
         save.setImage(file.getBytes());
         producerService.save(save);
-        log.info("Image added to {} ", save.toString());
+        log.info("==== Image added to {} ====", save.toString());
     }
 
 }

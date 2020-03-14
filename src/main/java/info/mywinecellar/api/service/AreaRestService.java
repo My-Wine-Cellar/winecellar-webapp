@@ -42,6 +42,6 @@ public class AreaRestService {
             update.setWeblink(request.getWeblink());
         }
         areaService.save(update);
-        log.info("Updated {} ", update.toString());
+        log.info("==== Updated {} ====", update.toString());
     }
 }

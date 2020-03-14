@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/producer")
+@RequestMapping("/api/producer/{producerId}")
 public class ProducerRestController extends AbstractRestController {
 
     @Inject ProducerRestService restService;
@@ -38,7 +38,7 @@ public class ProducerRestController extends AbstractRestController {
      * @param producerId Long producerId
      * @return ResponseEntity.Accepted
      */
-    @PutMapping("/{producerId}/edit")
+    @PutMapping("/edit")
     public ResponseEntity<?> producerEditPut(@PathVariable Long producerId, @RequestBody Producer request) {
         Producer update = producerService.findById(producerId);
         checkObjectNull(update);
@@ -54,7 +54,7 @@ public class ProducerRestController extends AbstractRestController {
      * @return ResponseEntity.Accepted
      * @throws IOException exception
      */
-    @PutMapping(value = "/{producerId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> producerImagePut(@PathVariable Long producerId, @RequestPart MultipartFile file)
             throws IOException {
         Producer save = producerService.findById(producerId);
