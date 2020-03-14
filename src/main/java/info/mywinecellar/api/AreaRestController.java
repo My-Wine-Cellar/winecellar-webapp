@@ -10,6 +10,7 @@ package info.mywinecellar.api;
 
 import info.mywinecellar.api.service.AreaRestService;
 import info.mywinecellar.model.Area;
+import info.mywinecellar.model.Producer;
 
 import javax.inject.Inject;
 
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/area")
+@RequestMapping("/api/area/{areaId}")
 public class AreaRestController extends AbstractRestController {
 
     @Inject AreaRestService restService;
@@ -33,11 +34,28 @@ public class AreaRestController extends AbstractRestController {
      * @param areaId Long areaId
      * @return ResponseEntity.ACCEPTED
      */
-    @PutMapping("/{areaId}/edit")
+    @PutMapping("/edit")
     public ResponseEntity<?> areaEditPut(@RequestBody Area area, @PathVariable Long areaId) {
         Area updateArea = areaService.findById(areaId);
         checkObjectNull(updateArea);
         restService.updateArea(updateArea, area);
         return ResponseEntity.accepted().body("Updated " + updateArea.toString());
     }
+
+    /**
+     * PUT mapping to add a Producer to Area
+     *
+     * @param producer Producer producer
+     * @param areaId   Long areaId
+     * @return ResponseEntity.ACCEPTED
+     */
+    @PutMapping("/addProducer")
+    public ResponseEntity<?> areaAddProducerPut(@RequestBody Producer producer, @PathVariable Long areaId) {
+        Area area = areaService.findById(areaId);
+        area.getProducers().add(producer);
+        producerService.save(producer);
+        return ResponseEntity.accepted().body("Added " + producer.toString() + " to " + area.toString());
+    }
+
+    // TODO add endpoint for addGrape
 }

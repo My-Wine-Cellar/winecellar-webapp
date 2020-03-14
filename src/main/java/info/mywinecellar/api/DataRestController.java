@@ -38,7 +38,7 @@ public class DataRestController extends AbstractRestController {
     public List<Country> dataApiRootGet() {
         List<Country> countries = countryService.findWithRegions();
         checkObjectListNull(countries);
-        log.info("==== Countries that have a wine producing region {} ", countries);
+        log.info("==== Countries that have a wine producing region {} ====", countries);
         return countries;
     }
 
@@ -129,7 +129,7 @@ public class DataRestController extends AbstractRestController {
     private Country setupCountry(String countryName) {
         Country country = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(countryName));
         checkObjectNull(country);
-        log.info("==== Country {} ", countryName);
+        log.info("==== Country {} ====", countryName);
         return country;
     }
 
@@ -137,7 +137,7 @@ public class DataRestController extends AbstractRestController {
         Country country = setupCountry(countryName);
         Region region = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(regionName), country.getId());
         checkObjectNull(region);
-        log.info("==== Region {} ", regionName);
+        log.info("==== Region {} ====", regionName);
         return region;
     }
 
@@ -151,7 +151,7 @@ public class DataRestController extends AbstractRestController {
             }
         }
         checkObjectNull(area);
-        log.info("==== Area {} ", areaName);
+        log.info("==== Area {} ====", areaName);
         return area;
     }
 
@@ -164,7 +164,7 @@ public class DataRestController extends AbstractRestController {
                 break;
             }
         }
-        log.info("==== Producer {} ", producerName);
+        log.info("==== Producer {} ====", producerName);
         return producer;
     }
 
@@ -179,7 +179,7 @@ public class DataRestController extends AbstractRestController {
                 break;
             }
         }
-        log.info("==== Wine {} ", wineName);
+        log.info("==== Wine {} ====", wineName);
         return wine;
     }
 

@@ -12,7 +12,9 @@ import info.mywinecellar.api.service.GrapeRestService;
 import info.mywinecellar.model.Grape;
 import info.mywinecellar.ui.AbstractKeyUI;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -63,15 +65,16 @@ public class GrapeRestController extends AbstractRestController {
     /**
      * GET mapping
      *
-     * @return all grapes
+     * @return map of grapes by color
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/list")
-    public List<Grape> grapeListGet() {
-        List<Grape> allGrapes = grapeService.findAll();
-        checkObjectListNull(allGrapes);
-        log.info("==== All grapes ====");
-        return allGrapes;
+    public Map<String, List<Grape>> grapeListGet() {
+        Map<String, List<Grape>> grapeMap = new HashMap<>();
+        grapeMap.put("red", grapeService.getRedGrapes());
+        grapeMap.put("white", grapeService.getWhiteGrapes());
+        log.info("==== All grapes by color ====");
+        return grapeMap;
     }
 
     /**

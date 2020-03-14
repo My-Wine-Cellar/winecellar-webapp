@@ -54,7 +54,7 @@ public class WineRestController extends AbstractRestController {
         checkObjectNull(saveWine);
         wineService.save(saveWine);
 
-        log.info("Added new {} ", saveWine.toString());
+        log.info("==== Added new {} ====", saveWine.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body("Created new " + wine.toString());
     }
 

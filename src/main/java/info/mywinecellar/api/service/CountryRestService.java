@@ -41,6 +41,6 @@ public class CountryRestService {
             update.setWeblink(request.getWeblink());
         }
         countryService.save(update);
-        log.info("Updated {} ", update.toString());
+        log.info("==== Updated {} ====", update.toString());
     }
 }

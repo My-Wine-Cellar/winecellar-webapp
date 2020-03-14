@@ -41,6 +41,6 @@ public class RegionRestService {
             update.setWeblink(request.getWeblink());
         }
         regionService.save(update);
-        log.info("Updated {} ", update.toString());
+        log.info("==== Updated {} ====", update.toString());
     }
 }

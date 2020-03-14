@@ -139,7 +139,7 @@ public class WineRestService {
             update.setBottleAging(request.getBottleAging());
         }
         wineService.save(update);
-        log.info("Updated {} ", update.toString());
+        log.info("==== Updated {} ====", update.toString());
     }
 
     /**
@@ -155,7 +155,7 @@ public class WineRestService {
         }
         saveWine.setImage(file.getBytes());
         wineService.save(saveWine);
-        log.info("Imaged added to {} ", saveWine.toString());
+        log.info("==== Imaged added to {} ====", saveWine.toString());
     }
 
 }
