@@ -13,7 +13,6 @@ import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.ui.AbstractKeyUI;
 import info.mywinecellar.ui.GrapeUI;
-import info.mywinecellar.ui.GrapeUIFactory;
 
 import java.security.Principal;
 
@@ -55,10 +54,10 @@ public class GrapeController extends AbstractController {
      */
     @GetMapping("/list")
     public String grapeListGet(Model model) {
-        model.addAttribute(Attributes.RED_GRAPES, GrapeUIFactory.instance()
-                .createList(grapeService.getRedGrapes()));
-        model.addAttribute(Attributes.WHITE_GRAPES, GrapeUIFactory.instance()
-                .createList(grapeService.getWhiteGrapes()));
+        model.addAttribute(Attributes.RED_GRAPES, grapeConverter
+                .toUIs(grapeService.getRedGrapes()));
+        model.addAttribute(Attributes.WHITE_GRAPES, grapeConverter
+                .toUIs(grapeService.getWhiteGrapes()));
         return Paths.GRAPE_LIST;
     }
 
@@ -74,7 +73,7 @@ public class GrapeController extends AbstractController {
         if (g == null) {
             return Paths.REDIRECT_ROOT;
         }
-        model.addAttribute(Attributes.GRAPE, GrapeUIFactory.instance().create(g));
+        model.addAttribute(Attributes.GRAPE, grapeConverter.toUI(g));
         return Paths.GRAPE_DETAILS;
     }
 
@@ -121,13 +120,14 @@ public class GrapeController extends AbstractController {
             return Paths.GRAPE_EDIT;
         } else {
             if (action.equals("save")) {
-                grape.setId(grapeId);
-                Grape savedGrape = grapeService.save(grape);
-                GrapeUI ui = GrapeUIFactory.instance().create(savedGrape);
+                Grape g = grapeService.findById(grapeId);
+                g = grapeConverter.toEntity(g, grapeConverter.toUI(grape));
+                grapeService.save(g);
+                GrapeUI ui = grapeConverter.toUI(g);
                 return Paths.REDIRECT_GRAPE + ui.getKey();
             } else {
                 Grape g = grapeService.findByLowerCaseName(AbstractKeyUI.fromKey(grape.getName()));
-                GrapeUI grapeUI = GrapeUIFactory.instance().create(g);
+                GrapeUI grapeUI = grapeConverter.toUI(g);
                 return Paths.REDIRECT_GRAPE + grapeUI.getKey();
             }
         }

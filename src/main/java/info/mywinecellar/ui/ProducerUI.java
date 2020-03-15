@@ -9,8 +9,7 @@
 package info.mywinecellar.ui;
 
 import info.mywinecellar.model.Producer;
-
-import java.util.Base64;
+import info.mywinecellar.util.Image;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,11 +35,17 @@ public class ProducerUI extends AbstractKeyUI {
     private String image;
 
     /**
+     * Default constructor
+     */
+    public ProducerUI() {
+    }
+
+    /**
      * Constructor
      *
      * @param p The producer
      */
-    ProducerUI(Producer p) {
+    public ProducerUI(Producer p) {
         super(toKey(p.getName()));
         this.id = p.getId();
         this.name = p.getName();
@@ -49,14 +54,6 @@ public class ProducerUI extends AbstractKeyUI {
         this.fax = p.getFax();
         this.email = p.getEmail();
         this.website = p.getWebsite();
-        this.image = encodeImage(p);
-    }
-
-    private String encodeImage(Producer p) {
-        String encodeToString = null;
-        if (p.getImage() != null) {
-            encodeToString = Base64.getEncoder().encodeToString(p.getImage());
-        }
-        return encodeToString;
+        this.image = Image.encode(p.getImage());
     }
 }

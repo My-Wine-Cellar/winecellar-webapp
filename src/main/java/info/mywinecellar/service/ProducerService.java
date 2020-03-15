@@ -10,10 +10,34 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Producer;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
  * Producer service
  */
-public interface ProducerService extends CrudService<Producer, Long> {
+@Component
+public class ProducerService {
+
+    @Inject
+    private EntityManager em;
+
+    /**
+     * Find by id
+     * @param id The identifier
+     * @return The producer
+     */
+    public Producer findById(Long id) {
+        try {
+            return em.find(Producer.class, id);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     /**
      * Find by name
@@ -21,14 +45,28 @@ public interface ProducerService extends CrudService<Producer, Long> {
      * @param name The name
      * @return The producer
      */
-    Producer findByName(String name);
+    public Producer findByName(String name) {
+        try {
+            Query q = em.createQuery("SELECT p FROM Producer p WHERE p.name = :name");
+            q.setParameter("name", name);
+            return (Producer) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     /**
-     * Update Producer
-     *
-     * @param model producer
-     * @param save  producer
+     * Save
+     * @param p The producer
      */
-    void update(Producer model, Producer save);
-
+    @Transactional
+    public void save(Producer p) {
+        try {
+            em.persist(p);
+        } catch (Exception e) {
+            // Log
+            System.out.println(e.getMessage());
+            e.printStackTrace(System.out);
+        }
+    }
 }

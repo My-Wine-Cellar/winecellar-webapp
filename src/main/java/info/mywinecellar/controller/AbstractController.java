@@ -8,6 +8,9 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converters.AreaConverter;
+import info.mywinecellar.converters.GrapeConverter;
+import info.mywinecellar.converters.ProducerConverter;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Country;
 import info.mywinecellar.model.Producer;
@@ -35,11 +38,9 @@ import info.mywinecellar.service.TypeService;
 import info.mywinecellar.service.WineService;
 import info.mywinecellar.service.WishlistService;
 import info.mywinecellar.ui.AreaUI;
-import info.mywinecellar.ui.AreaUIFactory;
 import info.mywinecellar.ui.CountryUI;
 import info.mywinecellar.ui.CountryUIFactory;
 import info.mywinecellar.ui.ProducerUI;
-import info.mywinecellar.ui.ProducerUIFactory;
 import info.mywinecellar.ui.RegionUI;
 import info.mywinecellar.ui.RegionUIFactory;
 
@@ -58,109 +59,148 @@ public abstract class AbstractController {
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
+     * AreaConverter
+     */
+    @Inject
+    protected AreaConverter areaConverter;
+
+    /**
      * AreaService
      */
-    @Inject protected AreaService areaService;
+    @Inject
+    protected AreaService areaService;
 
     /**
      * CountryService
      */
-    @Inject protected CountryService countryService;
+    @Inject
+    protected CountryService countryService;
+
+    /**
+     * ProducerConverter
+     */
+    @Inject
+    protected ProducerConverter producerConverter;
 
     /**
      * ProducerService
      */
-    @Inject protected ProducerService producerService;
+    @Inject
+    protected ProducerService producerService;
 
     /**
      * RegionService
      */
-    @Inject protected RegionService regionService;
+    @Inject
+    protected RegionService regionService;
 
     /**
      * UserService
      */
-    @Inject protected UserService userService;
+    @Inject
+    protected UserService userService;
+
+    /**
+     * GrapeConverter
+     */
+    @Inject
+    protected GrapeConverter grapeConverter;
 
     /**
      * GrapeService
      */
-    @Inject protected GrapeService grapeService;
+    @Inject
+    protected GrapeService grapeService;
 
     /**
      * BottleService
      */
-    @Inject protected BottleService bottleService;
+    @Inject
+    protected BottleService bottleService;
 
     /**
      * WineService
      */
-    @Inject protected WineService wineService;
+    @Inject
+    protected WineService wineService;
 
     /**
      * TastedService
      */
-    @Inject protected TastedService tastedService;
+    @Inject
+    protected TastedService tastedService;
 
     /**
      * ReviewService
      */
-    @Inject protected ReviewService reviewService;
+    @Inject
+    protected ReviewService reviewService;
 
     /**
      * BarrelService
      */
-    @Inject protected BarrelService barrelService;
+    @Inject
+    protected BarrelService barrelService;
 
     /**
      * TastingNotesService
      */
-    @Inject protected TastingNotesService tastingNotesService;
+    @Inject
+    protected TastingNotesService tastingNotesService;
 
     /**
      * WishlistService
      */
-    @Inject protected WishlistService wishlistService;
+    @Inject
+    protected WishlistService wishlistService;
 
     /**
      * GrapeComponentService
      */
-    @Inject protected GrapeComponentService grapeComponentService;
+    @Inject
+    protected GrapeComponentService grapeComponentService;
 
     /**
      * BarrelComponentService
      */
-    @Inject protected BarrelComponentService barrelComponentService;
+    @Inject
+    protected BarrelComponentService barrelComponentService;
 
     /**
      * ClosureService
      */
-    @Inject protected ClosureService closureService;
+    @Inject
+    protected ClosureService closureService;
 
     /**
      * ShapeService
      */
-    @Inject protected ShapeService shapeService;
+    @Inject
+    protected ShapeService shapeService;
 
     /**
      * MacerationService
      */
-    @Inject protected MacerationService macerationService;
+    @Inject
+    protected MacerationService macerationService;
 
     /**
      * FermentationService
      */
-    @Inject protected FermentationService fermentationService;
+    @Inject
+    protected FermentationService fermentationService;
 
     /**
      * ColorService
      */
-    @Inject protected ColorService colorService;
+    @Inject
+    protected ColorService colorService;
 
     /**
      * TypeService
      */
-    @Inject protected TypeService typeService;
+    @Inject
+    protected TypeService typeService;
 
     /**
      * Default constructor
@@ -177,7 +217,7 @@ public abstract class AbstractController {
     }
 
     protected AreaUI getAreaUI(Long areaId) {
-        return AreaUIFactory.instance().create(areaService.findById(areaId));
+        return areaConverter.toUI(areaService.findById(areaId));
     }
 
     protected String redirectCountry(Long countryId) {
@@ -212,7 +252,7 @@ public abstract class AbstractController {
 
         CountryUI cui = CountryUIFactory.instance().create(country);
         RegionUI rui = RegionUIFactory.instance().create(region);
-        AreaUI aui = AreaUIFactory.instance().create(area);
+        AreaUI aui = areaConverter.toUI(area);
 
         return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey();
     }
@@ -225,8 +265,8 @@ public abstract class AbstractController {
 
         CountryUI cui = CountryUIFactory.instance().create(country);
         RegionUI rui = RegionUIFactory.instance().create(region);
-        AreaUI aui = AreaUIFactory.instance().create(area);
-        ProducerUI pui = ProducerUIFactory.instance().create(producer);
+        AreaUI aui = areaConverter.toUI(area);
+        ProducerUI pui = producerConverter.toUI(producer);
 
         return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey() + "/" + pui.getKey();
     }

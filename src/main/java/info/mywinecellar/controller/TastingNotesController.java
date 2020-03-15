@@ -14,7 +14,6 @@ import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
 import info.mywinecellar.security.model.User;
-import info.mywinecellar.ui.ProducerUIFactory;
 import info.mywinecellar.ui.TastingNotesUI;
 import info.mywinecellar.ui.TastingNotesUIFactory;
 import info.mywinecellar.ui.UserUIFactory;
@@ -84,7 +83,7 @@ public class TastingNotesController extends AbstractController {
         TastingNotesUI ui = new TastingNotesUI();
         ui.setUser(UserUIFactory.instance().create(user));
         ui.setWine(WineUIFactory.instance().create(wine));
-        ui.setProducer(ProducerUIFactory.instance().create(wine.getProducer()));
+        ui.setProducer(producerConverter.toUI(wine.getProducer()));
         ui.setArea(getAreaUI(Session.getAreaId()));
         ui.setRegion(getRegionUI(Session.getRegionId()));
         ui.setCountry(getCountryUI(Session.getCountryId()));

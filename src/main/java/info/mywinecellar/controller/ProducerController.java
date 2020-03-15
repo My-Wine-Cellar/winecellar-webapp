@@ -98,7 +98,8 @@ public class ProducerController extends AbstractController {
             return Paths.PRODUCER_ADD_EDIT;
         } else {
             if (action.equals("save")) {
-                producerService.update(producer, saveProducer);
+                saveProducer = producerConverter.toEntity(saveProducer, producerConverter.toUI(producer));
+                producerService.save(saveProducer);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
             }
         }
