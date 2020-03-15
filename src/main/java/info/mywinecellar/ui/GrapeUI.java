@@ -41,6 +41,12 @@ public class GrapeUI extends AbstractKeyUI {
     private List<BarrelUI> barrels;
 
     /**
+     * Default constructor
+     */
+    public GrapeUI() {
+    }
+
+    /**
      * Constructor
      * @param percentage The percentage
      * @param name The name
@@ -81,7 +87,7 @@ public class GrapeUI extends AbstractKeyUI {
      * Constructor
      * @param g The grape
      */
-    GrapeUI(Grape g) {
+    public GrapeUI(Grape g) {
         super(toKey(g.getName()));
 
         this.id = g.getId();

@@ -29,20 +29,17 @@ import info.mywinecellar.service.TastingNotesService;
 import info.mywinecellar.service.WishlistService;
 import info.mywinecellar.ui.AbstractKeyUI;
 import info.mywinecellar.ui.AgingUI;
-import info.mywinecellar.ui.AreaUIFactory;
 import info.mywinecellar.ui.BarrelUI;
 import info.mywinecellar.ui.BarrelUISorter;
 import info.mywinecellar.ui.CountryUIFactory;
 import info.mywinecellar.ui.GrapeUI;
-import info.mywinecellar.ui.GrapeUIFactory;
 import info.mywinecellar.ui.GrapeUISorter;
-import info.mywinecellar.ui.ProducerUIFactory;
 import info.mywinecellar.ui.RegionUIFactory;
 import info.mywinecellar.ui.WineUIFactory;
+import info.mywinecellar.util.Image;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
@@ -147,7 +144,7 @@ public class DataController extends AbstractController {
 
         model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
         model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
-        model.addAttribute(Attributes.AREAS, AreaUIFactory.instance().createList(r.getAreas()));
+        model.addAttribute(Attributes.AREAS, areaConverter.toUIs(r.getAreas()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), null, null, null);
 
@@ -194,9 +191,9 @@ public class DataController extends AbstractController {
 
         model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
         model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
-        model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
-        model.addAttribute(Attributes.PRODUCERS, ProducerUIFactory.instance().createList(a.getProducers()));
-        model.addAttribute(Attributes.PRIMARY_GRAPES, GrapeUIFactory.instance().createList(a.getPrimaryGrapes()));
+        model.addAttribute(Attributes.AREA, areaConverter.toUI(a));
+        model.addAttribute(Attributes.PRODUCERS, producerConverter.toUIs(a.getProducers()));
+        model.addAttribute(Attributes.PRIMARY_GRAPES, grapeConverter.toUIs(a.getPrimaryGrapes()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), null, null);
 
@@ -255,8 +252,8 @@ public class DataController extends AbstractController {
 
         model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
         model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
-        model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
-        model.addAttribute(Attributes.PRODUCER, ProducerUIFactory.instance().create(p));
+        model.addAttribute(Attributes.AREA, areaConverter.toUI(a));
+        model.addAttribute(Attributes.PRODUCER, producerConverter.toUI(p));
         model.addAttribute(Attributes.WINES, WineUIFactory.instance().createList(p.getWines()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), null);
@@ -375,10 +372,10 @@ public class DataController extends AbstractController {
 
         model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
         model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
-        model.addAttribute(Attributes.AREA, AreaUIFactory.instance().create(a));
-        model.addAttribute(Attributes.PRODUCER, ProducerUIFactory.instance().create(p));
+        model.addAttribute(Attributes.AREA, areaConverter.toUI(a));
+        model.addAttribute(Attributes.PRODUCER, producerConverter.toUI(p));
         model.addAttribute(Attributes.WINE, w);
-        model.addAttribute(Attributes.ENCODED_IMAGE, encodedImage(w.getImage()));
+        model.addAttribute(Attributes.ENCODED_IMAGE, Image.encode(w.getImage()));
         model.addAttribute(Attributes.WINEGRAPES, winegrapes);
         model.addAttribute(Attributes.MYBOTTLE, bottle);
         model.addAttribute(Attributes.MYREVIEW, review);
@@ -401,13 +398,4 @@ public class DataController extends AbstractController {
 
         return false;
     }
-
-    private String encodedImage(byte[] image) {
-        String encodeToString = null;
-        if (image != null) {
-            encodeToString = Base64.getEncoder().encodeToString(image);
-        }
-        return encodeToString;
-    }
-
 }

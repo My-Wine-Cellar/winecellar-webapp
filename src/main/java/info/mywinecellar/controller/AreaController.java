@@ -14,9 +14,10 @@ import info.mywinecellar.model.Producer;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
+import info.mywinecellar.ui.AreaUI;
+import info.mywinecellar.ui.ProducerUI;
 
 import java.security.Principal;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -60,7 +61,7 @@ public class AreaController extends AbstractController {
     public String areaEditGet(@PathVariable Long areaId, Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.AREA, areaService.findById(areaId));
+        model.addAttribute(Attributes.AREA, areaConverter.toUI(areaService.findById(areaId)));
         return Paths.AREA_EDIT;
     }
 
@@ -72,15 +73,16 @@ public class AreaController extends AbstractController {
      * @return View
      */
     @PostMapping("/{areaId}/edit")
-    public String areaEditPost(Area area, Principal principal,
+    public String areaEditPost(AreaUI area, Principal principal,
                                @PathVariable Long areaId,
                                @RequestParam("action") String action) {
         principalNull(principal);
 
         if (action.equals("save")) {
-            area.setId(areaId);
-            areaService.save(area);
-            return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
+            Area a = areaService.findById(areaId);
+            a = areaConverter.toEntity(a, area);
+            areaService.save(a);
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), a);
         } else {
             return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
         }
@@ -96,8 +98,8 @@ public class AreaController extends AbstractController {
     public String areaAddProducerGet(Model model, @PathVariable Long areaId, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.AREA, areaService.findById(areaId));
-        model.addAttribute(Attributes.PRODUCER, new Producer());
+        model.addAttribute(Attributes.AREA, areaConverter.toUI(areaService.findById(areaId)));
+        model.addAttribute(Attributes.PRODUCER, new ProducerUI());
         return Paths.PRODUCER_ADD_EDIT;
     }
 
@@ -111,7 +113,7 @@ public class AreaController extends AbstractController {
      * @return View
      */
     @PostMapping("/{areaId}/addProducer")
-    public String areaAddProducerPost(@Valid Producer producer, BindingResult result, Model model,
+    public String areaAddProducerPost(@Valid ProducerUI producer, BindingResult result, Model model,
                                       @PathVariable Long areaId, Principal principal,
                                       @RequestParam("action") String action) {
         principalNull(principal);
@@ -122,10 +124,11 @@ public class AreaController extends AbstractController {
         if (result.hasErrors()) {
             return Paths.PRODUCER_ADD_EDIT;
         } else {
-            Area area = areaService.findById(areaId);
             if (action.equals("save")) {
-                area.getProducers().add(producer);
-                producerService.save(producer);
+                Area area = areaService.findById(areaId);
+                Producer p = producerConverter.toEntity(null, producer);
+                area.getProducers().add(p);
+                producerService.save(p);
                 return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
             }
         }
@@ -142,9 +145,9 @@ public class AreaController extends AbstractController {
     public String areaAddGrapeGet(Model model, @PathVariable Long areaId, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.AREA, areaService.findById(areaId));
-        model.addAttribute(Attributes.RED_GRAPES, grapeService.getRedGrapes());
-        model.addAttribute(Attributes.WHITE_GRAPES, grapeService.getWhiteGrapes());
+        model.addAttribute(Attributes.AREA, areaConverter.toUI(areaService.findById(areaId)));
+        model.addAttribute(Attributes.RED_GRAPES, grapeConverter.toUIs(grapeService.getRedGrapes()));
+        model.addAttribute(Attributes.WHITE_GRAPES, grapeConverter.toUIs(grapeService.getWhiteGrapes()));
         return Paths.AREA_ADD_GRAPE;
     }
 
@@ -156,20 +159,31 @@ public class AreaController extends AbstractController {
      * @return View
      */
     @PostMapping("/{areaId}/addGrape")
-    public String areaAddGrapePost(Area area, Principal principal,
+    public String areaAddGrapePost(AreaUI area, Principal principal,
                                    @PathVariable Long areaId,
                                    @RequestParam("action") String action) {
         principalNull(principal);
 
-        Area a = areaService.findById(areaId);
         if (action.equals("save")) {
-            List<Grape> grapes = area.getPrimaryGrapes();
-            grapes.forEach(grape -> grape.getAreas().add(a));
+            Area a = areaService.findById(areaId);
+
+            for (Grape g : a.getPrimaryGrapes()) {
+                if (!area.getPrimaryGrapes().contains(g.getId())) {
+                    g.getAreas().remove(a);
+                }
+            }
+
+            for (Long grape : area.getPrimaryGrapes()) {
+                Grape g = grapeService.findById(grape);
+                if (!a.getPrimaryGrapes().contains(g)) {
+                    g.getAreas().add(a);
+                }
+            }
+
             areaService.save(a);
             return redirectArea(Session.getCountryId(), Session.getRegionId(), a);
         } else {
-            return redirectArea(Session.getCountryId(), Session.getRegionId(), a);
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
         }
-
     }
 }
