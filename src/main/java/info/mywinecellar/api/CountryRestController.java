@@ -8,23 +8,27 @@
 
 package info.mywinecellar.api;
 
-import info.mywinecellar.api.service.CountryRestService;
 import info.mywinecellar.model.Country;
+import info.mywinecellar.service.CountryService;
+import info.mywinecellar.ui.CountryUI;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/country")
 public class CountryRestController extends AbstractRestController {
 
-    @Inject CountryRestService restService;
+    @Inject
+    CountryService countryService;
 
     /**
      * PUT mapping to update a Country
@@ -33,12 +37,13 @@ public class CountryRestController extends AbstractRestController {
      * @param countryId Long countryId
      * @return ResponseEntity.ACCEPTED
      */
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/{countryId}/edit")
-    public ResponseEntity<?> countryEditPut(@RequestBody Country request, @PathVariable Long countryId) {
-        Country update = countryService.findById(countryId);
-        checkObjectNull(update);
-        restService.updateCountry(update, request);
-        return ResponseEntity.accepted().body("Updated " + update.toString());
+    public ResponseEntity<?> countryEditPut(@RequestBody CountryUI request, @PathVariable Long countryId) {
+        Country edit = countryService.findById(countryId);
+        checkObjectNull(edit);
+        edit = countryService.editCountry(request, countryId);
+        return ResponseEntity.accepted().body("Updated " + edit.toString());
     }
 
 }

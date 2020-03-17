@@ -8,9 +8,12 @@
 
 package info.mywinecellar.controller;
 
-import info.mywinecellar.converters.AreaConverter;
-import info.mywinecellar.converters.GrapeConverter;
-import info.mywinecellar.converters.ProducerConverter;
+import info.mywinecellar.converter.AreaConverter;
+import info.mywinecellar.converter.CountryConverter;
+import info.mywinecellar.converter.GrapeConverter;
+import info.mywinecellar.converter.ProducerConverter;
+import info.mywinecellar.converter.RegionConverter;
+import info.mywinecellar.converter.WineConverter;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Country;
 import info.mywinecellar.model.Producer;
@@ -39,10 +42,8 @@ import info.mywinecellar.service.WineService;
 import info.mywinecellar.service.WishlistService;
 import info.mywinecellar.ui.AreaUI;
 import info.mywinecellar.ui.CountryUI;
-import info.mywinecellar.ui.CountryUIFactory;
 import info.mywinecellar.ui.ProducerUI;
 import info.mywinecellar.ui.RegionUI;
-import info.mywinecellar.ui.RegionUIFactory;
 
 import java.security.Principal;
 
@@ -71,6 +72,12 @@ public abstract class AbstractController {
     protected AreaService areaService;
 
     /**
+     * CountryConverter
+     */
+    @Inject
+    protected CountryConverter countryConverter;
+
+    /**
      * CountryService
      */
     @Inject
@@ -87,6 +94,12 @@ public abstract class AbstractController {
      */
     @Inject
     protected ProducerService producerService;
+
+    /**
+     * RegionConverter
+     */
+    @Inject
+    protected RegionConverter regionConverter;
 
     /**
      * RegionService
@@ -117,6 +130,12 @@ public abstract class AbstractController {
      */
     @Inject
     protected BottleService bottleService;
+
+    /**
+     * WineConverter
+     */
+    @Inject
+    protected WineConverter wineConverter;
 
     /**
      * WineService
@@ -209,11 +228,11 @@ public abstract class AbstractController {
     }
 
     protected CountryUI getCountryUI(Long countryId) {
-        return CountryUIFactory.instance().create(countryService.findById(countryId));
+        return countryConverter.toUI(countryService.findById(countryId));
     }
 
     protected RegionUI getRegionUI(Long regionId) {
-        return RegionUIFactory.instance().create(regionService.findById(regionId));
+        return regionConverter.toUI(regionService.findById(regionId));
     }
 
     protected AreaUI getAreaUI(Long areaId) {
@@ -225,7 +244,7 @@ public abstract class AbstractController {
     }
 
     protected String redirectCountry(Country country) {
-        CountryUI cui = CountryUIFactory.instance().create(country);
+        CountryUI cui = countryConverter.toUI(country);
 
         return Paths.REDIRECT_ROOT + "d/" + cui.getKey();
     }
@@ -236,8 +255,8 @@ public abstract class AbstractController {
 
     protected String redirectRegion(Long countryId, Region region) {
         Country country = countryService.findById(countryId);
-        CountryUI cui = CountryUIFactory.instance().create(country);
-        RegionUI rui = RegionUIFactory.instance().create(region);
+        CountryUI cui = countryConverter.toUI(country);
+        RegionUI rui = regionConverter.toUI(region);
 
         return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey();
     }
@@ -250,8 +269,8 @@ public abstract class AbstractController {
         Country country = countryService.findById(countryId);
         Region region = regionService.findById(regionId);
 
-        CountryUI cui = CountryUIFactory.instance().create(country);
-        RegionUI rui = RegionUIFactory.instance().create(region);
+        CountryUI cui = countryConverter.toUI(country);
+        RegionUI rui = regionConverter.toUI(region);
         AreaUI aui = areaConverter.toUI(area);
 
         return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey();
@@ -263,8 +282,8 @@ public abstract class AbstractController {
         Area area = areaService.findById(areaId);
         Producer producer = producerService.findById(producerId);
 
-        CountryUI cui = CountryUIFactory.instance().create(country);
-        RegionUI rui = RegionUIFactory.instance().create(region);
+        CountryUI cui = countryConverter.toUI(country);
+        RegionUI rui = regionConverter.toUI(region);
         AreaUI aui = areaConverter.toUI(area);
         ProducerUI pui = producerConverter.toUI(producer);
 

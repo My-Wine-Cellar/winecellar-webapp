@@ -9,4 +9,4 @@
 /**
  * This package contains the converters
  */
-package info.mywinecellar.converters;
+package info.mywinecellar.converter;

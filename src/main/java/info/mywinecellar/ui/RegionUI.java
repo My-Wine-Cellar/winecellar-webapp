@@ -16,7 +16,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * UI for wishlist
+ * UI for region
  */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -30,10 +30,17 @@ public class RegionUI extends AbstractKeyUI {
     private String weblink;
 
     /**
+     * Default constructor
+     */
+    public RegionUI() {
+    }
+
+    /**
      * Constructor
+     *
      * @param r The region
      */
-    RegionUI(Region r) {
+    public RegionUI(Region r) {
         super(toKey(r.getName()));
         this.id = r.getId();
         this.name = r.getName();

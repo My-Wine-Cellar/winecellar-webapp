@@ -12,6 +12,7 @@ import info.mywinecellar.model.Region;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
+import info.mywinecellar.ui.RegionUI;
 
 import java.security.Principal;
 
@@ -45,15 +46,14 @@ public class RegionController extends AbstractController {
      */
     @GetMapping("/{regionId}/edit")
     public String regionEditGet(@PathVariable Long regionId, Model model, Principal principal) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
-        model.addAttribute(Attributes.REGION, regionService.findById(regionId));
+        principalNull(principal);
+
+        model.addAttribute(Attributes.REGION, regionConverter.toUI(regionService.findById(regionId)));
         return Paths.REGION_EDIT;
     }
 
     /**
-     * @param region    region
+     * @param regionUI  region
      * @param result    result
      * @param model     model
      * @param regionId  regionId
@@ -62,23 +62,20 @@ public class RegionController extends AbstractController {
      * @return View
      */
     @PostMapping("/{regionId}/edit")
-    public String processEditRegionForm(@Valid Region region, BindingResult result, Model model,
+    public String processEditRegionForm(@Valid RegionUI regionUI, BindingResult result, Model model,
                                         @PathVariable Long regionId, Principal principal,
                                         @RequestParam("action") String action) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.REGION, regionService.findById(regionId));
+            model.addAttribute(Attributes.REGION, regionConverter.toUI(regionService.findById(regionId)));
             return Paths.REGION_EDIT;
         } else {
             if (action.equals("save")) {
-                region.setId(regionId);
-                regionService.save(region);
+                Region region = regionService.editRegion(regionUI, regionId);
                 return redirectRegion(Session.getCountryId(), region);
             } else {
-                return redirectRegion(Session.getCountryId(), region);
+                return redirectRegion(Session.getCountryId(), regionId);
             }
         }
     }

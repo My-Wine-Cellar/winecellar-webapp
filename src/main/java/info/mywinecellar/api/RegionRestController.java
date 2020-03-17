@@ -8,8 +8,9 @@
 
 package info.mywinecellar.api;
 
-import info.mywinecellar.api.service.RegionRestService;
 import info.mywinecellar.model.Region;
+import info.mywinecellar.service.RegionService;
+import info.mywinecellar.ui.RegionUI;
 
 import javax.inject.Inject;
 
@@ -24,7 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/region")
 public class RegionRestController extends AbstractRestController {
 
-    @Inject RegionRestService restService;
+    @Inject
+    RegionService regionService;
 
     /**
      * PUT mapping to update a Region
@@ -34,10 +36,10 @@ public class RegionRestController extends AbstractRestController {
      * @return ResponseEntity.ACCEPTED
      */
     @PutMapping("/{regionId}/edit")
-    public ResponseEntity<?> regionEditPut(@RequestBody Region request, @PathVariable Long regionId) {
-        Region update = regionService.findById(regionId);
-        checkObjectNull(update);
-        restService.updateRegion(update, request);
-        return ResponseEntity.accepted().body("Updated " + update.toString());
+    public ResponseEntity<?> regionEditPut(@RequestBody RegionUI request, @PathVariable Long regionId) {
+        Region edit = regionService.findById(regionId);
+        checkObjectNull(edit);
+        edit = regionService.editRegion(request, regionId);
+        return ResponseEntity.accepted().body("Updated " + edit.toString());
     }
 }
