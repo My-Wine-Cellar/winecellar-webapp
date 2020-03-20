@@ -18,7 +18,6 @@ import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
 import info.mywinecellar.ui.WineUI;
-import info.mywinecellar.ui.WineUIFactory;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -134,8 +133,8 @@ public class WineController extends AbstractController {
             producer.getWines().add(wine);
             switch (action) {
                 case Actions.SAVE_WINE:
-                    Wine savedWine = wineService.save(wine);
-                    WineUI wui = WineUIFactory.instance().create(savedWine);
+                    wineService.save(wine);
+                    WineUI wui = wineConverter.toUI(wine);
 
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
@@ -201,7 +200,7 @@ public class WineController extends AbstractController {
             case Actions.ADD_BARREL:
                 return Paths.REDIRECT_WINE_GRAPE + "/" + grapeComponent.getGrape().getId() + "/barrel";
             case Actions.SAVE_WINE:
-                Wine savedWine = wineService.save(wine);
+                wineService.save(wine);
 
                 saveOrNullMaceration(grapes);
                 saveOrNullFermentation(grapes);
@@ -212,7 +211,7 @@ public class WineController extends AbstractController {
                     barrelComponentService.saveAll(barrels);
                 }
 
-                WineUI wui = WineUIFactory.instance().create(savedWine);
+                WineUI wui = wineConverter.toUI(wine);
                 Session.clear(status);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                         Session.getAreaId(), Session.getProducerId()) +
@@ -281,7 +280,7 @@ public class WineController extends AbstractController {
                 case Actions.ADD_ANOTHER_BARREL:
                     return Paths.REDIRECT_WINE_GRAPE + "/" + grapeComponent.getGrape().getId() + "/barrel";
                 case Actions.SAVE_WINE:
-                    Wine savedWine = wineService.save(wine);
+                    wineService.save(wine);
 
                     saveOrNullMaceration(grapes);
                     saveOrNullFermentation(grapes);
@@ -289,7 +288,7 @@ public class WineController extends AbstractController {
                     grapeComponentService.saveAll(grapes);
                     barrelComponentService.saveAll(barrels);
 
-                    WineUI wui = WineUIFactory.instance().create(savedWine);
+                    WineUI wui = wineConverter.toUI(wine);
 
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
@@ -348,8 +347,8 @@ public class WineController extends AbstractController {
 
             switch (action) {
                 case Actions.SAVE_WINE:
-                    Wine savedWine = wineService.save(wine);
-                    WineUI wui = WineUIFactory.instance().create(savedWine);
+                    wineService.update(wine);
+                    WineUI wui = wineConverter.toUI(wine);
 
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
@@ -358,7 +357,7 @@ public class WineController extends AbstractController {
                 case Actions.ADD_GRAPE:
                     return Paths.REDIRECT_WINE_GRAPE;
                 case Actions.CANCEL:
-                    WineUI wineUI = WineUIFactory.instance().create(wine);
+                    WineUI wineUI = wineConverter.toUI(wine);
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                             Session.getAreaId(), Session.getProducerId()) +
@@ -408,13 +407,13 @@ public class WineController extends AbstractController {
                     return Paths.WINE_IMAGE;
                 }
                 wineService.save(saveWine);
-                WineUI wineUI = WineUIFactory.instance().create(saveWine);
+                WineUI wineUI = wineConverter.toUI(wine);
                 Session.clear(status);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(),
                         Session.getProducerId()) + "/" + wineUI.getKey() + "/" +
                         wineUI.getVintage() + "/" + wineUI.getSize();
             } else if (action.equals("cancel")) {
-                WineUI wineUI = WineUIFactory.instance().create(wine);
+                WineUI wineUI = wineConverter.toUI(wine);
                 Session.clear(status);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                         Session.getAreaId(), Session.getProducerId()) +

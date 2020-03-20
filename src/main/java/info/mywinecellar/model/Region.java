@@ -54,6 +54,20 @@ public class Region extends BaseEntity implements Comparable<Region> {
         this.country = country;
     }
 
+    /**
+     * Region constructor
+     *
+     * @param name        String name
+     * @param description String description
+     * @param weblink     String weblink
+     */
+    public Region(String name, String description, String weblink) {
+        super();
+        this.name = name;
+        this.description = description;
+        this.weblink = weblink;
+    }
+
     @NotNull
     @Column(name = "name")
     private String name;

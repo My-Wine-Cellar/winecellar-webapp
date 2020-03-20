@@ -11,6 +11,7 @@ package info.mywinecellar.controller;
 import info.mywinecellar.model.Country;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+import info.mywinecellar.ui.CountryUI;
 
 import java.security.Principal;
 
@@ -46,12 +47,12 @@ public class CountryController extends AbstractController {
     public String countryEditGet(@PathVariable Long countryId, Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.COUNTRY, countryService.findById(countryId));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(countryService.findById(countryId)));
         return Paths.COUNTRY_EDIT;
     }
 
     /**
-     * @param country   country
+     * @param ui        country
      * @param result    result
      * @param model     model
      * @param countryId countryId
@@ -60,21 +61,20 @@ public class CountryController extends AbstractController {
      * @return View
      */
     @PostMapping("/{countryId}/edit")
-    public String countryEditPost(@Valid Country country, BindingResult result, Model model,
+    public String countryEditPost(@Valid CountryUI ui, BindingResult result, Model model,
                                   @PathVariable Long countryId, Principal principal,
                                   @RequestParam("action") String action) {
         principalNull(principal);
 
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.COUNTRY, country);
+            model.addAttribute(Attributes.COUNTRY, ui);
             return Paths.COUNTRY_EDIT;
         } else {
             if (action.equals("save")) {
-                country.setId(countryId);
-                countryService.save(country);
+                Country country = countryService.editCountry(ui, countryId);
                 return redirectCountry(country);
             } else {
-                return redirectCountry(country);
+                return redirectCountry(countryId);
             }
         }
     }

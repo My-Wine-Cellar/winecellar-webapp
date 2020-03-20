@@ -84,6 +84,20 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
         this.image = image;
     }
 
+    /**
+     * Wine constructor
+     *
+     * @param name    String name
+     * @param vintage Integer vintage
+     * @param size    Float size
+     */
+    public Wine(String name, Integer vintage, Float size) {
+        super();
+        this.name = name;
+        this.vintage = vintage;
+        this.size = size;
+    }
+
     @NotNull
     @NotEmpty
     @Column(name = "name")

@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-2.0
  */
 
-package info.mywinecellar.converters;
+package info.mywinecellar.converter;
 
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.ui.ProducerUI;

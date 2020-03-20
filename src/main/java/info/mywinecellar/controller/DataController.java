@@ -31,11 +31,8 @@ import info.mywinecellar.ui.AbstractKeyUI;
 import info.mywinecellar.ui.AgingUI;
 import info.mywinecellar.ui.BarrelUI;
 import info.mywinecellar.ui.BarrelUISorter;
-import info.mywinecellar.ui.CountryUIFactory;
 import info.mywinecellar.ui.GrapeUI;
 import info.mywinecellar.ui.GrapeUISorter;
-import info.mywinecellar.ui.RegionUIFactory;
-import info.mywinecellar.ui.WineUIFactory;
 import info.mywinecellar.util.Image;
 
 import java.security.Principal;
@@ -81,7 +78,7 @@ public class DataController extends AbstractController {
     @GetMapping("/")
     public String dataRootGet(Model model) {
         List<Country> countries = countryService.findWithRegions();
-        model.addAttribute(Attributes.COUNTRIES, CountryUIFactory.instance().createList(countries));
+        model.addAttribute(Attributes.COUNTRIES, countryConverter.toUIs(countries));
 
         Session.updateSessionAttributes(null, null, null, null, null);
 
@@ -109,8 +106,8 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
-        model.addAttribute(Attributes.REGIONS, RegionUIFactory.instance().createList(c.getRegions()));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(c));
+        model.addAttribute(Attributes.REGIONS, regionConverter.toUIs(c.getRegions()));
 
         Session.updateSessionAttributes(c.getId(), null, null, null, null);
 
@@ -142,8 +139,8 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
-        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(c));
+        model.addAttribute(Attributes.REGION, regionConverter.toUI(r));
         model.addAttribute(Attributes.AREAS, areaConverter.toUIs(r.getAreas()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), null, null, null);
@@ -189,8 +186,8 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
-        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(c));
+        model.addAttribute(Attributes.REGION, regionConverter.toUI(r));
         model.addAttribute(Attributes.AREA, areaConverter.toUI(a));
         model.addAttribute(Attributes.PRODUCERS, producerConverter.toUIs(a.getProducers()));
         model.addAttribute(Attributes.PRIMARY_GRAPES, grapeConverter.toUIs(a.getPrimaryGrapes()));
@@ -250,11 +247,11 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
-        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(c));
+        model.addAttribute(Attributes.REGION, regionConverter.toUI(r));
         model.addAttribute(Attributes.AREA, areaConverter.toUI(a));
         model.addAttribute(Attributes.PRODUCER, producerConverter.toUI(p));
-        model.addAttribute(Attributes.WINES, WineUIFactory.instance().createList(p.getWines()));
+        model.addAttribute(Attributes.WINES, wineConverter.toUIs(p.getWines()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), null);
 
@@ -370,11 +367,11 @@ public class DataController extends AbstractController {
         }
         Collections.sort(winegrapes, new GrapeUISorter());
 
-        model.addAttribute(Attributes.COUNTRY, CountryUIFactory.instance().create(c));
-        model.addAttribute(Attributes.REGION, RegionUIFactory.instance().create(r));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(c));
+        model.addAttribute(Attributes.REGION, regionConverter.toUI(r));
         model.addAttribute(Attributes.AREA, areaConverter.toUI(a));
         model.addAttribute(Attributes.PRODUCER, producerConverter.toUI(p));
-        model.addAttribute(Attributes.WINE, w);
+        model.addAttribute(Attributes.WINE, wineConverter.toUI(w));
         model.addAttribute(Attributes.ENCODED_IMAGE, Image.encode(w.getImage()));
         model.addAttribute(Attributes.WINEGRAPES, winegrapes);
         model.addAttribute(Attributes.MYBOTTLE, bottle);
