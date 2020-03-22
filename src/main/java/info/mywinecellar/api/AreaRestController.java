@@ -8,11 +8,9 @@
 
 package info.mywinecellar.api;
 
-import info.mywinecellar.api.service.AreaRestService;
 import info.mywinecellar.model.Area;
-import info.mywinecellar.model.Producer;
-
-import javax.inject.Inject;
+import info.mywinecellar.ui.AreaUI;
+import info.mywinecellar.ui.ProducerUI;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,21 +25,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/area/{areaId}")
 public class AreaRestController extends AbstractRestController {
 
-    @Inject AreaRestService restService;
-
     /**
      * PUT mapping to update an Area
      *
-     * @param area   Area area
+     * @param areaUI   Area area
      * @param areaId Long areaId
      * @return ResponseEntity.ACCEPTED
      */
     @PutMapping("/edit")
-    public ResponseEntity<?> areaEditPut(@RequestBody Area area, @PathVariable Long areaId) {
-        Area updateArea = areaService.findById(areaId);
-        checkObjectNull(updateArea);
-        restService.updateArea(updateArea, area);
-        return ResponseEntity.accepted().body("Updated " + updateArea.toString());
+    public ResponseEntity<?> areaEditPut(@RequestBody AreaUI areaUI, @PathVariable Long areaId) {
+        checkObjectNull(areaUI);
+        Area area = areaService.editArea(areaUI, areaId);
+        return ResponseEntity.accepted().body("Updated " + area.toString());
     }
 
     /**
@@ -52,11 +47,10 @@ public class AreaRestController extends AbstractRestController {
      * @return ResponseEntity.CREATED
      */
     @PostMapping("/addProducer")
-    public ResponseEntity<?> areaAddProducerPost(@RequestBody Producer producer, @PathVariable Long areaId) {
-        Area area = areaService.findById(areaId);
-        area.getProducers().add(producer);
-        producerService.save(producer);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Added " + producer.toString() +
+    public ResponseEntity<?> areaAddProducerPost(@RequestBody ProducerUI producer, @PathVariable Long areaId) {
+        checkObjectNull(producer);
+        Area area = areaService.areaAddProducer(producer, areaId);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Added " + producer.getName() +
                 " to " + area.toString());
     }
 

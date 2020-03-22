@@ -10,7 +10,6 @@ package info.mywinecellar.controller;
 
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Grape;
-import info.mywinecellar.model.Producer;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
@@ -66,23 +65,21 @@ public class AreaController extends AbstractController {
     }
 
     /**
-     * @param area      area
+     * @param areaUI      area
      * @param principal principal
      * @param areaId    areaId
      * @param action    action
      * @return View
      */
     @PostMapping("/{areaId}/edit")
-    public String areaEditPost(AreaUI area, Principal principal,
+    public String areaEditPost(AreaUI areaUI, Principal principal,
                                @PathVariable Long areaId,
                                @RequestParam("action") String action) {
         principalNull(principal);
 
         if (action.equals("save")) {
-            Area a = areaService.findById(areaId);
-            a = areaConverter.toEntity(a, area);
-            areaService.save(a);
-            return redirectArea(Session.getCountryId(), Session.getRegionId(), a);
+            Area area = areaService.editArea(areaUI, areaId);
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
         } else {
             return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
         }
@@ -125,10 +122,7 @@ public class AreaController extends AbstractController {
             return Paths.PRODUCER_ADD_EDIT;
         } else {
             if (action.equals("save")) {
-                Area area = areaService.findById(areaId);
-                Producer p = producerConverter.toEntity(null, producer);
-                area.getProducers().add(p);
-                producerService.save(p);
+                Area area = areaService.areaAddProducer(producer, areaId);
                 return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
             }
         }

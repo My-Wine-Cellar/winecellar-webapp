@@ -8,7 +8,9 @@
 
 package info.mywinecellar.service;
 
+import info.mywinecellar.converter.GrapeConverter;
 import info.mywinecellar.model.Grape;
+import info.mywinecellar.ui.GrapeUI;
 
 import java.util.List;
 
@@ -27,6 +29,9 @@ public class GrapeService {
 
     @Inject
     private EntityManager em;
+
+    @Inject
+    private GrapeConverter grapeConverter;
 
     /**
      * Find by id
@@ -132,5 +137,17 @@ public class GrapeService {
             System.out.println(e.getMessage());
             e.printStackTrace(System.out);
         }
+    }
+
+    /**
+     * Edit Grape
+     * @param ui GrapeUI ui
+     * @param grapeId Long grapeId
+     */
+    @Transactional
+    public void editGrape(GrapeUI ui, Long grapeId) {
+        Grape grape = this.findById(grapeId);
+        Grape update = grapeConverter.toEntity(grape, ui);
+        this.save(update);
     }
 }
