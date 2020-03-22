@@ -8,9 +8,10 @@
 
 package info.mywinecellar.api;
 
-import info.mywinecellar.api.service.GrapeRestService;
 import info.mywinecellar.model.Grape;
+import info.mywinecellar.service.GrapeService;
 import info.mywinecellar.ui.AbstractKeyUI;
+import info.mywinecellar.ui.GrapeUI;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/grape")
 public class GrapeRestController extends AbstractRestController {
 
-    @Inject GrapeRestService restService;
+    @Inject
+    GrapeService grapeService;
 
     /**
      * GET mapping
@@ -100,10 +102,9 @@ public class GrapeRestController extends AbstractRestController {
      * @return ResponseEntity.ACCEPTED
      */
     @PutMapping("/{grapeId}/edit")
-    public ResponseEntity<?> grapeEditPut(@RequestBody Grape request, @PathVariable Long grapeId) {
-        Grape update = grapeService.findById(grapeId);
-        checkObjectNull(update);
-        restService.updateGrape(update, request);
-        return ResponseEntity.accepted().body("Updated " + update.toString());
+    public ResponseEntity<?> grapeEditPut(@RequestBody GrapeUI request, @PathVariable Long grapeId) {
+        checkObjectNull(request);
+        grapeService.editGrape(request, grapeId);
+        return ResponseEntity.accepted().body("Updated Grape: " + grapeId);
     }
 }
