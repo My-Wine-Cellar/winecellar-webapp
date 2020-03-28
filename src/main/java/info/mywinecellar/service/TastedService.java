@@ -10,25 +10,54 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Tasted;
 
-/**
- * Tasted service
- */
-public interface TastedService extends CrudService<Tasted, Long> {
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class TastedService extends AbstractService<Tasted> {
 
     /**
-     * Find by user
-     * @param userId The user identifier
-     * @param id The tasted identifier
-     * @return The tasted
+     * Constructor
      */
-    Tasted findByUser(Integer userId, Long id);
+    public TastedService() {
+        super(Tasted.class);
+    }
 
     /**
-     * Find by wine
-     * @param userId The user identifier
-     * @param wineId The wine identifier
-     * @return The tasted
+     * Find Tasted for a User
+     *
+     * @param userId Integer userId
+     * @param id     Long id
+     * @return Tasted entity
      */
-    Tasted findByWine(Integer userId, Long wineId);
+    public Tasted findByUser(Integer userId, Long id) {
+        try {
+            Query query = em.createQuery("SELECT t FROM Tasted t WHERE t.user.id = :userid AND t.id = :id");
+            query.setParameter("userid", userId);
+            query.setParameter("id", id);
+            return (Tasted) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Find Tasted for a Wine
+     *
+     * @param userId Integer userId
+     * @param wineId Long wineId
+     * @return Tasted entity
+     */
+    public Tasted findByWine(Integer userId, Long wineId) {
+        try {
+            Query query = em.createQuery("SELECT t FROM Tasted t WHERE t.user.id = :userid AND t.wine.id = :wineid");
+            query.setParameter("userid", userId);
+            query.setParameter("wineid", wineId);
+            return (Tasted) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 }

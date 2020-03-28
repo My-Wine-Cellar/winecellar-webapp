@@ -8,8 +8,6 @@
 
 package info.mywinecellar.model;
 
-import info.mywinecellar.security.model.User;
-
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

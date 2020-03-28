@@ -8,9 +8,9 @@
 
 package info.mywinecellar.converter;
 
+import info.mywinecellar.dto.RegionDto;
+import info.mywinecellar.dto.RegionDtoSorter;
 import info.mywinecellar.model.Region;
-import info.mywinecellar.ui.RegionUI;
-import info.mywinecellar.ui.RegionUISorter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,47 +21,47 @@ import org.springframework.stereotype.Component;
 public class RegionConverter {
 
     /**
-     * Convert Region entity to RegionUI
+     * Convert Region entity to RegionDto
      *
      * @param region Region region
-     * @return RegionUI object
+     * @return RegionDto object
      */
-    public RegionUI toUI(Region region) {
+    public RegionDto toDto(Region region) {
         if (region == null) {
             throw new IllegalStateException("Region is null");
         }
-        return new RegionUI(region);
+        return new RegionDto(region);
     }
 
     /**
-     * Convert a list of Regions to a list of RegionUI objects
+     * Convert a list of Regions to a list of RegionDto objects
      *
      * @param regions List<Region> regions
-     * @return List<RegionUI> regionUI's
+     * @return List<RegionDto> regionDto's
      */
-    public List<RegionUI> toUIs(List<Region> regions) {
+    public List<RegionDto> toDto(List<Region> regions) {
         if (regions == null) {
             throw new IllegalStateException("Region list is null");
         }
-        List<RegionUI> result = new ArrayList<>();
-        regions.forEach(region -> result.add(toUI(region)));
-        result.sort(new RegionUISorter());
+        List<RegionDto> result = new ArrayList<>();
+        regions.forEach(region -> result.add(toDto(region)));
+        result.sort(new RegionDtoSorter());
         return result;
     }
 
     /**
-     * Update and convert a Region entity from RegionUI to prepare for save
+     * Update and convert a Region entity from RegionDto to prepare for save
      *
      * @param entity Region entity
-     * @param ui     RegionUI ui
+     * @param dto     RegionDto dto
      * @return Region entity
      */
-    public Region toEntity(Region entity, RegionUI ui) {
+    public Region toEntity(Region entity, RegionDto dto) {
         if (entity == null) {
-            entity = new Region(ui.getName(), ui.getDescription(), ui.getWeblink());
+            entity = new Region(dto.getName(), dto.getDescription(), dto.getWeblink());
         } else {
-            entity.setDescription(ui.getDescription());
-            entity.setWeblink(ui.getWeblink());
+            entity.setDescription(dto.getDescription());
+            entity.setWeblink(dto.getWeblink());
         }
         return entity;
     }

@@ -10,5 +10,16 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Maceration;
 
-public interface MacerationService extends CrudService<Maceration, Long> {
+import org.springframework.stereotype.Component;
+
+@Component
+public class MacerationService extends AbstractService<Maceration> {
+
+    /**
+     * Constructor
+     */
+    public MacerationService() {
+        super(Maceration.class);
+    }
+
 }

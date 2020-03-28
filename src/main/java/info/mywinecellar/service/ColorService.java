@@ -10,13 +10,15 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Color;
 
-import java.util.List;
+import org.springframework.stereotype.Component;
 
-public interface ColorService extends CrudService<Color, Long> {
+@Component
+public class ColorService extends AbstractService<Color> {
 
     /**
-     * Find all
-     * @return All colors
+     * Constructor
      */
-    List<Color> findAll();
+    public ColorService() {
+        super(Color.class);
+    }
 }

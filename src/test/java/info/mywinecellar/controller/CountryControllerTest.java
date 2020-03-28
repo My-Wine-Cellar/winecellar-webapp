@@ -8,8 +8,8 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.CountryDto;
 import info.mywinecellar.service.CountryService;
-import info.mywinecellar.ui.CountryUI;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class CountryControllerTest {
     @Mock
     CountryService countryService;
 
-    CountryUI country;
+    CountryDto country;
 
     @BeforeEach
     void setUp() {

@@ -9,15 +9,15 @@
 package info.mywinecellar.unit;
 
 import info.mywinecellar.WineWebappApplication;
-import info.mywinecellar.security.exception.EmailException;
-import info.mywinecellar.security.exception.PasswordException;
-import info.mywinecellar.security.exception.UsernameException;
-import info.mywinecellar.security.model.User;
-import info.mywinecellar.security.model.UserRegisterDto;
-import info.mywinecellar.security.model.UserResetDto;
-import info.mywinecellar.security.service.AuthorityRepository;
-import info.mywinecellar.security.service.UserRepository;
-import info.mywinecellar.security.service.UserServiceImpl;
+import info.mywinecellar.dto.UserRegisterDto;
+import info.mywinecellar.dto.UserResetDto;
+import info.mywinecellar.exception.EmailException;
+import info.mywinecellar.exception.PasswordException;
+import info.mywinecellar.exception.UsernameException;
+import info.mywinecellar.model.User;
+import info.mywinecellar.service.AuthorityRepository;
+import info.mywinecellar.service.UserRepository;
+import info.mywinecellar.service.UserServiceImpl;
 
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;

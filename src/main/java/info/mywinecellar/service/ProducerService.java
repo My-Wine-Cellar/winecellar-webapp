@@ -10,33 +10,18 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Producer;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Producer service
  */
 @Component
-public class ProducerService {
+public class ProducerService extends AbstractService<Producer> {
 
-    @Inject
-    private EntityManager em;
-
-    /**
-     * Find by id
-     * @param id The identifier
-     * @return The producer
-     */
-    public Producer findById(Long id) {
-        try {
-            return em.find(Producer.class, id);
-        } catch (Exception e) {
-            return null;
-        }
+    protected ProducerService() {
+        super(Producer.class);
     }
 
     /**
@@ -55,18 +40,4 @@ public class ProducerService {
         }
     }
 
-    /**
-     * Save
-     * @param p The producer
-     */
-    @Transactional
-    public void save(Producer p) {
-        try {
-            em.persist(p);
-        } catch (Exception e) {
-            // Log
-            System.out.println(e.getMessage());
-            e.printStackTrace(System.out);
-        }
-    }
 }

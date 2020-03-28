@@ -9,17 +9,27 @@
 package info.mywinecellar.controller;
 
 import info.mywinecellar.converter.AreaConverter;
+import info.mywinecellar.converter.BarrelConverter;
+import info.mywinecellar.converter.BottleConverter;
 import info.mywinecellar.converter.CountryConverter;
 import info.mywinecellar.converter.GrapeConverter;
 import info.mywinecellar.converter.ProducerConverter;
 import info.mywinecellar.converter.RegionConverter;
+import info.mywinecellar.converter.ReviewConverter;
+import info.mywinecellar.converter.TastedConverter;
+import info.mywinecellar.converter.TastingNotesConverter;
+import info.mywinecellar.converter.UserConverter;
 import info.mywinecellar.converter.WineConverter;
+import info.mywinecellar.converter.WishlistConverter;
+import info.mywinecellar.dto.AreaDto;
+import info.mywinecellar.dto.CountryDto;
+import info.mywinecellar.dto.ProducerDto;
+import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Country;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.model.Region;
 import info.mywinecellar.nav.Paths;
-import info.mywinecellar.security.service.UserService;
 import info.mywinecellar.service.AreaService;
 import info.mywinecellar.service.BarrelComponentService;
 import info.mywinecellar.service.BarrelService;
@@ -38,12 +48,9 @@ import info.mywinecellar.service.ShapeService;
 import info.mywinecellar.service.TastedService;
 import info.mywinecellar.service.TastingNotesService;
 import info.mywinecellar.service.TypeService;
+import info.mywinecellar.service.UserService;
 import info.mywinecellar.service.WineService;
 import info.mywinecellar.service.WishlistService;
-import info.mywinecellar.ui.AreaUI;
-import info.mywinecellar.ui.CountryUI;
-import info.mywinecellar.ui.ProducerUI;
-import info.mywinecellar.ui.RegionUI;
 
 import java.security.Principal;
 
@@ -108,6 +115,12 @@ public abstract class AbstractController {
     protected RegionService regionService;
 
     /**
+     * UserConverter
+     */
+    @Inject
+    protected UserConverter userConverter;
+
+    /**
      * UserService
      */
     @Inject
@@ -124,6 +137,12 @@ public abstract class AbstractController {
      */
     @Inject
     protected GrapeService grapeService;
+
+    /**
+     * BottleConverter
+     */
+    @Inject
+    protected BottleConverter bottleConverter;
 
     /**
      * BottleService
@@ -144,10 +163,22 @@ public abstract class AbstractController {
     protected WineService wineService;
 
     /**
+     * TastedConverter
+     */
+    @Inject
+    protected TastedConverter tastedConverter;
+
+    /**
      * TastedService
      */
     @Inject
     protected TastedService tastedService;
+
+    /**
+     * ReviewConverter
+     */
+    @Inject
+    protected ReviewConverter reviewConverter;
 
     /**
      * ReviewService
@@ -162,10 +193,22 @@ public abstract class AbstractController {
     protected BarrelService barrelService;
 
     /**
+     * TastingNotesConverter
+     */
+    @Inject
+    protected TastingNotesConverter tastingNotesConverter;
+
+    /**
      * TastingNotesService
      */
     @Inject
     protected TastingNotesService tastingNotesService;
+
+    /**
+     * WishlistConverter
+     */
+    @Inject
+    protected WishlistConverter wishlistConverter;
 
     /**
      * WishlistService
@@ -178,6 +221,12 @@ public abstract class AbstractController {
      */
     @Inject
     protected GrapeComponentService grapeComponentService;
+
+    /**
+     * BarrleConverter
+     */
+    @Inject
+    protected BarrelConverter barrelConverter;
 
     /**
      * BarrelComponentService
@@ -227,16 +276,16 @@ public abstract class AbstractController {
     public AbstractController() {
     }
 
-    protected CountryUI getCountryUI(Long countryId) {
-        return countryConverter.toUI(countryService.findById(countryId));
+    protected CountryDto getCountryDto(Long countryId) {
+        return countryConverter.toDto(countryService.findById(countryId));
     }
 
-    protected RegionUI getRegionUI(Long regionId) {
-        return regionConverter.toUI(regionService.findById(regionId));
+    protected RegionDto getRegionDto(Long regionId) {
+        return regionConverter.toDto(regionService.findById(regionId));
     }
 
-    protected AreaUI getAreaUI(Long areaId) {
-        return areaConverter.toUI(areaService.findById(areaId));
+    protected AreaDto getAreaDto(Long areaId) {
+        return areaConverter.toDto(areaService.findById(areaId));
     }
 
     protected String redirectCountry(Long countryId) {
@@ -244,9 +293,9 @@ public abstract class AbstractController {
     }
 
     protected String redirectCountry(Country country) {
-        CountryUI cui = countryConverter.toUI(country);
+        CountryDto countryDto = countryConverter.toDto(country);
 
-        return Paths.REDIRECT_ROOT + "d/" + cui.getKey();
+        return Paths.REDIRECT_ROOT + "d/" + countryDto.getKey();
     }
 
     protected String redirectRegion(Long countryId, Long regionId) {
@@ -255,10 +304,10 @@ public abstract class AbstractController {
 
     protected String redirectRegion(Long countryId, Region region) {
         Country country = countryService.findById(countryId);
-        CountryUI cui = countryConverter.toUI(country);
-        RegionUI rui = regionConverter.toUI(region);
+        CountryDto countryDto = countryConverter.toDto(country);
+        RegionDto regionDto = regionConverter.toDto(region);
 
-        return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey();
+        return Paths.REDIRECT_ROOT + "d/" + countryDto.getKey() + "/" + regionDto.getKey();
     }
 
     protected String redirectArea(Long countryId, Long regionId, Long areaId) {
@@ -269,11 +318,11 @@ public abstract class AbstractController {
         Country country = countryService.findById(countryId);
         Region region = regionService.findById(regionId);
 
-        CountryUI cui = countryConverter.toUI(country);
-        RegionUI rui = regionConverter.toUI(region);
-        AreaUI aui = areaConverter.toUI(area);
+        CountryDto countryDto = countryConverter.toDto(country);
+        RegionDto regionDto = regionConverter.toDto(region);
+        AreaDto areaDto = areaConverter.toDto(area);
 
-        return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey();
+        return Paths.REDIRECT_ROOT + "d/" + countryDto.getKey() + "/" + regionDto.getKey() + "/" + areaDto.getKey();
     }
 
     protected String redirectProducer(Long countryId, Long regionId, Long areaId, Long producerId) {
@@ -282,12 +331,13 @@ public abstract class AbstractController {
         Area area = areaService.findById(areaId);
         Producer producer = producerService.findById(producerId);
 
-        CountryUI cui = countryConverter.toUI(country);
-        RegionUI rui = regionConverter.toUI(region);
-        AreaUI aui = areaConverter.toUI(area);
-        ProducerUI pui = producerConverter.toUI(producer);
+        CountryDto countryDto = countryConverter.toDto(country);
+        RegionDto regionDto = regionConverter.toDto(region);
+        AreaDto areaDto = areaConverter.toDto(area);
+        ProducerDto producerDto = producerConverter.toDto(producer);
 
-        return Paths.REDIRECT_ROOT + "d/" + cui.getKey() + "/" + rui.getKey() + "/" + aui.getKey() + "/" + pui.getKey();
+        return Paths.REDIRECT_ROOT + "d/" + countryDto.getKey() + "/" + regionDto.getKey() + "/" +
+                areaDto.getKey() + "/" + producerDto.getKey();
     }
 
     protected String principalNull(Principal principal) {

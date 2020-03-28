@@ -10,11 +10,10 @@ package info.mywinecellar.controller;
 
 import info.mywinecellar.model.Bottle;
 import info.mywinecellar.model.Tasted;
+import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
-import info.mywinecellar.security.model.User;
-import info.mywinecellar.ui.BottleUIFactory;
 
 import java.security.Principal;
 
@@ -204,7 +203,7 @@ public class BottleController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.BOTTLES, BottleUIFactory.instance().createList(user.getBottles()));
+        model.addAttribute(Attributes.BOTTLES, bottleConverter.toDto(user.getBottles()));
         return Paths.BOTTLE_LIST;
     }
 }

@@ -10,16 +10,15 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Shape;
 
-import java.util.List;
+import org.springframework.stereotype.Component;
 
-/**
- * Shape service
- */
-public interface ShapeService extends CrudService<Shape, Long> {
+@Component
+public class ShapeService extends AbstractService<Shape> {
 
     /**
-     * Find all
-     * @return All shapes
+     * Constructor
      */
-    List<Shape> findAll();
+    public ShapeService() {
+        super(Shape.class);
+    }
 }

@@ -8,9 +8,9 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.dto.CountryDto;
 import info.mywinecellar.model.Country;
 import info.mywinecellar.service.CountryService;
-import info.mywinecellar.ui.CountryUI;
 
 import javax.inject.Inject;
 
@@ -39,7 +39,7 @@ public class CountryRestController extends AbstractRestController {
      */
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/{countryId}/edit")
-    public ResponseEntity<?> countryEditPut(@RequestBody CountryUI request, @PathVariable Long countryId) {
+    public ResponseEntity<?> countryEditPut(@RequestBody CountryDto request, @PathVariable Long countryId) {
         Country edit = countryService.findById(countryId);
         checkObjectNull(edit);
         edit = countryService.editCountry(request, countryId);

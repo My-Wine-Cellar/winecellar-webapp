@@ -12,21 +12,35 @@ import info.mywinecellar.model.Barrel;
 
 import java.util.List;
 
-/**
- * Barrel service
- */
-public interface BarrelService extends CrudService<Barrel, Long> {
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class BarrelService extends AbstractService<Barrel> {
 
     /**
-     * Find by lower case name
-     * @param lcName The lower case name
-     * @return The barrels
+     * Constructor
      */
-    List<Barrel> findByLowerCaseName(String lcName);
+    public BarrelService() {
+        super(Barrel.class);
+    }
 
     /**
-     * Find all
-     * @return The barrels
+     * Find barrel by it's lowercase name
+     * @param lcName String lcName
+     * @return The list of barrels
      */
-    List<Barrel> findAll();
+    public List<Barrel> findByLowerCaseName(String lcName) {
+        try {
+            Query query = em.createNativeQuery("SELECT * FROM barrel b WHERE lower(b.name) " +
+                            "LIKE :lc_name ORDER BY b.id",
+                    Barrel.class);
+            query.setParameter("lc_name", lcName);
+            return query.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

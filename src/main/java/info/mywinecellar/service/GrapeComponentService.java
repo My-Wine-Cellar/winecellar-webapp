@@ -10,15 +10,30 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.GrapeComponent;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+
+import org.springframework.stereotype.Component;
+
 /**
  * GrapeComponent service
  */
-public interface GrapeComponentService extends CrudService<GrapeComponent, Long> {
+@Component
+public class GrapeComponentService {
+
+    @Inject
+    EntityManager em;
 
     /**
      * Save all
+     *
      * @param grapes The grape components
-     * @return The updated grape components
      */
-    Iterable<GrapeComponent> saveAll(Iterable<GrapeComponent> grapes);
+    public void saveAll(Iterable<GrapeComponent> grapes) {
+        try {
+            em.persist(grapes);
+        } catch (Exception ignored) {
+        }
+    }
+
 }

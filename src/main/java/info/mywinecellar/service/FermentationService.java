@@ -10,5 +10,16 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Fermentation;
 
-public interface FermentationService extends CrudService<Fermentation, Long> {
+import org.springframework.stereotype.Component;
+
+@Component
+public class FermentationService extends AbstractService<Fermentation> {
+
+    /**
+     * Constructor
+     */
+    public FermentationService() {
+        super(Fermentation.class);
+    }
+
 }

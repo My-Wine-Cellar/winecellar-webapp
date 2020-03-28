@@ -8,8 +8,6 @@
 
 package info.mywinecellar.model;
 
-import info.mywinecellar.security.model.User;
-
 import java.sql.Date;
 
 import javax.persistence.Column;

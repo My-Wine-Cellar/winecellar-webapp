@@ -8,9 +8,9 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.model.Region;
 import info.mywinecellar.service.RegionService;
-import info.mywinecellar.ui.RegionUI;
 
 import javax.inject.Inject;
 
@@ -36,7 +36,7 @@ public class RegionRestController extends AbstractRestController {
      * @return ResponseEntity.ACCEPTED
      */
     @PutMapping("/{regionId}/edit")
-    public ResponseEntity<?> regionEditPut(@RequestBody RegionUI request, @PathVariable Long regionId) {
+    public ResponseEntity<?> regionEditPut(@RequestBody RegionDto request, @PathVariable Long regionId) {
         Region edit = regionService.findById(regionId);
         checkObjectNull(edit);
         edit = regionService.editRegion(request, regionId);

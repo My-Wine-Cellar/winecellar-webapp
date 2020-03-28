@@ -10,7 +10,7 @@ package info.mywinecellar.controller;
 
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
-import info.mywinecellar.security.service.UserService;
+import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
 

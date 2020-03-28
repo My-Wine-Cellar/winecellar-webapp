@@ -8,39 +8,20 @@
 
 package info.mywinecellar.service;
 
-import info.mywinecellar.converter.WineConverter;
 import info.mywinecellar.model.Wine;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class WineService {
+public class WineService extends AbstractService<Wine> {
 
-    @Inject
-    EntityManager em;
-
-    @Inject
-    WineConverter wineConverter;
-
-    /**
-     * Find Wine by ID
-     *
-     * @param id Long id
-     * @return Wine entity
-     */
-    public Wine findById(Long id) {
-        try {
-            return em.find(Wine.class, id);
-        } catch (Exception e) {
-            return null;
-        }
+    protected WineService() {
+        super(Wine.class);
     }
 
     /**
@@ -72,21 +53,6 @@ public class WineService {
             return query.getResultList();
         } catch (Exception e) {
             return null;
-        }
-    }
-
-    /**
-     * Save Wine
-     *
-     * @param wine Wine wine
-     */
-    @Transactional
-    public void save(Wine wine) {
-        try {
-            em.persist(wine);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace(System.out);
         }
     }
 

@@ -10,13 +10,15 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Type;
 
-import java.util.List;
+import org.springframework.stereotype.Component;
 
-public interface TypeService extends CrudService<Type, Long> {
+@Component
+public class TypeService extends AbstractService<Type> {
 
     /**
-     * Find all
-     * @return All types
+     * Constructor
      */
-    List<Type> findAll();
+    public TypeService() {
+        super(Type.class);
+    }
 }

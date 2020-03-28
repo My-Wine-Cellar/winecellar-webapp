@@ -10,16 +10,15 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Closure;
 
-import java.util.List;
+import org.springframework.stereotype.Component;
 
-/**
- * Closure service
- */
-public interface ClosureService extends CrudService<Closure, Long> {
+@Component
+public class ClosureService extends AbstractService<Closure> {
 
     /**
-     * Find all
-     * @return All closures
+     * Constructor
      */
-    List<Closure> findAll();
+    public ClosureService() {
+        super(Closure.class);
+    }
 }

@@ -8,11 +8,11 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.model.Region;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
-import info.mywinecellar.ui.RegionUI;
 
 import java.security.Principal;
 
@@ -48,12 +48,12 @@ public class RegionController extends AbstractController {
     public String regionEditGet(@PathVariable Long regionId, Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.REGION, regionConverter.toUI(regionService.findById(regionId)));
+        model.addAttribute(Attributes.REGION, regionConverter.toDto(regionService.findById(regionId)));
         return Paths.REGION_EDIT;
     }
 
     /**
-     * @param regionUI  region
+     * @param regionDto region
      * @param result    result
      * @param model     model
      * @param regionId  regionId
@@ -62,17 +62,17 @@ public class RegionController extends AbstractController {
      * @return View
      */
     @PostMapping("/{regionId}/edit")
-    public String processEditRegionForm(@Valid RegionUI regionUI, BindingResult result, Model model,
+    public String processEditRegionForm(@Valid RegionDto regionDto, BindingResult result, Model model,
                                         @PathVariable Long regionId, Principal principal,
                                         @RequestParam("action") String action) {
         principalNull(principal);
 
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.REGION, regionConverter.toUI(regionService.findById(regionId)));
+            model.addAttribute(Attributes.REGION, regionConverter.toDto(regionService.findById(regionId)));
             return Paths.REGION_EDIT;
         } else {
             if (action.equals("save")) {
-                Region region = regionService.editRegion(regionUI, regionId);
+                Region region = regionService.editRegion(regionDto, regionId);
                 return redirectRegion(Session.getCountryId(), region);
             } else {
                 return redirectRegion(Session.getCountryId(), regionId);

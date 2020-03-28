@@ -8,10 +8,10 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.dto.AbstractKeyDto;
+import info.mywinecellar.dto.GrapeDto;
 import info.mywinecellar.model.Grape;
 import info.mywinecellar.service.GrapeService;
-import info.mywinecellar.ui.AbstractKeyUI;
-import info.mywinecellar.ui.GrapeUI;
 
 import java.util.HashMap;
 import java.util.List;
@@ -88,7 +88,7 @@ public class GrapeRestController extends AbstractRestController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{grape}")
     public Grape grapeDetailsGet(@PathVariable String grape) {
-        Grape grapeDetails = grapeService.findByLowerCaseName(AbstractKeyUI.fromKey(grape));
+        Grape grapeDetails = grapeService.findByLowerCaseName(AbstractKeyDto.fromKey(grape));
         checkObjectNull(grapeDetails);
         log.info("==== Grape {} ", grapeDetails.toString());
         return grapeDetails;
@@ -102,7 +102,7 @@ public class GrapeRestController extends AbstractRestController {
      * @return ResponseEntity.ACCEPTED
      */
     @PutMapping("/{grapeId}/edit")
-    public ResponseEntity<?> grapeEditPut(@RequestBody GrapeUI request, @PathVariable Long grapeId) {
+    public ResponseEntity<?> grapeEditPut(@RequestBody GrapeDto request, @PathVariable Long grapeId) {
         checkObjectNull(request);
         grapeService.editGrape(request, grapeId);
         return ResponseEntity.accepted().body("Updated Grape: " + grapeId);

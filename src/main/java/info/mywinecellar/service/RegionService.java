@@ -9,38 +9,24 @@
 package info.mywinecellar.service;
 
 import info.mywinecellar.converter.RegionConverter;
+import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.model.Region;
-import info.mywinecellar.ui.RegionUI;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class RegionService {
+public class RegionService extends AbstractService<Region> {
 
-    @Inject
-    EntityManager em;
+    protected RegionService() {
+        super(Region.class);
+    }
 
     @Inject
     RegionConverter regionConverter;
-
-    /**
-     * Find Region by it's ID
-     *
-     * @param id Long id
-     * @return Region entity
-     */
-    public Region findById(Long id) {
-        try {
-            return em.find(Region.class, id);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
     /**
      * Find Region by it's name
@@ -80,21 +66,6 @@ public class RegionService {
     }
 
     /**
-     * Save a Region entity
-     *
-     * @param region Region region
-     */
-    @Transactional
-    public void save(Region region) {
-        try {
-            em.persist(region);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace(System.out);
-        }
-    }
-
-    /**
      * Helper service to find a Region by it's ID, convert it from the UI object, and then save
      *
      * @param ui       RegionUI ui
@@ -102,7 +73,7 @@ public class RegionService {
      * @return Region entity
      */
     @Transactional
-    public Region editRegion(RegionUI ui, Long regionId) {
+    public Region editRegion(RegionDto ui, Long regionId) {
         Region region = this.findById(regionId);
         region = regionConverter.toEntity(region, ui);
         this.save(region);
