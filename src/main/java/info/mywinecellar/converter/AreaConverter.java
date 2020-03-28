@@ -8,12 +8,11 @@
 
 package info.mywinecellar.converter;
 
+import info.mywinecellar.dto.AreaDto;
+import info.mywinecellar.dto.AreaDtoSorter;
 import info.mywinecellar.model.Area;
-import info.mywinecellar.ui.AreaUI;
-import info.mywinecellar.ui.AreaUISorter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -25,51 +24,48 @@ import org.springframework.stereotype.Component;
 public class AreaConverter {
 
     /**
-     * Create a list of UI objects
+     * Create a list of Dto objects
+     *
      * @param areas The areas
-     * @return The UI objects
+     * @return The Dto objects
      */
-    public List<AreaUI> toUIs(List<Area> areas) {
+    public List<AreaDto> toDto(List<Area> areas) {
         if (areas == null) {
-            throw new IllegalStateException("Areas is null");
+            throw new IllegalStateException("Area list is null");
         }
-
-        List<AreaUI> result = new ArrayList<>();
-        for (Area a : areas) {
-            result.add(toUI(a));
-        }
-        Collections.sort(result, new AreaUISorter());
-
+        List<AreaDto> result = new ArrayList<>();
+        areas.forEach(area -> result.add(toDto(area)));
+        result.sort(new AreaDtoSorter());
         return result;
     }
 
     /**
-     * Create a UI object
+     * Convert entity to dto
+     *
      * @param a An area
-     * @return The UI
+     * @return dto object
      */
-    public AreaUI toUI(Area a) {
+    public AreaDto toDto(Area a) {
         if (a == null) {
             throw new IllegalStateException("Area is null");
         }
-
-        return new AreaUI(a);
+        return new AreaDto(a);
     }
 
     /**
      * Create an Area entity
-     * @param a An area
-     * @param ui The UI object
+     *
+     * @param a  An area
+     * @param ui The Dto object
      * @return The area
      */
-    public Area toEntity(Area a, AreaUI ui) {
+    public Area toEntity(Area a, AreaDto ui) {
         if (a == null) {
             a = new Area(ui.getName(), ui.getDescription(), ui.getWeblink());
         } else {
             a.setDescription(ui.getDescription());
             a.setWeblink(ui.getWeblink());
         }
-
         return a;
     }
 }

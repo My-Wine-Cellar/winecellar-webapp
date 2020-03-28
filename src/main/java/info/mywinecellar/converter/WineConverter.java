@@ -8,9 +8,9 @@
 
 package info.mywinecellar.converter;
 
+import info.mywinecellar.dto.WineDto;
+import info.mywinecellar.dto.WineDtoSorter;
 import info.mywinecellar.model.Wine;
-import info.mywinecellar.ui.WineUI;
-import info.mywinecellar.ui.WineUISorter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,48 +21,49 @@ import org.springframework.stereotype.Component;
 public class WineConverter {
 
     /**
-     * Convert Wine entity to WineUI
+     * Convert entity to dto
      *
      * @param wine wine
-     * @return WineUI
+     * @return dto object
      */
-    public WineUI toUI(Wine wine) {
+    public WineDto toDto(Wine wine) {
         if (wine == null) {
             throw new IllegalStateException("Wine is null");
         }
-        return new WineUI(wine);
+        return new WineDto(wine);
     }
 
     /**
-     * Convert Wine list to WineUI list
+     * Convert entity list to dto list
      *
-     * @param wines the list of wines
-     * @return WineUI list
+     * @param wines wines
+     * @return dto list
      */
-    public List<WineUI> toUIs(List<Wine> wines) {
+    public List<WineDto> toDto(List<Wine> wines) {
         if (wines == null) {
             throw new IllegalStateException("Wine list is null");
         }
-        List<WineUI> result = new ArrayList<>();
-        wines.forEach(wine -> result.add(toUI(wine)));
-        result.sort(new WineUISorter());
+        List<WineDto> result = new ArrayList<>();
+        wines.forEach(wine -> result.add(toDto(wine)));
+        result.sort(new WineDtoSorter());
         return result;
     }
 
     /**
-     * Convert WineUI to Wine
+     * Convert dto to entity
      *
-     * @param entity Wine entity
-     * @param ui     WineUI ui
-     * @return Wine entity
+     * @param entity entity
+     * @param dto    dto
+     * @return entity
      */
-    public Wine toEntity(Wine entity, WineUI ui) {
+    public Wine toEntity(Wine entity, WineDto dto) {
+        // TODO go back to 'main' Wine constructor, should fix new and edit
         if (entity == null) {
-            entity = new Wine(ui.getName(), ui.getVintage(), ui.getSize());
+            entity = new Wine(dto.getName(), dto.getVintage(), dto.getSize());
         } else {
-            entity.setName(ui.getName());
-            entity.setVintage(ui.getVintage());
-            entity.setSize(ui.getSize());
+            entity.setName(dto.getName());
+            entity.setVintage(dto.getVintage());
+            entity.setSize(dto.getSize());
         }
         return entity;
     }

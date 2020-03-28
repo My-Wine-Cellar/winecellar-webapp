@@ -8,11 +8,11 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.AbstractKeyDto;
+import info.mywinecellar.dto.GrapeDto;
 import info.mywinecellar.model.Grape;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
-import info.mywinecellar.ui.AbstractKeyUI;
-import info.mywinecellar.ui.GrapeUI;
 
 import java.security.Principal;
 
@@ -55,9 +55,9 @@ public class GrapeController extends AbstractController {
     @GetMapping("/list")
     public String grapeListGet(Model model) {
         model.addAttribute(Attributes.RED_GRAPES, grapeConverter
-                .toUIs(grapeService.getRedGrapes()));
+                .toDto(grapeService.getRedGrapes()));
         model.addAttribute(Attributes.WHITE_GRAPES, grapeConverter
-                .toUIs(grapeService.getWhiteGrapes()));
+                .toDto(grapeService.getWhiteGrapes()));
         return Paths.GRAPE_LIST;
     }
 
@@ -68,12 +68,12 @@ public class GrapeController extends AbstractController {
      */
     @GetMapping("/{grape}")
     public String grapeDetails(@PathVariable String grape, Model model) {
-        Grape g = grapeService.findByLowerCaseName(AbstractKeyUI.fromKey(grape));
+        Grape g = grapeService.findByLowerCaseName(AbstractKeyDto.fromKey(grape));
 
         if (g == null) {
             return Paths.REDIRECT_ROOT;
         }
-        model.addAttribute(Attributes.GRAPE, grapeConverter.toUI(g));
+        model.addAttribute(Attributes.GRAPE, grapeConverter.toDto(g));
         return Paths.GRAPE_DETAILS;
     }
 
@@ -121,14 +121,14 @@ public class GrapeController extends AbstractController {
         } else {
             if (action.equals("save")) {
                 Grape g = grapeService.findById(grapeId);
-                g = grapeConverter.toEntity(g, grapeConverter.toUI(grape));
+                g = grapeConverter.toEntity(g, grapeConverter.toDto(grape));
                 grapeService.save(g);
-                GrapeUI ui = grapeConverter.toUI(g);
-                return Paths.REDIRECT_GRAPE + ui.getKey();
+                GrapeDto grapeDto = grapeConverter.toDto(g);
+                return Paths.REDIRECT_GRAPE + grapeDto.getKey();
             } else {
-                Grape g = grapeService.findByLowerCaseName(AbstractKeyUI.fromKey(grape.getName()));
-                GrapeUI grapeUI = grapeConverter.toUI(g);
-                return Paths.REDIRECT_GRAPE + grapeUI.getKey();
+                Grape g = grapeService.findByLowerCaseName(AbstractKeyDto.fromKey(grape.getName()));
+                GrapeDto grapeDto = grapeConverter.toDto(g);
+                return Paths.REDIRECT_GRAPE + grapeDto.getKey();
             }
         }
     }

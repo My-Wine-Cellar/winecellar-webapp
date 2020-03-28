@@ -8,13 +8,11 @@
 
 package info.mywinecellar.converter;
 
+import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Producer;
-import info.mywinecellar.ui.ProducerUI;
-import info.mywinecellar.ui.ProducerUISorter;
 import info.mywinecellar.util.Image;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -26,55 +24,51 @@ import org.springframework.stereotype.Component;
 public class ProducerConverter {
 
     /**
-     * Create a list of UI objects
+     * Create a list of Dto objects
      * @param producers The producers
-     * @return The UI objects
+     * @return The Dto objects
      */
-    public List<ProducerUI> toUIs(List<Producer> producers) {
+    public List<ProducerDto> toDto(List<Producer> producers) {
         if (producers == null) {
             throw new IllegalStateException("Producers is null");
         }
 
-        List<ProducerUI> result = new ArrayList<>();
-        for (Producer p : producers) {
-            result.add(toUI(p));
-        }
-        Collections.sort(result, new ProducerUISorter());
-
+        List<ProducerDto> result = new ArrayList<>();
+        producers.forEach(producer -> result.add(toDto(producer)));
         return result;
     }
 
     /**
-     * Create a UI object
+     * Create a Dto object
      * @param p A producer
-     * @return The UI
+     * @return The Dto
      */
-    public ProducerUI toUI(Producer p) {
+    public ProducerDto toDto(Producer p) {
         if (p == null) {
             throw new IllegalStateException("Producer is null");
         }
 
-        return new ProducerUI(p);
+        return new ProducerDto(p);
     }
 
     /**
      * Create a Producer entity
      * @param p The entity
-     * @param ui The UI object
+     * @param dto The Dto object
      * @return The new entity
      */
-    public Producer toEntity(Producer p, ProducerUI ui) {
+    public Producer toEntity(Producer p, ProducerDto dto) {
         if (p == null) {
-            p = new Producer(ui.getName(), ui.getDescription(), ui.getPhone(),
-                             ui.getFax(), ui.getEmail(), ui.getWebsite(),
-                             Image.decode(ui.getImage()));
+            p = new Producer(dto.getName(), dto.getDescription(), dto.getPhone(),
+                             dto.getFax(), dto.getEmail(), dto.getWebsite(),
+                             Image.decode(dto.getImage()));
         } else {
-            p.setDescription(ui.getDescription());
-            p.setPhone(ui.getPhone());
-            p.setFax(ui.getFax());
-            p.setEmail(ui.getEmail());
-            p.setWebsite(ui.getWebsite());
-            p.setImage(Image.decode(ui.getImage()));
+            p.setDescription(dto.getDescription());
+            p.setPhone(dto.getPhone());
+            p.setFax(dto.getFax());
+            p.setEmail(dto.getEmail());
+            p.setWebsite(dto.getWebsite());
+            p.setImage(Image.decode(dto.getImage()));
         }
 
         return p;

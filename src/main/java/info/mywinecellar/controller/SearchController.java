@@ -8,8 +8,8 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.SearchDto;
 import info.mywinecellar.nav.Paths;
-import info.mywinecellar.ui.SearchUI;
 import info.mywinecellar.util.SearchSorter;
 
 import java.sql.Connection;
@@ -72,8 +72,8 @@ public class SearchController {
      * @return The list of results
      * @throws Exception In case of an error
      */
-    private List<SearchUI> search(String input, String table, SearchUI.SearchResult type) throws Exception {
-        List<SearchUI> l = new ArrayList<>();
+    private List<SearchDto> search(String input, String table, SearchDto.SearchResult type) throws Exception {
+        List<SearchDto> l = new ArrayList<>();
         Connection c = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -131,7 +131,7 @@ public class SearchController {
                     String description = rs.getString(3);
                     Double rank = rs.getDouble(4);
 
-                    l.add(new SearchUI(type, id, name, description, rank));
+                    l.add(new SearchDto(type, id, name, description, rank));
                 }
             }
         } catch (Exception e) {
@@ -170,8 +170,8 @@ public class SearchController {
      * @return The list of results
      * @throws Exception In case of an error
      */
-    private List<SearchUI> searchArea(String input) throws Exception {
-        return search(input, "area", SearchUI.SearchResult.AREA);
+    private List<SearchDto> searchArea(String input) throws Exception {
+        return search(input, "area", SearchDto.SearchResult.AREA);
     }
 
     /**
@@ -181,8 +181,8 @@ public class SearchController {
      * @return The list of results
      * @throws Exception In case of an error
      */
-    private List<SearchUI> searchCountry(String input) throws Exception {
-        return search(input, "country", SearchUI.SearchResult.COUNTRY);
+    private List<SearchDto> searchCountry(String input) throws Exception {
+        return search(input, "country", SearchDto.SearchResult.COUNTRY);
     }
 
     /**
@@ -192,8 +192,8 @@ public class SearchController {
      * @return The list of results
      * @throws Exception In case of an error
      */
-    private List<SearchUI> searchProducer(String input) throws Exception {
-        return search(input, "producer", SearchUI.SearchResult.PRODUCER);
+    private List<SearchDto> searchProducer(String input) throws Exception {
+        return search(input, "producer", SearchDto.SearchResult.PRODUCER);
     }
 
     /**
@@ -203,8 +203,8 @@ public class SearchController {
      * @return The list of results
      * @throws Exception In case of an error
      */
-    private List<SearchUI> searchRegion(String input) throws Exception {
-        return search(input, "region", SearchUI.SearchResult.REGION);
+    private List<SearchDto> searchRegion(String input) throws Exception {
+        return search(input, "region", SearchDto.SearchResult.REGION);
     }
 
     /**
@@ -214,8 +214,8 @@ public class SearchController {
      * @return The list of results
      * @throws Exception In case of an error
      */
-    private List<SearchUI> searchWine(String input) throws Exception {
-        return search(input, "wine", SearchUI.SearchResult.WINE);
+    private List<SearchDto> searchWine(String input) throws Exception {
+        return search(input, "wine", SearchDto.SearchResult.WINE);
     }
 
     /**
@@ -225,7 +225,7 @@ public class SearchController {
      */
     @GetMapping("/new")
     public String searchNewGet() {
-        List<SearchUI> l = new ArrayList<>();
+        List<SearchDto> l = new ArrayList<>();
         String input = "Poggio";
 
         try {

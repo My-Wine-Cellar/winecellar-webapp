@@ -10,15 +10,31 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.BarrelComponent;
 
-/**
- * BarrelComponent service
- */
-public interface BarrelComponentService extends CrudService<BarrelComponent, Long> {
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+@Component
+public class BarrelComponentService extends AbstractService<BarrelComponent> {
 
     /**
-     * Save all
-     * @param barrels The barrel components
-     * @return The updated barrel components
+     * Constructor
      */
-    Iterable<BarrelComponent> saveAll(Iterable<BarrelComponent> barrels);
+    public BarrelComponentService() {
+        super(BarrelComponent.class);
+    }
+
+    /**
+     * Save all BarrelComponents
+     * @param barrels barrels
+     */
+    @Transactional
+    public void saveAll(List<BarrelComponent> barrels) {
+        try {
+            em.persist(barrels);
+        } catch (Exception ignored) {
+
+        }
+    }
 }

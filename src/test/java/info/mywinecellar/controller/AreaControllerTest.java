@@ -8,9 +8,9 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.AreaDto;
 import info.mywinecellar.service.AreaService;
 import info.mywinecellar.service.GrapeService;
-import info.mywinecellar.ui.AreaUI;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,13 +40,13 @@ class AreaControllerTest {
     @Mock
     GrapeService grapeService;
 
-    AreaUI area;
+    AreaDto area;
 
     MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        area = new AreaUI();
+        area = new AreaDto();
         area.setId(1L);
         area.setName("Grand Valley AVA");
 

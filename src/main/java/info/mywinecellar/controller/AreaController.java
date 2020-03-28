@@ -8,13 +8,13 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.AreaDto;
+import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Grape;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
-import info.mywinecellar.ui.AreaUI;
-import info.mywinecellar.ui.ProducerUI;
 
 import java.security.Principal;
 
@@ -60,25 +60,25 @@ public class AreaController extends AbstractController {
     public String areaEditGet(@PathVariable Long areaId, Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.AREA, areaConverter.toUI(areaService.findById(areaId)));
+        model.addAttribute(Attributes.AREA, areaConverter.toDto(areaService.findById(areaId)));
         return Paths.AREA_EDIT;
     }
 
     /**
-     * @param areaUI      area
+     * @param areaDto   area
      * @param principal principal
      * @param areaId    areaId
      * @param action    action
      * @return View
      */
     @PostMapping("/{areaId}/edit")
-    public String areaEditPost(AreaUI areaUI, Principal principal,
+    public String areaEditPost(AreaDto areaDto, Principal principal,
                                @PathVariable Long areaId,
                                @RequestParam("action") String action) {
         principalNull(principal);
 
         if (action.equals("save")) {
-            Area area = areaService.editArea(areaUI, areaId);
+            Area area = areaService.editArea(areaDto, areaId);
             return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
         } else {
             return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
@@ -95,22 +95,21 @@ public class AreaController extends AbstractController {
     public String areaAddProducerGet(Model model, @PathVariable Long areaId, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.AREA, areaConverter.toUI(areaService.findById(areaId)));
-        model.addAttribute(Attributes.PRODUCER, new ProducerUI());
+        model.addAttribute(Attributes.AREA, areaConverter.toDto(areaService.findById(areaId)));
+        model.addAttribute(Attributes.PRODUCER, new ProducerDto());
         return Paths.PRODUCER_ADD_EDIT;
     }
 
     /**
      * @param producer  producer
      * @param result    result
-     * @param model     model
      * @param areaId    areaId
      * @param principal principal
      * @param action    action
      * @return View
      */
     @PostMapping("/{areaId}/addProducer")
-    public String areaAddProducerPost(@Valid ProducerUI producer, BindingResult result, Model model,
+    public String areaAddProducerPost(@Valid ProducerDto producer, BindingResult result,
                                       @PathVariable Long areaId, Principal principal,
                                       @RequestParam("action") String action) {
         principalNull(principal);
@@ -139,9 +138,9 @@ public class AreaController extends AbstractController {
     public String areaAddGrapeGet(Model model, @PathVariable Long areaId, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.AREA, areaConverter.toUI(areaService.findById(areaId)));
-        model.addAttribute(Attributes.RED_GRAPES, grapeConverter.toUIs(grapeService.getRedGrapes()));
-        model.addAttribute(Attributes.WHITE_GRAPES, grapeConverter.toUIs(grapeService.getWhiteGrapes()));
+        model.addAttribute(Attributes.AREA, areaConverter.toDto(areaService.findById(areaId)));
+        model.addAttribute(Attributes.RED_GRAPES, grapeConverter.toDto(grapeService.getRedGrapes()));
+        model.addAttribute(Attributes.WHITE_GRAPES, grapeConverter.toDto(grapeService.getWhiteGrapes()));
         return Paths.AREA_ADD_GRAPE;
     }
 
@@ -153,7 +152,7 @@ public class AreaController extends AbstractController {
      * @return View
      */
     @PostMapping("/{areaId}/addGrape")
-    public String areaAddGrapePost(AreaUI area, Principal principal,
+    public String areaAddGrapePost(AreaDto area, Principal principal,
                                    @PathVariable Long areaId,
                                    @RequestParam("action") String action) {
         principalNull(principal);

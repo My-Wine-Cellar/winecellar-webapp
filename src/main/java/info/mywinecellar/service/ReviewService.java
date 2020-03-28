@@ -10,24 +10,54 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Review;
 
-/**
- * Review service
- */
-public interface ReviewService extends CrudService<Review, Long> {
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class ReviewService extends AbstractService<Review> {
 
     /**
-     * Find by user
-     * @param userId The user identifier
-     * @param id The review identifier
-     * @return The review
+     * Constructor
      */
-    Review findByUser(Integer userId, Long id);
+    public ReviewService() {
+        super(Review.class);
+    }
 
     /**
-     * Find by wine
-     * @param userId The user identifier
-     * @param wineId The wine identifier
-     * @return The review
+     * Find Review for a User
+     *
+     * @param userId Integer userId
+     * @param id     Long id
+     * @return Review entity
      */
-    Review findByWine(Integer userId, Long wineId);
+    public Review findByUser(Integer userId, Long id) {
+        try {
+            Query query = em.createQuery("SELECT r FROM Review r WHERE r.user.id = :userid AND r.id = :id");
+            query.setParameter("userid", userId);
+            query.setParameter("id", id);
+            return (Review) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Find Review for a Wine
+     *
+     * @param userId Integer userId
+     * @param wineId Long wineId
+     * @return Review entity
+     */
+    public Review findByWine(Integer userId, Long wineId) {
+        try {
+            Query query = em.createQuery("SELECT r FROM Review r WHERE r.user.id = :userid AND r.wine.id = :wineid");
+            query.setParameter("userid", userId);
+            query.setParameter("wineid", wineId);
+            return (Review) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

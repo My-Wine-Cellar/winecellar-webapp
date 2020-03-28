@@ -9,13 +9,12 @@
 package info.mywinecellar.service;
 
 import info.mywinecellar.converter.GrapeConverter;
+import info.mywinecellar.dto.GrapeDto;
 import info.mywinecellar.model.Grape;
-import info.mywinecellar.ui.GrapeUI;
 
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
@@ -25,25 +24,16 @@ import org.springframework.transaction.annotation.Transactional;
  * Grape service
  */
 @Component
-public class GrapeService {
-
-    @Inject
-    private EntityManager em;
+public class GrapeService extends AbstractService<Grape> {
 
     @Inject
     private GrapeConverter grapeConverter;
 
     /**
-     * Find by id
-     * @param id The identifier
-     * @return The grape
+     * Constructor
      */
-    public Grape findById(Long id) {
-        try {
-            return em.find(Grape.class, id);
-        } catch (Exception e) {
-            return null;
-        }
+    public GrapeService() {
+        super(Grape.class);
     }
 
     /**
@@ -63,20 +53,6 @@ public class GrapeService {
     }
 
     /**
-     * Find all
-     *
-     * @return The grape
-     */
-    public List<Grape> findAll() {
-        try {
-            Query q = em.createQuery("SELECT g FROM Grape g");
-            return q.getResultList();
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    /**
      * Find all white grapes
      *
      * @return The grapes
@@ -84,8 +60,8 @@ public class GrapeService {
     public List<Grape> getWhiteGrapes() {
         try {
             Query q =
-                em.createNativeQuery("SELECT * FROM grape WHERE grape.color = 'White' ORDER BY grape.name",
-                                     Grape.class);
+                    em.createNativeQuery("SELECT * FROM grape WHERE grape.color = 'White' ORDER BY grape.name",
+                            Grape.class);
             return q.getResultList();
         } catch (Exception e) {
             return null;
@@ -100,8 +76,8 @@ public class GrapeService {
     public List<Grape> getRedGrapes() {
         try {
             Query q =
-                em.createNativeQuery("SELECT * FROM grape WHERE grape.color = 'Red' ORDER BY grape.name",
-                                     Grape.class);
+                    em.createNativeQuery("SELECT * FROM grape WHERE grape.color = 'Red' ORDER BY grape.name",
+                            Grape.class);
             return q.getResultList();
         } catch (Exception e) {
             return null;
@@ -125,27 +101,13 @@ public class GrapeService {
     }
 
     /**
-     * Save
-     * @param g The grape
-     */
-    @Transactional
-    public void save(Grape g) {
-        try {
-            em.persist(g);
-        } catch (Exception e) {
-            // Log
-            System.out.println(e.getMessage());
-            e.printStackTrace(System.out);
-        }
-    }
-
-    /**
      * Edit Grape
-     * @param ui GrapeUI ui
+     *
+     * @param ui      GrapeUI ui
      * @param grapeId Long grapeId
      */
     @Transactional
-    public void editGrape(GrapeUI ui, Long grapeId) {
+    public void editGrape(GrapeDto ui, Long grapeId) {
         Grape grape = this.findById(grapeId);
         Grape update = grapeConverter.toEntity(grape, ui);
         this.save(update);

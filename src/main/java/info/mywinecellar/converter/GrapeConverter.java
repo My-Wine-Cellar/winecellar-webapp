@@ -8,9 +8,9 @@
 
 package info.mywinecellar.converter;
 
+import info.mywinecellar.dto.GrapeDto;
+import info.mywinecellar.dto.GrapeDtoSorter;
 import info.mywinecellar.model.Grape;
-import info.mywinecellar.ui.GrapeUI;
-import info.mywinecellar.ui.GrapeUISorter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,49 +25,49 @@ import org.springframework.stereotype.Component;
 public class GrapeConverter {
 
     /**
-     * Create a list of UI objects
+     * Create a list of Dto objects
      * @param grapes The grapes
-     * @return The UI objects
+     * @return The Dto objects
      */
-    public List<GrapeUI> toUIs(List<Grape> grapes) {
+    public List<GrapeDto> toDto(List<Grape> grapes) {
         if (grapes == null) {
             throw new IllegalStateException("Grapes is null");
         }
 
-        List<GrapeUI> result = new ArrayList<>();
+        List<GrapeDto> result = new ArrayList<>();
         for (Grape g : grapes) {
-            result.add(toUI(g));
+            result.add(toDto(g));
         }
-        Collections.sort(result, new GrapeUISorter());
+        Collections.sort(result, new GrapeDtoSorter());
 
         return result;
     }
 
     /**
-     * Create a UI object
+     * Create a Dto object
      * @param g A grape
-     * @return The UI
+     * @return The Dto
      */
-    public GrapeUI toUI(Grape g) {
+    public GrapeDto toDto(Grape g) {
         if (g == null) {
             throw new IllegalStateException("Grape is null");
         }
 
-        return new GrapeUI(g);
+        return new GrapeDto(g);
     }
 
     /**
      * Create a Grape entity
      * @param g The entity
-     * @param ui The UI object
+     * @param dto The Dto object
      * @return The new entity
      */
-    public Grape toEntity(Grape g, GrapeUI ui) {
+    public Grape toEntity(Grape g, GrapeDto dto) {
         if (g == null) {
-            g = new Grape(ui.getName(), ui.getColor(), ui.getDescription(), ui.getWeblink());
+            g = new Grape(dto.getName(), dto.getColor(), dto.getDescription(), dto.getWeblink());
         } else {
-            g.setDescription(ui.getDescription());
-            g.setWeblink(ui.getWeblink());
+            g.setDescription(dto.getDescription());
+            g.setWeblink(dto.getWeblink());
         }
 
         return g;

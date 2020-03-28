@@ -8,9 +8,9 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.dto.AreaDto;
+import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Area;
-import info.mywinecellar.ui.AreaUI;
-import info.mywinecellar.ui.ProducerUI;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +28,14 @@ public class AreaRestController extends AbstractRestController {
     /**
      * PUT mapping to update an Area
      *
-     * @param areaUI   Area area
-     * @param areaId Long areaId
+     * @param areaDto AreaDto areaDto
+     * @param areaId  Long areaId
      * @return ResponseEntity.ACCEPTED
      */
     @PutMapping("/edit")
-    public ResponseEntity<?> areaEditPut(@RequestBody AreaUI areaUI, @PathVariable Long areaId) {
-        checkObjectNull(areaUI);
-        Area area = areaService.editArea(areaUI, areaId);
+    public ResponseEntity<?> areaEditPut(@RequestBody AreaDto areaDto, @PathVariable Long areaId) {
+        checkObjectNull(areaDto);
+        Area area = areaService.editArea(areaDto, areaId);
         return ResponseEntity.accepted().body("Updated " + area.toString());
     }
 
@@ -47,7 +47,7 @@ public class AreaRestController extends AbstractRestController {
      * @return ResponseEntity.CREATED
      */
     @PostMapping("/addProducer")
-    public ResponseEntity<?> areaAddProducerPost(@RequestBody ProducerUI producer, @PathVariable Long areaId) {
+    public ResponseEntity<?> areaAddProducerPost(@RequestBody ProducerDto producer, @PathVariable Long areaId) {
         checkObjectNull(producer);
         Area area = areaService.areaAddProducer(producer, areaId);
         return ResponseEntity.status(HttpStatus.CREATED).body("Added " + producer.getName() +

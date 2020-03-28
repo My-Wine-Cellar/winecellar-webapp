@@ -10,24 +10,55 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.GenericTastingNotes;
 
-/**
- * Tasting notes service
- */
-public interface TastingNotesService extends CrudService<GenericTastingNotes, Long> {
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class TastingNotesService extends AbstractService<GenericTastingNotes> {
 
     /**
-     * Find by user
-     * @param userId The user identifier
-     * @param id The tasting notes identifier
-     * @return The tasting notes
+     * Constructor
      */
-    GenericTastingNotes findByUser(Integer userId, Long id);
+    public TastingNotesService() {
+        super(GenericTastingNotes.class);
+    }
 
     /**
-     * Find by wine
-     * @param userId The user identifier
-     * @param wineId The wine identifier
-     * @return The tasting notes
+     * Find TastingNotes for a User
+     *
+     * @param userId Integer userId
+     * @param id     Long id
+     * @return TastingNotes entity
      */
-    GenericTastingNotes findByWine(Integer userId, Long wineId);
+    public GenericTastingNotes findByUser(Integer userId, Long id) {
+        try {
+            Query query = em.createQuery("SELECT gtn from GenericTastingNotes gtn " +
+                    "WHERE gtn.user.id = :userid AND gtn.id = :id");
+            query.setParameter("userid", userId);
+            query.setParameter("id", id);
+            return (GenericTastingNotes) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Find TastingNotes for a Wine
+     *
+     * @param userId Integer userId
+     * @param wineId Long wineId
+     * @return TastingNotes entity
+     */
+    public GenericTastingNotes findByWine(Integer userId, Long wineId) {
+        try {
+            Query query = em.createQuery("SELECT gtn FROM GenericTastingNotes gtn " +
+                    "WHERE gtn.user.id = :userid AND gtn.wine.id = :wineid");
+            query.setParameter("userid", userId);
+            query.setParameter("wineid", wineId);
+            return (GenericTastingNotes) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

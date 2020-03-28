@@ -9,8 +9,8 @@
 package info.mywinecellar.service;
 
 import info.mywinecellar.converter.CountryConverter;
+import info.mywinecellar.dto.CountryDto;
 import info.mywinecellar.model.Country;
-import info.mywinecellar.ui.CountryUI;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CountryService {
+public class CountryService extends AbstractService<Country> {
 
     @Inject
     private EntityManager em;
@@ -31,17 +31,10 @@ public class CountryService {
     private CountryConverter countryConverter;
 
     /**
-     * Find Country by it's ID
-     *
-     * @param id Long id
-     * @return Country entity
+     * Super constructor
      */
-    public Country findById(Long id) {
-        try {
-            return em.find(Country.class, id);
-        } catch (Exception e) {
-            return null;
-        }
+    public CountryService() {
+        super(Country.class);
     }
 
     /**
@@ -97,21 +90,6 @@ public class CountryService {
     }
 
     /**
-     * Save a Country entity
-     *
-     * @param country Country country
-     */
-    @Transactional
-    public void save(Country country) {
-        try {
-            em.persist(country);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace(System.out);
-        }
-    }
-
-    /**
      * Helper service to find a Country by it's ID, convert it from the UI object, and then save
      *
      * @param ui        CountryUI ui
@@ -119,7 +97,7 @@ public class CountryService {
      * @return Country entity
      */
     @Transactional
-    public Country editCountry(CountryUI ui, Long countryId) {
+    public Country editCountry(CountryDto ui, Long countryId) {
         Country country = this.findById(countryId);
         country = countryConverter.toEntity(country, ui);
         this.save(country);

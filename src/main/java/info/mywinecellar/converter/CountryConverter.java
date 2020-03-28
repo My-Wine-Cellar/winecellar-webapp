@@ -8,9 +8,9 @@
 
 package info.mywinecellar.converter;
 
+import info.mywinecellar.dto.CountryDto;
+import info.mywinecellar.dto.CountryDtoSorter;
 import info.mywinecellar.model.Country;
-import info.mywinecellar.ui.CountryUI;
-import info.mywinecellar.ui.CountryUISorter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,47 +21,47 @@ import org.springframework.stereotype.Component;
 public class CountryConverter {
 
     /**
-     * Convert Country entity to CountryUI
+     * Convert Country entity to CountryDto
      *
      * @param country Country country
-     * @return CountryUI object
+     * @return CountryDto object
      */
-    public CountryUI toUI(Country country) {
+    public CountryDto toDto(Country country) {
         if (country == null) {
             throw new IllegalStateException("Country is null");
         }
-        return new CountryUI(country);
+        return new CountryDto(country);
     }
 
     /**
-     * Convert a list of Countries to a list of CountryUI objects
+     * Convert a list of Countries to a list of CountryDto objects
      *
      * @param countries List<Country> countries
-     * @return List<CountryUI> countryUI's
+     * @return List<CountryDto> countryDto's
      */
-    public List<CountryUI> toUIs(List<Country> countries) {
+    public List<CountryDto> toDto(List<Country> countries) {
         if (countries == null) {
             throw new IllegalStateException("Country list is null");
         }
-        List<CountryUI> result = new ArrayList<>();
-        countries.forEach(country -> result.add(toUI(country)));
-        result.sort(new CountryUISorter());
+        List<CountryDto> result = new ArrayList<>();
+        countries.forEach(country -> result.add(toDto(country)));
+        result.sort(new CountryDtoSorter());
         return result;
     }
 
     /**
-     * Update and convert Country entity from CountryUI to prepare for save
+     * Update and convert Country entity from CountryDto to prepare for save
      *
      * @param entity Country entity
-     * @param ui     CountryUI ui
+     * @param dto    CountryDto dto
      * @return Country entity
      */
-    public Country toEntity(Country entity, CountryUI ui) {
+    public Country toEntity(Country entity, CountryDto dto) {
         if (entity == null) {
-            entity = new Country(ui.getName(), ui.getDescription(), ui.getWeblink(), ui.getFlag());
+            entity = new Country(dto.getName(), dto.getDescription(), dto.getWeblink(), dto.getFlag());
         } else {
-            entity.setDescription(ui.getDescription());
-            entity.setWeblink(ui.getWeblink());
+            entity.setDescription(dto.getDescription());
+            entity.setWeblink(dto.getWeblink());
         }
         return entity;
     }

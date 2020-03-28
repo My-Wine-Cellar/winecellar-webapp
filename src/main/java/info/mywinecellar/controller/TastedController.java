@@ -9,10 +9,9 @@
 package info.mywinecellar.controller;
 
 import info.mywinecellar.model.Tasted;
+import info.mywinecellar.model.User;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
-import info.mywinecellar.security.model.User;
-import info.mywinecellar.ui.TastedUIFactory;
 
 import java.security.Principal;
 
@@ -52,8 +51,7 @@ public class TastedController extends AbstractController {
             tastedService.delete(tasted);
         }
 
-        model.addAttribute(Attributes.TASTED, TastedUIFactory.instance().createList(reviewService,
-                user, user.getTasted()));
+        model.addAttribute(Attributes.TASTED, tastedConverter.toDto(user, user.getTasted()));
         return Paths.TASTED_LIST;
     }
 
@@ -69,8 +67,7 @@ public class TastedController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.TASTED, TastedUIFactory.instance().createList(reviewService,
-                user, user.getTasted()));
+        model.addAttribute(Attributes.TASTED, tastedConverter.toDto(user, user.getTasted()));
         return Paths.TASTED_LIST;
     }
 }

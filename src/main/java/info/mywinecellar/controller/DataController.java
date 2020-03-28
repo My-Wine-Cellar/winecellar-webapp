@@ -8,6 +8,12 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.AbstractKeyDto;
+import info.mywinecellar.dto.AgingDto;
+import info.mywinecellar.dto.BarrelDto;
+import info.mywinecellar.dto.BarrelDtoSorter;
+import info.mywinecellar.dto.GrapeDto;
+import info.mywinecellar.dto.GrapeDtoSorter;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.BarrelComponent;
 import info.mywinecellar.model.Bottle;
@@ -17,22 +23,16 @@ import info.mywinecellar.model.GrapeComponent;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.model.Region;
 import info.mywinecellar.model.Review;
+import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.model.Wishlist;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
-import info.mywinecellar.security.model.User;
 import info.mywinecellar.service.BottleService;
 import info.mywinecellar.service.ReviewService;
 import info.mywinecellar.service.TastingNotesService;
 import info.mywinecellar.service.WishlistService;
-import info.mywinecellar.ui.AbstractKeyUI;
-import info.mywinecellar.ui.AgingUI;
-import info.mywinecellar.ui.BarrelUI;
-import info.mywinecellar.ui.BarrelUISorter;
-import info.mywinecellar.ui.GrapeUI;
-import info.mywinecellar.ui.GrapeUISorter;
 import info.mywinecellar.util.Image;
 
 import java.security.Principal;
@@ -78,7 +78,7 @@ public class DataController extends AbstractController {
     @GetMapping("/")
     public String dataRootGet(Model model) {
         List<Country> countries = countryService.findWithRegions();
-        model.addAttribute(Attributes.COUNTRIES, countryConverter.toUIs(countries));
+        model.addAttribute(Attributes.COUNTRIES, countryConverter.toDto(countries));
 
         Session.updateSessionAttributes(null, null, null, null, null);
 
@@ -98,7 +98,7 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
+        c = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
         if (c == null) {
             return Paths.REDIRECT_ROOT;
         }
@@ -106,8 +106,8 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(c));
-        model.addAttribute(Attributes.REGIONS, regionConverter.toUIs(c.getRegions()));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
+        model.addAttribute(Attributes.REGIONS, regionConverter.toDto(c.getRegions()));
 
         Session.updateSessionAttributes(c.getId(), null, null, null, null);
 
@@ -129,19 +129,19 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
+        c = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
         if (c == null) {
             return Paths.REDIRECT_ROOT;
         }
 
-        r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
+        r = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(region), c.getId());
         if (r == null) {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(c));
-        model.addAttribute(Attributes.REGION, regionConverter.toUI(r));
-        model.addAttribute(Attributes.AREAS, areaConverter.toUIs(r.getAreas()));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
+        model.addAttribute(Attributes.REGION, regionConverter.toDto(r));
+        model.addAttribute(Attributes.AREAS, areaConverter.toDto(r.getAreas()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), null, null, null);
 
@@ -166,18 +166,18 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
+        c = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
         if (c == null) {
             return Paths.REDIRECT_ROOT;
         }
 
-        r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
+        r = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(region), c.getId());
         if (r == null) {
             return Paths.REDIRECT_ROOT;
         }
 
         for (Area ar : r.getAreas()) {
-            if (AbstractKeyUI.toKey(ar.getName()).equals(area)) {
+            if (AbstractKeyDto.toKey(ar.getName()).equals(area)) {
                 a = ar;
                 break;
             }
@@ -186,11 +186,11 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(c));
-        model.addAttribute(Attributes.REGION, regionConverter.toUI(r));
-        model.addAttribute(Attributes.AREA, areaConverter.toUI(a));
-        model.addAttribute(Attributes.PRODUCERS, producerConverter.toUIs(a.getProducers()));
-        model.addAttribute(Attributes.PRIMARY_GRAPES, grapeConverter.toUIs(a.getPrimaryGrapes()));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
+        model.addAttribute(Attributes.REGION, regionConverter.toDto(r));
+        model.addAttribute(Attributes.AREA, areaConverter.toDto(a));
+        model.addAttribute(Attributes.PRODUCERS, producerConverter.toDto(a.getProducers()));
+        model.addAttribute(Attributes.PRIMARY_GRAPES, grapeConverter.toDto(a.getPrimaryGrapes()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), null, null);
 
@@ -217,18 +217,18 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
+        c = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
         if (c == null) {
             return Paths.REDIRECT_ROOT;
         }
 
-        r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
+        r = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(region), c.getId());
         if (r == null) {
             return Paths.REDIRECT_ROOT;
         }
 
         for (Area ar : r.getAreas()) {
-            if (AbstractKeyUI.toKey(ar.getName()).equals(area)) {
+            if (AbstractKeyDto.toKey(ar.getName()).equals(area)) {
                 a = ar;
                 break;
             }
@@ -238,7 +238,7 @@ public class DataController extends AbstractController {
         }
 
         for (Producer pr : a.getProducers()) {
-            if (AbstractKeyUI.toKey(pr.getName()).equals(producer)) {
+            if (AbstractKeyDto.toKey(pr.getName()).equals(producer)) {
                 p = pr;
                 break;
             }
@@ -247,11 +247,11 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(c));
-        model.addAttribute(Attributes.REGION, regionConverter.toUI(r));
-        model.addAttribute(Attributes.AREA, areaConverter.toUI(a));
-        model.addAttribute(Attributes.PRODUCER, producerConverter.toUI(p));
-        model.addAttribute(Attributes.WINES, wineConverter.toUIs(p.getWines()));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
+        model.addAttribute(Attributes.REGION, regionConverter.toDto(r));
+        model.addAttribute(Attributes.AREA, areaConverter.toDto(a));
+        model.addAttribute(Attributes.PRODUCER, producerConverter.toDto(p));
+        model.addAttribute(Attributes.WINES, wineConverter.toDto(p.getWines()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), null);
 
@@ -291,18 +291,18 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        c = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(country));
+        c = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
         if (c == null) {
             return Paths.REDIRECT_ROOT;
         }
 
-        r = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(region), c.getId());
+        r = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(region), c.getId());
         if (r == null) {
             return Paths.REDIRECT_ROOT;
         }
 
         for (Area ar : r.getAreas()) {
-            if (AbstractKeyUI.toKey(ar.getName()).equals(area)) {
+            if (AbstractKeyDto.toKey(ar.getName()).equals(area)) {
                 a = ar;
                 break;
             }
@@ -312,7 +312,7 @@ public class DataController extends AbstractController {
         }
 
         for (Producer pr : a.getProducers()) {
-            if (AbstractKeyUI.toKey(pr.getName()).equals(producer)) {
+            if (AbstractKeyDto.toKey(pr.getName()).equals(producer)) {
                 p = pr;
                 break;
             }
@@ -322,7 +322,7 @@ public class DataController extends AbstractController {
         }
 
         for (Wine wi : p.getWines()) {
-            if (AbstractKeyUI.toKey(wi.getName()).equals(wine) &&
+            if (AbstractKeyDto.toKey(wi.getName()).equals(wine) &&
                     wi.getVintage().equals(vintage) && wi.getSize().equals(size)) {
                 w = wi;
                 break;
@@ -340,22 +340,22 @@ public class DataController extends AbstractController {
             wishlist = wishlistService.findByWine(user.getId(), w.getId());
         }
 
-        List<GrapeUI> winegrapes = new ArrayList<>();
+        List<GrapeDto> winegrapes = new ArrayList<>();
         for (GrapeComponent gc : w.getGrapes()) {
-            List<BarrelUI> barrels = new ArrayList<>();
+            List<BarrelDto> barrels = new ArrayList<>();
 
             if (gc.getBarrelComponents() != null) {
                 for (BarrelComponent bc : gc.getBarrelComponents()) {
-                    barrels.add(new BarrelUI(bc.getPercentage(),
+                    barrels.add(new BarrelDto(bc.getPercentage(),
                             bc.getBarrel().getName(), bc.getBarrel().getId(),
-                            bc.getSize(), new AgingUI(bc.getAging())
+                            bc.getSize(), new AgingDto(bc.getAging())
                     ));
                 }
             }
 
-            Collections.sort(barrels, new BarrelUISorter());
+            Collections.sort(barrels, new BarrelDtoSorter());
 
-            winegrapes.add(new GrapeUI(gc.getPercentage(),
+            winegrapes.add(new GrapeDto(gc.getPercentage(),
                     gc.getGrape().getName(), gc.getGrape().getId(),
                     gc.getHarvestBegin(), gc.getHarvestEnd(),
                     gc.getMaceration() != null ? gc.getMaceration().getDays() : null,
@@ -365,13 +365,13 @@ public class DataController extends AbstractController {
                     barrels
             ));
         }
-        Collections.sort(winegrapes, new GrapeUISorter());
+        Collections.sort(winegrapes, new GrapeDtoSorter());
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toUI(c));
-        model.addAttribute(Attributes.REGION, regionConverter.toUI(r));
-        model.addAttribute(Attributes.AREA, areaConverter.toUI(a));
-        model.addAttribute(Attributes.PRODUCER, producerConverter.toUI(p));
-        model.addAttribute(Attributes.WINE, wineConverter.toUI(w));
+        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
+        model.addAttribute(Attributes.REGION, regionConverter.toDto(r));
+        model.addAttribute(Attributes.AREA, areaConverter.toDto(a));
+        model.addAttribute(Attributes.PRODUCER, producerConverter.toDto(p));
+        model.addAttribute(Attributes.WINE, wineConverter.toDto(w));
         model.addAttribute(Attributes.ENCODED_IMAGE, Image.encode(w.getImage()));
         model.addAttribute(Attributes.WINEGRAPES, winegrapes);
         model.addAttribute(Attributes.MYBOTTLE, bottle);

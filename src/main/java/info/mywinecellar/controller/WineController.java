@@ -8,6 +8,7 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.WineDto;
 import info.mywinecellar.model.BarrelComponent;
 import info.mywinecellar.model.Grape;
 import info.mywinecellar.model.GrapeComponent;
@@ -17,7 +18,6 @@ import info.mywinecellar.nav.Actions;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
-import info.mywinecellar.ui.WineUI;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -134,12 +134,12 @@ public class WineController extends AbstractController {
             switch (action) {
                 case Actions.SAVE_WINE:
                     wineService.save(wine);
-                    WineUI wui = wineConverter.toUI(wine);
+                    WineDto wineDto = wineConverter.toDto(wine);
 
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                             Session.getAreaId(), Session.getProducerId()) +
-                            "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
+                            "/" + wineDto.getKey() + "/" + wineDto.getVintage() + "/" + wineDto.getSize();
                 case Actions.ADD_GRAPE:
                     return Paths.REDIRECT_WINE_GRAPE;
                 default:
@@ -211,11 +211,11 @@ public class WineController extends AbstractController {
                     barrelComponentService.saveAll(barrels);
                 }
 
-                WineUI wui = wineConverter.toUI(wine);
+                WineDto wineDto = wineConverter.toDto(wine);
                 Session.clear(status);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                         Session.getAreaId(), Session.getProducerId()) +
-                        "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
+                        "/" + wineDto.getKey() + "/" + wineDto.getVintage() + "/" + wineDto.getSize();
             default:
                 Session.clear(status);
                 return Paths.ERROR_PAGE;
@@ -288,12 +288,12 @@ public class WineController extends AbstractController {
                     grapeComponentService.saveAll(grapes);
                     barrelComponentService.saveAll(barrels);
 
-                    WineUI wui = wineConverter.toUI(wine);
+                    WineDto wineDto = wineConverter.toDto(wine);
 
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                             Session.getAreaId(), Session.getProducerId()) +
-                            "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
+                            "/" + wineDto.getKey() + "/" + wineDto.getVintage() + "/" + wineDto.getSize();
                 default:
                     Session.clear(status);
                     return Paths.ERROR_PAGE;
@@ -348,20 +348,20 @@ public class WineController extends AbstractController {
             switch (action) {
                 case Actions.SAVE_WINE:
                     wineService.update(wine);
-                    WineUI wui = wineConverter.toUI(wine);
+                    WineDto wineDto = wineConverter.toDto(wine);
 
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                             Session.getAreaId(), Session.getProducerId()) +
-                            "/" + wui.getKey() + "/" + wui.getVintage() + "/" + wui.getSize();
+                            "/" + wineDto.getKey() + "/" + wineDto.getVintage() + "/" + wineDto.getSize();
                 case Actions.ADD_GRAPE:
                     return Paths.REDIRECT_WINE_GRAPE;
                 case Actions.CANCEL:
-                    WineUI wineUI = wineConverter.toUI(wine);
+                    WineDto cancelDto = wineConverter.toDto(wine);
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                             Session.getAreaId(), Session.getProducerId()) +
-                            "/" + wineUI.getKey() + "/" + wineUI.getVintage() + "/" + wineUI.getSize();
+                            "/" + cancelDto.getKey() + "/" + cancelDto.getVintage() + "/" + cancelDto.getSize();
                 default:
                     Session.clear(status);
                     return Paths.ERROR_PAGE;
@@ -407,17 +407,17 @@ public class WineController extends AbstractController {
                     return Paths.WINE_IMAGE;
                 }
                 wineService.save(saveWine);
-                WineUI wineUI = wineConverter.toUI(wine);
+                WineDto wineDto = wineConverter.toDto(wine);
                 Session.clear(status);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(),
-                        Session.getProducerId()) + "/" + wineUI.getKey() + "/" +
-                        wineUI.getVintage() + "/" + wineUI.getSize();
+                        Session.getProducerId()) + "/" + wineDto.getKey() + "/" +
+                        wineDto.getVintage() + "/" + wineDto.getSize();
             } else if (action.equals("cancel")) {
-                WineUI wineUI = wineConverter.toUI(wine);
+                WineDto cancelDto = wineConverter.toDto(wine);
                 Session.clear(status);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                         Session.getAreaId(), Session.getProducerId()) +
-                        "/" + wineUI.getKey() + "/" + wineUI.getVintage() + "/" + wineUI.getSize();
+                        "/" + cancelDto.getKey() + "/" + cancelDto.getVintage() + "/" + cancelDto.getSize();
             }
         }
         return Paths.ERROR_PAGE;

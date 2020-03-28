@@ -10,25 +10,53 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Wishlist;
 
-/**
- * Wishlist service
- */
-public interface WishlistService extends CrudService<Wishlist, Long> {
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class WishlistService extends AbstractService<Wishlist> {
 
     /**
-     * Find by user
-     * @param userId The user identifier
-     * @param id The wishlist identifier
-     * @return The wishlist
+     * Constructor
      */
-    Wishlist findByUser(Integer userId, Long id);
+    public WishlistService() {
+        super(Wishlist.class);
+    }
 
     /**
-     * Find by wine
-     * @param userId The user identifier
-     * @param wineId The wine identifier
-     * @return The wishlist
+     * Find Wishlist for a User
+     *
+     * @param userId Integer userId
+     * @param id     Long id
+     * @return Wishlist entity
      */
-    Wishlist findByWine(Integer userId, Long wineId);
+    public Wishlist findByUser(Integer userId, Long id) {
+        try {
+            Query query = em.createQuery("SELECT w FROM Wishlist w WHERE w.user.id = :userid AND w.id = :id");
+            query.setParameter("userid", userId);
+            query.setParameter("id", id);
+            return (Wishlist) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
+    /**
+     * Find Wishlist for a Wine
+     *
+     * @param userId Integer userId
+     * @param wineId Long wineId
+     * @return Wishlist entity
+     */
+    public Wishlist findByWine(Integer userId, Long wineId) {
+        try {
+            Query query = em.createQuery("SELECT w FROM Wishlist w WHERE w.user.id = :userid AND w.wine.id = :wineid");
+            query.setParameter("userid", userId);
+            query.setParameter("wineid", wineId);
+            return (Wishlist) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

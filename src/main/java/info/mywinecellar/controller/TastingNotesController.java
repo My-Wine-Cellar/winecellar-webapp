@@ -8,15 +8,13 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.GenericTastingNotesDto;
 import info.mywinecellar.model.GenericTastingNotes;
+import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
-import info.mywinecellar.security.model.User;
-import info.mywinecellar.ui.TastingNotesUI;
-import info.mywinecellar.ui.TastingNotesUIFactory;
-import info.mywinecellar.ui.UserUIFactory;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -55,8 +53,7 @@ public class TastingNotesController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.NOTES, TastingNotesUIFactory.instance()
-                .createList(user.getGenericTastingNotes()));
+        model.addAttribute(Attributes.NOTES, tastingNotesConverter.toDto(user.getGenericTastingNotes()));
         return Paths.TASTING_NOTES_LIST;
     }
 
@@ -79,20 +76,20 @@ public class TastingNotesController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        TastingNotesUI ui = new TastingNotesUI();
-        ui.setUser(UserUIFactory.instance().create(user));
-        ui.setWine(wineConverter.toUI(wine));
-        ui.setProducer(producerConverter.toUI(wine.getProducer()));
-        ui.setArea(getAreaUI(Session.getAreaId()));
-        ui.setRegion(getRegionUI(Session.getRegionId()));
-        ui.setCountry(getCountryUI(Session.getCountryId()));
+        GenericTastingNotesDto dto = new GenericTastingNotesDto();
+        dto.setUser(userConverter.toDto(user));
+        dto.setWine(wineConverter.toDto(wine));
+        dto.setProducer(producerConverter.toDto(wine.getProducer()));
+        dto.setArea(getAreaDto(Session.getAreaId()));
+        dto.setRegion(getRegionDto(Session.getRegionId()));
+        dto.setCountry(getCountryDto(Session.getCountryId()));
 
-        model.addAttribute(Attributes.NOTE, ui);
+        model.addAttribute(Attributes.NOTE, dto);
         return Paths.TASTING_NOTES_ADD_EDIT;
     }
 
     /**
-     * @param tastingNotesUI tastingNotesUI
+     * @param genericTastingNotesDto tastingNotesDto
      * @param model          model
      * @param result         result
      * @param principal      principal
@@ -100,7 +97,7 @@ public class TastingNotesController extends AbstractController {
      * @return View
      */
     @PostMapping("/new")
-    public String tastingNotesNewPost(@Valid TastingNotesUI tastingNotesUI, Model model,
+    public String tastingNotesNewPost(@Valid GenericTastingNotesDto genericTastingNotesDto, Model model,
                                       BindingResult result, Principal principal,
                                       @RequestParam("action") String action) {
         if (principal == null) {
@@ -108,11 +105,11 @@ public class TastingNotesController extends AbstractController {
         }
 
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.NOTE, tastingNotesUI);
+            model.addAttribute(Attributes.NOTE, genericTastingNotesDto);
             return Paths.TASTING_NOTES_ADD_EDIT;
         } else {
             if (action.equals("save")) {
-                GenericTastingNotes gtn = prepForSave(principal, tastingNotesUI);
+                GenericTastingNotes gtn = prepForSave(principal, genericTastingNotesDto);
                 tastingNotesService.save(gtn);
                 return Paths.REDIRECT_TASTINGNOTES_LIST;
             } else {
@@ -150,8 +147,8 @@ public class TastingNotesController extends AbstractController {
             }
         }
 
-        model.addAttribute(Attributes.NOTE, TastingNotesUIFactory.instance().create(gtn));
-        model.addAttribute(Attributes.USER, UserUIFactory.instance().create(user));
+        model.addAttribute(Attributes.NOTE, tastingNotesConverter.toDto(gtn));
+        model.addAttribute(Attributes.USER, userConverter.toDto(user));
         return Paths.TASTING_NOTES_VIEW;
     }
 
@@ -172,12 +169,12 @@ public class TastingNotesController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.NOTE, TastingNotesUIFactory.instance().create(gtn));
+        model.addAttribute(Attributes.NOTE, tastingNotesConverter.toDto(gtn));
         return Paths.TASTING_NOTES_ADD_EDIT;
     }
 
     /**
-     * @param tastingNotesUI tastingNotesUI
+     * @param genericTastingNotesDto tastingNotesDto
      * @param result         result
      * @param tastedId       tastedId
      * @param model          model
@@ -186,18 +183,18 @@ public class TastingNotesController extends AbstractController {
      * @return View
      */
     @PostMapping("/{tastedId}/edit")
-    public String tastingNotesEditPost(@Valid TastingNotesUI tastingNotesUI, BindingResult result,
+    public String tastingNotesEditPost(@Valid GenericTastingNotesDto genericTastingNotesDto, BindingResult result,
                                        @PathVariable Long tastedId, Model model, Principal principal,
                                        @RequestParam("action") String action) {
         if (principal == null) {
             return Paths.REDIRECT_ROOT;
         }
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.NOTE, tastingNotesUI);
+            model.addAttribute(Attributes.NOTE, genericTastingNotesDto);
             return Paths.TASTING_NOTES_ADD_EDIT;
         } else {
             if (action.equals("save")) {
-                GenericTastingNotes gtn = prepForSave(principal, tastingNotesUI);
+                GenericTastingNotes gtn = prepForSave(principal, genericTastingNotesDto);
                 gtn.setId(tastedId);
                 tastingNotesService.save(gtn);
                 return Paths.REDIRECT_TASTINGNOTES_LIST;
@@ -228,15 +225,15 @@ public class TastingNotesController extends AbstractController {
         return Paths.REDIRECT_TASTINGNOTES_LIST;
     }
 
-    private GenericTastingNotes prepForSave(Principal principal, TastingNotesUI tastingNotesUI) {
+    private GenericTastingNotes prepForSave(Principal principal, GenericTastingNotesDto genericTastingNotesDto) {
         Date date = new Date(System.currentTimeMillis());
         User user = userService.findByUsername(principal.getName());
-        Wine wine = wineService.findById(tastingNotesUI.getWineId());
-        return new GenericTastingNotes(tastingNotesUI.mapSightNotes(),
-                tastingNotesUI.mapNoseNotes(),
-                tastingNotesUI.mapPalateNotes(),
-                tastingNotesUI.mapConclusionNotes(),
-                tastingNotesUI.getShow(),
+        Wine wine = wineService.findById(genericTastingNotesDto.getWineId());
+        return new GenericTastingNotes(genericTastingNotesDto.mapSightNotes(),
+                genericTastingNotesDto.mapNoseNotes(),
+                genericTastingNotesDto.mapPalateNotes(),
+                genericTastingNotesDto.mapConclusionNotes(),
+                genericTastingNotesDto.getShow(),
                 date, user, wine);
     }
 }

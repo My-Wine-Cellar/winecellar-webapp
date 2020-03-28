@@ -8,12 +8,12 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.dto.AbstractKeyDto;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Country;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.model.Region;
 import info.mywinecellar.model.Wine;
-import info.mywinecellar.ui.AbstractKeyUI;
 
 import java.util.List;
 
@@ -127,7 +127,7 @@ public class DataRestController extends AbstractRestController {
     }
 
     private Country setupCountry(String countryName) {
-        Country country = countryService.findByLowerCaseName(AbstractKeyUI.fromKey(countryName));
+        Country country = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(countryName));
         checkObjectNull(country);
         log.info("==== Country {} ====", countryName);
         return country;
@@ -135,7 +135,7 @@ public class DataRestController extends AbstractRestController {
 
     private Region setupRegion(String countryName, String regionName) {
         Country country = setupCountry(countryName);
-        Region region = regionService.findByLowerCaseName(AbstractKeyUI.fromKey(regionName), country.getId());
+        Region region = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(regionName), country.getId());
         checkObjectNull(region);
         log.info("==== Region {} ====", regionName);
         return region;
@@ -145,7 +145,7 @@ public class DataRestController extends AbstractRestController {
         Region region = setupRegion(countryName, regionName);
         Area area = null;
         for (Area ar : region.getAreas()) {
-            if (AbstractKeyUI.toKey(ar.getName()).equals(areaName)) {
+            if (AbstractKeyDto.toKey(ar.getName()).equals(areaName)) {
                 area = ar;
                 break;
             }
@@ -159,7 +159,7 @@ public class DataRestController extends AbstractRestController {
         Area area = setupArea(countryName, regionName, areaName);
         Producer producer = null;
         for (Producer pr : area.getProducers()) {
-            if (AbstractKeyUI.toKey(pr.getName()).equals(producerName)) {
+            if (AbstractKeyDto.toKey(pr.getName()).equals(producerName)) {
                 producer = pr;
                 break;
             }
@@ -173,7 +173,7 @@ public class DataRestController extends AbstractRestController {
         Producer p = setupProducer(countryName, regionName, areaName, producerName);
         Wine wine = null;
         for (Wine wi : p.getWines()) {
-            if (AbstractKeyUI.toKey(wi.getName()).equals(wineName) &&
+            if (AbstractKeyDto.toKey(wi.getName()).equals(wineName) &&
                     wi.getVintage().equals(vintage) && wi.getSize().equals(size)) {
                 wine = wi;
                 break;

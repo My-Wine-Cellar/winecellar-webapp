@@ -8,12 +8,11 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.AbstractKeyDto;
+import info.mywinecellar.dto.BarrelDto;
 import info.mywinecellar.model.Barrel;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
-import info.mywinecellar.ui.AbstractKeyUI;
-import info.mywinecellar.ui.BarrelUI;
-import info.mywinecellar.ui.BarrelUIFactory;
 
 import java.security.Principal;
 import java.util.List;
@@ -57,13 +56,13 @@ public class BarrelController extends AbstractController {
      */
     @GetMapping("/{barrel}")
     public String barrelDetails(@PathVariable String barrel, Model model) {
-        List<Barrel> barrels = barrelService.findByLowerCaseName(AbstractKeyUI.fromKey(barrel) + "%");
+        List<Barrel> barrels = barrelService.findByLowerCaseName(AbstractKeyDto.fromKey(barrel) + "%");
 
         if (barrels == null || barrels.isEmpty()) {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.BARREL, BarrelUIFactory.instance().create(barrels.get(0)));
+        model.addAttribute(Attributes.BARREL, barrelConverter.toDto(barrels.get(0)));
         return Paths.BARREL_DETAILS;
     }
 
@@ -85,7 +84,7 @@ public class BarrelController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.BARREL, BarrelUIFactory.instance().create(barrel));
+        model.addAttribute(Attributes.BARREL, barrelConverter.toDto(barrel));
         return Paths.BARREL_EDIT;
     }
 
@@ -99,7 +98,7 @@ public class BarrelController extends AbstractController {
      * @return View
      */
     @PostMapping("/{barrelId}/edit")
-    public String barrelEditPost(@Valid BarrelUI barrel, BindingResult result, Model model,
+    public String barrelEditPost(@Valid BarrelDto barrel, BindingResult result, Model model,
                                  @PathVariable Long barrelId, Principal principal,
                                  @RequestParam("action") String action) {
         if (principal == null) {
@@ -116,11 +115,11 @@ public class BarrelController extends AbstractController {
             b.setWeblink(barrel.getWeblink());
 
             if (action.equals("save")) {
-                Barrel savedBarrel = barrelService.save(b);
-                BarrelUI ui = BarrelUIFactory.instance().create(savedBarrel);
-                return Paths.REDIRECT_BARREL + ui.getKey();
+                barrelService.save(b);
+                BarrelDto barrelDto = barrelConverter.toDto(b);
+                return Paths.REDIRECT_BARREL + barrelDto.getKey();
             } else {
-                BarrelUI cancelBarrel = BarrelUIFactory.instance().create(b);
+                BarrelDto cancelBarrel = barrelConverter.toDto(b);
                 return Paths.REDIRECT_BARREL + cancelBarrel.getKey();
             }
         }
