@@ -24,6 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,12 +69,13 @@ public class GrapeController extends AbstractController {
      */
     @GetMapping("/{grape}")
     public String grapeDetails(@PathVariable String grape, Model model) {
-        Grape g = grapeService.findByLowerCaseName(AbstractKeyDto.fromKey(grape));
+        Grape entity = grapeService.findByLowerCaseName(AbstractKeyDto.fromKey(grape));
 
-        if (g == null) {
+        if (entity == null) {
             return Paths.REDIRECT_ROOT;
         }
-        model.addAttribute(Attributes.GRAPE, grapeConverter.toDto(g));
+
+        model.addAttribute(Attributes.GRAPE, grapeConverter.toDto(entity));
         return Paths.GRAPE_DETAILS;
     }
 
@@ -85,50 +87,38 @@ public class GrapeController extends AbstractController {
      */
     @GetMapping("/{grapeId}/edit")
     public String grapeEditGet(@PathVariable Long grapeId, Model model, Principal principal) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
-        Grape grape = grapeService.findById(grapeId);
-
-        if (grape == null) {
-            return Paths.REDIRECT_ROOT;
-        }
-        model.addAttribute(Attributes.GRAPE, grape);
+        model.addAttribute(Attributes.GRAPE, grapeConverter.toDto(grapeService.findById(grapeId)));
         return Paths.GRAPE_EDIT;
     }
 
     /**
-     * @param grape     grape
+     * @param grapeDto  grape
      * @param result    result
-     * @param model     model
      * @param grapeId   grapeId
      * @param principal principal
      * @param action    action
      * @return View
      */
     @PostMapping("/{grapeId}/edit")
-    public String grapeEditPost(@Valid Grape grape, BindingResult result, Model model,
+    public String grapeEditPost(@ModelAttribute(Attributes.GRAPE) @Valid GrapeDto grapeDto, BindingResult result,
                                 @PathVariable Long grapeId, Principal principal,
                                 @RequestParam("action") String action) {
-        if (principal == null) {
-            return Paths.REDIRECT_ROOT;
-        }
+        principalNull(principal);
 
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.GRAPE, grape);
             return Paths.GRAPE_EDIT;
         } else {
+            Grape entity = grapeService.findById(grapeId);
+            entity = grapeConverter.toEntity(entity, grapeDto);
             if (action.equals("save")) {
-                Grape g = grapeService.findById(grapeId);
-                g = grapeConverter.toEntity(g, grapeConverter.toDto(grape));
-                grapeService.save(g);
-                GrapeDto grapeDto = grapeConverter.toDto(g);
-                return Paths.REDIRECT_GRAPE + grapeDto.getKey();
+                grapeService.save(entity);
+                GrapeDto save = grapeConverter.toDto(entity);
+                return Paths.REDIRECT_GRAPE + save.getKey();
             } else {
-                Grape g = grapeService.findByLowerCaseName(AbstractKeyDto.fromKey(grape.getName()));
-                GrapeDto grapeDto = grapeConverter.toDto(g);
-                return Paths.REDIRECT_GRAPE + grapeDto.getKey();
+                GrapeDto cancel = grapeConverter.toDto(entity);
+                return Paths.REDIRECT_GRAPE + cancel.getKey();
             }
         }
     }

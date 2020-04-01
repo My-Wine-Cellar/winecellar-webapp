@@ -8,9 +8,13 @@
 
 package info.mywinecellar.service;
 
+import info.mywinecellar.converter.ProducerConverter;
+import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Producer;
 
+import javax.inject.Inject;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 
@@ -19,6 +23,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ProducerService extends AbstractService<Producer> {
+
+    @Inject
+    ProducerService producerService;
+
+    @Inject
+    ProducerConverter producerConverter;
 
     protected ProducerService() {
         super(Producer.class);
@@ -38,6 +48,19 @@ public class ProducerService extends AbstractService<Producer> {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     * Edit a Producer
+     *
+     * @param producerDto ProducerDto producerDto
+     * @param producerId  Long producerId
+     */
+    @Transactional
+    public void editProducer(ProducerDto producerDto, Long producerId) {
+        Producer saveProducer = producerService.findById(producerId);
+        saveProducer = producerConverter.toEntity(saveProducer, producerDto);
+        producerService.save(saveProducer);
     }
 
 }

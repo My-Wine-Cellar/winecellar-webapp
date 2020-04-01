@@ -26,6 +26,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,33 +67,39 @@ public class AreaController extends AbstractController {
 
     /**
      * @param areaDto   area
+     * @param result    result
      * @param principal principal
      * @param areaId    areaId
      * @param action    action
      * @return View
      */
     @PostMapping("/{areaId}/edit")
-    public String areaEditPost(AreaDto areaDto, Principal principal,
+    public String areaEditPost(@ModelAttribute(Attributes.AREA) @Valid AreaDto areaDto, BindingResult result,
+                               Principal principal,
                                @PathVariable Long areaId,
                                @RequestParam("action") String action) {
         principalNull(principal);
 
-        if (action.equals("save")) {
-            Area area = areaService.editArea(areaDto, areaId);
-            return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
+        if (result.hasErrors()) {
+            return Paths.AREA_EDIT;
         } else {
-            return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
+            if (action.equals("save")) {
+                Area area = areaService.editArea(areaDto, areaId);
+                return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
+            } else {
+                return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
+            }
         }
     }
 
     /**
-     * @param model     model
      * @param areaId    areaId
+     * @param model     model
      * @param principal principal
      * @return View
      */
     @GetMapping("/{areaId}/addProducer")
-    public String areaAddProducerGet(Model model, @PathVariable Long areaId, Principal principal) {
+    public String areaAddProducerGet(@PathVariable Long areaId, Model model, Principal principal) {
         principalNull(principal);
 
         model.addAttribute(Attributes.AREA, areaConverter.toDto(areaService.findById(areaId)));
@@ -101,16 +108,17 @@ public class AreaController extends AbstractController {
     }
 
     /**
-     * @param producer  producer
-     * @param result    result
-     * @param areaId    areaId
-     * @param principal principal
-     * @param action    action
+     * @param areaId      areaId
+     * @param producerDto producer
+     * @param result      result
+     * @param principal   principal
+     * @param action      action
      * @return View
      */
     @PostMapping("/{areaId}/addProducer")
-    public String areaAddProducerPost(@Valid ProducerDto producer, BindingResult result,
-                                      @PathVariable Long areaId, Principal principal,
+    public String areaAddProducerPost(@PathVariable Long areaId,
+                                      @ModelAttribute(Attributes.PRODUCER) @Valid ProducerDto producerDto,
+                                      BindingResult result, Principal principal,
                                       @RequestParam("action") String action) {
         principalNull(principal);
 
@@ -121,7 +129,7 @@ public class AreaController extends AbstractController {
             return Paths.PRODUCER_ADD_EDIT;
         } else {
             if (action.equals("save")) {
-                Area area = areaService.areaAddProducer(producer, areaId);
+                Area area = areaService.areaAddProducer(producerDto, areaId);
                 return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
             }
         }

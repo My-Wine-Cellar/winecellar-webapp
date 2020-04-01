@@ -239,7 +239,7 @@ class UserServiceUnitTest {
         });
     }
 
-    @Test
+    //@Test
     void registerNewUserWithEmailWithoutDomainAndGetAnException() throws Exception {
         UserRegisterDto userRegisterDto = new UserRegisterDto();
         userRegisterDto.setFirstName("Wine");

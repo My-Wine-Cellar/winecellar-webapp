@@ -44,7 +44,8 @@ public class RegistrationController extends AbstractController {
      * @throws Exception exception
      */
     @PostMapping
-    public String userRegistrationPost(@ModelAttribute("user") @Valid UserRegisterDto user, BindingResult result)
+    public String userRegistrationPost(@ModelAttribute(Attributes.USER) @Valid UserRegisterDto user,
+                                       BindingResult result)
             throws Exception {
         if (userService.emailExists(user.getEmail())) {
             result.rejectValue("email", "error.email");

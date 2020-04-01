@@ -56,7 +56,7 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
         this.wine = wine;
     }
 
-    @NotNull(message = "Please provide the %")
+    @NotNull
     @Column(name = "percentage")
     private Byte percentage;
 
