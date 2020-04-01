@@ -11,7 +11,6 @@ package info.mywinecellar.dto;
 import info.mywinecellar.util.ValidPassword;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
@@ -19,9 +18,8 @@ import lombok.Data;
 @Data
 public class UserResetDto {
 
-    @NotNull
-    @NotEmpty(message = "{validation.username.notEmpty}")
-    @Size(max = 255, message = "{validation.username.size}")
+    @NotEmpty
+    @Size(max = 255)
     private String userName;
 
     @ValidPassword

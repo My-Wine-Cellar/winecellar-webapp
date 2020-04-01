@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,20 +56,19 @@ public class RegionController extends AbstractController {
     /**
      * @param regionDto region
      * @param result    result
-     * @param model     model
      * @param regionId  regionId
      * @param principal principal
      * @param action    action
      * @return View
      */
     @PostMapping("/{regionId}/edit")
-    public String processEditRegionForm(@Valid RegionDto regionDto, BindingResult result, Model model,
-                                        @PathVariable Long regionId, Principal principal,
+    public String processEditRegionForm(@ModelAttribute(Attributes.REGION) @Valid RegionDto regionDto,
+                                        BindingResult result, Principal principal,
+                                        @PathVariable Long regionId,
                                         @RequestParam("action") String action) {
         principalNull(principal);
 
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.REGION, regionConverter.toDto(regionService.findById(regionId)));
             return Paths.REGION_EDIT;
         } else {
             if (action.equals("save")) {

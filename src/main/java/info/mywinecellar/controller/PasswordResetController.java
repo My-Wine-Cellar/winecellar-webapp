@@ -8,7 +8,6 @@
 
 package info.mywinecellar.controller;
 
-import info.mywinecellar.dto.UserRegisterDto;
 import info.mywinecellar.dto.UserResetDto;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
@@ -33,7 +32,7 @@ public class PasswordResetController extends AbstractController {
      */
     @GetMapping
     public String userPasswordResetGet(Model model) {
-        model.addAttribute(Attributes.USER, new UserRegisterDto());
+        model.addAttribute(Attributes.USER, new UserResetDto());
         return Paths.SECURITY_PASSWORD_RESET;
     }
 
@@ -43,7 +42,8 @@ public class PasswordResetController extends AbstractController {
      * @return View
      */
     @PostMapping
-    public String userPasswordResetPost(@ModelAttribute("user") @Valid UserResetDto user, BindingResult result) {
+    public String userPasswordResetPost(@ModelAttribute(Attributes.USER) @Valid UserResetDto user,
+                                        BindingResult result) {
 
         if (!userService.usernameExists(user.getUserName())) {
             result.rejectValue("userName", "error.reset");

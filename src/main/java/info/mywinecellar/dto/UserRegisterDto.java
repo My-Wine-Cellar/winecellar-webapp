@@ -8,38 +8,36 @@
 
 package info.mywinecellar.dto;
 
-import info.mywinecellar.util.Regex;
-
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.validation.annotation.Validated;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
-@Validated
+@ToString
+@Getter
+@Setter
 public class UserRegisterDto extends UserResetDto {
 
-    @NotNull
-    @NotEmpty(message = "{validation.firstName.notEmpty}")
-    @Size(max = 255, message = "{validation.name.size}")
+    @NotEmpty
+    @Size(max = 255)
     private String firstName;
 
-    @Size(max = 255, message = "{validation.name.size}")
+    @Size(max = 255)
     private String middleName;
 
-    @NotNull
-    @NotEmpty(message = "{validation.lastName.notEmpty}")
-    @Size(max = 255, message = "{validation.name.size}")
+    @NotEmpty
+    @Size(max = 255)
     private String lastName;
 
-    @Pattern(message = "{validation.email}", regexp = Regex.EMAIL_PATTERN)
+    @NotEmpty
+    @Email
     private String email;
 
     /**

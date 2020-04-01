@@ -13,24 +13,26 @@ import info.mywinecellar.model.Grape;
 import java.sql.Date;
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
  * Dto for grape
  */
-@EqualsAndHashCode(callSuper = false)
-@ToString
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Getter
+@Setter
 public class GrapeDto extends AbstractKeyDto {
+
     private Long id;
     private String name;
     private String color;
-    private String description;
-    private String weblink;
     private String alternativeNames;
-
     private Byte percentage;
     private Date harvestBegin;
     private Date harvestEnd;
@@ -39,6 +41,12 @@ public class GrapeDto extends AbstractKeyDto {
     private Byte fermentationDays;
     private Float fermentationTemperature;
     private List<BarrelDto> barrels;
+
+    @Size(max = 255)
+    private String description;
+
+    @Size(max = 50)
+    private String weblink;
 
     /**
      * Default constructor

@@ -10,6 +10,8 @@ package info.mywinecellar.dto;
 
 import info.mywinecellar.model.Region;
 
+import javax.validation.constraints.Size;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +28,11 @@ public class RegionDto extends AbstractKeyDto {
 
     private Long id;
     private String name;
+
+    @Size(max = 255)
     private String description;
+
+    @Size(max = 50)
     private String weblink;
 
     /**

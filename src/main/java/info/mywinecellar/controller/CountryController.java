@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,20 +55,19 @@ public class CountryController extends AbstractController {
     /**
      * @param countryDto country
      * @param result     result
-     * @param model      model
      * @param countryId  countryId
      * @param principal  principal
      * @param action     action
      * @return View
      */
     @PostMapping("/{countryId}/edit")
-    public String countryEditPost(@Valid CountryDto countryDto, BindingResult result, Model model,
-                                  @PathVariable Long countryId, Principal principal,
+    public String countryEditPost(@ModelAttribute(Attributes.COUNTRY) @Valid CountryDto countryDto,
+                                  BindingResult result, Principal principal,
+                                  @PathVariable Long countryId,
                                   @RequestParam("action") String action) {
         principalNull(principal);
 
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.COUNTRY, countryDto);
             return Paths.COUNTRY_EDIT;
         } else {
             if (action.equals("save")) {

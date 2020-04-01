@@ -59,30 +59,30 @@ public class AreaService extends AbstractService<Area> {
     /**
      * Edit Area
      *
-     * @param ui     AreaUI ui
+     * @param dto    AreaDto dto
      * @param areaId Long areaId
      * @return Area entity
      */
     @Transactional
-    public Area editArea(AreaDto ui, Long areaId) {
-        Area a = this.findById(areaId);
-        a = areaConverter.toEntity(a, ui);
-        this.save(a);
-        return a;
+    public Area editArea(AreaDto dto, Long areaId) {
+        Area area = this.findById(areaId);
+        area = areaConverter.toEntity(area, dto);
+        this.save(area);
+        return area;
     }
 
     /**
      * Add Producer to Area
      *
-     * @param ui     ProducerUI ui
+     * @param dto    ProducerDto dto
      * @param areaId Long areaId
      * @return Area entity
      */
-    public Area areaAddProducer(ProducerDto ui, Long areaId) {
+    public Area areaAddProducer(ProducerDto dto, Long areaId) {
         Area area = this.findById(areaId);
-        Producer p = producerConverter.toEntity(null, ui);
-        area.getProducers().add(p);
-        producerService.save(p);
+        Producer producer = producerConverter.toEntity(null, dto);
+        area.getProducers().add(producer);
+        producerService.save(producer);
         return area;
     }
 

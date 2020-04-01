@@ -14,6 +14,8 @@ import info.mywinecellar.model.Grape;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +32,11 @@ public class AreaDto extends AbstractKeyDto {
 
     private Long id;
     private String name;
+
+    @Size(max = 255)
     private String description;
+
+    @Size(max = 50)
     private String weblink;
 
     private List<Long> primaryGrapes;

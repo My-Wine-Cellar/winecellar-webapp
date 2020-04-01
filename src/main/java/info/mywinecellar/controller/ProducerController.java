@@ -8,7 +8,7 @@
 
 package info.mywinecellar.controller;
 
-import info.mywinecellar.model.Area;
+import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,29 +69,27 @@ public class ProducerController extends AbstractController {
     public String producerEditGet(@PathVariable Long producerId, Model model, Principal principal) {
         principalNull(principal);
 
-        Producer producer = producerService.findById(producerId);
-        Area area = areaService.findById(Session.getAreaId());
-
-        model.addAttribute(Attributes.AREA, area);
-        model.addAttribute(Attributes.PRODUCER, producer);
+        model.addAttribute(Attributes.AREA, areaConverter.toDto(areaService.findById(Session.getAreaId())));
+        model.addAttribute(Attributes.PRODUCER, producerConverter.toDto(producerService.findById(producerId)));
 
         return Paths.PRODUCER_ADD_EDIT;
     }
 
     /**
-     * @param producer   producer
-     * @param result     result
-     * @param principal  principal
-     * @param producerId producerId
-     * @param action     action
+     * @param producerDto producer
+     * @param result      result
+     * @param principal   principal
+     * @param producerId  producerId
+     * @param action      action
      * @return View
      */
     @PostMapping("/{producerId}/edit")
-    public String producerEditPost(@Valid Producer producer, BindingResult result, Principal principal,
+    public String producerEditPost(@ModelAttribute(Attributes.PRODUCER) @Valid ProducerDto producerDto,
+                                   BindingResult result, Principal principal,
                                    @PathVariable Long producerId,
                                    @RequestParam("action") String action) {
         principalNull(principal);
-        Producer saveProducer = producerService.findById(producerId);
+
         if (action.equals("cancel")) {
             return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
         }
@@ -98,8 +97,7 @@ public class ProducerController extends AbstractController {
             return Paths.PRODUCER_ADD_EDIT;
         } else {
             if (action.equals("save")) {
-                saveProducer = producerConverter.toEntity(saveProducer, producerConverter.toDto(producer));
-                producerService.save(saveProducer);
+                producerService.editProducer(producerDto, producerId);
                 return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
             }
         }
@@ -135,9 +133,6 @@ public class ProducerController extends AbstractController {
         Producer saveProducer = producerService.findById(producerId);
         if (action.equals("cancel")) {
             return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(), producerId);
-        }
-        if (result.hasErrors()) {
-            return Paths.PRODUCER_IMAGE;
         } else {
             if (action.equals("save")) {
                 saveProducer.setImage(producer.getImage());
