@@ -25,9 +25,6 @@ import org.springframework.stereotype.Component;
 public class ProducerService extends AbstractService<Producer> {
 
     @Inject
-    ProducerService producerService;
-
-    @Inject
     ProducerConverter producerConverter;
 
     protected ProducerService() {
@@ -58,9 +55,9 @@ public class ProducerService extends AbstractService<Producer> {
      */
     @Transactional
     public void editProducer(ProducerDto producerDto, Long producerId) {
-        Producer saveProducer = producerService.findById(producerId);
+        Producer saveProducer = this.findById(producerId);
         saveProducer = producerConverter.toEntity(saveProducer, producerDto);
-        producerService.save(saveProducer);
+        this.save(saveProducer);
     }
 
 }
