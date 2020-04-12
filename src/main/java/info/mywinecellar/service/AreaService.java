@@ -78,7 +78,7 @@ public class AreaService extends AbstractService<Area> {
      * @param areaId Long areaId
      * @return Area entity
      */
-    public Area areaAddProducer(ProducerDto dto, Long areaId) {
+    public Area addProducer(ProducerDto dto, Long areaId) {
         Area area = this.findById(areaId);
         Producer producer = producerConverter.toEntity(null, dto);
         area.getProducers().add(producer);
