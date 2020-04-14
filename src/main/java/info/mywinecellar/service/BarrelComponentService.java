@@ -32,9 +32,11 @@ public class BarrelComponentService extends AbstractService<BarrelComponent> {
     @Transactional
     public void saveAll(List<BarrelComponent> barrels) {
         try {
-            em.persist(barrels);
-        } catch (Exception ignored) {
-
+            barrels.forEach(barrel -> em.persist(barrel));
+        } catch (Exception e) {
+            System.out.println(barrels.getClass());
+            System.out.println(e.getMessage());
+            e.printStackTrace(System.out);
         }
     }
 }

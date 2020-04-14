@@ -10,6 +10,7 @@ package info.mywinecellar.dto;
 
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.util.Image;
+import info.mywinecellar.util.VintageMax;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
@@ -38,25 +39,42 @@ public class WineDto extends AbstractKeyDto {
     @NotEmpty
     private String name;
 
-    @Min(1900)
-    @Max(2021)
+    @Min(1800)
+    @VintageMax
     @NotNull
     private Integer vintage;
 
-    @Digits(integer = 1, fraction = 2)
+    @Max(18)
+    @Digits(integer = 2, fraction = 2)
     @NotNull
     private Float size;
 
     @Size(max = 8192)
     private String description;
 
+    @Size(max = 255)
     private String weblink;
+
     private String image;
+
+    @Max(50)
+    @Min(10)
+    @Digits(integer = 2, fraction = 1)
     private Float alcohol;
+
+    @Digits(integer = 2, fraction = 1)
     private Float acid;
+
+    @Max(14)
+    @Min(1)
     private Float pH;
+
+    @Min(1)
     private Integer bottleAging;
+
+    @Size(max = 255)
     private String subarea;
+
     private Long colorId;
     private Long typeId;
     private Long shapeId;

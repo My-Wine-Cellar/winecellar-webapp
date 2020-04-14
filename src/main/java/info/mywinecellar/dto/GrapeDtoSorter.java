@@ -30,12 +30,12 @@ public class GrapeDtoSorter implements Comparator<GrapeDto> {
     public int compare(GrapeDto g1, GrapeDto g2) {
         int result;
 
-        if (g1.getPercentage() != null && g2.getPercentage() != null) {
-            result = g1.getPercentage().compareTo(g2.getPercentage());
-            if (result != 0) {
-                return -result;
-            }
-        }
+//        if (g1.getPercentage() != null && g2.getPercentage() != null) {
+//            result = g1.getPercentage().compareTo(g2.getPercentage());
+//            if (result != 0) {
+//                return -result;
+//            }
+//        }
 
         return g1.getName().compareTo(g2.getName());
     }

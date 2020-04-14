@@ -70,7 +70,7 @@
                                                 <div th:text="*{weblink}"></div>
                                             </a></td>
                                         </tr>
-                                        <tr>
+                                        <tr th:if="${! #lists.isEmpty(winegrapes)}">
                                             <td><b th:text="#{grapes}">Grapes</b></td>
                                             <td>
                                                 <div th:each="winegrape : ${winegrapes}">
@@ -243,9 +243,9 @@
                                                             <td width="25%" th:text="#{size}">Size</td>
                                                             <td th:text="|${barrel.size}L|"></td>
                                                         </tr>
-                                                        <tr th:if="${barrel.aging}">
+                                                        <tr th:if="${barrel.agingDto}">
                                                             <td width="25%" th:text="#{aging}">Aging</td>
-                                                            <td th:text="${barrel.aging}"></td>
+                                                            <td th:text="${barrel.agingDto}"></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>

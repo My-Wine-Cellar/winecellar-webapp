@@ -71,15 +71,15 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
     @JoinColumn(name = "grape_id", referencedColumnName = "id")
     private Grape grape;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "wine_id", referencedColumnName = "id")
     private Wine wine;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "maceration_id", referencedColumnName = "id")
     private Maceration maceration;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "fermentation_id", referencedColumnName = "id")
     private Fermentation fermentation;
 

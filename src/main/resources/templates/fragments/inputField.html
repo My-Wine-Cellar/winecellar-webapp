@@ -24,6 +24,8 @@
             <input th:case="'number'" class="form-control" autocomplete="off" type="number"
                    th:placeholder="#{__${name}__}"
                    th:field="*{__${name}__}" pattern="^\d*\.?\d*$"/>
+            <input th:case="'date'" class="form-control" type="date" th:field="*{__${name}__}"
+                   th:placeholder="#{__${name}__}"/>
         </div>
         <ul class="text-danger" th:each="error: ${#fields.errors(name)}">
             <li th:each="message : ${error.split(',')}">

@@ -8,11 +8,14 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.BarrelDto;
+import info.mywinecellar.dto.GrapeComponentDto;
 import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.dto.WineDto;
 import info.mywinecellar.model.BarrelComponent;
-import info.mywinecellar.model.Grape;
+import info.mywinecellar.model.Fermentation;
 import info.mywinecellar.model.GrapeComponent;
+import info.mywinecellar.model.Maceration;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.nav.Actions;
@@ -35,6 +38,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,42 +88,35 @@ public class WineController extends AbstractController {
     /**
      * @param producerDto producerDto
      * @param model       model
-     * @param status      status
      * @param principal   principal
      * @return View
      */
     @GetMapping("/new")
-    public String wineAddRequiredGet(ProducerDto producerDto, Model model,
-                                     SessionStatus status, Principal principal) {
+    public String wineAddRequiredGet(ProducerDto producerDto, Model model, Principal principal) {
         principalNull(principal);
-
-        Session.clear(status);
 
         WineDto wineDto = new WineDto();
         wineDto.setProducerId(producerDto.getId());
         model.addAttribute(Attributes.WINE, wineDto);
-
-        model.addAttribute(Attributes.COLOR, colorConverter.toDto(colorService.findAll()));
-        model.addAttribute(Attributes.TYPE, typeConverter.toDto(typeService.findAll()));
-        model.addAttribute(Attributes.SHAPE, shapeConverter.toDto(shapeService.findAll()));
-        model.addAttribute(Attributes.CLOSURE, closureConverter.toDto(closureService.findAll()));
+        addWineAttributes(model);
 
         return Paths.WINE_ADD_EDIT_DETAILS;
     }
 
     /**
-     * @param wineDto    wineDto
+     * @param requestDto wineDto
      * @param result     result
      * @param principal  principal
      * @param status     status
      * @param producerId producerId
+     * @param model      model
      * @param action     action
      * @return View
      */
-    @PostMapping(value = "/new")
-    public String wineAddRequiredPost(@Valid WineDto wineDto, BindingResult result,
+    @PostMapping("/new")
+    public String wineAddRequiredPost(@ModelAttribute(Attributes.WINE) @Valid WineDto requestDto, BindingResult result,
                                       Principal principal, SessionStatus status,
-                                      @RequestParam Long producerId,
+                                      @RequestParam Long producerId, Model model,
                                       @RequestParam(value = "action") String action) {
         principalNull(principal);
 
@@ -129,46 +126,42 @@ public class WineController extends AbstractController {
                     Session.getAreaId(), Session.getProducerId());
         }
         if (result.hasErrors()) {
-            // TODO figure out how to show error messages on redirect
-            return Paths.REDIRECT_WINE_NEW + "?id=" + producerId;
-        } else {
-            Producer producer = producerService.findById(producerId);
-            Wine entity = new Wine();
-            entity = wineConverter.toEntity(entity, wineDto);
-            entity.setProducer(producer);
-            producer.getWines().add(entity);
-            switch (action) {
-                case Actions.SAVE_WINE:
-                    wineService.save(entity);
-                    WineDto wDto = wineConverter.toDto(entity);
-
-                    Session.clear(status);
-                    return redirectProducer(Session.getCountryId(), Session.getRegionId(),
-                            Session.getAreaId(), Session.getProducerId()) +
-                            "/" + wDto.getKey() + "/" + wDto.getVintage() + "/" + wDto.getSize();
-                case Actions.ADD_GRAPE:
-                    return Paths.REDIRECT_WINE_GRAPE;
-                default:
-                    Session.clear(status);
-                    return Paths.ERROR_PAGE;
-            }
+            requestDto.setProducerId(producerId);
+            addWineAttributes(model);
+            return Paths.WINE_ADD_EDIT_DETAILS;
         }
+
+        Producer producer = producerService.findById(producerId);
+        Wine entity = wineConverter.toEntity(null, requestDto);
+        producer.getWines().add(entity);
+        switch (action) {
+            case Actions.SAVE_WINE:
+                wineService.save(entity);
+                WineDto saveDto = wineConverter.toDto(entity);
+
+                Session.clear(status);
+                return redirectProducer(Session.getCountryId(), Session.getRegionId(),
+                        Session.getAreaId(), Session.getProducerId()) +
+                        "/" + saveDto.getKey() + "/" + saveDto.getVintage() + "/" + saveDto.getSize();
+            case Actions.ADD_GRAPE:
+                return Paths.REDIRECT_WINE_GRAPE;
+            default:
+                Session.clear(status);
+                return Paths.ERROR_PAGE;
+        }
+
     }
 
     /**
-     * @param wine      wine
      * @param model     model
      * @param principal principal
      * @return View
      */
     @GetMapping("/grape")
-    public String wineAddGrapeComponentsGet(Wine wine, Model model, Principal principal) {
+    public String wineAddGrapeComponentsGet(Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.WINE, wine);
-        GrapeComponent grapeComponent = new GrapeComponent();
-        model.addAttribute(Attributes.GRAPE_COMPONENT, grapeComponent);
-        model.addAttribute(Attributes.WINEGRAPES, grapeService.findAll());
+        addGrapeAttributes(model);
         return Paths.WINE_ADD_GRAPE;
     }
 
@@ -183,38 +176,42 @@ public class WineController extends AbstractController {
      */
     @PostMapping("/grape")
     public String wineAddGrapeComponentsPost(SessionStatus status, Principal principal, Model model,
-                                             @Valid GrapeComponent grapeComponent, BindingResult result,
+                                             @Valid GrapeComponentDto grapeComponent, BindingResult result,
                                              @RequestParam(value = "action") String action) {
         principalNull(principal);
 
-        Wine wine = Session.getWine();
-
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.WINEGRAPES, grapeService.findAll());
+            addGrapeAttributes(model);
             return Paths.WINE_ADD_GRAPE;
         }
 
-        Session.setGrapeComponent(grapeComponent);
-        List<GrapeComponent> grapes = Session.getGrapeComponents();
-        List<BarrelComponent> barrels = Session.getBarrelComponents();
+        WineDto session = Session.getWine();
 
-        grapeComponent.setWine(wine);
+        Session.setGrapeComponent(grapeComponent);
+        List<GrapeComponentDto> grapes = Session.getGrapeComponents();
+        List<BarrelDto> barrels = Session.getBarrelComponents();
+
+        Wine wine = wineConverter.toEntity(null, session);
 
         switch (action) {
             case Actions.ADD_ANOTHER_GRAPE:
                 return Paths.REDIRECT_WINE_GRAPE;
             case Actions.ADD_BARREL:
-                return Paths.REDIRECT_WINE_GRAPE + "/" + grapeComponent.getGrape().getId() + "/barrel";
+                return Paths.REDIRECT_WINE_GRAPE + "/" + grapeComponent.getGrapeId() + "/barrel";
             case Actions.SAVE_WINE:
                 wineService.save(wine);
+                grapes.forEach(grape -> grape.setWineId(wine.getId()));
 
-                saveOrNullMaceration(grapes);
                 saveOrNullFermentation(grapes);
+                saveOrNullMaceration(grapes);
 
-                grapeComponentService.saveAll(grapes);
+                List<GrapeComponent> grapeList = grapeComponentConverter.toEntity(grapes);
+
+                grapeComponentService.saveAll(grapeList);
 
                 if (barrels != null) {
-                    barrelComponentService.saveAll(barrels);
+                    List<BarrelComponent> barrelList = barrelComponentConverter.toEntity(barrels);
+                    barrelComponentService.saveAll(barrelList);
                 }
 
                 WineDto wineDto = wineConverter.toDto(wine);
@@ -230,22 +227,16 @@ public class WineController extends AbstractController {
 
     /**
      * @param grapeId   grapeId
-     * @param wine      wine
      * @param principal principal
      * @param model     model
      * @return View
      */
     @GetMapping("/grape/{grapeId}/barrel")
-    public String wineAddGrapeBarrelGet(@PathVariable Long grapeId, Wine wine,
+    public String wineAddGrapeBarrelGet(@PathVariable Long grapeId,
                                         Principal principal, Model model) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.WINE, wine);
-        Grape grape = grapeService.findById(grapeId);
-        model.addAttribute(Attributes.GRAPE, grape);
-        BarrelComponent barrelComponent = new BarrelComponent();
-        model.addAttribute(Attributes.BARREL_COMPONENT, barrelComponent);
-        model.addAttribute(Attributes.BARRELS, barrelService.findAll());
+        addBarrelAttributes(model, grapeId);
         return Paths.WINE_ADD_GRAPE_BARREL;
     }
 
@@ -262,49 +253,54 @@ public class WineController extends AbstractController {
     @PostMapping("/grape/{grapeId}/barrel")
     public String wineAddGrapeBarrelPost(Principal principal, SessionStatus status,
                                          @PathVariable Long grapeId, Model model,
-                                         @Valid BarrelComponent barrelComponent, BindingResult result,
+                                         @Valid BarrelDto barrelComponent, BindingResult result,
                                          @RequestParam(value = "action") String action) {
         principalNull(principal);
 
-        Wine wine = Session.getWine();
-        GrapeComponent grapeComponent = Session.getGrapeComponent();
+        if (result.hasErrors()) {
+            addBarrelAttributes(model, grapeId);
+            return Paths.WINE_ADD_GRAPE_BARREL;
+        }
+
+        WineDto session = Session.getWine();
+        GrapeComponentDto grapeComponent = Session.getGrapeComponent();
 
         Session.setBarrelComponent(barrelComponent);
-        List<BarrelComponent> barrels = Session.getBarrelComponents();
-        List<GrapeComponent> grapes = Session.getGrapeComponents();
+        List<BarrelDto> barrels = Session.getBarrelComponents();
+        List<GrapeComponentDto> grapes = Session.getGrapeComponents();
 
-        barrelComponent.setGrapeComponent(grapeComponent);
+        Wine wine = wineConverter.toEntity(null, session);
 
-        if (result.hasErrors()) {
-            Grape grape = grapeService.findById(grapeId);
-            model.addAttribute(Attributes.GRAPE, grape);
-            return Paths.WINE_ADD_GRAPE_BARREL;
-        } else {
-            switch (action) {
-                case Actions.ADD_ANOTHER_GRAPE:
-                    return Paths.REDIRECT_WINE_GRAPE;
-                case Actions.ADD_ANOTHER_BARREL:
-                    return Paths.REDIRECT_WINE_GRAPE + "/" + grapeComponent.getGrape().getId() + "/barrel";
-                case Actions.SAVE_WINE:
-                    wineService.save(wine);
+        switch (action) {
+            case Actions.ADD_ANOTHER_GRAPE:
+                return Paths.REDIRECT_WINE_GRAPE;
+            case Actions.ADD_ANOTHER_BARREL:
+                return Paths.REDIRECT_WINE_GRAPE + "/" + grapeComponent.getGrapeId() + "/barrel";
+            case Actions.SAVE_WINE:
+                wineService.save(wine);
+                grapes.forEach(grape -> grape.setWineId(wine.getId()));
 
-                    saveOrNullMaceration(grapes);
-                    saveOrNullFermentation(grapes);
+                saveOrNullFermentation(grapes);
+                saveOrNullMaceration(grapes);
 
-                    grapeComponentService.saveAll(grapes);
-                    barrelComponentService.saveAll(barrels);
+                List<GrapeComponent> grapeList = grapeComponentConverter.toEntity(grapes);
+                grapeComponentService.saveAll(grapeList);
+                grapeList.forEach(grape -> barrels.forEach(barrel -> barrel.setGrapeComponentId(grape.getId())));
 
-                    WineDto wineDto = wineConverter.toDto(wine);
+                List<BarrelComponent> barrelList = barrelComponentConverter.toEntity(barrels);
+                barrelComponentService.saveAll(barrelList);
 
-                    Session.clear(status);
-                    return redirectProducer(Session.getCountryId(), Session.getRegionId(),
-                            Session.getAreaId(), Session.getProducerId()) +
-                            "/" + wineDto.getKey() + "/" + wineDto.getVintage() + "/" + wineDto.getSize();
-                default:
-                    Session.clear(status);
-                    return Paths.ERROR_PAGE;
-            }
+                WineDto wineDto = wineConverter.toDto(wine);
+
+                Session.clear(status);
+                return redirectProducer(Session.getCountryId(), Session.getRegionId(),
+                        Session.getAreaId(), Session.getProducerId()) +
+                        "/" + wineDto.getKey() + "/" + wineDto.getVintage() + "/" + wineDto.getSize();
+            default:
+                Session.clear(status);
+                return Paths.ERROR_PAGE;
         }
+
     }
 
     /**
@@ -316,16 +312,15 @@ public class WineController extends AbstractController {
     @GetMapping("/{wineId}/edit")
     public String wineEditGet(@PathVariable Long wineId, Model model, Principal principal) {
         principalNull(principal);
-        model.addAttribute(Attributes.WINE, wineService.findById(wineId));
-        model.addAttribute(Attributes.COLOR, colorService.findAll());
-        model.addAttribute(Attributes.TYPE, typeService.findAll());
-        model.addAttribute(Attributes.CLOSURE, closureService.findAll());
-        model.addAttribute(Attributes.SHAPE, shapeService.findAll());
+
+        model.addAttribute(Attributes.WINE, wineConverter.toDto(wineService.findById(wineId)));
+        addWineAttributes(model);
+
         return Paths.WINE_ADD_EDIT_DETAILS;
     }
 
     /**
-     * @param wine       wine
+     * @param requestDto wine
      * @param result     result
      * @param model      model
      * @param principal  principal
@@ -336,34 +331,32 @@ public class WineController extends AbstractController {
      * @return View
      */
     @PostMapping("/{wineId}/edit")
-    public String wineEditPost(@Valid Wine wine, BindingResult result,
+    public String wineEditPost(@ModelAttribute(Attributes.WINE) @Valid WineDto requestDto, BindingResult result,
                                Model model, Principal principal, SessionStatus status,
                                @RequestParam(value = "action") String action,
                                @PathVariable Long wineId, @RequestParam Long producerId) {
         principalNull(principal);
 
         if (result.hasErrors()) {
-            model.addAttribute(Attributes.WINE, wine);
+            requestDto.setProducerId(producerId);
+            addWineAttributes(model);
             return Paths.WINE_ADD_EDIT_DETAILS;
         } else {
-            Producer producer = producerService.findById(producerId);
-
-            wine.setId(wineId);
-            wine.setProducer(producer);
-
+            Wine entity = wineConverter.toEntity(wineService.findById(wineId), requestDto);
+            entity.setProducer(producerService.findById(producerId));
             switch (action) {
                 case Actions.SAVE_WINE:
-                    wineService.update(wine);
-                    WineDto wineDto = wineConverter.toDto(wine);
+                    wineService.update(entity);
+                    WineDto saveDto = wineConverter.toDto(entity);
 
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                             Session.getAreaId(), Session.getProducerId()) +
-                            "/" + wineDto.getKey() + "/" + wineDto.getVintage() + "/" + wineDto.getSize();
+                            "/" + saveDto.getKey() + "/" + saveDto.getVintage() + "/" + saveDto.getSize();
                 case Actions.ADD_GRAPE:
                     return Paths.REDIRECT_WINE_GRAPE;
                 case Actions.CANCEL:
-                    WineDto cancelDto = wineConverter.toDto(wine);
+                    WineDto cancelDto = wineConverter.toDto(entity);
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                             Session.getAreaId(), Session.getProducerId()) +
@@ -389,63 +382,97 @@ public class WineController extends AbstractController {
     }
 
     /**
-     * @param wine      wine
-     * @param result    result
-     * @param principal principal
-     * @param status    status
-     * @param action    action
-     * @param wineId    wineId
+     * @param requestDto wine
+     * @param result     result
+     * @param principal  principal
+     * @param status     status
+     * @param model      model
+     * @param action     action
+     * @param wineId     wineId
      * @return View
      */
     @PostMapping("/{wineId}/image")
-    public String wineImagePost(@Valid Wine wine, BindingResult result, Principal principal, SessionStatus status,
+    public String wineImagePost(@ModelAttribute(Attributes.WINE) @Valid WineDto requestDto, BindingResult result,
+                                Principal principal, SessionStatus status, Model model,
                                 @RequestParam(value = "action") String action, @PathVariable Long wineId) {
         principalNull(principal);
 
         if (result.hasErrors()) {
+            model.addAttribute(Attributes.WINE, wineService.findById(wineId));
             return Paths.WINE_IMAGE;
-        } else {
-            if (action.equals("save")) {
-                Wine saveWine = wineService.findById(wineId);
-                saveWine.setImage(wine.getImage());
-                if (saveWine.getImage().length >= 5242880L) {
-                    result.rejectValue("image", "error.imageSize");
-                    return Paths.WINE_IMAGE;
-                }
-                wineService.save(saveWine);
-                WineDto wineDto = wineConverter.toDto(wine);
-                Session.clear(status);
-                return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(),
-                        Session.getProducerId()) + "/" + wineDto.getKey() + "/" +
-                        wineDto.getVintage() + "/" + wineDto.getSize();
-            } else if (action.equals("cancel")) {
-                WineDto cancelDto = wineConverter.toDto(wine);
-                Session.clear(status);
-                return redirectProducer(Session.getCountryId(), Session.getRegionId(),
-                        Session.getAreaId(), Session.getProducerId()) +
-                        "/" + cancelDto.getKey() + "/" + cancelDto.getVintage() + "/" + cancelDto.getSize();
+        }
+
+        Wine entity = wineConverter.toEntity(null, requestDto);
+
+        if (action.equals("save")) {
+            Wine saveWine = wineService.findById(wineId);
+            saveWine.setImage(entity.getImage());
+            if (saveWine.getImage().length >= 5242880L) {
+                result.rejectValue("image", "error.imageSize");
+                return Paths.WINE_IMAGE;
             }
+            wineService.save(saveWine);
+            WineDto wineDto = wineConverter.toDto(entity);
+            Session.clear(status);
+            return redirectProducer(Session.getCountryId(), Session.getRegionId(), Session.getAreaId(),
+                    Session.getProducerId()) + "/" + wineDto.getKey() + "/" +
+                    wineDto.getVintage() + "/" + wineDto.getSize();
+        } else if (action.equals("cancel")) {
+            WineDto cancelDto = wineConverter.toDto(entity);
+            Session.clear(status);
+            return redirectProducer(Session.getCountryId(), Session.getRegionId(),
+                    Session.getAreaId(), Session.getProducerId()) +
+                    "/" + cancelDto.getKey() + "/" + cancelDto.getVintage() + "/" + cancelDto.getSize();
+
         }
         return Paths.ERROR_PAGE;
     }
 
+    private void addWineAttributes(Model model) {
+        model.addAttribute(Attributes.COLOR, colorConverter.toDto(colorService.findAll()));
+        model.addAttribute(Attributes.TYPE, typeConverter.toDto(typeService.findAll()));
+        model.addAttribute(Attributes.SHAPE, shapeConverter.toDto(shapeService.findAll()));
+        model.addAttribute(Attributes.CLOSURE, closureConverter.toDto(closureService.findAll()));
+    }
 
-    private void saveOrNullMaceration(List<GrapeComponent> grapes) {
-        grapes.forEach(grapeComponent -> {
-            if (grapeComponent.getMaceration().getDays() != null) {
-                macerationService.save(grapeComponent.getMaceration());
+    private void addGrapeAttributes(Model model) {
+        model.addAttribute(Attributes.WINE, Session.getWine());
+        model.addAttribute(Attributes.GRAPE_COMPONENT, new GrapeComponentDto());
+        model.addAttribute(Attributes.WINEGRAPES, grapeConverter.toDto(grapeService.findAll()));
+    }
+
+    private void addBarrelAttributes(Model model, Long grapeId) {
+        model.addAttribute(Attributes.WINE, Session.getWine());
+        model.addAttribute(Attributes.GRAPE, grapeConverter.toDto(grapeService.findById(grapeId)));
+        model.addAttribute(Attributes.BARREL_COMPONENT, new BarrelDto());
+        model.addAttribute(Attributes.BARRELS, barrelConverter.toDto(barrelService.findAll()));
+    }
+
+    private void saveOrNullMaceration(List<GrapeComponentDto> grapes) {
+
+        grapes.forEach(grape -> {
+            if (grape.getMacerationDays() != null) {
+                Maceration maceration = new Maceration();
+                maceration.setDays(grape.getMacerationDays());
+                maceration.setTemperature(grape.getMacerationTemperature());
+                macerationService.save(maceration);
+                grape.setMacerationId(maceration.getId());
             } else {
-                grapeComponent.setMaceration(null);
+                grape.setMacerationId(null);
             }
         });
     }
 
-    private void saveOrNullFermentation(List<GrapeComponent> grapes) {
-        grapes.forEach(grapeComponent -> {
-            if (grapeComponent.getFermentation().getDays() != null) {
-                fermentationService.save(grapeComponent.getFermentation());
+    private void saveOrNullFermentation(List<GrapeComponentDto> grapes) {
+        grapes.forEach(grape -> {
+            if (grape.getFermentationDays() != null) {
+                Fermentation fermentation = new Fermentation();
+                fermentation.setDays(grape.getFermentationDays());
+                fermentation.setTemperature(grape.getFermentationTemperature());
+                fermentationService.save(fermentation);
+                grape.setFermentationId(fermentation.getId());
             } else {
-                grapeComponent.setFermentation(null);
+                grape.setFermentationId(null);
             }
         });
     }

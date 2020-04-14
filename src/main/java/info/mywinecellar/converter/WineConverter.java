@@ -77,16 +77,22 @@ public class WineConverter {
      * @return entity
      */
     public Wine toEntity(Wine entity, WineDto dto) {
+        Producer producer = new Producer();
+        producer.setId(dto.getProducerId());
 
         Color color = new Color();
+        color.setId(dto.getColorId());
         Type type = new Type();
+        type.setId(dto.getTypeId());
         Shape shape = new Shape();
+        shape.setId(dto.getShapeId());
         Closure closure = new Closure();
+        closure.setId(dto.getClosureId());
 
         if (entity == null) {
             entity = new Wine(dto.getName(), dto.getVintage(), dto.getAlcohol(), dto.getSize(),
                     dto.getAcid(), dto.getPH(), dto.getBottleAging(), dto.getDescription(), dto.getWeblink(),
-                    new Producer(), closure, shape, color, type, Image.decode(dto.getImage()));
+                    producer, closure, shape, color, type, Image.decode(dto.getImage()));
         } else {
             entity.setName(dto.getName());
             entity.setVintage(dto.getVintage());
@@ -98,12 +104,7 @@ public class WineConverter {
             entity.setDescription(dto.getDescription());
             entity.setWeblink(dto.getWeblink());
             entity.setImage(Image.decode(dto.getImage()));
-
-            color.setId(dto.getId());
-            type.setId(dto.getTypeId());
-            shape.setId(dto.getShapeId());
-            closure.setId(dto.getClosureId());
-
+            entity.setProducer(producer);
             entity.setColor(color);
             entity.setType(type);
             entity.setShape(shape);
