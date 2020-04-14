@@ -11,43 +11,22 @@ package info.mywinecellar.dto;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.util.Image;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-/**
- * Dto for wine
- */
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Getter
-public class WineDto extends AbstractKeyDto {
+public class WineDetailsDto extends AbstractKeyDto {
 
     private Long id;
-
-    @Size(max = 255)
-    @NotEmpty
     private String name;
-
-    @Min(1900)
-    @Max(2021)
-    @NotNull
     private Integer vintage;
-
-    @Digits(integer = 1, fraction = 2)
-    @NotNull
     private Float size;
-
-    @Size(max = 8192)
     private String description;
-
     private String weblink;
     private String image;
     private Float alcohol;
@@ -55,24 +34,26 @@ public class WineDto extends AbstractKeyDto {
     private Float pH;
     private Integer bottleAging;
     private String subarea;
-    private Long colorId;
-    private Long typeId;
-    private Long shapeId;
-    private Long closureId;
-    private Long producerId;
+    private List<Long> reviews;
+    private List<Long> genericTastingNotes;
+    private ColorDto color;
+    private TypeDto type;
+    private ShapeDto shape;
+    private ClosureDto closure;
+    private ProducerDto producer;
 
     /**
      * Default constructor
      */
-    public WineDto() {
+    public WineDetailsDto() {
     }
 
     /**
      * Constructor
      *
-     * @param w The wine
+     * @param w Wine w
      */
-    public WineDto(Wine w) {
+    public WineDetailsDto(Wine w) {
         super(toKey(w.getName()));
         this.id = w.getId();
         this.name = w.getName();
@@ -86,29 +67,11 @@ public class WineDto extends AbstractKeyDto {
         this.bottleAging = w.getBottleAging();
         this.alcohol = w.getAlcohol();
         this.subarea = w.getSubarea();
-        this.producerId = w.getProducer().getId();
-        this.closureId = w.getClosure().getId();
-        this.shapeId = w.getShape().getId();
-        this.typeId = w.getType().getId();
-        this.colorId = w.getColor().getId();
-    }
-
-    /**
-     * Check if Id is new
-     *
-     * @return true
-     */
-    public boolean isNew() {
-        return id == null;
-    }
-
-    /**
-     * Set producerId
-     *
-     * @param producerId Long producerId
-     */
-    public void setProducerId(Long producerId) {
-        this.producerId = producerId;
+        this.producer = new ProducerDto(w.getProducer());
+        this.closure = new ClosureDto(w.getClosure());
+        this.shape = new ShapeDto(w.getShape());
+        this.type = new TypeDto(w.getType());
+        this.color = new ColorDto(w.getColor());
     }
 
 }

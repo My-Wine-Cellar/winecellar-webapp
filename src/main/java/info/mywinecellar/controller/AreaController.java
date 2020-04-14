@@ -129,7 +129,7 @@ public class AreaController extends AbstractController {
             return Paths.PRODUCER_ADD_EDIT;
         } else {
             if (action.equals("save")) {
-                Area area = areaService.addProducer(producerDto, areaId);
+                Area area = areaService.addProducer(areaId, producerDto);
                 return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
             }
         }

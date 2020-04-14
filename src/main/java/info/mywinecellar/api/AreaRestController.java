@@ -49,7 +49,7 @@ public class AreaRestController extends AbstractRestController {
     @PostMapping("/addProducer")
     public ResponseEntity<?> areaAddProducerPost(@RequestBody ProducerDto producer, @PathVariable Long areaId) {
         checkObjectNull(producer);
-        Area area = areaService.addProducer(producer, areaId);
+        Area area = areaService.addProducer(areaId, producer);
         return ResponseEntity.status(HttpStatus.CREATED).body("Added " + producer.getName() +
                 " to " + area.toString());
     }

@@ -11,13 +11,17 @@ package info.mywinecellar.controller;
 import info.mywinecellar.converter.AreaConverter;
 import info.mywinecellar.converter.BarrelConverter;
 import info.mywinecellar.converter.BottleConverter;
+import info.mywinecellar.converter.ClosureConverter;
+import info.mywinecellar.converter.ColorConverter;
 import info.mywinecellar.converter.CountryConverter;
 import info.mywinecellar.converter.GrapeConverter;
 import info.mywinecellar.converter.ProducerConverter;
 import info.mywinecellar.converter.RegionConverter;
 import info.mywinecellar.converter.ReviewConverter;
+import info.mywinecellar.converter.ShapeConverter;
 import info.mywinecellar.converter.TastedConverter;
 import info.mywinecellar.converter.TastingNotesConverter;
+import info.mywinecellar.converter.TypeConverter;
 import info.mywinecellar.converter.UserConverter;
 import info.mywinecellar.converter.WineConverter;
 import info.mywinecellar.converter.WishlistConverter;
@@ -235,10 +239,22 @@ public abstract class AbstractController {
     protected BarrelComponentService barrelComponentService;
 
     /**
+     * ClosureConverter
+     */
+    @Inject
+    protected ClosureConverter closureConverter;
+
+    /**
      * ClosureService
      */
     @Inject
     protected ClosureService closureService;
+
+    /**
+     * ShapeConverter
+     */
+    @Inject
+    protected ShapeConverter shapeConverter;
 
     /**
      * ShapeService
@@ -259,10 +275,22 @@ public abstract class AbstractController {
     protected FermentationService fermentationService;
 
     /**
+     * ColorConverter
+     */
+    @Inject
+    protected ColorConverter colorConverter;
+
+    /**
      * ColorService
      */
     @Inject
     protected ColorService colorService;
+
+    /**
+     * TypeConverter
+     */
+    @Inject
+    protected TypeConverter typeConverter;
 
     /**
      * TypeService
