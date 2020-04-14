@@ -51,7 +51,9 @@ public class Builder {
      * @return The builder
      */
     public Builder area(Area a) {
-        json.addArea(areaConverter.toDto(a));
+        if (!json.hasArea(a.getId())) {
+            json.addArea(areaConverter.toDto(a));
+        }
         return this;
     }
 
@@ -61,7 +63,9 @@ public class Builder {
      * @return The builder
      */
     public Builder country(Country c) {
-        json.addCountry(countryConverter.toDto(c));
+        if (!json.hasCountry(c.getId())) {
+            json.addCountry(countryConverter.toDto(c));
+        }
         return this;
     }
 
@@ -71,7 +75,9 @@ public class Builder {
      * @return The builder
      */
     public Builder producer(Producer p) {
-        json.addProducer(producerConverter.toDto(p));
+        if (!json.hasProducer(p.getId())) {
+            json.addProducer(producerConverter.toDto(p));
+        }
         return this;
     }
 
@@ -81,7 +87,9 @@ public class Builder {
      * @return The builder
      */
     public Builder region(Region r) {
-        json.addRegion(regionConverter.toDto(r));
+        if (!json.hasRegion(r.getId())) {
+            json.addRegion(regionConverter.toDto(r));
+        }
         return this;
     }
 
@@ -91,7 +99,9 @@ public class Builder {
      * @return The builder
      */
     public Builder wine(Wine w) {
-        json.addWine(wineConverter.toDto(w));
+        if (!json.hasWine(w.getId())) {
+            json.addWine(wineConverter.toDto(w));
+        }
         return this;
     }
 

@@ -107,9 +107,19 @@ public class MyWineCellar implements Serializable {
             areas = new ArrayList<>();
         }
 
-        if (!areas.contains(a)) {
-            areas.add(a);
+        areas.add(a);
+    }
+
+    boolean hasArea(Long id) {
+        if (areas != null) {
+            for (AreaDto a : areas) {
+                if (a.getId().equals(id)) {
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 
     void addCountry(CountryDto c) {
@@ -117,9 +127,19 @@ public class MyWineCellar implements Serializable {
             countries = new ArrayList<>();
         }
 
-        if (!countries.contains(c)) {
-            countries.add(c);
+        countries.add(c);
+    }
+
+    boolean hasCountry(Long id) {
+        if (countries != null) {
+            for (CountryDto c : countries) {
+                if (c.getId().equals(id)) {
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 
     void addRegion(RegionDto r) {
@@ -127,9 +147,19 @@ public class MyWineCellar implements Serializable {
             regions = new ArrayList<>();
         }
 
-        if (!regions.contains(r)) {
-            regions.add(r);
+        regions.add(r);
+    }
+
+    boolean hasRegion(Long id) {
+        if (regions != null) {
+            for (RegionDto r : regions) {
+                if (r.getId().equals(id)) {
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 
     void addProducer(ProducerDto p) {
@@ -137,9 +167,19 @@ public class MyWineCellar implements Serializable {
             producers = new ArrayList<>();
         }
 
-        if (!producers.contains(p)) {
-            producers.add(p);
+        producers.add(p);
+    }
+
+    boolean hasProducer(Long id) {
+        if (producers != null) {
+            for (ProducerDto p : producers) {
+                if (p.getId().equals(id)) {
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 
     void addWine(WineDto w) {
@@ -147,9 +187,19 @@ public class MyWineCellar implements Serializable {
             wines = new ArrayList<>();
         }
 
-        if (!wines.contains(w)) {
-            wines.add(w);
+        wines.add(w);
+    }
+
+    boolean hasWine(Long id) {
+        if (wines != null) {
+            for (WineDto w : wines) {
+                if (w.getId().equals(id)) {
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 
     private void sortAll() {
