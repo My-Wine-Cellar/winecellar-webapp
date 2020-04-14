@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -28,6 +29,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Getter
+@Setter
 public class WineDto extends AbstractKeyDto {
 
     private Long id;
@@ -100,15 +102,6 @@ public class WineDto extends AbstractKeyDto {
      */
     public boolean isNew() {
         return id == null;
-    }
-
-    /**
-     * Set producerId
-     *
-     * @param producerId Long producerId
-     */
-    public void setProducerId(Long producerId) {
-        this.producerId = producerId;
     }
 
 }

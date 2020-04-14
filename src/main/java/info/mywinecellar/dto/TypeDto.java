@@ -12,11 +12,13 @@ import info.mywinecellar.model.Type;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Getter
+@Setter
 public class TypeDto extends AbstractKeyDto {
 
     private Long id;
