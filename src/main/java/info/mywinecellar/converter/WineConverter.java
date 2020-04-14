@@ -8,9 +8,16 @@
 
 package info.mywinecellar.converter;
 
+import info.mywinecellar.dto.WineDetailsDto;
 import info.mywinecellar.dto.WineDto;
 import info.mywinecellar.dto.WineDtoSorter;
+import info.mywinecellar.model.Closure;
+import info.mywinecellar.model.Color;
+import info.mywinecellar.model.Producer;
+import info.mywinecellar.model.Shape;
+import info.mywinecellar.model.Type;
 import info.mywinecellar.model.Wine;
+import info.mywinecellar.util.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +41,19 @@ public class WineConverter {
     }
 
     /**
+     * Convert entity to dto
+     *
+     * @param wine wine
+     * @return dto object
+     */
+    public WineDetailsDto toDetailsDto(Wine wine) {
+        if (wine == null) {
+            throw new IllegalStateException("Wine is null");
+        }
+        return new WineDetailsDto(wine);
+    }
+
+    /**
      * Convert entity list to dto list
      *
      * @param wines wines
@@ -50,20 +70,44 @@ public class WineConverter {
     }
 
     /**
-     * Convert dto to entity
+     * Create a Wine entity
      *
      * @param entity entity
      * @param dto    dto
      * @return entity
      */
     public Wine toEntity(Wine entity, WineDto dto) {
-        // TODO go back to 'main' Wine constructor, should fix new and edit
+
+        Color color = new Color();
+        Type type = new Type();
+        Shape shape = new Shape();
+        Closure closure = new Closure();
+
         if (entity == null) {
-            entity = new Wine(dto.getName(), dto.getVintage(), dto.getSize());
+            entity = new Wine(dto.getName(), dto.getVintage(), dto.getAlcohol(), dto.getSize(),
+                    dto.getAcid(), dto.getPH(), dto.getBottleAging(), dto.getDescription(), dto.getWeblink(),
+                    new Producer(), closure, shape, color, type, Image.decode(dto.getImage()));
         } else {
             entity.setName(dto.getName());
             entity.setVintage(dto.getVintage());
+            entity.setAlcohol(dto.getAlcohol());
             entity.setSize(dto.getSize());
+            entity.setAcid(dto.getAcid());
+            entity.setPH(dto.getPH());
+            entity.setBottleAging(dto.getBottleAging());
+            entity.setDescription(dto.getDescription());
+            entity.setWeblink(dto.getWeblink());
+            entity.setImage(Image.decode(dto.getImage()));
+
+            color.setId(dto.getId());
+            type.setId(dto.getTypeId());
+            shape.setId(dto.getShapeId());
+            closure.setId(dto.getClosureId());
+
+            entity.setColor(color);
+            entity.setType(type);
+            entity.setShape(shape);
+            entity.setClosure(closure);
         }
         return entity;
     }

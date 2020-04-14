@@ -31,7 +31,7 @@
                 <div class="card-body">
                     <form th:object="${wine}" method="post">
                         <input type="hidden" name="id" th:value="*{id}"/>
-                        <input type="hidden" name="producerId" th:value="${wine.producer.id}"/>
+                        <input type="hidden" name="producerId" th:value="${wine.producerId}"/>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <input th:replace="~{fragments/inputField :: input ('*Name*', 'name', 'text')}"/>
@@ -46,37 +46,37 @@
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label th:for="${color}">Color</label>
-                                <select class="form-control" th:field="*{color}">
+                                <select class="form-control" th:field="*{colorId}">
                                     <option class="form-control" th:each="colors : ${color}"
                                             th:text="${colors.name}"
-                                            th:value="${colors.id}" th:selected="${wine.color}">
+                                            th:value="${colors.id}" th:selected="${wine.colorId}">
                                     </option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
                                 <label th:for="${type}">Type</label>
-                                <select class="form-control" th:field="*{type}">
+                                <select class="form-control" th:field="*{typeId}">
                                     <option class="form-control" th:each="types : ${type}"
                                             th:text="${types.name}"
-                                            th:value="${types.id}" th:selected="${wine.type}">
+                                            th:value="${types.id}" th:selected="${wine.typeId}">
                                     </option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
                                 <label th:for="${shape}">Shape</label>
-                                <select class="form-control" th:field="*{shape}">
+                                <select class="form-control" th:field="*{shapeId}">
                                     <option class="form-control" th:each="shapes : ${shape}"
                                             th:text="${shapes.name}"
-                                            th:value="${shapes.id}" th:selected="${wine.shape}">
+                                            th:value="${shapes.id}" th:selected="${wine.shapeId}">
                                     </option>
                                 </select>
                             </div>
                             <div class="form-group col-md-2">
                                 <label th:for="${closure}">Closure</label>
-                                <select class="form-control" th:field="*{closure}">
+                                <select class="form-control" th:field="*{closureId}">
                                     <option class="form-control" th:each="closures : ${closure}"
                                             th:text="${closures.name}"
-                                            th:value="${closures.id}" th:selected="${wine.closure}">
+                                            th:value="${closures.id}" th:selected="${wine.closureId}">
                                     </option>
                                 </select>
                             </div>

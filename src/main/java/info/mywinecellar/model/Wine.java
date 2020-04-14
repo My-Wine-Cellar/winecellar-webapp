@@ -18,8 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicUpdate;
@@ -99,12 +97,10 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     }
 
     @NotNull
-    @NotEmpty
     @Column(name = "name")
     private String name;
 
     @NotNull
-    @Digits(integer = 4, fraction = 0)
     @Column(name = "vintage")
     private Integer vintage;
 

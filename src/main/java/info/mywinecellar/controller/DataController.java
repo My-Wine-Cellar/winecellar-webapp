@@ -371,7 +371,7 @@ public class DataController extends AbstractController {
         model.addAttribute(Attributes.REGION, regionConverter.toDto(r));
         model.addAttribute(Attributes.AREA, areaConverter.toDto(a));
         model.addAttribute(Attributes.PRODUCER, producerConverter.toDto(p));
-        model.addAttribute(Attributes.WINE, wineConverter.toDto(w));
+        model.addAttribute(Attributes.WINE, wineConverter.toDetailsDto(w));
         model.addAttribute(Attributes.ENCODED_IMAGE, Image.encode(w.getImage()));
         model.addAttribute(Attributes.WINEGRAPES, winegrapes);
         model.addAttribute(Attributes.MYBOTTLE, bottle);

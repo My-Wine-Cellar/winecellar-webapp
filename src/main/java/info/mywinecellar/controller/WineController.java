@@ -8,6 +8,7 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.dto.WineDto;
 import info.mywinecellar.model.BarrelComponent;
 import info.mywinecellar.model.Grape;
@@ -81,31 +82,33 @@ public class WineController extends AbstractController {
     }
 
     /**
-     * @param producer  producer
-     * @param model     model
-     * @param status    status
-     * @param principal principal
+     * @param producerDto producerDto
+     * @param model       model
+     * @param status      status
+     * @param principal   principal
      * @return View
      */
     @GetMapping("/new")
-    public String wineAddRequiredGet(Producer producer, Model model,
+    public String wineAddRequiredGet(ProducerDto producerDto, Model model,
                                      SessionStatus status, Principal principal) {
         principalNull(principal);
 
         Session.clear(status);
 
-        Wine wine = new Wine();
-        wine.setProducer(producer);
-        model.addAttribute(Attributes.WINE, wine);
-        model.addAttribute(Attributes.COLOR, colorService.findAll());
-        model.addAttribute(Attributes.TYPE, typeService.findAll());
-        model.addAttribute(Attributes.CLOSURE, closureService.findAll());
-        model.addAttribute(Attributes.SHAPE, shapeService.findAll());
+        WineDto wineDto = new WineDto();
+        wineDto.setProducerId(producerDto.getId());
+        model.addAttribute(Attributes.WINE, wineDto);
+
+        model.addAttribute(Attributes.COLOR, colorConverter.toDto(colorService.findAll()));
+        model.addAttribute(Attributes.TYPE, typeConverter.toDto(typeService.findAll()));
+        model.addAttribute(Attributes.SHAPE, shapeConverter.toDto(shapeService.findAll()));
+        model.addAttribute(Attributes.CLOSURE, closureConverter.toDto(closureService.findAll()));
+
         return Paths.WINE_ADD_EDIT_DETAILS;
     }
 
     /**
-     * @param wine       wine
+     * @param wineDto    wineDto
      * @param result     result
      * @param principal  principal
      * @param status     status
@@ -114,7 +117,7 @@ public class WineController extends AbstractController {
      * @return View
      */
     @PostMapping(value = "/new")
-    public String wineAddRequiredPost(@Valid Wine wine, BindingResult result,
+    public String wineAddRequiredPost(@Valid WineDto wineDto, BindingResult result,
                                       Principal principal, SessionStatus status,
                                       @RequestParam Long producerId,
                                       @RequestParam(value = "action") String action) {
@@ -126,20 +129,23 @@ public class WineController extends AbstractController {
                     Session.getAreaId(), Session.getProducerId());
         }
         if (result.hasErrors()) {
-            return Paths.REDIRECT_WINE_NEW + "?id=" + producerId;
+            // TODO figure out how to show error messages on redirect
+            return Paths.REDIRECT_WINE_NEW + "?=" + producerId;
         } else {
             Producer producer = producerService.findById(producerId);
-            wine.setProducer(producer);
-            producer.getWines().add(wine);
+            Wine entity = new Wine();
+            entity = wineConverter.toEntity(entity, wineDto);
+            entity.setProducer(producer);
+            producer.getWines().add(entity);
             switch (action) {
                 case Actions.SAVE_WINE:
-                    wineService.save(wine);
-                    WineDto wineDto = wineConverter.toDto(wine);
+                    wineService.save(entity);
+                    WineDto wDto = wineConverter.toDto(entity);
 
                     Session.clear(status);
                     return redirectProducer(Session.getCountryId(), Session.getRegionId(),
                             Session.getAreaId(), Session.getProducerId()) +
-                            "/" + wineDto.getKey() + "/" + wineDto.getVintage() + "/" + wineDto.getSize();
+                            "/" + wDto.getKey() + "/" + wDto.getVintage() + "/" + wDto.getSize();
                 case Actions.ADD_GRAPE:
                     return Paths.REDIRECT_WINE_GRAPE;
                 default:
