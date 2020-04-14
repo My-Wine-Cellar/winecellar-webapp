@@ -130,7 +130,7 @@ public class WineController extends AbstractController {
         }
         if (result.hasErrors()) {
             // TODO figure out how to show error messages on redirect
-            return Paths.REDIRECT_WINE_NEW + "?=" + producerId;
+            return Paths.REDIRECT_WINE_NEW + "?id=" + producerId;
         } else {
             Producer producer = producerService.findById(producerId);
             Wine entity = new Wine();
