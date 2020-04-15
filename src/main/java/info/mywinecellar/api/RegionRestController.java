@@ -14,7 +14,6 @@ import info.mywinecellar.service.RegionService;
 
 import javax.inject.Inject;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,10 +35,8 @@ public class RegionRestController extends AbstractRestController {
      * @return ResponseEntity.ACCEPTED
      */
     @PutMapping("/{regionId}/edit")
-    public ResponseEntity<?> regionEditPut(@RequestBody RegionDto request, @PathVariable Long regionId) {
-        Region edit = regionService.findById(regionId);
-        checkObjectNull(edit);
-        edit = regionService.editRegion(request, regionId);
-        return ResponseEntity.accepted().body("Updated " + edit.toString());
+    public Region regionEditPut(@RequestBody RegionDto request, @PathVariable Long regionId) {
+        checkObjectNull(request);
+        return regionService.editRegion(request, regionId);
     }
 }

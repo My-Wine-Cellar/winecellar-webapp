@@ -15,7 +15,6 @@ import info.mywinecellar.service.CountryService;
 import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,11 +38,9 @@ public class CountryRestController extends AbstractRestController {
      */
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/{countryId}/edit")
-    public ResponseEntity<?> countryEditPut(@RequestBody CountryDto request, @PathVariable Long countryId) {
-        Country edit = countryService.findById(countryId);
-        checkObjectNull(edit);
-        edit = countryService.editCountry(request, countryId);
-        return ResponseEntity.accepted().body("Updated " + edit.toString());
+    public Country countryEditPut(@RequestBody CountryDto request, @PathVariable Long countryId) {
+        checkObjectNull(request);
+        return countryService.editCountry(request, countryId);
     }
 
 }

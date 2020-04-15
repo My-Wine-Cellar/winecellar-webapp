@@ -18,15 +18,30 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 /**
  * MyWineCellar
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
+@JsonTypeName(value = "mywinecellar")
 public class MyWineCellar implements Serializable {
 
+    @JsonSerialize(using = GenericSerializer.class)
     private List<AreaDto> areas;
+
+    @JsonSerialize(using = GenericSerializer.class)
     private List<CountryDto> countries;
+
+    @JsonSerialize(using = GenericSerializer.class)
     private List<ProducerDto> producers;
+
+    @JsonSerialize(using = GenericSerializer.class)
     private List<RegionDto> regions;
+
+    @JsonSerialize(using = GenericSerializer.class)
     private List<WineDto> wines;
 
     /**
@@ -37,6 +52,7 @@ public class MyWineCellar implements Serializable {
 
     /**
      * Get the areas
+     *
      * @return The list
      */
     public List<AreaDto> getAreas() {
@@ -45,6 +61,7 @@ public class MyWineCellar implements Serializable {
 
     /**
      * Get the countries
+     *
      * @return The list
      */
     public List<CountryDto> getCountries() {
@@ -53,6 +70,7 @@ public class MyWineCellar implements Serializable {
 
     /**
      * Get the producers
+     *
      * @return The list
      */
     public List<ProducerDto> getProducers() {
@@ -61,6 +79,7 @@ public class MyWineCellar implements Serializable {
 
     /**
      * Get the regions
+     *
      * @return The list
      */
     public List<RegionDto> getRegions() {
@@ -69,6 +88,7 @@ public class MyWineCellar implements Serializable {
 
     /**
      * Get the wines
+     *
      * @return The list
      */
     public List<WineDto> getWines() {

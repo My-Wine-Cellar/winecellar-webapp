@@ -9,6 +9,8 @@
 package info.mywinecellar.api;
 
 import info.mywinecellar.dto.AbstractKeyDto;
+import info.mywinecellar.json.Builder;
+import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Country;
 import info.mywinecellar.model.Producer;
@@ -29,17 +31,43 @@ import org.springframework.web.bind.annotation.RestController;
 public class DataRestController extends AbstractRestController {
 
     /**
+     * GET Mapping
+     *
+     * @return MyWineCellar
+     */
+    @GetMapping("/json")
+    public MyWineCellar getJsonEnvelope() {
+        List<Country> countries = countryService.findWithRegions();
+        List<Region> regions = regionService.findAll();
+        List<Area> areas = areaService.findAll();
+        List<Producer> producers = producerService.findAll();
+        List<Wine> wines = wineService.findAll();
+
+        Builder builder = new Builder();
+
+        countries.forEach(builder::country);
+        regions.forEach(builder::region);
+        areas.forEach(builder::area);
+        producers.forEach(builder::producer);
+        wines.forEach(builder::wine);
+
+        return builder.build();
+    }
+
+    /**
      * GET mapping
      *
      * @return List of Countries that have wine producing regions
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<Country> dataApiRootGet() {
+    public MyWineCellar dataApiRootGet() {
         List<Country> countries = countryService.findWithRegions();
         checkObjectListNull(countries);
         log.info("==== Countries that have a wine producing region {} ====", countries);
-        return countries;
+        Builder builder = new Builder();
+        countries.forEach(builder::country);
+        return builder.build();
     }
 
     /**
@@ -54,8 +82,10 @@ public class DataRestController extends AbstractRestController {
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}")
-    public Country countryByNameGet(@PathVariable String country) {
-        return setupCountry(country);
+    public MyWineCellar countryByNameGet(@PathVariable String country) {
+        Builder builder = new Builder();
+        builder.country(setupCountry(country));
+        return builder.build();
     }
 
     /**
@@ -68,8 +98,10 @@ public class DataRestController extends AbstractRestController {
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}/{region}")
-    public Region regionByNameGet(@PathVariable String country, @PathVariable String region) {
-        return setupRegion(country, region);
+    public MyWineCellar regionByNameGet(@PathVariable String country, @PathVariable String region) {
+        Builder builder = new Builder();
+        builder.region(setupRegion(country, region));
+        return builder.build();
     }
 
     /**
@@ -84,8 +116,11 @@ public class DataRestController extends AbstractRestController {
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}/{region}/{area}")
-    public Area areaByNameGet(@PathVariable String country, @PathVariable String region, @PathVariable String area) {
-        return setupArea(country, region, area);
+    public MyWineCellar areaByNameGet(@PathVariable String country, @PathVariable String region,
+                                      @PathVariable String area) {
+        Builder builder = new Builder();
+        builder.area(setupArea(country, region, area));
+        return builder.build();
     }
 
     /**
@@ -100,9 +135,11 @@ public class DataRestController extends AbstractRestController {
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}/{region}/{area}/{producer}")
-    public Producer producerByNameGet(@PathVariable String country, @PathVariable String region,
-                                      @PathVariable String area, @PathVariable String producer) {
-        return setupProducer(country, region, area, producer);
+    public MyWineCellar producerByNameGet(@PathVariable String country, @PathVariable String region,
+                                          @PathVariable String area, @PathVariable String producer) {
+        Builder builder = new Builder();
+        builder.producer(setupProducer(country, region, area, producer));
+        return builder.build();
     }
 
     /**
@@ -120,10 +157,13 @@ public class DataRestController extends AbstractRestController {
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}/{region}/{area}/{producer}/{wine}/{vintage}/{size}")
-    public Wine wineByNameGet(@PathVariable String country, @PathVariable String region,
-                              @PathVariable String area, @PathVariable String producer,
-                              @PathVariable String wine, @PathVariable Integer vintage, @PathVariable Float size) {
-        return setupWine(country, region, area, producer, wine, vintage, size);
+    public MyWineCellar wineByNameGet(@PathVariable String country, @PathVariable String region,
+                                      @PathVariable String area, @PathVariable String producer,
+                                      @PathVariable String wine, @PathVariable Integer vintage,
+                                      @PathVariable Float size) {
+        Builder builder = new Builder();
+        builder.wine(setupWine(country, region, area, producer, wine, vintage, size));
+        return builder.build();
     }
 
     private Country setupCountry(String countryName) {
