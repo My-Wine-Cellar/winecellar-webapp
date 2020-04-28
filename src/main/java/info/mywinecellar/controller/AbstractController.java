@@ -9,11 +9,13 @@
 package info.mywinecellar.controller;
 
 import info.mywinecellar.converter.AreaConverter;
+import info.mywinecellar.converter.BarrelComponentConverter;
 import info.mywinecellar.converter.BarrelConverter;
 import info.mywinecellar.converter.BottleConverter;
 import info.mywinecellar.converter.ClosureConverter;
 import info.mywinecellar.converter.ColorConverter;
 import info.mywinecellar.converter.CountryConverter;
+import info.mywinecellar.converter.GrapeComponentConverter;
 import info.mywinecellar.converter.GrapeConverter;
 import info.mywinecellar.converter.ProducerConverter;
 import info.mywinecellar.converter.RegionConverter;
@@ -191,6 +193,12 @@ public abstract class AbstractController {
     protected ReviewService reviewService;
 
     /**
+     * BarrleConverter
+     */
+    @Inject
+    protected BarrelConverter barrelConverter;
+
+    /**
      * BarrelService
      */
     @Inject
@@ -227,10 +235,16 @@ public abstract class AbstractController {
     protected GrapeComponentService grapeComponentService;
 
     /**
-     * BarrleConverter
+     * GrapeComponentConverter
      */
     @Inject
-    protected BarrelConverter barrelConverter;
+    protected GrapeComponentConverter grapeComponentConverter;
+
+    /**
+     * BarrelComponentConverter
+     */
+    @Inject
+    protected BarrelComponentConverter barrelComponentConverter;
 
     /**
      * BarrelComponentService

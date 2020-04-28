@@ -12,8 +12,8 @@ import info.mywinecellar.dto.AbstractKeyDto;
 import info.mywinecellar.dto.AgingDto;
 import info.mywinecellar.dto.BarrelDto;
 import info.mywinecellar.dto.BarrelDtoSorter;
-import info.mywinecellar.dto.GrapeDto;
-import info.mywinecellar.dto.GrapeDtoSorter;
+import info.mywinecellar.dto.GrapeComponentDto;
+import info.mywinecellar.dto.GrapeComponentSorter;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.BarrelComponent;
 import info.mywinecellar.model.Bottle;
@@ -37,7 +37,6 @@ import info.mywinecellar.util.Image;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -340,7 +339,7 @@ public class DataController extends AbstractController {
             wishlist = wishlistService.findByWine(user.getId(), w.getId());
         }
 
-        List<GrapeDto> winegrapes = new ArrayList<>();
+        List<GrapeComponentDto> winegrapes = new ArrayList<>();
         for (GrapeComponent gc : w.getGrapes()) {
             List<BarrelDto> barrels = new ArrayList<>();
 
@@ -353,9 +352,9 @@ public class DataController extends AbstractController {
                 }
             }
 
-            Collections.sort(barrels, new BarrelDtoSorter());
+            barrels.sort(new BarrelDtoSorter());
 
-            winegrapes.add(new GrapeDto(gc.getPercentage(),
+            winegrapes.add(new GrapeComponentDto(gc.getPercentage(),
                     gc.getGrape().getName(), gc.getGrape().getId(),
                     gc.getHarvestBegin(), gc.getHarvestEnd(),
                     gc.getMaceration() != null ? gc.getMaceration().getDays() : null,
@@ -365,7 +364,7 @@ public class DataController extends AbstractController {
                     barrels
             ));
         }
-        Collections.sort(winegrapes, new GrapeDtoSorter());
+        winegrapes.sort(new GrapeComponentSorter());
 
         model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
         model.addAttribute(Attributes.REGION, regionConverter.toDto(r));

@@ -11,6 +11,7 @@ package info.mywinecellar.dto;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.util.Image;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.EqualsAndHashCode;
@@ -36,8 +37,8 @@ public class WineDetailsDto extends AbstractKeyDto {
     private Float pH;
     private Integer bottleAging;
     private String subarea;
-    private List<Long> reviews;
-    private List<Long> genericTastingNotes;
+    private List<ReviewDto> reviews;
+    private List<GenericTastingNotesDto> genericTastingNotes;
     private ColorDto color;
     private TypeDto type;
     private ShapeDto shape;
@@ -74,6 +75,12 @@ public class WineDetailsDto extends AbstractKeyDto {
         this.shape = new ShapeDto(w.getShape());
         this.type = new TypeDto(w.getType());
         this.color = new ColorDto(w.getColor());
+
+        this.reviews = new ArrayList<>();
+        w.getReviews().forEach(review -> reviews.add(new ReviewDto(review)));
+
+        this.genericTastingNotes = new ArrayList<>();
+        w.getGenericTastingNotes().forEach(gtn -> genericTastingNotes.add(new GenericTastingNotesDto(gtn)));
     }
 
 }

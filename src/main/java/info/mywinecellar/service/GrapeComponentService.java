@@ -12,6 +12,7 @@ import info.mywinecellar.model.GrapeComponent;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 
@@ -29,10 +30,14 @@ public class GrapeComponentService {
      *
      * @param grapes The grape components
      */
+    @Transactional
     public void saveAll(Iterable<GrapeComponent> grapes) {
         try {
-            em.persist(grapes);
-        } catch (Exception ignored) {
+            grapes.forEach(grape -> em.persist(grape));
+        } catch (Exception e) {
+            System.out.println(grapes.getClass());
+            System.out.println(e.getMessage());
+            e.printStackTrace(System.out);
         }
     }
 

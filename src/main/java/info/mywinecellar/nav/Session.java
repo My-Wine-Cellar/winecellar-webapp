@@ -8,9 +8,9 @@
 
 package info.mywinecellar.nav;
 
-import info.mywinecellar.model.BarrelComponent;
-import info.mywinecellar.model.GrapeComponent;
-import info.mywinecellar.model.Wine;
+import info.mywinecellar.dto.BarrelDto;
+import info.mywinecellar.dto.GrapeComponentDto;
+import info.mywinecellar.dto.WineDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,28 +106,28 @@ public class Session {
      * Get the current wine
      * @return The wine, or <code>null</code>
      */
-    public static Wine getWine() {
+    public static WineDto getWine() {
         RequestAttributes ra = RequestContextHolder.currentRequestAttributes();
-        return (Wine) ra.getAttribute(Session.WINE, RequestAttributes.SCOPE_SESSION);
+        return (WineDto) ra.getAttribute(Session.WINE, RequestAttributes.SCOPE_SESSION);
     }
 
     /**
      * Get the current grape component
      * @return The grape component, or <code>null</code>
      */
-    public static GrapeComponent getGrapeComponent() {
+    public static GrapeComponentDto getGrapeComponent() {
         RequestAttributes ra = RequestContextHolder.currentRequestAttributes();
-        return (GrapeComponent) ra.getAttribute(Session.GRAPE_COMPONENT, RequestAttributes.SCOPE_SESSION);
+        return (GrapeComponentDto) ra.getAttribute(Session.GRAPE_COMPONENT, RequestAttributes.SCOPE_SESSION);
     }
 
     /**
      * Set the current grape component
      * @param gc The grape component
      */
-    public static void setGrapeComponent(GrapeComponent gc) {
+    public static void setGrapeComponent(GrapeComponentDto gc) {
         RequestAttributes ra = RequestContextHolder.currentRequestAttributes();
 
-        List<GrapeComponent> grapes = (List<GrapeComponent>) ra.getAttribute(Session.GRAPE_COMPONENTS,
+        List<GrapeComponentDto> grapes = (List<GrapeComponentDto>) ra.getAttribute(Session.GRAPE_COMPONENTS,
                 RequestAttributes.SCOPE_SESSION);
 
         if (grapes == null) {
@@ -143,19 +143,19 @@ public class Session {
      * Get all grape components
      * @return The grape components, or <code>null</code>
      */
-    public static List<GrapeComponent> getGrapeComponents() {
+    public static List<GrapeComponentDto> getGrapeComponents() {
         RequestAttributes ra = RequestContextHolder.currentRequestAttributes();
-        return (List<GrapeComponent>) ra.getAttribute(Session.GRAPE_COMPONENTS, RequestAttributes.SCOPE_SESSION);
+        return (List<GrapeComponentDto>) ra.getAttribute(Session.GRAPE_COMPONENTS, RequestAttributes.SCOPE_SESSION);
     }
 
     /**
      * Set barrel component
      * @param bc The barrel component
      */
-    public static void setBarrelComponent(BarrelComponent bc) {
+    public static void setBarrelComponent(BarrelDto bc) {
         RequestAttributes ra = RequestContextHolder.currentRequestAttributes();
 
-        List<BarrelComponent> barrels = (List<BarrelComponent>) ra.getAttribute(Session.BARREL_COMPONENTS,
+        List<BarrelDto> barrels = (List<BarrelDto>) ra.getAttribute(Session.BARREL_COMPONENTS,
                 RequestAttributes.SCOPE_SESSION);
 
         if (barrels == null) {
@@ -170,9 +170,9 @@ public class Session {
      * Get all barrel components
      * @return The barrel components, or <code>null</code>
      */
-    public static List<BarrelComponent> getBarrelComponents() {
+    public static List<BarrelDto> getBarrelComponents() {
         RequestAttributes ra = RequestContextHolder.currentRequestAttributes();
-        return (List<BarrelComponent>) ra.getAttribute(Session.BARREL_COMPONENTS, RequestAttributes.SCOPE_SESSION);
+        return (List<BarrelDto>) ra.getAttribute(Session.BARREL_COMPONENTS, RequestAttributes.SCOPE_SESSION);
     }
 
     /**

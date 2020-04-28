@@ -34,13 +34,13 @@
                         <input type="hidden" name="producerId" th:value="${wine.producerId}"/>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <input th:replace="~{fragments/inputField :: input ('*Name*', 'name', 'text')}"/>
+                                <input th:replace="~{fragments/inputField :: input ('Name', 'name', 'text')}"/>
                             </div>
                             <div class="form-group col-md-2">
-                                <input th:replace="~{fragments/inputField :: input ('*Vintage*', 'vintage', 'number')}"/>
+                                <input th:replace="~{fragments/inputField :: input ('Vintage', 'vintage', 'number')}"/>
                             </div>
                             <div class="form-group col-md-2">
-                                <input th:replace="~{fragments/inputField :: input ('*Size*', 'size', 'text')}"/>
+                                <input th:replace="~{fragments/inputField :: input ('Size', 'size', 'text')}"/>
                             </div>
                         </div>
                         <div class="form-row">

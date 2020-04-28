@@ -9,7 +9,7 @@
         <div class="container">
             <div class="card shadow p-4 m-3">
                 <div class="card-body text-center">
-                    <h3 class="font-weight-light mb-4">At a minimum you must choose a grape from the dropdown.</h3>
+                    <h3 class="font-weight-light mb-4">At a minimum you must choose a grape from the dropdown and assign a percentage.</h3>
                     <p class="lead">Next you can hit <span class="btn-link fas fa-plus-square"></span> to add the
                         barrel where the grape was stored.</p>
                     <p class="lead">Or feel free to add multiple grapes using <span
@@ -27,58 +27,24 @@
         <div class="container justify-content-center">
             <div class="container">
                 <div class="container justify-content-center">
-                    <div class="card shadow my-5 text-center">
-                        <div class="card-body">
-                            <h4 class="card-subtitle" th:text="|${wine.name}|"></h4>
-                            <br/>
-                            <p class="card-text"
-                               th:if="${wine.description != null && !wine.description.isEmpty()}"
-                               th:text="|#{description}: ${wine.description}|"></p>
-                            <ul class="list-inline">
-                                <li class="list-inline-item card-text" th:text="|#{vintage}: ${wine.vintage}|"></li>
-                                <li class="list-inline-item card-text" th:text="|#{size}: ${wine.size}L|"></li>
-                            </ul>
-                            <ul class="list-inline">
-                                <li class="list-inline-item card-text" th:if="${wine.closure != null}"
-                                    th:text="|#{closure}: ${wine.closure.name}|"></li>
-                                <li class="list-inline-item card-text" th:if="${wine.shape != null}"
-                                    th:text="|#{shape}: ${wine.shape.name}|"></li>
-                            </ul>
-                            <ul class="list-inline">
-                                <li class="list-inline-item card-text" th:if="${wine.acid}"
-                                    th:text="|#{acid}: ${wine.acid} g/L|"></li>
-                                <li class="list-inline-item card-text" th:if="${wine.getPH()}"
-                                    th:text="|#{pH}: ${wine.pH}|"></li>
-                            </ul>
-                            <ul class="list-inline">
-                                <li class="list-inline-item card-text" th:if="${wine.alcohol}"
-                                    th:text="|#{alcohol}: ${wine.alcohol}%|"></li>
-                                <li class="list-inline-item card-text" th:if="${wine.bottleAging}"
-                                    th:text="|#{aging}: ${wine.bottleAging} days|"></li>
-                            </ul>
-                            <p class="card-link" th:if="${wine.weblink != null && !wine.weblink.isEmpty()}"
-                               th:text="${wine.weblink}"></p>
-                            <p class="card-text" th:if="${wine.subarea != null && !wine.subarea.isEmpty()}"
-                               th:text="${wine.subarea}"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="container justify-content-center">
                     <div class="card shadow my-5">
                         <div class="card-body">
                             <form th:object="${grapeComponent}" method="post">
                                 <div class="container">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item card-text" th:text="|${wine.name}|"></li>
+                                        <li class="list-inline-item card-text" th:text="|#{vintage}: ${wine.vintage}|"></li>
+                                        <li class="list-inline-item card-text" th:text="|#{size}: ${wine.size}L|"></li>
+                                    </ul>
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
                                             <label th:for="${winegrapes}" th:text="#{grapes}">Grapes</label>
-                                            <select class="form-control" th:field="*{grape}">
+                                            <select class="form-control" th:field="*{grapeId}">
                                                 <option value="">Please select a Grape</option>
                                                 <option class="form-control" th:each="winegrape : ${winegrapes}"
                                                         th:text="${winegrape.name}"
                                                         th:value="${winegrape.id}"
-                                                        th:selected="${grapeComponent.grape}">
+                                                        th:selected="${grapeComponent.grapeId}">
                                                 </option>
                                             </select>
                                         </div>
@@ -93,17 +59,17 @@
                                         </div>
                                     </div>
                                     <div class="form-row" >
-                                        <div class="form-group col-md-3" th:object="${grapeComponent.maceration}">
-                                            <input th:replace="~{fragments/inputField :: input ('Maceration days', 'days', 'text')}"/>
+                                        <div class="form-group col-md-3" >
+                                            <input th:replace="~{fragments/inputField :: input ('Maceration days', 'macerationDays', 'text')}"/>
                                         </div>
-                                        <div class="form-group col-md-3" th:object="${grapeComponent.maceration}">
-                                            <input th:replace="~{fragments/inputField :: input ('Maceration temp.', 'temperature', 'number')}"/>
+                                        <div class="form-group col-md-3" >
+                                            <input th:replace="~{fragments/inputField :: input ('Maceration temp.', 'macerationTemperature', 'number')}"/>
                                         </div>
-                                        <div class="form-group col-md-3" th:object="${grapeComponent.fermentation}">
-                                            <input th:replace="~{fragments/inputField :: input ('Fermentation days', 'days', 'text')}"/>
+                                        <div class="form-group col-md-3" >
+                                            <input th:replace="~{fragments/inputField :: input ('Fermentation days', 'fermentationDays', 'text')}"/>
                                         </div>
-                                        <div class="form-group col-md-3" th:object="${grapeComponent.fermentation}">
-                                            <input th:replace="~{fragments/inputField :: input ('Fermentation temp.', 'temperature', 'number')}"/>
+                                        <div class="form-group col-md-3" >
+                                            <input th:replace="~{fragments/inputField :: input ('Fermentation temp.', 'fermentationTemperature', 'number')}"/>
                                         </div>
                                     </div>
                                 </div>

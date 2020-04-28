@@ -10,9 +10,6 @@ package info.mywinecellar.dto;
 
 import info.mywinecellar.model.Grape;
 
-import java.sql.Date;
-import java.util.List;
-
 import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
@@ -33,19 +30,11 @@ public class GrapeDto extends AbstractKeyDto {
     private String name;
     private String color;
     private String alternativeNames;
-    private Byte percentage;
-    private Date harvestBegin;
-    private Date harvestEnd;
-    private Byte macerationDays;
-    private Float macerationTemperature;
-    private Byte fermentationDays;
-    private Float fermentationTemperature;
-    private List<BarrelDto> barrels;
 
-    @Size(max = 255)
+    @Size(max = 8192)
     private String description;
 
-    @Size(max = 50)
+    @Size(max = 255)
     private String weblink;
 
     /**
@@ -56,43 +45,7 @@ public class GrapeDto extends AbstractKeyDto {
 
     /**
      * Constructor
-     * @param percentage The percentage
-     * @param name The name
-     * @param id The identifier
-     * @param harvestBegin The harvest begin date
-     * @param harvestEnd The harvest end date
-     * @param macerationDays The number of maceration days
-     * @param macerationTemperature The maceration temperature
-     * @param fermentationDays The number of fermentation days
-     * @param fermentationTemperature The fermentation temperature
-     * @param barrels The barrels
-     */
-    public GrapeDto(Byte percentage,
-                    String name, Long id,
-                    Date harvestBegin, Date harvestEnd,
-                    Byte macerationDays, Float macerationTemperature,
-                    Byte fermentationDays, Float fermentationTemperature,
-                    List<BarrelDto> barrels) {
-        super(toKey(name));
-
-        this.percentage = percentage;
-        this.name = name;
-        this.id = id;
-
-        this.harvestBegin = harvestBegin;
-        this.harvestEnd = harvestEnd;
-
-        this.macerationDays = macerationDays;
-        this.macerationTemperature = macerationTemperature;
-
-        this.fermentationDays = fermentationDays;
-        this.fermentationTemperature = fermentationTemperature;
-
-        this.barrels = barrels;
-    }
-
-    /**
-     * Constructor
+     *
      * @param g The grape
      */
     public GrapeDto(Grape g) {

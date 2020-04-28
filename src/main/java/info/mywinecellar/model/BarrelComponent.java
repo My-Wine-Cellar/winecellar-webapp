@@ -27,8 +27,6 @@ import lombok.Setter;
 @Table(name = "barrel_component")
 public class BarrelComponent extends BaseEntity implements Comparable<BarrelComponent> {
 
-    private static final String NOT_NULL_MESSAGE = "This field is required";
-
     /**
      * Default constructor
      */
@@ -55,24 +53,24 @@ public class BarrelComponent extends BaseEntity implements Comparable<BarrelComp
         this.barrel = barrel;
     }
 
-    @NotNull(message = NOT_NULL_MESSAGE)
+    @NotNull
     @Column(name = "percentage")
     private Byte percentage;
 
-    @NotNull(message = NOT_NULL_MESSAGE)
+    @NotNull
     @Column(name = "size")
     private Integer size;
 
-    @NotNull(message = NOT_NULL_MESSAGE)
+    @NotNull
     @Column(name = "aging")
     private Integer aging;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "grape_component_id", referencedColumnName = "id")
     private GrapeComponent grapeComponent;
 
-    @NotNull(message = "You need to select a barrel")
-    @ManyToOne
+    @NotNull
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "barrel_id", referencedColumnName = "id")
     private Barrel barrel;
 
