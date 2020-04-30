@@ -8,18 +8,16 @@
 
 package info.mywinecellar.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -52,7 +50,7 @@ public class Fermentation extends BaseEntity implements Comparable<Fermentation>
     private Float temperature;
 
     @OneToMany(mappedBy = "fermentation")
-    private List<GrapeComponent> grapes;
+    private Set<GrapeComponent> grapes;
 
     @Override
     public int compareTo(Fermentation m) {
@@ -62,6 +60,20 @@ public class Fermentation extends BaseEntity implements Comparable<Fermentation>
             return temperature.compareTo(m.getTemperature());
         }
         return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Fermentation)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override

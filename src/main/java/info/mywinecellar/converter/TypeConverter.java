@@ -44,6 +44,7 @@ public class TypeConverter {
         }
         List<TypeDto> result = new ArrayList<>();
         types.forEach(type -> result.add(toDto(type)));
+        /* SORTING */
         return result;
     }
 

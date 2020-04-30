@@ -41,6 +41,8 @@ public class AreaDto extends AbstractKeyDto {
 
     private List<Long> primaryGrapes;
 
+    private Long regionId;
+
     /**
      * Constructor
      */
@@ -63,5 +65,8 @@ public class AreaDto extends AbstractKeyDto {
         for (Grape g : a.getPrimaryGrapes()) {
             this.primaryGrapes.add(g.getId());
         }
+
+        /* CLEANUP */
+        this.regionId = a.getRegions().iterator().next().getId();
     }
 }

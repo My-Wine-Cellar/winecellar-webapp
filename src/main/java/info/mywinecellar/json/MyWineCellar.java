@@ -9,30 +9,19 @@
 package info.mywinecellar.json;
 
 import info.mywinecellar.dto.AreaDto;
-import info.mywinecellar.dto.AreaDtoSorter;
 import info.mywinecellar.dto.CountryDto;
-import info.mywinecellar.dto.CountryDtoSorter;
 import info.mywinecellar.dto.ProducerDto;
-import info.mywinecellar.dto.ProducerDtoSorter;
 import info.mywinecellar.dto.RegionDto;
-import info.mywinecellar.dto.RegionDtoSorter;
 import info.mywinecellar.dto.WineDto;
-import info.mywinecellar.dto.WineDtoSorter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import lombok.Data;
 
 /**
  * MyWineCellar
  */
-@Data
 public class MyWineCellar implements Serializable {
-
-    private boolean sorted;
 
     private List<AreaDto> areas;
     private List<CountryDto> countries;
@@ -44,7 +33,6 @@ public class MyWineCellar implements Serializable {
      * Constructor
      */
     MyWineCellar() {
-        sorted = false;
     }
 
     /**
@@ -52,9 +40,6 @@ public class MyWineCellar implements Serializable {
      * @return The list
      */
     public List<AreaDto> getAreas() {
-        if (!sorted) {
-            sortAll();
-        }
         return areas;
     }
 
@@ -63,9 +48,6 @@ public class MyWineCellar implements Serializable {
      * @return The list
      */
     public List<CountryDto> getCountries() {
-        if (!sorted) {
-            sortAll();
-        }
         return countries;
     }
 
@@ -74,9 +56,6 @@ public class MyWineCellar implements Serializable {
      * @return The list
      */
     public List<ProducerDto> getProducers() {
-        if (!sorted) {
-            sortAll();
-        }
         return producers;
     }
 
@@ -85,9 +64,6 @@ public class MyWineCellar implements Serializable {
      * @return The list
      */
     public List<RegionDto> getRegions() {
-        if (!sorted) {
-            sortAll();
-        }
         return regions;
     }
 
@@ -96,9 +72,6 @@ public class MyWineCellar implements Serializable {
      * @return The list
      */
     public List<WineDto> getWines() {
-        if (!sorted) {
-            sortAll();
-        }
         return wines;
     }
 
@@ -200,29 +173,5 @@ public class MyWineCellar implements Serializable {
         }
 
         return false;
-    }
-
-    private void sortAll() {
-        if (areas != null) {
-            Collections.sort(areas, new AreaDtoSorter());
-        }
-
-        if (countries != null) {
-            Collections.sort(countries, new CountryDtoSorter());
-        }
-
-        if (producers != null) {
-            Collections.sort(producers, new ProducerDtoSorter());
-        }
-
-        if (regions != null) {
-            Collections.sort(regions, new RegionDtoSorter());
-        }
-
-        if (wines != null) {
-            Collections.sort(wines, new WineDtoSorter());
-        }
-
-        sorted = true;
     }
 }

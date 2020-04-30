@@ -8,6 +8,8 @@
 
 package info.mywinecellar.dto;
 
+import info.mywinecellar.model.Area;
+import info.mywinecellar.model.Region;
 import info.mywinecellar.model.Review;
 
 import java.io.Serializable;
@@ -47,9 +49,14 @@ public class ReviewDto implements Serializable {
         this.stars = r.getStars();
         this.comment = r.getComment();
         this.date = r.getDate();
-        this.country = new CountryDto(r.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());
-        this.region = new RegionDto(r.getWine().getProducer().getAreas().get(0).getRegions().get(0));
-        this.area = new AreaDto(r.getWine().getProducer().getAreas().get(0));
+
+        /* CLEANUP */
+        Area ae = r.getWine().getProducer().getAreas().iterator().next();
+        Region re = ae.getRegions().iterator().next();
+
+        this.country = new CountryDto(re.getCountry());
+        this.region = new RegionDto(re);
+        this.area = new AreaDto(ae);
         this.producer = new ProducerDto(r.getWine().getProducer());
         this.wine = new WineDto(r.getWine());
         this.user = new UserDto(r.getUser());

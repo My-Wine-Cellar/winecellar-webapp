@@ -14,6 +14,7 @@ import info.mywinecellar.util.Image;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -28,13 +29,14 @@ public class ProducerConverter {
      * @param producers The producers
      * @return The Dto objects
      */
-    public List<ProducerDto> toDto(List<Producer> producers) {
+    public List<ProducerDto> toDto(Set<Producer> producers) {
         if (producers == null) {
             throw new IllegalStateException("Producers is null");
         }
 
         List<ProducerDto> result = new ArrayList<>();
         producers.forEach(producer -> result.add(toDto(producer)));
+        /* SORTING */
         return result;
     }
 

@@ -44,6 +44,7 @@ public class ClosureConverter {
         }
         List<ClosureDto> result = new ArrayList<>();
         closures.forEach(closure -> result.add(toDto(closure)));
+        /* SORTING */
         return result;
     }
 

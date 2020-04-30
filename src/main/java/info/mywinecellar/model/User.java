@@ -8,16 +8,9 @@
 
 package info.mywinecellar.model;
 
-import info.mywinecellar.util.BottleSorter;
-import info.mywinecellar.util.GenericTastingNotesSorter;
-import info.mywinecellar.util.ReviewSorter;
-import info.mywinecellar.util.TastedSorter;
-import info.mywinecellar.util.WishlistSorter;
-
 import java.sql.Date;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,10 +30,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -92,59 +87,19 @@ public class User implements UserDetails {
     private Collection<Authority> authorities;
 
     @OneToMany(mappedBy = "user")
-    private List<Bottle> bottles;
+    private Set<Bottle> bottles;
 
     @OneToMany(mappedBy = "user")
-    private List<GenericTastingNotes> genericTastingNotes;
+    private Set<GenericTastingNotes> genericTastingNotes;
 
     @OneToMany(mappedBy = "user")
-    private List<Review> reviews;
+    private Set<Review> reviews;
 
     @OneToMany(mappedBy = "user")
-    private List<Tasted> tasted;
+    private Set<Tasted> tasted;
 
     @OneToMany(mappedBy = "user")
-    private List<Wishlist> wishlist;
-
-    /**
-     * @return Bottle list
-     */
-    public List<Bottle> getBottles() {
-        Collections.sort(bottles, new BottleSorter());
-        return bottles;
-    }
-
-    /**
-     * @return GenericTastingNotes list
-     */
-    public List<GenericTastingNotes> getGenericTastingNotes() {
-        Collections.sort(genericTastingNotes, new GenericTastingNotesSorter());
-        return genericTastingNotes;
-    }
-
-    /**
-     * @return Review list
-     */
-    public List<Review> getReviews() {
-        Collections.sort(reviews, new ReviewSorter());
-        return reviews;
-    }
-
-    /**
-     * @return Tasted list
-     */
-    public List<Tasted> getTasted() {
-        Collections.sort(tasted, new TastedSorter());
-        return tasted;
-    }
-
-    /**
-     * @return Wishlist list
-     */
-    public List<Wishlist> getWishlist() {
-        Collections.sort(wishlist, new WishlistSorter());
-        return wishlist;
-    }
+    private Set<Wishlist> wishlist;
 
     @Override
     public boolean isAccountNonExpired() {
@@ -159,5 +114,24 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof User)) {
+            return false;
+        }
+
+        return id == ((User) o).getId();
+    }
+
+    @Override
+    public String toString() {
+        return "User(" + id + ")";
     }
 }

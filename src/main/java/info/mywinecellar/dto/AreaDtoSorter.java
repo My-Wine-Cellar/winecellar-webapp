@@ -8,17 +8,27 @@
 
 package info.mywinecellar.dto;
 
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Sorter for dto beans
  */
 public class AreaDtoSorter implements Comparator<AreaDto> {
 
+    private Map<Long, String> regions;
+
     /**
-     * Default constructor
+     * Constructor
+     * @param r The regions
      */
-    public AreaDtoSorter() {
+    public AreaDtoSorter(Collection<RegionDto> r) {
+        regions = new HashMap<>();
+        for (RegionDto dto : r) {
+            regions.put(dto.getId(), dto.getName());
+        }
     }
 
     /**
@@ -28,6 +38,15 @@ public class AreaDtoSorter implements Comparator<AreaDto> {
      * @return 0 if equals, otherwise based on name
      */
     public int compare(AreaDto a1, AreaDto a2) {
+
+        if (a1.getName().equals(regions.get(a1.getRegionId()))) {
+            return -1;
+        }
+
+        if (a2.getName().equals(regions.get(a2.getRegionId()))) {
+            return 1;
+        }
+
         return a1.getName().compareTo(a2.getName());
     }
 }

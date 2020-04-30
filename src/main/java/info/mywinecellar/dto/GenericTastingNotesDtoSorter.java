@@ -6,22 +6,20 @@
  * http://www.eclipse.org/legal/epl-2.0
  */
 
-package info.mywinecellar.util;
-
-import info.mywinecellar.model.GenericTastingNotes;
+package info.mywinecellar.dto;
 
 import java.util.Comparator;
 
 /**
- * Sorter for GenericTastingNotes entities
+ * Sorter for GenericTastingNotes DTOs
  */
-public class GenericTastingNotesSorter implements Comparator<GenericTastingNotes> {
-    private WineSorter wineSorter;
+public class GenericTastingNotesDtoSorter implements Comparator<GenericTastingNotesDto> {
+    private WineDtoSorter wineSorter;
 
     /**
      * Default constructor that doesn't take country into account
      */
-    public GenericTastingNotesSorter() {
+    public GenericTastingNotesDtoSorter() {
         this(false);
     }
 
@@ -29,8 +27,8 @@ public class GenericTastingNotesSorter implements Comparator<GenericTastingNotes
      * Constructor
      * @param country Should country be considered
      */
-    public GenericTastingNotesSorter(boolean country) {
-        wineSorter = new WineSorter(country);
+    public GenericTastingNotesDtoSorter(boolean country) {
+        wineSorter = new WineDtoSorter(country);
     }
 
     /**
@@ -39,7 +37,7 @@ public class GenericTastingNotesSorter implements Comparator<GenericTastingNotes
      * @param g2 Instance two
      * @return 0 if equals, otherwise result of WineSorter
      */
-    public int compare(GenericTastingNotes g1, GenericTastingNotes g2) {
+    public int compare(GenericTastingNotesDto g1, GenericTastingNotesDto g2) {
         if (g1.getId().equals(g2.getId())) {
             return 0;
         }

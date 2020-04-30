@@ -8,7 +8,9 @@
 
 package info.mywinecellar.dto;
 
+import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Bottle;
+import info.mywinecellar.model.Region;
 
 import java.io.Serializable;
 
@@ -46,9 +48,14 @@ public class BottleDto implements Serializable {
         this.number = b.getNumber();
         this.location = b.getLocation();
         this.show = b.getShow();
-        this.country = new CountryDto(b.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());
-        this.region = new RegionDto(b.getWine().getProducer().getAreas().get(0).getRegions().get(0));
-        this.area = new AreaDto(b.getWine().getProducer().getAreas().get(0));
+
+        /* CLEANUP */
+        Area ae = b.getWine().getProducer().getAreas().iterator().next();
+        Region re = ae.getRegions().iterator().next();
+
+        this.country = new CountryDto(re.getCountry());
+        this.region = new RegionDto(re);
+        this.area = new AreaDto(ae);
         this.producer = new ProducerDto(b.getWine().getProducer());
         this.wine = new WineDto(b.getWine());
     }

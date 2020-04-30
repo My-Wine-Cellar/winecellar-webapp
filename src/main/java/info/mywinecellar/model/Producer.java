@@ -8,10 +8,7 @@
 
 package info.mywinecellar.model;
 
-import info.mywinecellar.util.WineSorter;
-
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,11 +22,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
 @Entity
@@ -91,45 +86,28 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
     private byte[] image;
 
     @ManyToMany(mappedBy = "producers")
-    private List<Area> areas;
+    private Set<Area> areas;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producer")
-    private List<Wine> wines;
-
-    /**
-     * Sorted by WineSorter
-     *
-     * @return sorted list of wines
-     */
-    public List<Wine> getWines() {
-        Collections.sort(wines, new WineSorter());
-        return wines;
-    }
+    private Set<Wine> wines;
 
     @Override
     public int compareTo(Producer p) {
         return name.compareTo(p.getName());
     }
 
-    /**
-     * @param label     label
-     * @param ignoreNew ignoreNew
-     * @return Wine
-     * @deprecated since v1.0.4
-     */
-    @Deprecated
-    public Wine getWine(String label, boolean ignoreNew) {
-        label = label.toLowerCase();
-        for (Wine wine : wines) {
-            if (!ignoreNew || !wine.isNew()) {
-                String compName = wine.getName();
-                compName = compName.toLowerCase();
-                if (compName.equals(label)) {
-                    return wine;
-                }
-            }
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Producer)) {
+            return false;
         }
-        return null;
+
+        return super.equals(o);
     }
 
     @Override

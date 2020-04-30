@@ -8,6 +8,8 @@
 
 package info.mywinecellar.dto;
 
+import info.mywinecellar.model.Area;
+import info.mywinecellar.model.Region;
 import info.mywinecellar.model.Tasted;
 
 import java.io.Serializable;
@@ -38,11 +40,16 @@ public class TastedDto implements Serializable {
      */
     public TastedDto(Tasted t, Long reviewId) {
         this.id = t.getId();
-        this.country = new CountryDto(t.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());
-        this.region = new RegionDto(t.getWine().getProducer().getAreas().get(0).getRegions().get(0));
-        this.area = new AreaDto(t.getWine().getProducer().getAreas().get(0));
+        this.reviewId = reviewId;
+
+        /* CLEANUP */
+        Area ae = t.getWine().getProducer().getAreas().iterator().next();
+        Region re = ae.getRegions().iterator().next();
+
+        this.country = new CountryDto(re.getCountry());
+        this.region = new RegionDto(re);
+        this.area = new AreaDto(ae);
         this.producer = new ProducerDto(t.getWine().getProducer());
         this.wine = new WineDto(t.getWine());
-        this.reviewId = reviewId;
     }
 }

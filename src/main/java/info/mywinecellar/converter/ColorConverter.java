@@ -44,6 +44,7 @@ public class ColorConverter {
         }
         List<ColorDto> result = new ArrayList<>();
         colors.forEach(color -> result.add(toDto(color)));
+        /* SORTING */
         return result;
     }
 

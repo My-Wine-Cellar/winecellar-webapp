@@ -6,22 +6,20 @@
  * http://www.eclipse.org/legal/epl-2.0
  */
 
-package info.mywinecellar.util;
-
-import info.mywinecellar.model.Review;
+package info.mywinecellar.dto;
 
 import java.util.Comparator;
 
 /**
- * Sorter for Review entities
+ * Sorter for Review DTOs
  */
-public class ReviewSorter implements Comparator<Review> {
-    private WineSorter wineSorter;
+public class ReviewDtoSorter implements Comparator<ReviewDto> {
+    private WineDtoSorter wineSorter;
 
     /**
      * Default constructor that doesn't take country into account
      */
-    public ReviewSorter() {
+    public ReviewDtoSorter() {
         this(false);
     }
 
@@ -29,8 +27,8 @@ public class ReviewSorter implements Comparator<Review> {
      * Constructor
      * @param country Should country be considered
      */
-    public ReviewSorter(boolean country) {
-        wineSorter = new WineSorter(country);
+    public ReviewDtoSorter(boolean country) {
+        wineSorter = new WineDtoSorter(country);
     }
 
     /**
@@ -39,7 +37,7 @@ public class ReviewSorter implements Comparator<Review> {
      * @param r2 Instance two
      * @return 0 if equals, otherwise result of WineSorter
      */
-    public int compare(Review r1, Review r2) {
+    public int compare(ReviewDto r1, ReviewDto r2) {
         int result;
 
         if (r1.getId().equals(r2.getId())) {

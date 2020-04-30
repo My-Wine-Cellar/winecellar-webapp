@@ -14,6 +14,7 @@ import info.mywinecellar.model.Region;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -39,7 +40,7 @@ public class RegionConverter {
      * @param regions List<Region> regions
      * @return List<RegionDto> regionDto's
      */
-    public List<RegionDto> toDto(List<Region> regions) {
+    public List<RegionDto> toDto(Set<Region> regions) {
         if (regions == null) {
             throw new IllegalStateException("Region list is null");
         }

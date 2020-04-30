@@ -13,6 +13,7 @@ import info.mywinecellar.model.Bottle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -38,12 +39,13 @@ public class BottleConverter {
      * @param bottles List of bottles
      * @return List of BottleDto's
      */
-    public List<BottleDto> toDto(List<Bottle> bottles) {
+    public List<BottleDto> toDto(Set<Bottle> bottles) {
         if (bottles == null) {
             throw new IllegalStateException("Bottle list is null");
         }
         List<BottleDto> result = new ArrayList<>();
         bottles.forEach(bottle -> result.add(toDto(bottle)));
+        /* SORTING */
         return result;
     }
 }

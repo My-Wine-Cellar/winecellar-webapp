@@ -16,6 +16,7 @@ import info.mywinecellar.model.GrapeComponent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -41,7 +42,7 @@ public class BarrelComponentConverter {
      * @param barrels BarrelComponent list
      * @return BarrelDto list
      */
-    public List<BarrelDto> toDto(List<BarrelComponent> barrels) {
+    public List<BarrelDto> toDto(Set<BarrelComponent> barrels) {
         if (barrels == null) {
             throw new IllegalStateException("Barrel list is null");
         }

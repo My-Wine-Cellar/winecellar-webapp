@@ -13,8 +13,10 @@ import info.mywinecellar.dto.GrapeDtoSorter;
 import info.mywinecellar.model.Grape;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -30,17 +32,16 @@ public class GrapeConverter {
      * @return The Dto objects
      */
     public List<GrapeDto> toDto(List<Grape> grapes) {
-        if (grapes == null) {
-            throw new IllegalStateException("Grapes is null");
-        }
+        return convert(grapes);
+    }
 
-        List<GrapeDto> result = new ArrayList<>();
-        for (Grape g : grapes) {
-            result.add(toDto(g));
-        }
-        Collections.sort(result, new GrapeDtoSorter());
-
-        return result;
+    /**
+     * Create a list of Dto objects
+     * @param grapes The grapes
+     * @return The Dto objects
+     */
+    public List<GrapeDto> toDto(Set<Grape> grapes) {
+        return convert(grapes);
     }
 
     /**
@@ -72,4 +73,24 @@ public class GrapeConverter {
 
         return g;
     }
+
+    /**
+     * Create a list of Dto objects
+     * @param grapes The grapes
+     * @return The Dto objects
+     */
+    private List<GrapeDto> convert(Collection<Grape> grapes) {
+        if (grapes == null) {
+            throw new IllegalStateException("Grapes is null");
+        }
+
+        List<GrapeDto> result = new ArrayList<>();
+        for (Grape g : grapes) {
+            result.add(toDto(g));
+        }
+        Collections.sort(result, new GrapeDtoSorter());
+
+        return result;
+    }
+
 }

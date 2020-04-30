@@ -16,6 +16,7 @@ import info.mywinecellar.service.ReviewService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -50,11 +51,12 @@ public class TastedConverter {
      * @param tastedList tastedList
      * @return dto list
      */
-    public List<TastedDto> toDto(User user, List<Tasted> tastedList) {
+    public List<TastedDto> toDto(User user, Set<Tasted> tastedList) {
         List<TastedDto> result = new ArrayList<>();
         if (tastedList != null) {
             tastedList.forEach(tasted -> result.add(toDto(user, tasted)));
         }
+        /* SORTING */
         return result;
     }
 }

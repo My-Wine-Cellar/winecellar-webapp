@@ -8,6 +8,8 @@
 
 package info.mywinecellar.dto;
 
+import info.mywinecellar.model.Area;
+import info.mywinecellar.model.Region;
 import info.mywinecellar.model.Wishlist;
 
 import java.io.Serializable;
@@ -42,9 +44,14 @@ public class WishlistDto implements Serializable {
     public WishlistDto(Wishlist w) {
         this.id = w.getId();
         this.date = w.getDate();
-        this.country = new CountryDto(w.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());
-        this.region = new RegionDto(w.getWine().getProducer().getAreas().get(0).getRegions().get(0));
-        this.area = new AreaDto(w.getWine().getProducer().getAreas().get(0));
+
+        /* CLEANUP */
+        Area ae = w.getWine().getProducer().getAreas().iterator().next();
+        Region re = ae.getRegions().iterator().next();
+
+        this.country = new CountryDto(re.getCountry());
+        this.region = new RegionDto(re);
+        this.area = new AreaDto(ae);
         this.producer = new ProducerDto(w.getWine().getProducer());
         this.wine = new WineDto(w.getWine());
     }

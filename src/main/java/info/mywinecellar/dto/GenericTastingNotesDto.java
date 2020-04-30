@@ -8,7 +8,9 @@
 
 package info.mywinecellar.dto;
 
+import info.mywinecellar.model.Area;
 import info.mywinecellar.model.GenericTastingNotes;
+import info.mywinecellar.model.Region;
 import info.mywinecellar.util.StringJsonKey;
 
 import java.io.Serializable;
@@ -92,9 +94,14 @@ public class GenericTastingNotesDto implements Serializable {
      * @param gtn The generic tasting notes
      */
     public GenericTastingNotesDto(GenericTastingNotes gtn) {
-        this.country = new CountryDto(gtn.getWine().getProducer().getAreas().get(0).getRegions().get(0).getCountry());
-        this.region = new RegionDto(gtn.getWine().getProducer().getAreas().get(0).getRegions().get(0));
-        this.area = new AreaDto(gtn.getWine().getProducer().getAreas().get(0));
+
+        /* CLEANUP */
+        Area ae = gtn.getWine().getProducer().getAreas().iterator().next();
+        Region re = ae.getRegions().iterator().next();
+
+        this.country = new CountryDto(re.getCountry());
+        this.region = new RegionDto(re);
+        this.area = new AreaDto(ae);
         this.producer = new ProducerDto(gtn.getWine().getProducer());
         this.wine = new WineDto(gtn.getWine());
         this.user = new UserDto(gtn.getUser());

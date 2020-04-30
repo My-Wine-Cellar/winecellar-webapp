@@ -16,11 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -83,6 +81,20 @@ public class BarrelComponent extends BaseEntity implements Comparable<BarrelComp
         }
 
         return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof BarrelComponent)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override
