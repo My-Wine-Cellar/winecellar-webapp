@@ -44,6 +44,7 @@ public class BarrelConverter {
         }
         List<BarrelDto> result = new ArrayList<>();
         barrels.forEach(dto -> result.add(toDto(dto)));
+        /* SORTING */
         return result;
     }
 }

@@ -23,11 +23,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -292,6 +290,20 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
     @Override
     public int compareTo(GenericTastingNotes gtn) {
         return getId().compareTo(gtn.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof GenericTastingNotes)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override

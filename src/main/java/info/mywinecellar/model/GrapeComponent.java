@@ -9,7 +9,7 @@
 package info.mywinecellar.model;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,11 +20,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -84,7 +82,7 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
     private Fermentation fermentation;
 
     @OneToMany(mappedBy = "grapeComponent", cascade = CascadeType.REMOVE)
-    private List<BarrelComponent> barrelComponents;
+    private Set<BarrelComponent> barrelComponents;
 
     @Override
     public int compareTo(GrapeComponent gc) {
@@ -94,6 +92,20 @@ public class GrapeComponent extends BaseEntity implements Comparable<GrapeCompon
             return grape.getName().compareTo(gc.getGrape().getName());
         }
         return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof GrapeComponent)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override

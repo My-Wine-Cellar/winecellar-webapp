@@ -13,6 +13,7 @@ import info.mywinecellar.model.Wishlist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -38,12 +39,13 @@ public class WishlistConverter {
      * @param wishlists wishlists
      * @return dto list
      */
-    public List<WishlistDto> toDto(List<Wishlist> wishlists) {
+    public List<WishlistDto> toDto(Set<Wishlist> wishlists) {
         if (wishlists == null) {
             throw new IllegalStateException("Wishlist list is null");
         }
         List<WishlistDto> result = new ArrayList<>();
         wishlists.forEach(wishlist -> result.add(toDto(wishlist)));
+        /* SORTING */
         return result;
     }
 }

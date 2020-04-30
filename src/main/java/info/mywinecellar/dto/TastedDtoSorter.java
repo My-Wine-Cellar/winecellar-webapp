@@ -6,22 +6,20 @@
  * http://www.eclipse.org/legal/epl-2.0
  */
 
-package info.mywinecellar.util;
-
-import info.mywinecellar.model.Wishlist;
+package info.mywinecellar.dto;
 
 import java.util.Comparator;
 
 /**
- * Sorter for Wishlist entities
+ * Sorter for Tasted DTOs
  */
-public class WishlistSorter implements Comparator<Wishlist> {
-    private WineSorter wineSorter;
+public class TastedDtoSorter implements Comparator<TastedDto> {
+    private WineDtoSorter wineSorter;
 
     /**
      * Default constructor that doesn't take country into account
      */
-    public WishlistSorter() {
+    public TastedDtoSorter() {
         this(false);
     }
 
@@ -29,22 +27,22 @@ public class WishlistSorter implements Comparator<Wishlist> {
      * Constructor
      * @param country Should country be considered
      */
-    public WishlistSorter(boolean country) {
-        wineSorter = new WineSorter(country);
+    public TastedDtoSorter(boolean country) {
+        wineSorter = new WineDtoSorter(country);
     }
 
     /**
-     * Compare two wishlist entities
-     * @param w1 Instance one
-     * @param w2 Instance two
+     * Compare two tasted entities
+     * @param t1 Instance one
+     * @param t2 Instance two
      * @return 0 if equals, otherwise result of WineSorter
      */
-    public int compare(Wishlist w1, Wishlist w2) {
-        if (w1.getId().equals(w2.getId())) {
+    public int compare(TastedDto t1, TastedDto t2) {
+        if (t1.getId().equals(t2.getId())) {
             return 0;
         }
 
-        return wineSorter.compare(w1.getWine(), w2.getWine());
+        return wineSorter.compare(t1.getWine(), t2.getWine());
     }
 }
 

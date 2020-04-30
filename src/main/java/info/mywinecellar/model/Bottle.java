@@ -14,11 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -72,6 +70,20 @@ public class Bottle extends BaseEntity implements Comparable<Bottle> {
     @Override
     public int compareTo(Bottle b) {
         return wine.getName().compareTo(b.getWine().getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Bottle)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override

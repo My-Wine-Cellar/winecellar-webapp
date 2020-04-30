@@ -22,12 +22,16 @@ public class ProducerDtoSorter implements Comparator<ProducerDto> {
     }
 
     /**
-     * Compare two countries
+     * Compare two producers
      * @param p1 The first producer
      * @param p2 The second producer
      * @return 0 if equals, otherwise based on name
      */
     public int compare(ProducerDto p1, ProducerDto p2) {
+        if (p1.getId().equals(p2.getId())) {
+            return 0;
+        }
+
         return p1.getName().compareTo(p2.getName());
     }
 }

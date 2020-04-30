@@ -8,7 +8,7 @@
 
 package info.mywinecellar.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,13 +22,10 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicUpdate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -129,59 +126,47 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @Column(name = "subarea")
     private String subarea;
 
-    @JsonIgnore
     @Lob
     @org.hibernate.annotations.Type(type = "org.hibernate.type.ImageType")
     private byte[] image;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "producer_id", referencedColumnName = "id")
     private Producer producer;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine", cascade = CascadeType.REMOVE)
-    private List<GrapeComponent> grapes;
+    private Set<GrapeComponent> grapes;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
-    private List<Bottle> bottles;
+    private Set<Bottle> bottles;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
-    private List<GenericTastingNotes> genericTastingNotes;
+    private Set<GenericTastingNotes> genericTastingNotes;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
-    private List<Tasted> tasted;
+    private Set<Tasted> tasted;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
-    private List<Review> reviews;
+    private Set<Review> reviews;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "wine")
-    private List<Wishlist> wishlists;
+    private Set<Wishlist> wishlists;
 
-    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "closure_id", referencedColumnName = "id")
     private Closure closure;
 
-    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shape_id", referencedColumnName = "id")
     private Shape shape;
 
-    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private Type type;
 
-    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "color_id", referencedColumnName = "id")
@@ -190,6 +175,20 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @Override
     public int compareTo(Wine w) {
         return name.compareTo(w.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Wine)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override

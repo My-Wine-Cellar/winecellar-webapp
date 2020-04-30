@@ -8,10 +8,7 @@
 
 package info.mywinecellar.model;
 
-import info.mywinecellar.util.ProducerSorter;
-
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,12 +19,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -64,15 +58,12 @@ public class Area extends BaseEntity implements Comparable<Area> {
     @Column(name = "weblink")
     private String weblink;
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "areas")
-    private List<Region> regions;
+    private Set<Region> regions;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "areas")
-    private List<Grape> primaryGrapes;
+    private Set<Grape> primaryGrapes;
 
-    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "area_producer",
             joinColumns =
@@ -80,21 +71,25 @@ public class Area extends BaseEntity implements Comparable<Area> {
             inverseJoinColumns =
             @JoinColumn(name = "producer_id", referencedColumnName = "id")
     )
-    private List<Producer> producers;
-
-    /**
-     * Sort Producers using ProducerSorter
-     *
-     * @return sorted Producers
-     */
-    public List<Producer> getProducers() {
-        Collections.sort(producers, new ProducerSorter());
-        return producers;
-    }
+    private Set<Producer> producers;
 
     @Override
     public int compareTo(Area a) {
         return name.compareTo(a.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Area)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override

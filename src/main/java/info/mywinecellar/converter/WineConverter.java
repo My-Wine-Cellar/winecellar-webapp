@@ -21,6 +21,7 @@ import info.mywinecellar.util.Image;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -59,7 +60,7 @@ public class WineConverter {
      * @param wines wines
      * @return dto list
      */
-    public List<WineDto> toDto(List<Wine> wines) {
+    public List<WineDto> toDto(Set<Wine> wines) {
         if (wines == null) {
             throw new IllegalStateException("Wine list is null");
         }

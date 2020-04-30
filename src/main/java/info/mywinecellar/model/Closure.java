@@ -8,7 +8,7 @@
 
 package info.mywinecellar.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,11 +17,9 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -61,11 +59,25 @@ public class Closure extends BaseEntity implements Comparable<Closure> {
     private String weblink;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "closure")
-    private List<Wine> wines;
+    private Set<Wine> wines;
 
     @Override
     public int compareTo(Closure c) {
         return name.compareTo(c.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Closure)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override

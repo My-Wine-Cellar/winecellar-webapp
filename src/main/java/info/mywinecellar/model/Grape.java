@@ -8,7 +8,7 @@
 
 package info.mywinecellar.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,12 +20,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -68,11 +65,9 @@ public class Grape extends BaseEntity implements Comparable<Grape> {
     @Column(name = "weblink")
     private String weblink;
 
-    @JsonIgnore
     @OneToMany
-    private List<Grape> alternativeNames;
+    private Set<Grape> alternativeNames;
 
-    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "grape_area",
             joinColumns =
@@ -80,15 +75,28 @@ public class Grape extends BaseEntity implements Comparable<Grape> {
             inverseJoinColumns =
             @JoinColumn(name = "area_id", referencedColumnName = "id")
     )
-    private List<Area> areas;
+    private Set<Area> areas;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "grape")
-    private List<GrapeComponent> grapeComponents;
+    private Set<GrapeComponent> grapeComponents;
 
     @Override
     public int compareTo(Grape g) {
         return name.compareTo(g.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Grape)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override

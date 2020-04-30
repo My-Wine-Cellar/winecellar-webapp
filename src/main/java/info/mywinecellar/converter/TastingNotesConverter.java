@@ -13,6 +13,7 @@ import info.mywinecellar.model.GenericTastingNotes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -38,12 +39,13 @@ public class TastingNotesConverter {
      * @param notes notes
      * @return ui list
      */
-    public List<GenericTastingNotesDto> toDto(List<GenericTastingNotes> notes) {
+    public List<GenericTastingNotesDto> toDto(Set<GenericTastingNotes> notes) {
         if (notes == null) {
             throw new IllegalStateException("Tasting notes list is null");
         }
         List<GenericTastingNotesDto> result = new ArrayList<>();
         notes.forEach(tasting -> result.add(toDto(tasting)));
+        /* SORTING */
         return result;
     }
 }

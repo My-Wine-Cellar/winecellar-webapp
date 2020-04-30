@@ -44,6 +44,7 @@ public class ShapeConverter {
         }
         List<ShapeDto> result = new ArrayList<>();
         shapes.forEach(shape -> result.add(toDto(shape)));
+        /* SORTING */
         return result;
     }
 

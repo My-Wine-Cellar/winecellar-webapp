@@ -8,7 +8,7 @@
 
 package info.mywinecellar.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,11 +17,9 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -61,11 +59,25 @@ public class Barrel extends BaseEntity implements Comparable<Barrel> {
     private String weblink;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "barrel")
-    private List<BarrelComponent> barrelComponents;
+    private Set<BarrelComponent> barrelComponents;
 
     @Override
     public int compareTo(Barrel b) {
         return name.compareTo(b.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Barrel)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override

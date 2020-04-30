@@ -15,9 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import lombok.EqualsAndHashCode;
-
-@EqualsAndHashCode
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
@@ -62,5 +59,27 @@ public class BaseEntity implements Serializable {
      */
     public boolean isNew() {
         return id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? super.hashCode() : id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof BaseEntity)) {
+            return false;
+        }
+
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        if (id == null) {
+            return super.equals(o);
+        }
+
+        return id == ((BaseEntity) o).getId();
     }
 }

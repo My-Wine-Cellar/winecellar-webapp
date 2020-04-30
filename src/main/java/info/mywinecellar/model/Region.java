@@ -9,8 +9,7 @@
 package info.mywinecellar.model;
 
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,12 +19,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
@@ -78,13 +74,11 @@ public class Region extends BaseEntity implements Comparable<Region> {
     @Column(name = "weblink")
     private String weblink;
 
-    @JsonIgnore
     @NotNull
     @ManyToOne
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "region_area",
             joinColumns =
@@ -92,25 +86,25 @@ public class Region extends BaseEntity implements Comparable<Region> {
             inverseJoinColumns =
             @JoinColumn(name = "area_id", referencedColumnName = "id")
     )
-    private List<Area> areas;
-
-    /**
-     * This will find the Area with the same name as the Region at the top of list
-     *
-     * @return areas
-     */
-    public List<Area> getAreas() {
-        areas.forEach(area -> {
-            if (area.getName().equals(this.name)) {
-                Collections.swap(areas, areas.indexOf(area), 0);
-            }
-        });
-        return areas;
-    }
+    private Set<Area> areas;
 
     @Override
     public int compareTo(Region r) {
         return name.compareTo(r.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Region)) {
+            return false;
+        }
+
+        return super.equals(o);
     }
 
     @Override

@@ -10,10 +10,15 @@ package info.mywinecellar.converter;
 
 import info.mywinecellar.dto.AreaDto;
 import info.mywinecellar.dto.AreaDtoSorter;
+import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.model.Area;
+import info.mywinecellar.model.Region;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
 
@@ -23,19 +28,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class AreaConverter {
 
+    @Inject
+    private RegionConverter regionConverter;
+
     /**
      * Create a list of Dto objects
      *
      * @param areas The areas
      * @return The Dto objects
      */
-    public List<AreaDto> toDto(List<Area> areas) {
+    public List<AreaDto> toDto(Set<Area> areas) {
         if (areas == null) {
             throw new IllegalStateException("Area list is null");
         }
         List<AreaDto> result = new ArrayList<>();
-        areas.forEach(area -> result.add(toDto(area)));
-        result.sort(new AreaDtoSorter());
+        List<RegionDto> regions = new ArrayList<>();
+
+        for (Area a : areas) {
+            result.add(toDto(a));
+
+            Region r = a.getRegions().iterator().next();
+            regions.add(regionConverter.toDto(r));
+        }
+
+        result.sort(new AreaDtoSorter(regions));
         return result;
     }
 

@@ -8,7 +8,7 @@
 
 package info.mywinecellar.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,11 +17,9 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
 @Entity
@@ -61,15 +59,29 @@ public class Type extends BaseEntity implements Comparable<Type> {
     private String weblink;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "type")
-    private List<Wine> wines;
-
-    @Override
-    public String toString() {
-        return "Type(" + id + ")";
-    }
+    private Set<Wine> wines;
 
     @Override
     public int compareTo(Type o) {
         return name.compareTo(o.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof Type)) {
+            return false;
+        }
+
+        return super.equals(o);
+    }
+
+    @Override
+    public String toString() {
+        return "Type(" + id + ")";
     }
 }
