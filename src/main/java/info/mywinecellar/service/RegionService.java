@@ -77,6 +77,7 @@ public class RegionService extends AbstractService<Region> {
         Region region = this.findById(regionId);
         region = regionConverter.toEntity(region, dto);
         this.save(region);
+        log.info("Updated Region: {} ", region.getName());
         return region;
     }
 }

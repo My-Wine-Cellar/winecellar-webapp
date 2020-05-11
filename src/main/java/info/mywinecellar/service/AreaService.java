@@ -68,6 +68,7 @@ public class AreaService extends AbstractService<Area> {
         Area area = this.findById(areaId);
         area = areaConverter.toEntity(area, dto);
         this.save(area);
+        log.info("Updated Area: {} ", area.getName());
         return area;
     }
 
@@ -83,6 +84,7 @@ public class AreaService extends AbstractService<Area> {
         Producer producer = producerConverter.toEntity(null, dto);
         area.getProducers().add(producer);
         producerService.save(producer);
+        log.info("Added Producer: {} to Area: {} ", producer.getName(), area.getName());
         return area;
     }
 

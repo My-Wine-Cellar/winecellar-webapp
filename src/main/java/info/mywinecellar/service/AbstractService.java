@@ -19,7 +19,15 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class AbstractService<T extends BaseEntity> {
+
+    /**
+     * Service logger
+     */
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Inject
     EntityManager em;
