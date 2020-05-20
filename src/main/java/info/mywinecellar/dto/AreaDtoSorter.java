@@ -22,17 +22,17 @@ public class AreaDtoSorter implements Comparator<AreaDto> {
 
     /**
      * Constructor
-     * @param r The regions
+     *
+     * @param dtos The regions
      */
-    public AreaDtoSorter(Collection<RegionDto> r) {
+    public AreaDtoSorter(Collection<RegionDto> dtos) {
         regions = new HashMap<>();
-        for (RegionDto dto : r) {
-            regions.put(dto.getId(), dto.getName());
-        }
+        dtos.forEach(regionDto -> regions.put(regionDto.getId(), regionDto.getName()));
     }
 
     /**
      * Compare two countries
+     *
      * @param a1 The first area
      * @param a2 The second area
      * @return 0 if equals, otherwise based on name
