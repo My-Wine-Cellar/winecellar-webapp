@@ -11,7 +11,6 @@ package info.mywinecellar.controller;
 import info.mywinecellar.dto.AreaDto;
 import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Area;
-import info.mywinecellar.model.Grape;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
@@ -153,36 +152,32 @@ public class AreaController extends AbstractController {
     }
 
     /**
-     * @param area      area
+     * @param dto       area
      * @param principal principal
      * @param areaId    areaId
      * @param action    action
      * @return View
      */
     @PostMapping("/{areaId}/addGrape")
-    public String areaAddGrapePost(AreaDto area, Principal principal,
+    public String areaAddGrapePost(AreaDto dto, Principal principal,
                                    @PathVariable Long areaId,
                                    @RequestParam("action") String action) {
         principalNull(principal);
 
         if (action.equals("save")) {
-            Area a = areaService.findById(areaId);
+            Area entity = areaService.findById(areaId);
 
-            for (Grape g : a.getPrimaryGrapes()) {
-                if (!area.getPrimaryGrapes().contains(g.getId())) {
-                    g.getAreas().remove(a);
-                }
-            }
+            entity.getPrimaryGrapes().stream()
+                    .filter(grape -> !dto.getPrimaryGrapes().contains(grape.getId()))
+                    .forEach(grape -> grape.getAreas().remove(entity));
 
-            for (Long grape : area.getPrimaryGrapes()) {
-                Grape g = grapeService.findById(grape);
-                if (!a.getPrimaryGrapes().contains(g)) {
-                    g.getAreas().add(a);
-                }
-            }
+            dto.getPrimaryGrapes().stream()
+                    .map(grape -> grapeService.findById(grape))
+                    .filter(grape -> !entity.getPrimaryGrapes().contains(grape))
+                    .forEach(grape -> grape.getAreas().add(entity));
 
-            areaService.save(a);
-            return redirectArea(Session.getCountryId(), Session.getRegionId(), a);
+            areaService.save(entity);
+            return redirectArea(Session.getCountryId(), Session.getRegionId(), entity);
         } else {
             return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
         }

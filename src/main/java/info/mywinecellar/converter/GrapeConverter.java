@@ -14,7 +14,6 @@ import info.mywinecellar.model.Grape;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -85,11 +84,8 @@ public class GrapeConverter {
         }
 
         List<GrapeDto> result = new ArrayList<>();
-        for (Grape g : grapes) {
-            result.add(toDto(g));
-        }
-        Collections.sort(result, new GrapeDtoSorter());
-
+        grapes.forEach(grape -> result.add(toDto(grape)));
+        result.sort(new GrapeDtoSorter());
         return result;
     }
 

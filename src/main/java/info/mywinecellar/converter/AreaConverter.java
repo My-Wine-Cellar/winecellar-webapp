@@ -44,12 +44,11 @@ public class AreaConverter {
         List<AreaDto> result = new ArrayList<>();
         List<RegionDto> regions = new ArrayList<>();
 
-        for (Area a : areas) {
-            result.add(toDto(a));
-
-            Region r = a.getRegions().iterator().next();
-            regions.add(regionConverter.toDto(r));
-        }
+        areas.forEach(area -> {
+            result.add(toDto(area));
+            Region region = area.getRegions().iterator().next();
+            regions.add(regionConverter.toDto(region));
+        });
 
         result.sort(new AreaDtoSorter(regions));
         return result;

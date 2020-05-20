@@ -9,7 +9,6 @@
 package info.mywinecellar.dto;
 
 import info.mywinecellar.model.Area;
-import info.mywinecellar.model.Grape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +66,7 @@ public class AreaDto extends AbstractKeyDto {
         this.weblink = a.getWeblink();
 
         this.primaryGrapes = new ArrayList<>();
-        for (Grape g : a.getPrimaryGrapes()) {
-            this.primaryGrapes.add(g.getId());
-        }
+        a.getPrimaryGrapes().forEach(grape -> this.primaryGrapes.add(grape.getId()));
 
         /* CLEANUP */
         this.regionId = a.getRegions().iterator().next().getId();
