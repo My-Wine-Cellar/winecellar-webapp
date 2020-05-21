@@ -14,17 +14,13 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service
 public class EmailService {
 
-    @Inject JavaMailSender mailSender;
-    @Inject SpringTemplateEngine templateEngine;
-
-    public void sendRegistrationEmail(String to) throws MessagingException {
+    public void sendRegistrationEmail(String to, JavaMailSender mailSender, SpringTemplateEngine templateEngine) throws MessagingException {
         Context context = new Context();
         final String htmlContent = templateEngine.process("email/registerVerify", context);
 
@@ -38,7 +34,7 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    public void sendVerificationEmail(String to, String token) throws MessagingException {
+    public void sendVerificationEmail(String to, String token, JavaMailSender mailSender ) throws MessagingException {
 
         //Context context = new Context();
         //final String htmlContent = templateEngine.process("email/registerVerify", context);
@@ -55,5 +51,4 @@ public class EmailService {
 
         mailSender.send(message);
     }
-
 }
