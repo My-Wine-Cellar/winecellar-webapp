@@ -4,8 +4,9 @@ buildscript {
     }
     repositories {
         mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "http://www.evosuite.org/m2" }
+        maven {
+           url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -61,14 +62,9 @@ dependencies {
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.mockito:mockito-core:2.+')
-    testCompile 'org.evosuite:evosuite-standalone-runtime:1.0.6'
 
     testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
 
-    testCompileOnly('junit:junit:4.12')
-    testRuntimeOnly('org.junit.vintage:junit-vintage-engine:5.5.2') {
-        because 'allows JUnit 3 and JUnit 4 tests to run'
-    }
 }
 
 test {

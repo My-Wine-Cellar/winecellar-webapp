@@ -19,7 +19,6 @@ import info.mywinecellar.service.TypeService;
 import info.mywinecellar.service.WineService;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
