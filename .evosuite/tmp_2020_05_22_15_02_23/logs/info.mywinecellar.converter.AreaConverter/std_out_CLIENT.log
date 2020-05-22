@@ -1,0 +1,104 @@
+* Starting client
+* Connecting to master process on port 15249
+* Analyzing classpath: 
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/charsets.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/deploy.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/ext/cldrdata.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/ext/dnsns.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/ext/jaccess.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/ext/jfxrt.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/ext/localedata.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/ext/nashorn.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/ext/sunec.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/ext/sunjce_provider.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/ext/sunpkcs11.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/ext/zipfs.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/javaws.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/jce.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/jfr.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/jfxswt.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/jsse.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/management-agent.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/plugin.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/resources.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre/lib/rt.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/lib/ant-javafx.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/lib/dt.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/lib/javafx-mx.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/lib/jconsole.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/lib/packager.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/lib/sa-jdi.jar
+  - /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/lib/tools.jar
+  - /Users/MarinoSchneider/Documents/GitHub/winecellar-webapp/build/classes/java/test
+  - /Users/MarinoSchneider/Documents/GitHub/winecellar-webapp/build/resources/test
+  - /Users/MarinoSchneider/Documents/GitHub/winecellar-webapp/build/classes/java/main
+  - /Users/MarinoSchneider/Documents/GitHub/winecellar-webapp/build/resources/main
+* Finished analyzing classpath
+* Generating tests for class info.mywinecellar.converter.AreaConverter
+* Test criteria:
+  - Line Coverage
+  - Branch Coverage
+  - Exception
+  - Mutation testing (weak)
+  - Method-Output Coverage
+  - Top-Level Method Coverage
+  - No-Exception Top-Level Method Coverage
+  - Context Branch Coverage
+* Setting up search algorithm for whole suite generation
+[MASTER] 15:02:30.078 [pool-2-thread-1] WARN  TestSuiteSerialization - Cannot load tests because file does not exist: /Users/MarinoSchneider/Documents/GitHub/winecellar-webapp/.evosuite/evosuite-seeds/info.mywinecellar.converter.AreaConverter.seed
+* Loaded 0 tests from /Users/MarinoSchneider/Documents/GitHub/winecellar-webapp/.evosuite/evosuite-seeds/info.mywinecellar.converter.AreaConverter.seed
+* Total number of test goals: 
+  - Line 20
+  - Branch 9
+  - Exception 0
+  - MutationFactory 11
+  - Output 11
+  - Method 4
+  - MethodNoException 4
+  - CBranchFitnessFactory 9
+* Using seed 1590152545493
+* Starting evolution
+* Search finished after 96s and 1435 generations, 349126 statements, best individual has fitness: 9.916666666666666
+* Writing sequences to pool
+* Minimizing test suite
+* Going to analyze the coverage criteria
+* Coverage analysis for criterion LINE
+* Coverage of criterion LINE: 85%
+* Total number of goals: 20
+* Number of covered goals: 17
+* Coverage analysis for criterion BRANCH
+* Coverage of criterion BRANCH: 100%
+* Total number of goals: 9
+* Number of covered goals: 9
+* Coverage analysis for criterion EXCEPTION
+* Coverage of criterion EXCEPTION: 100%
+* Total number of goals: 5
+* Number of covered goals: 5
+* Coverage analysis for criterion WEAKMUTATION
+* Coverage of criterion WEAKMUTATION: 91%
+* Total number of goals: 11
+* Number of covered goals: 10
+* Coverage analysis for criterion OUTPUT
+* Coverage of criterion OUTPUT: 36%
+* Total number of goals: 11
+* Number of covered goals: 4
+* Coverage analysis for criterion METHOD
+* Coverage of criterion METHOD: 100%
+* Total number of goals: 4
+* Number of covered goals: 4
+* Coverage analysis for criterion METHODNOEXCEPTION
+* Coverage of criterion METHODNOEXCEPTION: 75%
+* Total number of goals: 4
+* Number of covered goals: 3
+* Coverage analysis for criterion CBRANCH
+* Coverage of criterion CBRANCH: 100%
+* Total number of goals: 9
+* Number of covered goals: 9
+* Generated 9 tests with total length 58
+* Resulting test suite's coverage: 86% (average coverage for all fitness functions)
+* Generating assertions
+* Resulting test suite's mutation score: 27%
+* Compiling and checking tests
+* Writing JUnit test case 'AreaConverter_ESTest' to /Users/MarinoSchneider/Documents/GitHub/winecellar-webapp/.evosuite/tmp_2020_05_22_15_02_23/tests
+* Done!
+
