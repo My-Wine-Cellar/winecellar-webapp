@@ -19,7 +19,7 @@ class EmailServiceTest {
     private MimeMessage mimeMessage;
 
     @BeforeEach
-    public void setup(){
+    void setup(){
         emailService = new EmailService();
         mockedSender = Mockito.mock(JavaMailSender.class);
         springTemplateEngine = new SpringTemplateEngine();
@@ -27,7 +27,7 @@ class EmailServiceTest {
     }
 
     @Test
-    public void sendRegistrationEmail_success() throws MessagingException {
+    void sendRegistrationEmail_success() throws MessagingException {
         String address = "test@uzh.ch";
         String message = "Verify your email to access MyWineCellar.info";
 
@@ -39,7 +39,7 @@ class EmailServiceTest {
     }
 
     @Test
-    public void sendVerificationEmail_success() throws MessagingException {
+    void sendVerificationEmail_success() throws MessagingException {
         String token = "1L";
         String address = "test@uzh.ch";
         String message = "Verify your email to access MyWineCellar.info";

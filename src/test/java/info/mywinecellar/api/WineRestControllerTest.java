@@ -14,24 +14,32 @@ import info.mywinecellar.model.Wine;
 import info.mywinecellar.service.ProducerService;
 import info.mywinecellar.service.WineService;
 
+import java.io.IOException;
 import java.util.Collections;
 
 //import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.internal.invocation.RealMethod;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
@@ -73,8 +81,8 @@ class WineRestControllerTest {
         mockMvc = standaloneSetup(controller).build();
     }
 
-    //@Test
-    void wineNewPost() throws Exception {
+    @Test
+    void wineNewPost_badRequest() throws Exception {
 
         MockHttpServletResponse response = mockMvc.perform(post("/api/wine/new")
                 .queryParam("producerId", String.valueOf(1L))
@@ -89,14 +97,16 @@ class WineRestControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
-    //@Test
-    void wineEditPut() throws Exception {
-        given(wineService.findById(opusOne.getId())).willReturn(opusOne);
+    @Test
+    void wineEditPut_accepted() throws Exception {
+
+        given(wineService.findById(any())).willReturn(opusOne);
+        Mockito.doNothing().when(restService).updateWine(any(), any());
 
         opusOne.setName("Opus One Wine");
 
         MockHttpServletResponse response = mockMvc.perform(put("/api/wine/{id}/edit", opusOne.getId())
-                .content(new ObjectMapper().writeValueAsString(opusOne))
+                .content(new ObjectMapper().writeValueAsString(new Wine()))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -105,6 +115,16 @@ class WineRestControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.ACCEPTED.value());
     }
 
-    // TODO write null check on object test
+    @Test
+    void wineEditPut_wineIsNull() throws Exception {
 
+        given(wineService.findById(opusOne.getId())).willReturn(null);
+
+        MockHttpServletResponse response = mockMvc.perform(put("/api/wine/{id}/edit", opusOne.getId())
+                .content(new ObjectMapper().writeValueAsString(new Wine()))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
 }
