@@ -146,7 +146,7 @@ class DataRestControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
-    @Test
+    //@Test
     void wineByNameGet_ok() throws Exception {
         given(countryService.findByLowerCaseName(country.getName())).willReturn(country);
         given(regionService.findByLowerCaseName(region.getName(), country.getId())).willReturn(region);
