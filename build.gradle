@@ -8,9 +8,14 @@ buildscript {
            url "https://plugins.gradle.org/m2/"
         }
     }
+
+    configurations.maybeCreate('pitest')
+
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath "io.freefair.gradle:lombok-plugin:4.1.6"
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.4.6'
+        pitest 'org.pitest:pitest-junit5-plugin:0.12'
     }
 }
 
@@ -19,6 +24,15 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'checkstyle'
 apply plugin: 'io.freefair.lombok'
+apply plugin: 'info.solidsoft.pitest'
+
+pitest {
+    testPlugin = 'junit5'
+    targetClasses = ['info.mywinecellar.*']
+    outputFormats = ['HTML', 'XML']
+    timestampedReports = false
+    threads = 4
+}
 
 repositories {
     mavenCentral()
