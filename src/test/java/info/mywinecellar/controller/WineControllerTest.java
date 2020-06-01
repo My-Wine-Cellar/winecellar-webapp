@@ -48,7 +48,6 @@ class WineControllerTest {
 
     private Wine wine;
     private Wine wineEmpty;
-
     private GrapeComponent grape;
 
     private MockMvc mockMvc;
