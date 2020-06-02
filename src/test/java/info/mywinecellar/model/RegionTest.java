@@ -7,36 +7,36 @@
  */
 
 package info.mywinecellar.model;
+
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @ExtendWith(MockitoExtension.class)
-class AreaTest {
+class RegionTest {
 
-    Area area;
+    Region regionWithCountry;
+    Region regionWithoutCountry;
+    Country country;
 
     @BeforeEach
     void setUp() {
-        Area area = new Area("testname", "teststring", "testurl");
+        regionWithCountry = new Region("testname", "teststring", "testurl", country);
+        regionWithoutCountry = new Region("testname", "teststring", "testurl");
     }
 
     @Test()
-    void emptyAreaGetProducersThrowsException() throws Exception {
-        assertThrows(NullPointerException.class,
-                ()->{
-                    area.getProducers();
-                });
+    void equalsReturnsFalseIfCountryMissing() throws Exception {
+        Assert.assertFalse(regionWithCountry.equals(regionWithoutCountry));
     }
 
     @Test()
-    void emptyAreaToStringThrowsException() throws Exception {
-        assertThrows(NullPointerException.class,
-                ()->{
-                    area.toString();
-                });
+    void equalsReturnsTrueIfSame() throws Exception {
+        Assert.assertTrue(regionWithCountry.equals(regionWithCountry));
     }
 }
