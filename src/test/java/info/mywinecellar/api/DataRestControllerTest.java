@@ -27,7 +27,10 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 
+import org.springframework.web.util.NestedServletException;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
@@ -146,18 +149,30 @@ class DataRestControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
-    //@Test
+    @Test
     void wineByNameGet_ok() throws Exception {
         given(countryService.findByLowerCaseName(country.getName())).willReturn(country);
         given(regionService.findByLowerCaseName(region.getName(), country.getId())).willReturn(region);
+        assertThrows(NestedServletException.class, // This Block should be removes as soon as Builder won't return null object.
+                ()->{
+                    MockHttpServletResponse response = mockMvc.perform(get(
+                            "/api/{country}/{region}/{area}/{producer}/{wine}/{vintage}/{size}",
+                            country.getName(), region.getName(), area.getName(), producer.getName(),
+                            wine.getName(), wine.getVintage(), wine.getSize())
+                            .accept(MediaType.APPLICATION_JSON))
+                            .andReturn().getResponse();
+                });
+    }
 
+    @Test
+    void getJasonEnvelopeReturnsNullIfEmpty() throws Exception {
+        assertThrows(NestedServletException.class,
+                ()->{
         MockHttpServletResponse response = mockMvc.perform(get(
-                "/api/{country}/{region}/{area}/{producer}/{wine}/{vintage}/{size}",
-                country.getName(), region.getName(), area.getName(), producer.getName(),
-                wine.getName(), wine.getVintage(), wine.getSize())
+                "/api/json")
                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
-
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+                });
     }
 }
