@@ -38,6 +38,7 @@ import info.mywinecellar.util.Image;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -76,7 +77,7 @@ public class DataController extends AbstractController {
      */
     @GetMapping("/")
     public String dataRootGet(Model model) {
-        List<Country> countries = countryService.findWithRegions();
+        Set<Country> countries = countryService.findWithRegions();
         model.addAttribute(Attributes.COUNTRIES, countryConverter.toDto(countries));
 
         Session.updateSessionAttributes(null, null, null, null, null);

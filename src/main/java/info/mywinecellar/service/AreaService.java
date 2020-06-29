@@ -57,6 +57,23 @@ public class AreaService extends AbstractService<Area> {
     }
 
     /**
+     * Find Area by its name in lowercase form
+     *
+     * @param lcName String lowercase name
+     * @return Area entity
+     */
+    public Area findByLowerCaseName(String lcName) {
+        try {
+            Query query = em.createNativeQuery("SELECT * FROM area a WHERE lower(a.name) = :lc_name",
+                    Area.class);
+            query.setParameter("lc_name", lcName);
+            return (Area) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
      * Edit Area
      *
      * @param dto    AreaDto dto

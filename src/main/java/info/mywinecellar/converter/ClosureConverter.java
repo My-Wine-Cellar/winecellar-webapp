@@ -13,6 +13,7 @@ import info.mywinecellar.model.Closure;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,7 @@ public class ClosureConverter {
      * @param closures List of Closures
      * @return ClosureDto list
      */
-    public List<ClosureDto> toDto(List<Closure> closures) {
+    public List<ClosureDto> toDto(Set<Closure> closures) {
         if (closures == null) {
             throw new IllegalStateException("Closure list is null");
         }

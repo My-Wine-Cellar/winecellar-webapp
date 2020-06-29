@@ -39,6 +39,8 @@ public class RegionDto extends AbstractKeyDto {
     @Size(max = 50)
     private String weblink;
 
+    private Long countryId;
+
     /**
      * Default constructor
      */
@@ -56,5 +58,6 @@ public class RegionDto extends AbstractKeyDto {
         this.name = r.getName();
         this.description = r.getDescription();
         this.weblink = r.getWeblink();
+        this.countryId = r.getCountry().getId();
     }
 }

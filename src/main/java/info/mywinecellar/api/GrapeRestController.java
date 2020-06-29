@@ -10,12 +10,12 @@ package info.mywinecellar.api;
 
 import info.mywinecellar.dto.AbstractKeyDto;
 import info.mywinecellar.dto.GrapeDto;
+import info.mywinecellar.json.Builder;
+import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Grape;
 import info.mywinecellar.service.GrapeService;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -43,11 +43,11 @@ public class GrapeRestController extends AbstractRestController {
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/red")
-    public List<Grape> grapeRedGet() {
-        List<Grape> redGrapes = grapeService.getRedGrapes();
-        checkObjectListNull(redGrapes);
-        log.info("==== Red grapes ==== ");
-        return redGrapes;
+    public MyWineCellar grapeRedGet() {
+        Set<Grape> redGrapes = grapeService.getRedGrapes();
+        Builder builder = new Builder();
+        redGrapes.forEach(builder::grape);
+        return builder.build();
     }
 
     /**
@@ -57,41 +57,26 @@ public class GrapeRestController extends AbstractRestController {
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/white")
-    public List<Grape> grapeWhiteGet() {
-        List<Grape> whiteGrapes = grapeService.getWhiteGrapes();
-        checkObjectListNull(whiteGrapes);
-        log.info("==== White grapes ====");
-        return whiteGrapes;
-    }
-
-    /**
-     * GET mapping
-     *
-     * @return map of grapes by color
-     */
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/list")
-    public Map<String, List<Grape>> grapeListGet() {
-        Map<String, List<Grape>> grapeMap = new HashMap<>();
-        grapeMap.put("red", grapeService.getRedGrapes());
-        grapeMap.put("white", grapeService.getWhiteGrapes());
-        log.info("==== All grapes by color ====");
-        return grapeMap;
+    public MyWineCellar grapeWhiteGet() {
+        Set<Grape> whiteGrapes = grapeService.getWhiteGrapes();
+        Builder builder = new Builder();
+        whiteGrapes.forEach(builder::grape);
+        return builder.build();
     }
 
     /**
      * GET mapping
      *
      * @param grape String grape
-     * @return grape Grape
+     * @return The grape
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{grape}")
-    public Grape grapeDetailsGet(@PathVariable String grape) {
+    public MyWineCellar grapeDetailsGet(@PathVariable String grape) {
         Grape grapeDetails = grapeService.findByLowerCaseName(AbstractKeyDto.fromKey(grape));
-        checkObjectNull(grapeDetails);
-        log.info("==== Grape {} ", grapeDetails.toString());
-        return grapeDetails;
+        Builder builder = new Builder();
+        builder.grape(grapeDetails);
+        return builder.build();
     }
 
     /**

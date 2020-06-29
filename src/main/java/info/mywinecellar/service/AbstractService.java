@@ -10,7 +10,8 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.BaseEntity;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -59,12 +60,12 @@ public abstract class AbstractService<T extends BaseEntity> {
      *
      * @return the list of entities
      */
-    public List<T> findAll() {
+    public Set<T> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(entityClass);
         Root<T> root = query.from(entityClass);
         query.select(root);
-        return em.createQuery(query).getResultList();
+        return new HashSet<>(em.createQuery(query).getResultList());
     }
 
     /**

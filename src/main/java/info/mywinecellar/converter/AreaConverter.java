@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,8 +26,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class AreaConverter {
 
-    @Inject
     private RegionConverter regionConverter;
+
+    /**
+     * Constructor
+     * Field injection of RegionConverter throw's NPE
+     *
+     * @param regionConverter RegionConverter
+     */
+    public AreaConverter(RegionConverter regionConverter) {
+        this.regionConverter = regionConverter;
+    }
 
     /**
      * Create a list of Dto objects

@@ -12,7 +12,8 @@ import info.mywinecellar.converter.GrapeConverter;
 import info.mywinecellar.dto.GrapeDto;
 import info.mywinecellar.model.Grape;
 
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.inject.Inject;
 import javax.persistence.Query;
@@ -57,12 +58,12 @@ public class GrapeService extends AbstractService<Grape> {
      *
      * @return The grapes
      */
-    public List<Grape> getWhiteGrapes() {
+    public Set<Grape> getWhiteGrapes() {
         try {
             Query q =
                     em.createNativeQuery("SELECT * FROM grape WHERE grape.color = 'White' ORDER BY grape.name",
                             Grape.class);
-            return q.getResultList();
+            return new TreeSet<>(q.getResultList());
         } catch (Exception e) {
             return null;
         }
@@ -73,12 +74,12 @@ public class GrapeService extends AbstractService<Grape> {
      *
      * @return The grapes
      */
-    public List<Grape> getRedGrapes() {
+    public Set<Grape> getRedGrapes() {
         try {
             Query q =
                     em.createNativeQuery("SELECT * FROM grape WHERE grape.color = 'Red' ORDER BY grape.name",
                             Grape.class);
-            return q.getResultList();
+            return new TreeSet<>(q.getResultList());
         } catch (Exception e) {
             return null;
         }
@@ -103,13 +104,12 @@ public class GrapeService extends AbstractService<Grape> {
     /**
      * Edit Grape
      *
-     * @param ui      GrapeUI ui
+     * @param dto     GrapeDto dto
      * @param grapeId Long grapeId
      */
     @Transactional
-    public void editGrape(GrapeDto ui, Long grapeId) {
-        Grape grape = this.findById(grapeId);
-        Grape update = grapeConverter.toEntity(grape, ui);
-        this.save(update);
+    public void editGrape(GrapeDto dto, Long grapeId) {
+        Grape entity = grapeConverter.toEntity(this.findById(grapeId), dto);
+        this.save(entity);
     }
 }

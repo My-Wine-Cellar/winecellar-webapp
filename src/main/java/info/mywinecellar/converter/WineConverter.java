@@ -97,19 +97,14 @@ public class WineConverter {
         } else {
             entity.setName(dto.getName());
             entity.setVintage(dto.getVintage());
-            entity.setAlcohol(dto.getAlcohol());
             entity.setSize(dto.getSize());
+            entity.setAlcohol(dto.getAlcohol());
             entity.setAcid(dto.getAcid());
             entity.setPH(dto.getPH());
             entity.setBottleAging(dto.getBottleAging());
             entity.setDescription(dto.getDescription());
             entity.setWeblink(dto.getWeblink());
             entity.setImage(Image.decode(dto.getImage()));
-            entity.setProducer(producer);
-            entity.setColor(color);
-            entity.setType(type);
-            entity.setShape(shape);
-            entity.setClosure(closure);
         }
         return entity;
     }

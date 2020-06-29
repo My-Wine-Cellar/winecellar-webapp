@@ -14,6 +14,7 @@ import info.mywinecellar.model.Country;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -39,7 +40,7 @@ public class CountryConverter {
      * @param countries List<Country> countries
      * @return List<CountryDto> countryDto's
      */
-    public List<CountryDto> toDto(List<Country> countries) {
+    public List<CountryDto> toDto(Set<Country> countries) {
         if (countries == null) {
             throw new IllegalStateException("Country list is null");
         }

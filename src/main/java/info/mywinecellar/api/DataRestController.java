@@ -12,12 +12,17 @@ import info.mywinecellar.dto.AbstractKeyDto;
 import info.mywinecellar.json.Builder;
 import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Area;
+import info.mywinecellar.model.Closure;
+import info.mywinecellar.model.Color;
 import info.mywinecellar.model.Country;
+import info.mywinecellar.model.Grape;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.model.Region;
+import info.mywinecellar.model.Shape;
+import info.mywinecellar.model.Type;
 import info.mywinecellar.model.Wine;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,20 +42,23 @@ public class DataRestController extends AbstractRestController {
      */
     @GetMapping("/json")
     public MyWineCellar getJsonEnvelope() {
-        List<Country> countries = countryService.findWithRegions();
-        List<Region> regions = regionService.findAll();
-        List<Area> areas = areaService.findAll();
-        List<Producer> producers = producerService.findAll();
-        List<Wine> wines = wineService.findAll();
+        Set<Country> countries = countryService.findWithRegions();
+        Set<Region> regions = regionService.findAll();
+        Set<Area> areas = areaService.findAll();
+        Set<Producer> producers = producerService.findAll();
+        Set<Wine> wines = wineService.findAll();
+        Set<Grape> grapes = grapeService.findAll();
+        Set<Closure> closures = closureService.findAll();
+        Set<Color> colors = colorService.findAll();
+        Set<Shape> shapes = shapeService.findAll();
+        Set<Type> types = typeService.findAll();
 
         Builder builder = new Builder();
-
-        countries.forEach(builder::country);
-        regions.forEach(builder::region);
-        areas.forEach(builder::area);
-        producers.forEach(builder::producer);
-        wines.forEach(builder::wine);
-
+        builder.envelope(countries, regions, areas, producers, wines, grapes);
+        builder.closures(closures);
+        builder.colors(colors);
+        builder.shapes(shapes);
+        builder.types(types);
         return builder.build();
     }
 
@@ -60,13 +68,11 @@ public class DataRestController extends AbstractRestController {
      * @return List of Countries that have wine producing regions
      */
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @GetMapping("/countries")
     public MyWineCellar dataApiRootGet() {
-        List<Country> countries = countryService.findWithRegions();
-        checkObjectListNull(countries);
-        log.info("==== Countries that have a wine producing region {} ====", countries);
+        Set<Country> countries = countryService.findWithRegions();
         Builder builder = new Builder();
-        countries.forEach(builder::country);
+        builder.countries(countries);
         return builder.build();
     }
 
@@ -83,8 +89,11 @@ public class DataRestController extends AbstractRestController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}")
     public MyWineCellar countryByNameGet(@PathVariable String country) {
+        Country cntry = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
+
         Builder builder = new Builder();
-        builder.country(setupCountry(country));
+        builder.country(cntry);
+        builder.regions(cntry.getRegions());
         return builder.build();
     }
 
@@ -99,8 +108,13 @@ public class DataRestController extends AbstractRestController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}/{region}")
     public MyWineCellar regionByNameGet(@PathVariable String country, @PathVariable String region) {
+        Country cntry = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
+        Region rgn = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(region), cntry.getId());
+
         Builder builder = new Builder();
-        builder.region(setupRegion(country, region));
+        builder.country(cntry);
+        builder.region(rgn);
+        builder.areas(rgn.getAreas());
         return builder.build();
     }
 
@@ -118,8 +132,16 @@ public class DataRestController extends AbstractRestController {
     @GetMapping("/{country}/{region}/{area}")
     public MyWineCellar areaByNameGet(@PathVariable String country, @PathVariable String region,
                                       @PathVariable String area) {
+        Country cntry = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
+        Region rgn = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(region), cntry.getId());
+        Area ar = areaService.findByLowerCaseName(AbstractKeyDto.fromKey(area));
+
         Builder builder = new Builder();
-        builder.area(setupArea(country, region, area));
+        builder.country(cntry);
+        builder.region(rgn);
+        builder.area(ar);
+        builder.producers(ar.getProducers());
+        builder.grapes(ar.getPrimaryGrapes());
         return builder.build();
     }
 
@@ -137,8 +159,17 @@ public class DataRestController extends AbstractRestController {
     @GetMapping("/{country}/{region}/{area}/{producer}")
     public MyWineCellar producerByNameGet(@PathVariable String country, @PathVariable String region,
                                           @PathVariable String area, @PathVariable String producer) {
+        Country cntry = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
+        Region rgn = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(region), cntry.getId());
+        Area ar = areaService.findByLowerCaseName(AbstractKeyDto.fromKey(area));
+        Producer prdcr = producerService.findByLowerCaseName(AbstractKeyDto.fromKey(producer));
+
         Builder builder = new Builder();
-        builder.producer(setupProducer(country, region, area, producer));
+        builder.country(cntry);
+        builder.region(rgn);
+        builder.area(ar);
+        builder.producer(prdcr);
+        builder.wines(prdcr.getWines());
         return builder.build();
     }
 
@@ -161,66 +192,30 @@ public class DataRestController extends AbstractRestController {
                                       @PathVariable String area, @PathVariable String producer,
                                       @PathVariable String wine, @PathVariable Integer vintage,
                                       @PathVariable Float size) {
+        Country cntry = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
+        Region rgn = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(region), cntry.getId());
+        Area ar = areaService.findByLowerCaseName(AbstractKeyDto.fromKey(area));
+        Producer prdcr = producerService.findByLowerCaseName(AbstractKeyDto.fromKey(producer));
+        Wine wn = wineService.findByLowerCaseName(AbstractKeyDto.fromKey(wine));
+        Closure closure = closureService.findById(wn.getClosure().getId());
+        Color color = colorService.findById(wn.getColor().getId());
+        Shape shape = shapeService.findById(wn.getShape().getId());
+        Type type = typeService.findById(wn.getType().getId());
+
         Builder builder = new Builder();
-        builder.wine(setupWine(country, region, area, producer, wine, vintage, size));
+        builder.country(cntry);
+        builder.region(rgn);
+        builder.area(ar);
+        builder.producer(prdcr);
+        if (wn.getVintage().equals(vintage) && wn.getSize().equals(size)) {
+            builder.wine(wn);
+        }
+        builder.closure(closure);
+        builder.color(color);
+        builder.shape(shape);
+        builder.type(type);
         return builder.build();
     }
 
-    private Country setupCountry(String countryName) {
-        Country country = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(countryName));
-        checkObjectNull(country);
-        log.info("==== Country {} ====", countryName);
-        return country;
-    }
-
-    private Region setupRegion(String countryName, String regionName) {
-        Country country = setupCountry(countryName);
-        Region region = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(regionName), country.getId());
-        checkObjectNull(region);
-        log.info("==== Region {} ====", regionName);
-        return region;
-    }
-
-    private Area setupArea(String countryName, String regionName, String areaName) {
-        Region region = setupRegion(countryName, regionName);
-        Area area = null;
-        for (Area ar : region.getAreas()) {
-            if (AbstractKeyDto.toKey(ar.getName()).equals(areaName)) {
-                area = ar;
-                break;
-            }
-        }
-        checkObjectNull(area);
-        log.info("==== Area {} ====", areaName);
-        return area;
-    }
-
-    private Producer setupProducer(String countryName, String regionName, String areaName, String producerName) {
-        Area area = setupArea(countryName, regionName, areaName);
-        Producer producer = null;
-        for (Producer pr : area.getProducers()) {
-            if (AbstractKeyDto.toKey(pr.getName()).equals(producerName)) {
-                producer = pr;
-                break;
-            }
-        }
-        log.info("==== Producer {} ====", producerName);
-        return producer;
-    }
-
-    private Wine setupWine(String countryName, String regionName, String areaName, String producerName,
-                           String wineName, Integer vintage, Float size) {
-        Producer p = setupProducer(countryName, regionName, areaName, producerName);
-        Wine wine = null;
-        for (Wine wi : p.getWines()) {
-            if (AbstractKeyDto.toKey(wi.getName()).equals(wineName) &&
-                    wi.getVintage().equals(vintage) && wi.getSize().equals(size)) {
-                wine = wi;
-                break;
-            }
-        }
-        log.info("==== Wine {} ====", wineName);
-        return wine;
-    }
 
 }

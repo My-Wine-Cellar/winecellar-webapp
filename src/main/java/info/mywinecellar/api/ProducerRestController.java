@@ -8,15 +8,18 @@
 
 package info.mywinecellar.api;
 
-import info.mywinecellar.api.service.ProducerRestService;
+import info.mywinecellar.converter.ProducerConverter;
+import info.mywinecellar.dto.ProducerDto;
+import info.mywinecellar.json.Builder;
+import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Producer;
 
 import java.io.IOException;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,26 +27,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/producer/{producerId}")
 public class ProducerRestController extends AbstractRestController {
 
-    @Inject ProducerRestService restService;
+    @Inject
+    ProducerConverter producerConverter;
 
     /**
      * PUT mapping to edit Producer
      *
-     * @param request   Producer producer
+     * @param request    Producer producer
      * @param producerId Long producerId
      * @return ResponseEntity.Accepted
      */
     @PutMapping("/edit")
-    public ResponseEntity<?> producerEditPut(@PathVariable Long producerId, @RequestBody Producer request) {
-        Producer update = producerService.findById(producerId);
-        checkObjectNull(update);
-        restService.updateProducer(update, request);
-        return ResponseEntity.accepted().body("Updated " + update.toString());
+    public MyWineCellar producerEditPut(@PathVariable Long producerId, @RequestBody ProducerDto request) {
+        Producer entity = producerService.editProducer(request, producerId);
+        Builder builder = new Builder();
+        builder.producer(entity);
+        return builder.build();
     }
 
     /**
@@ -55,12 +60,17 @@ public class ProducerRestController extends AbstractRestController {
      * @throws IOException exception
      */
     @PutMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> producerImagePut(@PathVariable Long producerId, @RequestPart MultipartFile file)
+    public MyWineCellar producerImagePut(@PathVariable Long producerId, @RequestPart MultipartFile file)
             throws IOException {
-        Producer save = producerService.findById(producerId);
-        checkObjectNull(save);
-        restService.checkFileThenSave(save, file);
-        return ResponseEntity.accepted().body("Image upload success");
+        Producer entity = producerService.findById(producerId);
+        if (file.getBytes().length >= 5242880L) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image cannot exceed 5MB");
+        }
+        entity.setImage(file.getBytes());
+        producerService.save(entity);
+        Builder builder = new Builder();
+        builder.producer(entity);
+        return builder.build();
     }
 
 }

@@ -13,6 +13,7 @@ import info.mywinecellar.model.Barrel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,7 @@ public class BarrelConverter {
      * @param barrels Barrel list
      * @return entity list
      */
-    public List<BarrelDto> toDto(List<Barrel> barrels) {
+    public List<BarrelDto> toDto(Set<Barrel> barrels) {
         if (barrels == null) {
             throw new IllegalStateException("Barrel list is null");
         }

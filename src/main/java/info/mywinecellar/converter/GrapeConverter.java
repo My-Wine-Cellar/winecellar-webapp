@@ -27,6 +27,7 @@ public class GrapeConverter {
 
     /**
      * Create a list of Dto objects
+     *
      * @param grapes The grapes
      * @return The Dto objects
      */
@@ -36,6 +37,7 @@ public class GrapeConverter {
 
     /**
      * Create a list of Dto objects
+     *
      * @param grapes The grapes
      * @return The Dto objects
      */
@@ -45,6 +47,7 @@ public class GrapeConverter {
 
     /**
      * Create a Dto object
+     *
      * @param g A grape
      * @return The Dto
      */
@@ -58,7 +61,8 @@ public class GrapeConverter {
 
     /**
      * Create a Grape entity
-     * @param g The entity
+     *
+     * @param g   The entity
      * @param dto The Dto object
      * @return The new entity
      */
