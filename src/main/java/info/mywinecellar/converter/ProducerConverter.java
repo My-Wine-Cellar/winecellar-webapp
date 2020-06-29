@@ -65,6 +65,7 @@ public class ProducerConverter {
                              dto.getFax(), dto.getEmail(), dto.getWebsite(),
                              Image.decode(dto.getImage()));
         } else {
+            p.setName(dto.getName());
             p.setDescription(dto.getDescription());
             p.setPhone(dto.getPhone());
             p.setFax(dto.getFax());

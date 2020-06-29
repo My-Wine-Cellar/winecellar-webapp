@@ -8,7 +8,11 @@
 
 package info.mywinecellar.api;
 
-import info.mywinecellar.api.service.WineRestService;
+import info.mywinecellar.converter.WineConverter;
+import info.mywinecellar.dto.WineDto;
+import info.mywinecellar.json.Builder;
+import info.mywinecellar.json.MyWineCellar;
+import info.mywinecellar.model.Producer;
 import info.mywinecellar.model.Wine;
 
 import java.io.IOException;
@@ -17,7 +21,6 @@ import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,52 +30,67 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/wine")
 public class WineRestController extends AbstractRestController {
 
-    @Inject WineRestService restService;
+    @Inject
+    WineConverter wineConverter;
 
     /**
      * POST mapping to add a new Wine
      *
-     * @param wine       Wine wine
+     * @param wineDto    WineDto dto
      * @param producerId Long producerId
      * @param shapeId    Long shapeId
      * @param colorId    Long colorId
      * @param typeId     Long typeId
      * @param closureId  Long closureId
-     * @return ResponseEntity.CREATED
+     * @return MyWineCellar
      */
     @PostMapping("/new")
-    public ResponseEntity<?> wineNewPost(@RequestBody Wine wine, @RequestParam Long producerId,
-                                         @RequestParam Long shapeId, @RequestParam Long colorId,
-                                         @RequestParam Long typeId, @RequestParam Long closureId) {
+    public MyWineCellar wineNewPost(@RequestBody WineDto wineDto, @RequestParam Long producerId,
+                                    @RequestParam(defaultValue = "1") Long shapeId,
+                                    @RequestParam(defaultValue = "1") Long colorId,
+                                    @RequestParam(defaultValue = "1") Long typeId,
+                                    @RequestParam(defaultValue = "1") Long closureId) {
 
-        Wine saveWine = restService.wineNewSetup(wine, producerId, shapeId, colorId, typeId, closureId);
-        checkObjectNull(saveWine);
-        wineService.save(saveWine);
+        Wine entity = wineConverter.toEntity(null, wineDto);
 
-        log.info("==== Added new {} ====", saveWine.toString());
-        return ResponseEntity.status(HttpStatus.CREATED).body("Created new " + wine.toString());
+        Producer producer = producerService.findById(producerId);
+        entity.setProducer(producer);
+        producer.getWines().add(entity);
+
+        entity.setShape(shapeService.findById(shapeId));
+        entity.setColor(colorService.findById(colorId));
+        entity.setType(typeService.findById(typeId));
+        entity.setClosure(closureService.findById(closureId));
+        wineService.save(entity);
+        log.info("==== Added new {} ====", entity.toString());
+
+        Builder builder = new Builder();
+        builder.wine(entity);
+        return builder.build();
     }
 
     /**
      * PUT mapping to edit Wine
      *
-     * @param wineId      Long wineId
-     * @param wineRequest Wine wineRequest
-     * @return ResponseEntity.ACCEPTED
+     * @param wineId  Long wineId
+     * @param wineDto Wine wineRequest
+     * @return MyWineCellar
      */
     @PutMapping("/{wineId}/edit")
-    public ResponseEntity<?> wineEditPut(@PathVariable Long wineId, @RequestBody Wine wineRequest) {
+    public MyWineCellar wineEditPut(@PathVariable Long wineId, @RequestBody WineDto wineDto) {
+        Wine entity = wineConverter.toEntity(wineService.findById(wineId), wineDto);
+        wineService.update(entity);
+        log.info("==== Updated {} ====", entity.toString());
 
-        Wine wineUpdate = wineService.findById(wineId);
-        checkObjectNull(wineUpdate);
-        restService.updateWine(wineUpdate, wineRequest);
-
-        return ResponseEntity.accepted().body("Updated " + wineUpdate.toString());
+        Builder builder = new Builder();
+        builder.wine(entity);
+        return builder.build();
     }
 
     /**
@@ -80,18 +98,23 @@ public class WineRestController extends AbstractRestController {
      *
      * @param wineId Long wineId
      * @param file   MultipartFile file
-     * @return ResponseEntity.ACCEPTED
+     * @return MyWineCellar
      * @throws IOException exception
      */
     @PutMapping(value = "/{wineId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> wineImagePut(@PathVariable Long wineId, @RequestPart MultipartFile file)
+    public MyWineCellar wineImagePut(@PathVariable Long wineId, @RequestPart MultipartFile file)
             throws IOException {
-        Wine saveWine = wineService.findById(wineId);
-        checkObjectNull(saveWine);
+        Wine entity = wineService.findById(wineId);
+        if (file.getBytes().length >= 5242880L) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image cannot exceed 5MB");
+        }
+        entity.setImage(file.getBytes());
+        wineService.update(entity);
+        log.info("==== Image added to {} ====", entity.toString());
 
-        restService.checkFileThenSave(saveWine, file);
-
-        return ResponseEntity.accepted().body("Image upload success");
+        Builder builder = new Builder();
+        builder.wine(entity);
+        return builder.build();
     }
 
 }

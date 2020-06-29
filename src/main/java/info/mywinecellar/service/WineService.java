@@ -10,9 +10,14 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Wine;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
@@ -46,14 +51,29 @@ public class WineService extends AbstractService<Wine> {
      * @param name String name
      * @return A list of Wine's
      */
-    List<Wine> findAllByName(String name) {
+    Set<Wine> findAllByName(String name) {
         try {
             Query query = em.createQuery("SELECT w FROM Wine w WHERE w.name = :name");
             query.setParameter("name", name);
-            return query.getResultList();
+            return new HashSet<>(query.getResultList());
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     * Find a wine by it's lowercase name
+     *
+     * @param name String name
+     * @return Wine entity
+     */
+    public Wine findByLowerCaseName(String name) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Wine> query = cb.createQuery(Wine.class);
+        Root<Wine> root = query.from(Wine.class);
+        Predicate predicate = cb.like(cb.lower(root.get("name")), "%" + name.toLowerCase() + "%");
+        query.where(predicate);
+        return em.createQuery(query).getSingleResult();
     }
 
     /**

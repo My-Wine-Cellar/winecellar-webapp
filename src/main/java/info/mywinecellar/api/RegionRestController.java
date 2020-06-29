@@ -9,10 +9,9 @@
 package info.mywinecellar.api;
 
 import info.mywinecellar.dto.RegionDto;
+import info.mywinecellar.json.Builder;
+import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Region;
-import info.mywinecellar.service.RegionService;
-
-import javax.inject.Inject;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,19 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/region")
 public class RegionRestController extends AbstractRestController {
 
-    @Inject
-    RegionService regionService;
-
     /**
      * PUT mapping to update a Region
      *
      * @param request  Region request
      * @param regionId Long regionId
-     * @return ResponseEntity.ACCEPTED
+     * @return MyWineCellar.regions
      */
     @PutMapping("/{regionId}/edit")
-    public Region regionEditPut(@RequestBody RegionDto request, @PathVariable Long regionId) {
+    public MyWineCellar regionEditPut(@RequestBody RegionDto request, @PathVariable Long regionId) {
         checkObjectNull(request);
-        return regionService.editRegion(request, regionId);
+        Region region = regionService.editRegion(request, regionId);
+        Builder builder = new Builder();
+        builder.region(region);
+        return builder.build();
     }
 }

@@ -69,6 +69,7 @@ public class AreaDto extends AbstractKeyDto {
         a.getPrimaryGrapes().forEach(grape -> this.primaryGrapes.add(grape.getId()));
 
         /* CLEANUP */
-        this.regionId = a.getRegions().iterator().next().getId();
+        a.getRegions().forEach(region -> this.regionId = region.getId());
+        //this.regionId = a.getRegions().iterator().next().getId();
     }
 }

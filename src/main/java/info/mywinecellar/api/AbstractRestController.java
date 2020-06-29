@@ -9,10 +9,14 @@
 package info.mywinecellar.api;
 
 import info.mywinecellar.service.AreaService;
+import info.mywinecellar.service.ClosureService;
+import info.mywinecellar.service.ColorService;
 import info.mywinecellar.service.CountryService;
 import info.mywinecellar.service.GrapeService;
 import info.mywinecellar.service.ProducerService;
 import info.mywinecellar.service.RegionService;
+import info.mywinecellar.service.ShapeService;
+import info.mywinecellar.service.TypeService;
 import info.mywinecellar.service.WineService;
 
 import java.util.List;
@@ -34,6 +38,10 @@ abstract class AbstractRestController {
     @Inject AreaService areaService;
     @Inject ProducerService producerService;
     @Inject WineService wineService;
+    @Inject ClosureService closureService;
+    @Inject ColorService colorService;
+    @Inject ShapeService shapeService;
+    @Inject TypeService typeService;
 
     void checkObjectNull(Object o) {
         if (o == null) {

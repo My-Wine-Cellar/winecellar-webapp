@@ -48,16 +48,33 @@ public class ProducerService extends AbstractService<Producer> {
     }
 
     /**
-     * Edit a Producer
+     * Find a producer by it's lowercase name
      *
-     * @param producerDto ProducerDto producerDto
+     * @param lcName String lowercase name
+     * @return Producer entity
+     */
+    public Producer findByLowerCaseName(String lcName) {
+        try {
+            Query query = em.createNativeQuery("SELECT * FROM producer p WHERE lower(p.name) = :lc_name",
+                    Producer.class);
+            query.setParameter("lc_name", lcName);
+            return (Producer) query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Edit a Producer
+     *  @param producerDto ProducerDto producerDto
      * @param producerId  Long producerId
+     * @return Producer
      */
     @Transactional
-    public void editProducer(ProducerDto producerDto, Long producerId) {
-        Producer saveProducer = this.findById(producerId);
-        saveProducer = producerConverter.toEntity(saveProducer, producerDto);
-        this.save(saveProducer);
+    public Producer editProducer(ProducerDto producerDto, Long producerId) {
+        Producer entity = producerConverter.toEntity(this.findById(producerId), producerDto);
+        this.save(entity);
+        return entity;
     }
 
 }

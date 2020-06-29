@@ -9,9 +9,14 @@
 package info.mywinecellar.json;
 
 import info.mywinecellar.dto.AreaDto;
+import info.mywinecellar.dto.ClosureDto;
+import info.mywinecellar.dto.ColorDto;
 import info.mywinecellar.dto.CountryDto;
+import info.mywinecellar.dto.GrapeDto;
 import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.dto.RegionDto;
+import info.mywinecellar.dto.ShapeDto;
+import info.mywinecellar.dto.TypeDto;
 import info.mywinecellar.dto.WineDto;
 
 import java.io.Serializable;
@@ -36,6 +41,9 @@ public class MyWineCellar implements Serializable {
     private List<CountryDto> countries;
 
     @JsonSerialize(using = GenericSerializer.class)
+    private List<GrapeDto> grapes;
+
+    @JsonSerialize(using = GenericSerializer.class)
     private List<ProducerDto> producers;
 
     @JsonSerialize(using = GenericSerializer.class)
@@ -43,6 +51,18 @@ public class MyWineCellar implements Serializable {
 
     @JsonSerialize(using = GenericSerializer.class)
     private List<WineDto> wines;
+
+    @JsonSerialize(using = GenericSerializer.class)
+    private List<ClosureDto> closures;
+
+    @JsonSerialize(using = GenericSerializer.class)
+    private List<ColorDto> colors;
+
+    @JsonSerialize(using = GenericSerializer.class)
+    private List<ShapeDto> shapes;
+
+    @JsonSerialize(using = GenericSerializer.class)
+    private List<TypeDto> types;
 
     /**
      * Constructor
@@ -66,6 +86,15 @@ public class MyWineCellar implements Serializable {
      */
     public List<CountryDto> getCountries() {
         return countries;
+    }
+
+    /**
+     * Get the grapes
+     *
+     * @return The list
+     */
+    public List<GrapeDto> getGrapes() {
+        return grapes;
     }
 
     /**
@@ -95,12 +124,54 @@ public class MyWineCellar implements Serializable {
         return wines;
     }
 
+    /**
+     * Get the closures
+     *
+     * @return The list
+     */
+    public List<ClosureDto> getClosures() {
+        return closures;
+    }
+
+    /**
+     * Get the colors
+     *
+     * @return The list
+     */
+    public List<ColorDto> getColors() {
+        return colors;
+    }
+
+    /**
+     * Get the shapes
+     *
+     * @return The list
+     */
+    public List<ShapeDto> getShapes() {
+        return shapes;
+    }
+
+    /**
+     * Get the types
+     *
+     * @return The list
+     */
+    public List<TypeDto> getTypes() {
+        return types;
+    }
+
     void addArea(AreaDto a) {
         if (areas == null) {
             areas = new ArrayList<>();
         }
-
         areas.add(a);
+    }
+
+    void addAreas(List<AreaDto> dtos) {
+        if (areas == null) {
+            areas = new ArrayList<>();
+        }
+        areas.addAll(dtos);
     }
 
     boolean hasArea(Long id) {
@@ -111,7 +182,6 @@ public class MyWineCellar implements Serializable {
                 }
             }
         }
-
         return false;
     }
 
@@ -119,8 +189,14 @@ public class MyWineCellar implements Serializable {
         if (countries == null) {
             countries = new ArrayList<>();
         }
-
         countries.add(c);
+    }
+
+    void addCountries(List<CountryDto> dtos) {
+        if (countries == null) {
+            countries = new ArrayList<>();
+        }
+        countries.addAll(dtos);
     }
 
     boolean hasCountry(Long id) {
@@ -131,27 +207,31 @@ public class MyWineCellar implements Serializable {
                 }
             }
         }
-
         return false;
     }
 
-    void addRegion(RegionDto r) {
-        if (regions == null) {
-            regions = new ArrayList<>();
+    void addGrape(GrapeDto g) {
+        if (grapes == null) {
+            grapes = new ArrayList<>();
         }
-
-        regions.add(r);
+        grapes.add(g);
     }
 
-    boolean hasRegion(Long id) {
-        if (regions != null) {
-            for (RegionDto r : regions) {
-                if (r.getId().equals(id)) {
+    void addGrapes(List<GrapeDto> dtos) {
+        if (grapes == null) {
+            grapes = new ArrayList<>();
+        }
+        grapes.addAll(dtos);
+    }
+
+    boolean hasGrape(Long id) {
+        if (grapes != null) {
+            for (GrapeDto g : grapes) {
+                if (g.getId().equals(id)) {
                     return true;
                 }
             }
         }
-
         return false;
     }
 
@@ -159,8 +239,14 @@ public class MyWineCellar implements Serializable {
         if (producers == null) {
             producers = new ArrayList<>();
         }
-
         producers.add(p);
+    }
+
+    void addProducers(List<ProducerDto> dtos) {
+        if (producers == null) {
+            producers = new ArrayList<>();
+        }
+        producers.addAll(dtos);
     }
 
     boolean hasProducer(Long id) {
@@ -171,7 +257,31 @@ public class MyWineCellar implements Serializable {
                 }
             }
         }
+        return false;
+    }
 
+    void addRegion(RegionDto r) {
+        if (regions == null) {
+            regions = new ArrayList<>();
+        }
+        regions.add(r);
+    }
+
+    void addRegions(List<RegionDto> dtos) {
+        if (regions == null) {
+            regions = new ArrayList<>();
+        }
+        regions.addAll(dtos);
+    }
+
+    boolean hasRegion(Long id) {
+        if (regions != null) {
+            for (RegionDto r : regions) {
+                if (r.getId().equals(id)) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -179,8 +289,14 @@ public class MyWineCellar implements Serializable {
         if (wines == null) {
             wines = new ArrayList<>();
         }
-
         wines.add(w);
+    }
+
+    void addWines(List<WineDto> dtos) {
+        if (wines == null) {
+            wines = new ArrayList<>();
+        }
+        wines.addAll(dtos);
     }
 
     boolean hasWine(Long id) {
@@ -191,7 +307,107 @@ public class MyWineCellar implements Serializable {
                 }
             }
         }
-
         return false;
     }
+
+    void addClosure(ClosureDto c) {
+        if (closures == null) {
+            closures = new ArrayList<>();
+        }
+        closures.add(c);
+    }
+
+    void addClosures(List<ClosureDto> dtos) {
+        if (closures == null) {
+            closures = new ArrayList<>();
+        }
+        closures.addAll(dtos);
+    }
+
+    boolean hasClosure(Long id) {
+        if (closures != null) {
+            for (ClosureDto c : closures) {
+                if (c.getId().equals(id)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    void addColor(ColorDto c) {
+        if (colors == null) {
+            colors = new ArrayList<>();
+        }
+        colors.add(c);
+    }
+
+    void addColors(List<ColorDto> dtos) {
+        if (colors == null) {
+            colors = new ArrayList<>();
+        }
+        colors.addAll(dtos);
+    }
+
+    boolean hasColor(Long id) {
+        if (colors != null) {
+            for (ColorDto c : colors) {
+                if (c.getId().equals(id)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    void addShape(ShapeDto s) {
+        if (shapes == null) {
+            shapes = new ArrayList<>();
+        }
+        shapes.add(s);
+    }
+
+    void addShapes(List<ShapeDto> dtos) {
+        if (shapes == null) {
+            shapes = new ArrayList<>();
+        }
+        shapes.addAll(dtos);
+    }
+
+    boolean hasShape(Long id) {
+        if (shapes != null) {
+            for (ShapeDto s : shapes) {
+                if (s.getId().equals(id)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    void addType(TypeDto t) {
+        if (types == null) {
+            types = new ArrayList<>();
+        }
+        types.add(t);
+    }
+
+    void addTypes(List<TypeDto> dtos) {
+        if (types == null) {
+            types = new ArrayList<>();
+        }
+        types.addAll(dtos);
+    }
+
+    boolean hasType(Long id) {
+        if (types != null) {
+            for (TypeDto t : types) {
+                if (t.getId().equals(id)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

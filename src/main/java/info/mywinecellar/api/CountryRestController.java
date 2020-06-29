@@ -9,10 +9,9 @@
 package info.mywinecellar.api;
 
 import info.mywinecellar.dto.CountryDto;
+import info.mywinecellar.json.Builder;
+import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Country;
-import info.mywinecellar.service.CountryService;
-
-import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,21 +25,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/country")
 public class CountryRestController extends AbstractRestController {
 
-    @Inject
-    CountryService countryService;
-
     /**
      * PUT mapping to update a Country
      *
      * @param request   Country request
      * @param countryId Long countryId
-     * @return ResponseEntity.ACCEPTED
+     * @return MyWineCellar.countries
      */
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/{countryId}/edit")
-    public Country countryEditPut(@RequestBody CountryDto request, @PathVariable Long countryId) {
+    public MyWineCellar countryEditPut(@RequestBody CountryDto request, @PathVariable Long countryId) {
         checkObjectNull(request);
-        return countryService.editCountry(request, countryId);
+        Country country = countryService.editCountry(request, countryId);
+        Builder builder = new Builder();
+        builder.country(country);
+        return builder.build();
     }
 
 }

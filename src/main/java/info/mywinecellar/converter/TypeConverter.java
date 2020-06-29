@@ -13,6 +13,7 @@ import info.mywinecellar.model.Type;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,7 @@ public class TypeConverter {
      * @param types List of Types
      * @return TypeDto list
      */
-    public List<TypeDto> toDto(List<Type> types) {
+    public List<TypeDto> toDto(Set<Type> types) {
         if (types == null) {
             throw new IllegalStateException("Type list is null");
         }

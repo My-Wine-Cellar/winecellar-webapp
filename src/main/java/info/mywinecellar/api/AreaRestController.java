@@ -10,6 +10,8 @@ package info.mywinecellar.api;
 
 import info.mywinecellar.dto.AreaDto;
 import info.mywinecellar.dto.ProducerDto;
+import info.mywinecellar.json.Builder;
+import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Area;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,9 +33,12 @@ public class AreaRestController extends AbstractRestController {
      * @return ResponseEntity.ACCEPTED
      */
     @PutMapping("/edit")
-    public Area areaEditPut(@RequestBody AreaDto request, @PathVariable Long areaId) {
+    public MyWineCellar areaEditPut(@RequestBody AreaDto request, @PathVariable Long areaId) {
         checkObjectNull(request);
-        return areaService.editArea(request, areaId);
+        Area area = areaService.editArea(request, areaId);
+        Builder builder = new Builder();
+        builder.area(area);
+        return builder.build();
     }
 
     /**
@@ -44,9 +49,12 @@ public class AreaRestController extends AbstractRestController {
      * @return ResponseEntity.CREATED
      */
     @PostMapping("/addProducer")
-    public Area areaAddProducerPost(@RequestBody ProducerDto request, @PathVariable Long areaId) {
+    public MyWineCellar areaAddProducerPost(@RequestBody ProducerDto request, @PathVariable Long areaId) {
         checkObjectNull(request);
-        return areaService.addProducer(areaId, request);
+        Area area = areaService.addProducer(areaId, request);
+        Builder builder = new Builder();
+        builder.area(area);
+        return builder.build();
     }
 
     // TODO add endpoint for addGrape

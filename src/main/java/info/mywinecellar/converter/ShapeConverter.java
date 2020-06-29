@@ -13,6 +13,7 @@ import info.mywinecellar.model.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,7 @@ public class ShapeConverter {
      * @param shapes List of Shapes
      * @return ShapeDto list
      */
-    public List<ShapeDto> toDto(List<Shape> shapes) {
+    public List<ShapeDto> toDto(Set<Shape> shapes) {
         if (shapes == null) {
             throw new IllegalStateException("Shape list is null");
         }

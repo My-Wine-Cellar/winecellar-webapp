@@ -13,6 +13,7 @@ import info.mywinecellar.model.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,7 @@ public class ColorConverter {
      * @param colors List of Colors
      * @return ColorDto list
      */
-    public List<ColorDto> toDto(List<Color> colors) {
+    public List<ColorDto> toDto(Set<Color> colors) {
         if (colors == null) {
             throw new IllegalStateException("Color list is null");
         }

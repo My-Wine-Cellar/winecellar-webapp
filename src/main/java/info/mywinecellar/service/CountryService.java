@@ -12,7 +12,8 @@ import info.mywinecellar.converter.CountryConverter;
 import info.mywinecellar.dto.CountryDto;
 import info.mywinecellar.model.Country;
 
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -77,13 +78,13 @@ public class CountryService extends AbstractService<Country> {
      *
      * @return A list of Countries
      */
-    public List<Country> findWithRegions() {
+    public Set<Country> findWithRegions() {
         try {
             Query query = em.createNativeQuery("SELECT DISTINCT country.id, country.name, " +
                     "country.description, country.flag, country.weblink " +
                     "FROM country JOIN region on country.id = region.country_id " +
                     "ORDER BY country.name", Country.class);
-            return query.getResultList();
+            return new TreeSet<>(query.getResultList());
         } catch (Exception e) {
             return null;
         }
@@ -98,8 +99,7 @@ public class CountryService extends AbstractService<Country> {
      */
     @Transactional
     public Country editCountry(CountryDto dto, Long countryId) {
-        Country country = this.findById(countryId);
-        country = countryConverter.toEntity(country, dto);
+        Country country = countryConverter.toEntity(this.findById(countryId), dto);
         this.save(country);
         log.info("Updated Country: {} ", country.getName());
         return country;
