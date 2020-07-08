@@ -97,7 +97,6 @@ public class CountryService extends AbstractService<Country> {
     public Country editCountry(CountryDto dto, Long countryId) {
         Country country = countryConverter.toEntity(this.findById(countryId), dto);
         this.save(country);
-        log.info("Updated Country: {} ", country.getName());
         return country;
     }
 

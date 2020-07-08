@@ -20,7 +20,6 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -37,9 +36,9 @@ public class GrapeRestController extends AbstractRestController {
     GrapeService grapeService;
 
     /**
-     * GET mapping
+     * Red grapes
      *
-     * @return red grapes
+     * @return MyWineCellar JSON envelope and the list of grapes
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/red")
@@ -51,9 +50,9 @@ public class GrapeRestController extends AbstractRestController {
     }
 
     /**
-     * GET mapping
+     * White grapes
      *
-     * @return white grapes
+     * @return MyWineCellar JSON envelope and the list of grapes
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/white")
@@ -65,10 +64,10 @@ public class GrapeRestController extends AbstractRestController {
     }
 
     /**
-     * GET mapping
+     * Details of a grape
      *
-     * @param grape String grape
-     * @return The grape
+     * @param grape Name of the grape
+     * @return MyWineCellar JSON envelope and the grape
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{grape}")
@@ -80,16 +79,23 @@ public class GrapeRestController extends AbstractRestController {
     }
 
     /**
-     * PUT mapping to update a Grape
+     * Edit a grape
      *
-     * @param request Grape request
-     * @param grapeId Long grapeId
-     * @return ResponseEntity.ACCEPTED
+     * @param request Description and weblink are the only fields that can be edited:
+     *                {@link GrapeDto}
+     *                {@link info.mywinecellar.converter.GrapeConverter}
+     * @param grapeId The id of the grape to edit
+     * @return MyWineCellar JSON envelope and the grape
      */
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{grapeId}/edit")
-    public ResponseEntity<?> grapeEditPut(@RequestBody GrapeDto request, @PathVariable Long grapeId) {
+    public MyWineCellar grapeEditPut(@RequestBody GrapeDto request, @PathVariable Long grapeId) {
         checkObjectNull(request);
-        grapeService.editGrape(request, grapeId);
-        return ResponseEntity.accepted().body("Updated Grape: " + grapeId);
+        Grape grape = grapeService.editGrape(request, grapeId);
+        log.info("Updated {} {} ", grape.toString(), grape.getName());
+
+        Builder builder = new Builder();
+        builder.grape(grape);
+        return builder.build();
     }
 }

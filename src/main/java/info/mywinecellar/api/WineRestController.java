@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,24 +41,27 @@ public class WineRestController extends AbstractRestController {
     WineConverter wineConverter;
 
     /**
-     * POST mapping to add a new Wine
+     * Add a new wine
      *
-     * @param wineDto    WineDto dto
-     * @param producerId Long producerId
-     * @param shapeId    Long shapeId
-     * @param colorId    Long colorId
-     * @param typeId     Long typeId
-     * @param closureId  Long closureId
-     * @return MyWineCellar
+     * @param request    Name, vintage, and size are required in the request:
+     *                   {@link WineDto}
+     *                   {@link WineConverter}
+     * @param producerId The id of the producer for the new wine
+     * @param shapeId    The id of the shape
+     * @param colorId    The id of the color
+     * @param typeId     The id of the type
+     * @param closureId  The id of the closure
+     * @return MyWineCellar JSON envelope and the wine
      */
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/new")
-    public MyWineCellar wineNewPost(@RequestBody WineDto wineDto, @RequestParam Long producerId,
+    public MyWineCellar wineNewPost(@RequestBody WineDto request, @RequestParam Long producerId,
                                     @RequestParam(defaultValue = "1") Long shapeId,
                                     @RequestParam(defaultValue = "1") Long colorId,
                                     @RequestParam(defaultValue = "1") Long typeId,
                                     @RequestParam(defaultValue = "1") Long closureId) {
 
-        Wine entity = wineConverter.toEntity(null, wineDto);
+        Wine entity = wineConverter.toEntity(null, request);
 
         Producer producer = producerService.findById(producerId);
         entity.setProducer(producer);
@@ -68,7 +72,7 @@ public class WineRestController extends AbstractRestController {
         entity.setType(typeService.findById(typeId));
         entity.setClosure(closureService.findById(closureId));
         wineService.save(entity);
-        log.info("==== Added new {} ====", entity.toString());
+        log.info("Added new {} {} ", entity.toString(), entity.getName());
 
         Builder builder = new Builder();
         builder.wine(entity);
@@ -76,17 +80,20 @@ public class WineRestController extends AbstractRestController {
     }
 
     /**
-     * PUT mapping to edit Wine
+     * Edit a wine
      *
-     * @param wineId  Long wineId
-     * @param wineDto Wine wineRequest
-     * @return MyWineCellar
+     * @param wineId  The id of the wine to edit
+     * @param request Variety of fields are available in the request:
+     *                {@link WineDto}
+     *                {@link WineConverter}
+     * @return MyWineCellar JSON envelope and the wine
      */
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{wineId}/edit")
-    public MyWineCellar wineEditPut(@PathVariable Long wineId, @RequestBody WineDto wineDto) {
-        Wine entity = wineConverter.toEntity(wineService.findById(wineId), wineDto);
+    public MyWineCellar wineEditPut(@PathVariable Long wineId, @RequestBody WineDto request) {
+        Wine entity = wineConverter.toEntity(wineService.findById(wineId), request);
         wineService.update(entity);
-        log.info("==== Updated {} ====", entity.toString());
+        log.info("Updated {} {} ", entity.toString(), entity.getName());
 
         Builder builder = new Builder();
         builder.wine(entity);
@@ -94,13 +101,14 @@ public class WineRestController extends AbstractRestController {
     }
 
     /**
-     * PUT mapping to add image to Wine
+     * Add an image to the wine
      *
-     * @param wineId Long wineId
-     * @param file   MultipartFile file
-     * @return MyWineCellar
+     * @param wineId The id of the wine
+     * @param file   MultipartFile as a jpg, png, etc.
+     * @return MyWineCellar JSON envelope and the wine
      * @throws IOException exception
      */
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping(value = "/{wineId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public MyWineCellar wineImagePut(@PathVariable Long wineId, @RequestPart MultipartFile file)
             throws IOException {
@@ -110,7 +118,7 @@ public class WineRestController extends AbstractRestController {
         }
         entity.setImage(file.getBytes());
         wineService.update(entity);
-        log.info("==== Image added to {} ====", entity.toString());
+        log.info("Image added to {} {} ", entity.toString(), entity.getName());
 
         Builder builder = new Builder();
         builder.wine(entity);

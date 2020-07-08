@@ -4,28 +4,26 @@ import info.mywinecellar.json.MyWineCellar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 /**
  * Provides setup for all ITCase's
- * Plus our API healthcheck
  */
 public class BaseITCase {
 
     private final RestTemplate client = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    protected final ObjectMapper objectMapper = new ObjectMapper();
     protected MyWineCellar myWineCellar;
 
     /**
@@ -59,6 +57,26 @@ public class BaseITCase {
     }
 
     /**
+     * Request for any image/multipart form data requests
+     *
+     * @param path The path of the request
+     * @return The response
+     */
+    protected ResponseEntity<String> apiImageRequest(String path) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        var content = new FileSystemResource("src/test/resources/opus_one.jpg");
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("file", content);
+
+        HttpEntity<MultiValueMap<String, Object>> httpEntity =
+                new HttpEntity<>(body, headers);
+        return client.exchange("http://localhost:8080/api" + path, HttpMethod.PUT, httpEntity, String.class);
+    }
+
+    /**
      * JSON body used to test entities that can only edit description and weblink
      *
      * @return JSONObject.toString
@@ -73,14 +91,4 @@ public class BaseITCase {
         return json.toString();
     }
 
-    /**
-     * Test our environment
-     * Will be executed with every test that extends this class unfortunately
-     */
-    @Order(1)
-    @Test
-    void healthCheck() {
-        ResponseEntity<String> response = apiRequest("/json", null, HttpMethod.GET);
-        assertEquals(200, response.getStatusCodeValue());
-    }
 }

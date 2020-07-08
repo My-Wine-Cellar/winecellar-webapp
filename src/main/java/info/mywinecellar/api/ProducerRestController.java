@@ -8,15 +8,12 @@
 
 package info.mywinecellar.api;
 
-import info.mywinecellar.converter.ProducerConverter;
 import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.json.Builder;
 import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Producer;
 
 import java.io.IOException;
-
-import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,32 +31,35 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/producer/{producerId}")
 public class ProducerRestController extends AbstractRestController {
 
-    @Inject
-    ProducerConverter producerConverter;
-
     /**
-     * PUT mapping to edit Producer
+     * Edit a producer
      *
-     * @param request    Producer producer
-     * @param producerId Long producerId
-     * @return ResponseEntity.Accepted
+     * @param request    A variety of fields are available in the request:
+     *                   {@link ProducerDto}
+     *                   {@link info.mywinecellar.converter.ProducerConverter}
+     * @param producerId The id of the producer to edit
+     * @return MyWineCellar JSON envelope and the producer
      */
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/edit")
     public MyWineCellar producerEditPut(@PathVariable Long producerId, @RequestBody ProducerDto request) {
         Producer entity = producerService.editProducer(request, producerId);
+        log.info("Updated {} {} ", entity.toString(), entity.getName());
+
         Builder builder = new Builder();
         builder.producer(entity);
         return builder.build();
     }
 
     /**
-     * PUT mapping to add image to Producer
+     * Add an image to the producer
      *
-     * @param producerId Long producerId
-     * @param file       MultipartFile file
-     * @return ResponseEntity.Accepted
+     * @param producerId The id of the producer
+     * @param file       MultipartFile as a jpg, png, etc.
+     * @return MyWineCellar JSON envelope and the producer
      * @throws IOException exception
      */
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public MyWineCellar producerImagePut(@PathVariable Long producerId, @RequestPart MultipartFile file)
             throws IOException {
@@ -68,6 +69,8 @@ public class ProducerRestController extends AbstractRestController {
         }
         entity.setImage(file.getBytes());
         producerService.save(entity);
+        log.info("Image added to {} {} ", entity.toString(), entity.getName());
+
         Builder builder = new Builder();
         builder.producer(entity);
         return builder.build();
