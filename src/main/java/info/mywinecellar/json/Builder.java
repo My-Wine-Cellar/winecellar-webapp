@@ -17,6 +17,7 @@ import info.mywinecellar.converter.ProducerConverter;
 import info.mywinecellar.converter.RegionConverter;
 import info.mywinecellar.converter.ShapeConverter;
 import info.mywinecellar.converter.TypeConverter;
+import info.mywinecellar.converter.UserConverter;
 import info.mywinecellar.converter.WineConverter;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Closure;
@@ -27,7 +28,10 @@ import info.mywinecellar.model.Producer;
 import info.mywinecellar.model.Region;
 import info.mywinecellar.model.Shape;
 import info.mywinecellar.model.Type;
+import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
+import info.mywinecellar.wset.WSET;
+import info.mywinecellar.wset.WSETConverter;
 
 import java.util.Collections;
 import java.util.Set;
@@ -42,11 +46,13 @@ public class Builder {
     private GrapeConverter grapeConverter;
     private ProducerConverter producerConverter;
     private RegionConverter regionConverter;
+    private UserConverter userConverter;
     private WineConverter wineConverter;
     private ClosureConverter closureConverter;
     private ColorConverter colorConverter;
     private ShapeConverter shapeConverter;
     private TypeConverter typeConverter;
+    private WSETConverter wsetConverter;
 
     private MyWineCellar json;
 
@@ -64,6 +70,9 @@ public class Builder {
         colorConverter = new ColorConverter();
         shapeConverter = new ShapeConverter();
         typeConverter = new TypeConverter();
+        userConverter = new UserConverter();
+        wineConverter = new WineConverter();
+        wsetConverter = new WSETConverter();
 
         json = new MyWineCellar();
     }
@@ -189,6 +198,18 @@ public class Builder {
     }
 
     /**
+     * Add a user
+     * @param u The user
+     * @return The builder
+     */
+    public Builder user(User u) {
+        if (!json.hasUser(u.getId())) {
+            json.addUser(userConverter.toDto(u));
+        }
+        return this;
+    }
+
+    /**
      * Add a wine
      *
      * @param w The wine
@@ -269,6 +290,18 @@ public class Builder {
     public Builder shape(Shape s) {
         if (!json.hasShape(s.getId())) {
             json.addShape(shapeConverter.toDto(s));
+        }
+        return this;
+    }
+
+    /**
+     * Add a WSET
+     * @param w The WSET
+     * @return The builder
+     */
+    public Builder wset(WSET w) {
+        if (!json.hasWSET(w.getId())) {
+            json.addWSET(wsetConverter.toDto(w));
         }
         return this;
     }

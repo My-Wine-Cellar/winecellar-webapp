@@ -44,13 +44,14 @@ public class AreaDto extends AbstractKeyDto {
 
     private List<Long> primaryGrapes;
 
-    private Long regionId;
+    private List<Long> regions;
 
     /**
      * Constructor
      */
     public AreaDto() {
         this.primaryGrapes = new ArrayList<>();
+        this.regions = new ArrayList<>();
     }
 
     /**
@@ -67,9 +68,7 @@ public class AreaDto extends AbstractKeyDto {
 
         this.primaryGrapes = new ArrayList<>();
         a.getPrimaryGrapes().forEach(grape -> this.primaryGrapes.add(grape.getId()));
-
-        /* CLEANUP */
-        a.getRegions().forEach(region -> this.regionId = region.getId());
-        //this.regionId = a.getRegions().iterator().next().getId();
+        this.regions = new ArrayList<>();
+        a.getRegions().forEach(region -> this.regions.add(region.getId()));
     }
 }

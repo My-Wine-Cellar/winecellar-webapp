@@ -39,12 +39,16 @@ public class AreaDtoSorter implements Comparator<AreaDto> {
      */
     public int compare(AreaDto a1, AreaDto a2) {
 
-        if (a1.getName().equals(regions.get(a1.getRegionId()))) {
-            return -1;
+        for (Long regionId : a1.getRegions()) {
+            if (a1.getName().equals(regions.get(regionId))) {
+                return -1;
+            }
         }
 
-        if (a2.getName().equals(regions.get(a2.getRegionId()))) {
-            return 1;
+        for (Long regionId : a2.getRegions()) {
+            if (a2.getName().equals(regions.get(regionId))) {
+                return -1;
+            }
         }
 
         return a1.getName().compareTo(a2.getName());

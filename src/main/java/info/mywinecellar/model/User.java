@@ -8,6 +8,8 @@
 
 package info.mywinecellar.model;
 
+import info.mywinecellar.wset.WSET;
+
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Set;
@@ -100,6 +102,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private Set<Wishlist> wishlist;
+
+    @OneToMany(mappedBy = "user")
+    private Set<WSET> wset;
 
     @Override
     public boolean isAccountNonExpired() {

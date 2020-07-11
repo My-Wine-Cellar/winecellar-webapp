@@ -21,6 +21,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService {
 
     /**
+     * @param id id
+     * @return User
+     */
+    User findById(Integer id);
+
+    /**
      * @param username username
      * @return User
      */

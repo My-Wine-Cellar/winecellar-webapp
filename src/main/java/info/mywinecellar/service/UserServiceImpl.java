@@ -52,6 +52,11 @@ public class UserServiceImpl implements UserService {
     private static final String TOKEN_VALID = "valid";
 
     @Override
+    public User findById(Integer id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public User findByUsername(String username) {
         return userRepository.findUserByUsername(username);
     }

@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:include="~{fragments/layout :: head}"/>
+  <body class="tasting-background">
+    <div th:replace="~{fragments/layout :: nav}"/>
+    <br/><br/>
+    <div class="container">
+      <div class="card p-2 shadow">
+        <div class="container">
+          <div class="card shadow p-4 m-3">
+            <h2 class="col-sm-10" th:text="#{wset}"></h2>
+            <div class="col-sm-10 text-left">
+              <ul class="list-inline">
+                <li class="list-inline-item">
+                  <h5>
+                    <a th:href="@{/d/__${data.countries[0].key}__/__${data.regions[0].key}__/__${data.areas[0].key}__/__${data.producers[0].key}__/}"
+                       th:text="${data.producers[0].name}"></a>
+                  </h5>
+                </li>
+                <li class="list-inline-item">
+                  <h5>
+                    <a th:href="@{/d/__${data.countries[0].key}__/__${data.regions[0].key}__/__${data.areas[0].key}__/__${data.producers[0].key}__/__${data.wines[0].key}__/__${data.wines[0].vintage}__/__${data.wines[0].size}__}"
+                       th:text="${data.wines[0].name}"></a>
+                  </h5>
+                </li>
+                <li class="list-inline-item">
+                  <h5 th:text="${data.wines[0].vintage}"></h5>
+                </li>
+              </ul>
+            </div>
+            <br/>
+            <form th:object="${wset}" method="post">
+              <input type="hidden" name="wineId" th:value="${wset.wineId}"/>
+              <input type="hidden" name="userId" th:value="${wset.userId}"/>
+              <div class="col-sm-10">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label class="form-check-label" for="showNotes" th:title="#{showNotes}">Allow people to see these notes</label>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <input type="checkbox" class="form-check-input showNotes" th:field="*{show}"
+                           id="showNotes">
+                  </div>
+                </div>
+              </div>
+              <br/>
+
+              <!-- APPEARANCE -->
+              <h4 class="col-sm-10 wsetSolid" th:text="#{wset.appearance}">Appearance</h4>
+              <div class="col-sm-10">
+                <table class="pct100">
+                  <tbody>
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.intensity', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{appearanceIntensity}">
+                          <option th:value="1" th:text="#{wset.pale}"></option>
+                          <option th:value="2" th:text="#{wset.medium}"></option>
+                          <option th:value="3" th:text="#{wset.deep}"></option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.color', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{appearanceColor}">
+                          <option th:if="${data.wines[0].colorId == 1}" th:value="1" th:text="#{wset.lemon}"></option>
+                          <option th:if="${data.wines[0].colorId == 1}" th:value="2" th:text="#{wset.gold}"></option>
+                          <option th:if="${data.wines[0].colorId == 1}" th:value="3" th:text="#{wset.amber}"></option>
+                          <option th:if="${data.wines[0].colorId == 1}" th:value="4" th:text="#{wset.brown}"></option>
+                          <option th:if="${data.wines[0].colorId == 3 || data.wines[0].colorId == 4}" th:value="5" th:text="#{wset.pink}"></option>
+                          <option th:if="${data.wines[0].colorId == 3 || data.wines[0].colorId == 4}" th:value="6" th:text="#{wset.pink_orange}"></option>
+                          <option th:if="${data.wines[0].colorId == 3 || data.wines[0].colorId == 4}" th:value="7" th:text="#{wset.orange}"></option>
+                          <option th:if="${data.wines[0].colorId == 2}" th:value="8" th:text="#{wset.purple}"></option>
+                          <option th:if="${data.wines[0].colorId == 2}" th:value="9" th:text="#{wset.ruby}"></option>
+                          <option th:if="${data.wines[0].colorId == 2}" th:value="10" th:text="#{wset.garnet}"></option>
+                          <option th:if="${data.wines[0].colorId == 2}" th:value="11" th:text="#{wset.tawny}"></option>
+                        </select>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- NOSE -->
+              <p/>
+              <h4 class="col-sm-10 wsetSolid" th:text="#{wset.nose}">Nose</h4>
+              <div class="col-sm-10">
+                <table class="pct100">
+                  <tbody>
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.intensity', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{noseIntensity}">
+                          <option th:value="1" th:text="#{wset.light}"></option>
+                          <option th:value="2" th:text="#{wset.medium_minus}"></option>
+                          <option th:value="3" th:text="#{wset.medium}"></option>
+                          <option th:value="4" th:text="#{wset.medium_plus}"></option>
+                          <option th:value="5" th:text="#{wset.pronounced}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.floral', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseFloralBlossom" th:title="#{wset.blossom}" th:text="#{wset.blossom}"/>
+                        <input type="checkbox" th:field="*{noseFloralBlossom}" id="noseFloralBlossom">
+
+                        <label for="noseFloralElderflower" th:title="#{wset.elderflower}" th:text="#{wset.elderflower}"/>
+                        <input type="checkbox" th:field="*{noseFloralElderflower}" id="noseFloralElderflower">
+
+                        <label for="noseFloralHoneysuckle" th:title="#{wset.honeysuckle}" th:text="#{wset.honeysuckle}"/>
+                        <input type="checkbox" th:field="*{noseFloralHoneysuckle}" id="noseFloralHoneysuckle">
+
+                        <label for="noseFloralJasmine" th:title="#{wset.jasmine}" th:text="#{wset.jasmine}"/>
+                        <input type="checkbox" th:field="*{noseFloralJasmine}" id="noseFloralJasmine">
+
+                        <label for="noseFloralRose" th:title="#{wset.rose}" th:text="#{wset.rose}"/>
+                        <input type="checkbox" th:field="*{noseFloralRose}" id="noseFloralRose">
+
+                        <label for="noseFloralViolet" th:title="#{wset.violet}" th:text="#{wset.violet}"/>
+                        <input type="checkbox" th:field="*{noseFloralViolet}" id="noseFloralViolet">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.green_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseGreenFruitApple" th:title="#{wset.apple}" th:text="#{wset.apple}"/>
+                        <input type="checkbox" th:field="*{noseGreenFruitApple}" id="noseGreenFruitApple">
+
+                        <label for="noseGreenFruitPear" th:title="#{wset.pear}" th:text="#{wset.pear}"/>
+                        <input type="checkbox" th:field="*{noseGreenFruitPear}" id="noseGreenFruitPear">
+
+                        <label for="noseGreenFruitGooseberry" th:title="#{wset.gooseberry}" th:text="#{wset.gooseberry}"/>
+                        <input type="checkbox" th:field="*{noseGreenFruitGooseberry}" id="noseGreenFruitGooseberry">
+
+                        <label for="noseGreenFruitGrape" th:title="#{wset.grape}" th:text="#{wset.grape}"/>
+                        <input type="checkbox" th:field="*{noseGreenFruitGrape}" id="noseGreenFruitGrape">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.citrus_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseCitrusFruitGrapefruit" th:title="#{wset.grapefruit}" th:text="#{wset.grapefruit}"/>
+                        <input type="checkbox" th:field="*{noseCitrusFruitGrapefruit}" id="noseCitrusFruitGrapefruit">
+
+                        <label for="noseCitrusFruitLemon" th:title="#{wset.lemon}" th:text="#{wset.lemon}"/>
+                        <input type="checkbox" th:field="*{noseCitrusFruitLemon}" id="noseCitrusFruitLemon">
+
+                        <label for="noseCitrusFruitLime" th:title="#{wset.lime}" th:text="#{wset.lime}"/>
+                        <input type="checkbox" th:field="*{noseCitrusFruitLime}" id="noseCitrusFruitLime">
+
+                        <label for="noseCitrusFruitOrange" th:title="#{wset.orange}" th:text="#{wset.orange}"/>
+                        <input type="checkbox" th:field="*{noseCitrusFruitOrange}" id="noseCitrusFruitOrange">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.stone_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseStoneFruitPeach" th:title="#{wset.peach}" th:text="#{wset.peach}"/>
+                        <input type="checkbox" th:field="*{noseStoneFruitPeach}" id="noseStoneFruitPeach">
+
+                        <label for="noseStoneFruitApricot" th:title="#{wset.apricot}" th:text="#{wset.apricot}"/>
+                        <input type="checkbox" th:field="*{noseStoneFruitApricot}" id="noseStoneFruitApricot">
+
+                        <label for="noseStoneFruitNectarine" th:title="#{wset.nectarine}" th:text="#{wset.nectarine}"/>
+                        <input type="checkbox" th:field="*{noseStoneFruitNectarine}" id="noseStoneFruitNectarine">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tropical_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseTropicalFruitBanana" th:title="#{wset.banana}" th:text="#{wset.banana}"/>
+                        <input type="checkbox" th:field="*{noseTropicalFruitBanana}" id="noseTropicalFruitBanana">
+
+                        <label for="noseTropicalFruitLychee" th:title="#{wset.lychee}" th:text="#{wset.lychee}"/>
+                        <input type="checkbox" th:field="*{noseTropicalFruitLychee}" id="noseTropicalFruitLychee">
+
+                        <label for="noseTropicalFruitMango" th:title="#{wset.mango}" th:text="#{wset.mango}"/>
+                        <input type="checkbox" th:field="*{noseTropicalFruitMango}" id="noseTropicalFruitMango">
+
+                        <label for="noseTropicalFruitMelon" th:title="#{wset.melon}" th:text="#{wset.melon}"/>
+                        <input type="checkbox" th:field="*{noseTropicalFruitMelon}" id="noseTropicalFruitMelon">
+
+                        <label for="noseTropicalFruitPassionFruit" th:title="#{wset.passion_fruit}" th:text="#{wset.passion_fruit}"/>
+                        <input type="checkbox" th:field="*{noseTropicalFruitPassionFruit}" id="noseTropicalFruitPassionFruit">
+
+                        <label for="noseTropicalFruitPineapple" th:title="#{wset.pineapple}" th:text="#{wset.pineapple}"/>
+                        <input type="checkbox" th:field="*{noseTropicalFruitPineapple}" id="noseTropicalFruitPineapple">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.red_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseRedFruitRedcurrant" th:title="#{wset.redcurrant}" th:text="#{wset.redcurrant}"/>
+                        <input type="checkbox" th:field="*{noseRedFruitRedcurrant}" id="noseRedFruitRedcurrant">
+
+                        <label for="noseRedFruitCranberry" th:title="#{wset.cranberry}" th:text="#{wset.cranberry}"/>
+                        <input type="checkbox" th:field="*{noseRedFruitCranberry}" id="noseRedFruitCranberry">
+
+                        <label for="noseRedFruitRaspberry" th:title="#{wset.raspberry}" th:text="#{wset.raspberry}"/>
+                        <input type="checkbox" th:field="*{noseRedFruitRaspberry}" id="noseRedFruitRaspberry">
+
+                        <label for="noseRedFruitStrawberry" th:title="#{wset.strawberry}" th:text="#{wset.strawberry}"/>
+                        <input type="checkbox" th:field="*{noseRedFruitStrawberry}" id="noseRedFruitStrawberry">
+
+                        <label for="noseRedFruitRedCherry" th:title="#{wset.red_cherry}" th:text="#{wset.red_cherry}"/>
+                        <input type="checkbox" th:field="*{noseRedFruitRedCherry}" id="noseRedFruitRedCherry">
+
+                        <label for="noseRedFruitRedPlum" th:title="#{wset.red_plum}" th:text="#{wset.red_plum}"/>
+                        <input type="checkbox" th:field="*{noseRedFruitRedPlum}" id="noseRedFruitRedPlum">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.black_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseBlackFruitBlackcurrant" th:title="#{wset.blackcurrant}" th:text="#{wset.blackcurrant}"/>
+                        <input type="checkbox" th:field="*{noseBlackFruitBlackcurrant}" id="noseBlackFruitBlackcurrant">
+
+                        <label for="noseBlackFruitBlackberry" th:title="#{wset.blackberry}" th:text="#{wset.blackberry}"/>
+                        <input type="checkbox" th:field="*{noseBlackFruitBlackberry}" id="noseBlackFruitBlackberry">
+
+                        <label for="noseBlackFruitBlueberry" th:title="#{wset.blueberry}" th:text="#{wset.blueberry}"/>
+                        <input type="checkbox" th:field="*{noseBlackFruitBlueberry}" id="noseBlackFruitBlueberry">
+
+                        <label for="noseBlackFruitBlackCherry" th:title="#{wset.black_cherry}" th:text="#{wset.black_cherry}"/>
+                        <input type="checkbox" th:field="*{noseBlackFruitBlackCherry}" id="noseBlackFruitBlackCherry">
+
+                        <label for="noseBlackFruitBlackPlum" th:title="#{wset.black_plum}" th:text="#{wset.black_plum}"/>
+                        <input type="checkbox" th:field="*{noseBlackFruitBlackPlum}" id="noseBlackFruitBlackPlum">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.herbaceous', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseHerbaceousGreenBellPepper" th:title="#{wset.green_bell_pepper}" th:text="#{wset.green_bell_pepper}"/>
+                        <input type="checkbox" th:field="*{noseHerbaceousGreenBellPepper}" id="noseHerbaceousGreenBellPepper">
+
+                        <label for="noseHerbaceousGrass" th:title="#{wset.grass}" th:text="#{wset.grass}"/>
+                        <input type="checkbox" th:field="*{noseHerbaceousGrass}" id="noseHerbaceousGrass">
+
+                        <label for="noseHerbaceousTomatoLeaf" th:title="#{wset.tomato_leaf}" th:text="#{wset.tomato_leaf}"/>
+                        <input type="checkbox" th:field="*{noseHerbaceousTomatoLeaf}" id="noseHerbaceousTomatoLeaf">
+
+                        <label for="noseHerbaceousAsparagus" th:title="#{wset.asparagus}" th:text="#{wset.asparagus}"/>
+                        <input type="checkbox" th:field="*{noseHerbaceousAsparagus}" id="noseHerbaceousAsparagus">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.herbal', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseHerbalEucalyptus" th:title="#{wset.eucalyptus}" th:text="#{wset.eucalyptus}"/>
+                        <input type="checkbox" th:field="*{noseHerbalEucalyptus}" id="noseHerbalEucalyptus">
+
+                        <label for="noseHerbalMint" th:title="#{wset.mint}" th:text="#{wset.mint}"/>
+                        <input type="checkbox" th:field="*{noseHerbalMint}" id="noseHerbalMint">
+
+                        <label for="noseHerbalFennel" th:title="#{wset.fennel}" th:text="#{wset.fennel}"/>
+                        <input type="checkbox" th:field="*{noseHerbalFennel}" id="noseHerbalFennel">
+
+                        <label for="noseHerbalDill" th:title="#{wset.dill}" th:text="#{wset.dill}"/>
+                        <input type="checkbox" th:field="*{noseHerbalDill}" id="noseHerbalDill">
+
+                        <label for="noseHerbalDriedHerbs" th:title="#{wset.dried_herbs}" th:text="#{wset.dried_herbs}"/>
+                        <input type="checkbox" th:field="*{noseHerbalDriedHerbs}" id="noseHerbalDriedHerbs">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.spice', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseSpiceBlackWhitePepper" th:title="#{wset.black_white_pepper}" th:text="#{wset.black_white_pepper}"/>
+                        <input type="checkbox" th:field="*{noseSpiceBlackWhitePepper}" id="noseSpiceBlackWhitePepper">
+
+                        <label for="noseSpiceLiquorice" th:title="#{wset.liquorice}" th:text="#{wset.liquorice}"/>
+                        <input type="checkbox" th:field="*{noseSpiceLiquorice}" id="noseSpiceLiquorice">
+
+                        <label for="noseSpiceCinnamon" th:title="#{wset.cinnamon}" th:text="#{wset.cinnamon}"/>
+                        <input type="checkbox" th:field="*{noseSpiceCinnamon}" id="noseSpiceCinnamon">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.fruit_ripeness', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseFruitRipenessUnripeFruit" th:title="#{wset.unripe_fruit}" th:text="#{wset.unripe_fruit}"/>
+                        <input type="checkbox" th:field="*{noseFruitRipenessUnripeFruit}" id="noseFruitRipenessUnripeFruit">
+
+                        <label for="noseFruitRipenessRipeFruit" th:title="#{wset.ripe_fruit}" th:text="#{wset.ripe_fruit}"/>
+                        <input type="checkbox" th:field="*{noseFruitRipenessRipeFruit}" id="noseFruitRipenessRipeFruit">
+
+                        <label for="noseFruitRipenessDriedFruit" th:title="#{wset.dried_fruit}" th:text="#{wset.dried_fruit}"/>
+                        <input type="checkbox" th:field="*{noseFruitRipenessDriedFruit}" id="noseFruitRipenessDriedFruit">
+
+                        <label for="noseFruitRipenessCookedFruit" th:title="#{wset.cooked_fruit}" th:text="#{wset.cooked_fruit}"/>
+                        <input type="checkbox" th:field="*{noseFruitRipenessCookedFruit}" id="noseFruitRipenessCookedFruit">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.other', 'wset.help')}"/></td>
+                      <td class="pct75"><div th:replace="~{fragments/textHelp :: textarea ('noseOther')}"/></td>
+                    </tr>
+                    
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.yeast', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseYeastBiscuit" th:title="#{wset.biscuit}" th:text="#{wset.biscuit}"/>
+                        <input type="checkbox" th:field="*{noseYeastBiscuit}" id="noseYeastBiscuit">
+
+                        <label for="noseYeastPastry" th:title="#{wset.pastry}" th:text="#{wset.pastry}"/>
+                        <input type="checkbox" th:field="*{noseYeastPastry}" id="noseYeastPastry">
+
+                        <label for="noseYeastBread" th:title="#{wset.bread}" th:text="#{wset.bread}"/>
+                        <input type="checkbox" th:field="*{noseYeastBread}" id="noseYeastBread">
+
+                        <label for="noseYeastToastedBread" th:title="#{wset.toasted_bread}" th:text="#{wset.toasted_bread}"/>
+                        <input type="checkbox" th:field="*{noseYeastToastedBread}" id="noseYeastToastedBread">
+
+                        <label for="noseYeastBreadDough" th:title="#{wset.bread_dough}" th:text="#{wset.bread_dough}"/>
+                        <input type="checkbox" th:field="*{noseYeastBreadDough}" id="noseYeastBreadDough">
+
+                        <label for="noseYeastCheese" th:title="#{wset.cheese}" th:text="#{wset.cheese}"/>
+                        <input type="checkbox" th:field="*{noseYeastCheese}" id="noseYeastCheese">
+
+                        <label for="noseYeastYogurt" th:title="#{wset.yogurt}" th:text="#{wset.yogurt}"/>
+                        <input type="checkbox" th:field="*{noseYeastYogurt}" id="noseYeastYogurt">
+
+                        <label for="noseYeastAcetaldehyde" th:title="#{wset.acetaldehyde}" th:text="#{wset.acetaldehyde}"/>
+                        <input type="checkbox" th:field="*{noseYeastAcetaldehyde}" id="noseYeastAcetaldehyde">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.malo', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseMaloButter" th:title="#{wset.butter}" th:text="#{wset.butter}"/>
+                        <input type="checkbox" th:field="*{noseMaloButter}" id="noseMaloButter">
+
+                        <label for="noseMaloCream" th:title="#{wset.cream}" th:text="#{wset.cream}"/>
+                        <input type="checkbox" th:field="*{noseMaloCream}" id="noseMaloCream">
+
+                        <label for="noseMaloCheese" th:title="#{wset.cheese}" th:text="#{wset.cheese}"/>
+                        <input type="checkbox" th:field="*{noseMaloCheese}" id="noseMaloCheese">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.oak', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseOakVanilla" th:title="#{wset.vanilla}" th:text="#{wset.vanilla}"/>
+                        <input type="checkbox" th:field="*{noseOakVanilla}" id="noseOakVanilla">
+
+                        <label for="noseOakCloves" th:title="#{wset.cloves}" th:text="#{wset.cloves}"/>
+                        <input type="checkbox" th:field="*{noseOakCloves}" id="noseOakCloves">
+
+                        <label for="noseOakCoconut" th:title="#{wset.coconut}" th:text="#{wset.coconut}"/>
+                        <input type="checkbox" th:field="*{noseOakCoconut}" id="noseOakCoconut">
+
+                        <label for="noseOakCedar" th:title="#{wset.cedar}" th:text="#{wset.cedar}"/>
+                        <input type="checkbox" th:field="*{noseOakCedar}" id="noseOakCedar">
+
+                        <label for="noseOakCharredWood" th:title="#{wset.charred_wood}" th:text="#{wset.charred_wood}"/>
+                        <input type="checkbox" th:field="*{noseOakCharredWood}" id="noseOakCharredWood">
+
+                        <label for="noseOakSmoke" th:title="#{wset.smoke}" th:text="#{wset.smoke}"/>
+                        <input type="checkbox" th:field="*{noseOakSmoke}" id="noseOakSmoke">
+
+                        <label for="noseOakChocolate" th:title="#{wset.chocolate}" th:text="#{wset.chocolate}"/>
+                        <input type="checkbox" th:field="*{noseOakChocolate}" id="noseOakChocolate">
+
+                        <label for="noseOakCoffee" th:title="#{wset.coffee}" th:text="#{wset.coffee}"/>
+                        <input type="checkbox" th:field="*{noseOakCoffee}" id="noseOakCoffee">
+                      </td>
+                    </tr>
+
+                    <!-- Tertiary: Red -->
+                    <tr th:if="${data.wines[0].colorId == 2 || data.wines[0].colorId == 3}" class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tertiary', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseTertiaryDriedFruit" th:title="#{wset.dried_fruit}" th:text="#{wset.dried_fruit}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryDriedFruit}" id="noseTertiaryDriedFruit">
+
+                        <label for="noseTertiaryCookedFruit" th:title="#{wset.cooked_fruit}" th:text="#{wset.cooked_fruit}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryCookedFruit}" id="noseTertiaryCookedFruit">
+
+                        <label for="noseTertiaryLeather" th:title="#{wset.leather}" th:text="#{wset.leather}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryLeather}" id="noseTertiaryLeather">
+
+                        <label for="noseTertiaryEarth" th:title="#{wset.earth}" th:text="#{wset.earth}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryEarth}" id="noseTertiaryEarth">
+
+                        <label for="noseTertiaryMushroom" th:title="#{wset.mushroom}" th:text="#{wset.mushroom}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryMushroom}" id="noseTertiaryMushroom">
+
+                        <label for="noseTertiaryMeat" th:title="#{wset.meat}" th:text="#{wset.meat}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryMeat}" id="noseTertiaryMeat">
+
+                        <label for="noseTertiaryTobacco" th:title="#{wset.tobacco}" th:text="#{wset.tobacco}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryTobacco}" id="noseTertiaryTobacco">
+
+                        <label for="noseTertiaryWetLeaves" th:title="#{wset.wet_leaves}" th:text="#{wset.wet_leaves}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryWetLeaves}" id="noseTertiaryWetLeaves">
+
+                        <label for="noseTertiaryForestFloor" th:title="#{wset.forest_floor}" th:text="#{wset.forest_floor}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryForestFloor}" id="noseTertiaryForestFloor">
+
+                        <label for="noseTertiaryCaramel" th:title="#{wset.caramel}" th:text="#{wset.caramel}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryCaramel}" id="noseTertiaryCaramel">
+                      </td>
+                    </tr>
+
+                    <!-- Tertiary: White -->
+                    <tr th:if="${data.wines[0].colorId == 1 || data.wines[0].colorId == 4}" class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tertiary', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseTertiaryDriedFruit" th:title="#{wset.dried_fruit}" th:text="#{wset.dried_fruit}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryDriedFruit}" id="noseTertiaryDriedFruit">
+
+                        <label for="noseTertiaryOrangeMarmalade" th:title="#{wset.orange_marmalade}" th:text="#{wset.orange_marmalade}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryOrangeMarmalade}" id="noseTertiaryOrangeMarmalade">
+
+                        <label for="noseTertiaryPetrol" th:title="#{wset.petrol}" th:text="#{wset.petrol}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryPetrol}" id="noseTertiaryPetrol">
+
+                        <label for="noseTertiaryCinnamon" th:title="#{wset.cinnamon}" th:text="#{wset.cinnamon}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryCinnamon}" id="noseTertiaryCinnamon">
+
+                        <label for="noseTertiaryGinger" th:title="#{wset.ginger}" th:text="#{wset.ginger}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryGinger}" id="noseTertiaryGinger">
+
+                        <label for="noseTertiaryNutmeg" th:title="#{wset.nutmeg}" th:text="#{wset.nutmeg}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryNutmeg}" id="noseTertiaryNutmeg">
+
+                        <label for="noseTertiaryAlmond" th:title="#{wset.almond}" th:text="#{wset.almond}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryAlmond}" id="noseTertiaryAlmond">
+
+                        <label for="noseTertiaryHazelnut" th:title="#{wset.hazelnut}" th:text="#{wset.hazelnut}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryHazelnut}" id="noseTertiaryHazelnut">
+
+                        <label for="noseTertiaryHoney" th:title="#{wset.honey}" th:text="#{wset.honey}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryHoney}" id="noseTertiaryHoney">
+
+                        <label for="noseTertiaryCaramel" th:title="#{wset.caramel}" th:text="#{wset.caramel}"/>
+                        <input type="checkbox" th:field="*{noseTertiaryCaramel}" id="noseTertiaryCaramel">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.oxidised', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="noseOxidisedAlmond" th:title="#{wset.almond}" th:text="#{wset.almond}"/>
+                        <input type="checkbox" th:field="*{noseOxidisedAlmond}" id="noseOxidisedAlmond">
+
+                        <label for="noseOxidisedHazelnut" th:title="#{wset.hazelnut}" th:text="#{wset.hazelnut}"/>
+                        <input type="checkbox" th:field="*{noseOxidisedHazelnut}" id="noseOxidisedHazelnut">
+
+                        <label for="noseOxidisedWalnut" th:title="#{wset.walnut}" th:text="#{wset.walnut}"/>
+                        <input type="checkbox" th:field="*{noseOxidisedWalnut}" id="noseOxidisedWalnut">
+
+                        <label for="noseOxidisedChocolate" th:title="#{wset.chocolate}" th:text="#{wset.chocolate}"/>
+                        <input type="checkbox" th:field="*{noseOxidisedChocolate}" id="noseOxidisedChocolate">
+
+                        <label for="noseOxidisedCoffee" th:title="#{wset.coffee}" th:text="#{wset.coffee}"/>
+                        <input type="checkbox" th:field="*{noseOxidisedCoffee}" id="noseOxidisedCoffee">
+
+                        <label for="noseOxidisedCaramel" th:title="#{wset.caramel}" th:text="#{wset.caramel}"/>
+                        <input type="checkbox" th:field="*{noseOxidisedCaramel}" id="noseOxidisedCaramel">
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- PALATE -->
+              <p/>
+              <h4 class="col-sm-10 wsetSolid" th:text="#{wset.palate}">Palate</h4>
+
+              <button th:if="${data.wines[0].colorId == 1 || data.wines[0].colorId == 4}" type="button" class="btn btn-link fas fa-copy"
+                      data-toggle="tooltip" th:title="#{wset.copy}"
+                      onclick="copyDescriptorsWhite()"></button>
+
+              <button th:if="${data.wines[0].colorId == 2 || data.wines[0].colorId == 3}" type="button" class="btn btn-link fas fa-copy"
+                      data-toggle="tooltip" th:title="#{wset.copy}"
+                      onclick="copyDescriptorsRed()"></button>
+
+              <div class="col-sm-10">
+                <table class="pct100">
+                  <tbody>
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.sweetness', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{palateSweetness}">
+                          <option th:value="1" th:text="#{wset.dry}"></option>
+                          <option th:value="2" th:text="#{wset.off_dry}"></option>
+                          <option th:value="3" th:text="#{wset.medium_dry}"></option>
+                          <option th:value="4" th:text="#{wset.medium_sweet}"></option>
+                          <option th:value="5" th:text="#{wset.sweet}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.acidity', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{palateAcidity}">
+                          <option th:value="1" th:text="#{wset.low}"></option>
+                          <option th:value="2" th:text="#{wset.medium_minus}"></option>
+                          <option th:value="3" th:text="#{wset.medium}"></option>
+                          <option th:value="4" th:text="#{wset.medium_plus}"></option>
+                          <option th:value="5" th:text="#{wset.high}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr th:if="${data.wines[0].colorId == 2 || data.wines[0].colorId == 3}" class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tannin_level', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{palateTanninLevel}">
+                          <option th:value="1" th:text="#{wset.low}"></option>
+                          <option th:value="2" th:text="#{wset.medium_minus}"></option>
+                          <option th:value="3" th:text="#{wset.medium}"></option>
+                          <option th:value="4" th:text="#{wset.medium_plus}"></option>
+                          <option th:value="5" th:text="#{wset.high}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr th:if="${data.wines[0].colorId == 2 || data.wines[0].colorId == 3}" class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tannin_nature', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{palateTanninNature}">
+                          <option th:value="1" th:text="#{wset.ripe}"></option>
+                          <option th:value="2" th:text="#{wset.soft}"></option>
+                          <option th:value="3" th:text="#{wset.smooth}"></option>
+                          <option th:value="4" th:text="#{wset.unripe}"></option>
+                          <option th:value="5" th:text="#{wset.green}"></option>
+                          <option th:value="6" th:text="#{wset.coarse}"></option>
+                          <option th:value="7" th:text="#{wset.stalky}"></option>
+                          <option th:value="8" th:text="#{wset.chalky}"></option>
+                          <option th:value="9" th:text="#{wset.fine_grained}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.alcohol', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{palateAlcohol}">
+                          <option th:value="1" th:text="#{wset.low}"></option>
+                          <option th:value="2" th:text="#{wset.medium}"></option>
+                          <option th:value="3" th:text="#{wset.high}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.body', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{palateBody}">
+                          <option th:value="1" th:text="#{wset.light}"></option>
+                          <option th:value="2" th:text="#{wset.medium_minus}"></option>
+                          <option th:value="3" th:text="#{wset.medium}"></option>
+                          <option th:value="4" th:text="#{wset.medium_plus}"></option>
+                          <option th:value="5" th:text="#{wset.full}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.flavour_intensity', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{palateIntensity}">
+                          <option th:value="1" th:text="#{wset.light}"></option>
+                          <option th:value="2" th:text="#{wset.medium_minus}"></option>
+                          <option th:value="3" th:text="#{wset.medium}"></option>
+                          <option th:value="4" th:text="#{wset.medium_plus}"></option>
+                          <option th:value="5" th:text="#{wset.pronounced}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.floral', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateFloralBlossom" th:title="#{wset.blossom}" th:text="#{wset.blossom}"/>
+                        <input type="checkbox" th:field="*{palateFloralBlossom}" id="palateFloralBlossom">
+
+                        <label for="palateFloralElderflower" th:title="#{wset.elderflower}" th:text="#{wset.elderflower}"/>
+                        <input type="checkbox" th:field="*{palateFloralElderflower}" id="palateFloralElderflower">
+
+                        <label for="palateFloralHoneysuckle" th:title="#{wset.honeysuckle}" th:text="#{wset.honeysuckle}"/>
+                        <input type="checkbox" th:field="*{palateFloralHoneysuckle}" id="palateFloralHoneysuckle">
+
+                        <label for="palateFloralJasmine" th:title="#{wset.jasmine}" th:text="#{wset.jasmine}"/>
+                        <input type="checkbox" th:field="*{palateFloralJasmine}" id="palateFloralJasmine">
+
+                        <label for="palateFloralRose" th:title="#{wset.rose}" th:text="#{wset.rose}"/>
+                        <input type="checkbox" th:field="*{palateFloralRose}" id="palateFloralRose">
+
+                        <label for="palateFloralViolet" th:title="#{wset.violet}" th:text="#{wset.violet}"/>
+                        <input type="checkbox" th:field="*{palateFloralViolet}" id="palateFloralViolet">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.green_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateGreenFruitApple" th:title="#{wset.apple}" th:text="#{wset.apple}"/>
+                        <input type="checkbox" th:field="*{palateGreenFruitApple}" id="palateGreenFruitApple">
+
+                        <label for="palateGreenFruitPear" th:title="#{wset.pear}" th:text="#{wset.pear}"/>
+                        <input type="checkbox" th:field="*{palateGreenFruitPear}" id="palateGreenFruitPear">
+
+                        <label for="palateGreenFruitGooseberry" th:title="#{wset.gooseberry}" th:text="#{wset.gooseberry}"/>
+                        <input type="checkbox" th:field="*{palateGreenFruitGooseberry}" id="palateGreenFruitGooseberry">
+
+                        <label for="palateGreenFruitGrape" th:title="#{wset.grape}" th:text="#{wset.grape}"/>
+                        <input type="checkbox" th:field="*{palateGreenFruitGrape}" id="palateGreenFruitGrape">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.citrus_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateCitrusFruitGrapefruit" th:title="#{wset.grapefruit}" th:text="#{wset.grapefruit}"/>
+                        <input type="checkbox" th:field="*{palateCitrusFruitGrapefruit}" id="palateCitrusFruitGrapefruit">
+
+                        <label for="palateCitrusFruitLemon" th:title="#{wset.lemon}" th:text="#{wset.lemon}"/>
+                        <input type="checkbox" th:field="*{palateCitrusFruitLemon}" id="palateCitrusFruitLemon">
+
+                        <label for="palateCitrusFruitLime" th:title="#{wset.lime}" th:text="#{wset.lime}"/>
+                        <input type="checkbox" th:field="*{palateCitrusFruitLime}" id="palateCitrusFruitLime">
+
+                        <label for="palateCitrusFruitOrange" th:title="#{wset.orange}" th:text="#{wset.orange}"/>
+                        <input type="checkbox" th:field="*{palateCitrusFruitOrange}" id="palateCitrusFruitOrange">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.stone_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateStoneFruitPeach" th:title="#{wset.peach}" th:text="#{wset.peach}"/>
+                        <input type="checkbox" th:field="*{palateStoneFruitPeach}" id="palateStoneFruitPeach">
+
+                        <label for="palateStoneFruitApricot" th:title="#{wset.apricot}" th:text="#{wset.apricot}"/>
+                        <input type="checkbox" th:field="*{palateStoneFruitApricot}" id="palateStoneFruitApricot">
+
+                        <label for="palateStoneFruitNectarine" th:title="#{wset.nectarine}" th:text="#{wset.nectarine}"/>
+                        <input type="checkbox" th:field="*{palateStoneFruitNectarine}" id="palateStoneFruitNectarine">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tropical_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateTropicalFruitBanana" th:title="#{wset.banana}" th:text="#{wset.banana}"/>
+                        <input type="checkbox" th:field="*{palateTropicalFruitBanana}" id="palateTropicalFruitBanana">
+
+                        <label for="palateTropicalFruitLychee" th:title="#{wset.lychee}" th:text="#{wset.lychee}"/>
+                        <input type="checkbox" th:field="*{palateTropicalFruitLychee}" id="palateTropicalFruitLychee">
+
+                        <label for="palateTropicalFruitMango" th:title="#{wset.mango}" th:text="#{wset.mango}"/>
+                        <input type="checkbox" th:field="*{palateTropicalFruitMango}" id="palateTropicalFruitMango">
+
+                        <label for="palateTropicalFruitMelon" th:title="#{wset.melon}" th:text="#{wset.melon}"/>
+                        <input type="checkbox" th:field="*{palateTropicalFruitMelon}" id="palateTropicalFruitMelon">
+
+                        <label for="palateTropicalFruitPassionFruit" th:title="#{wset.passion_fruit}" th:text="#{wset.passion_fruit}"/>
+                        <input type="checkbox" th:field="*{palateTropicalFruitPassionFruit}" id="palateTropicalFruitPassionFruit">
+
+                        <label for="palateTropicalFruitPineapple" th:title="#{wset.pineapple}" th:text="#{wset.pineapple}"/>
+                        <input type="checkbox" th:field="*{palateTropicalFruitPineapple}" id="palateTropicalFruitPineapple">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.red_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateRedFruitRedcurrant" th:title="#{wset.redcurrant}" th:text="#{wset.redcurrant}"/>
+                        <input type="checkbox" th:field="*{palateRedFruitRedcurrant}" id="palateRedFruitRedcurrant">
+
+                        <label for="palateRedFruitCranberry" th:title="#{wset.cranberry}" th:text="#{wset.cranberry}"/>
+                        <input type="checkbox" th:field="*{palateRedFruitCranberry}" id="palateRedFruitCranberry">
+
+                        <label for="palateRedFruitRaspberry" th:title="#{wset.raspberry}" th:text="#{wset.raspberry}"/>
+                        <input type="checkbox" th:field="*{palateRedFruitRaspberry}" id="palateRedFruitRaspberry">
+
+                        <label for="palateRedFruitStrawberry" th:title="#{wset.strawberry}" th:text="#{wset.strawberry}"/>
+                        <input type="checkbox" th:field="*{palateRedFruitStrawberry}" id="palateRedFruitStrawberry">
+
+                        <label for="palateRedFruitRedCherry" th:title="#{wset.red_cherry}" th:text="#{wset.red_cherry}"/>
+                        <input type="checkbox" th:field="*{palateRedFruitRedCherry}" id="palateRedFruitRedCherry">
+
+                        <label for="palateRedFruitRedPlum" th:title="#{wset.red_plum}" th:text="#{wset.red_plum}"/>
+                        <input type="checkbox" th:field="*{palateRedFruitRedPlum}" id="palateRedFruitRedPlum">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.black_fruit', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateBlackFruitBlackcurrant" th:title="#{wset.blackcurrant}" th:text="#{wset.blackcurrant}"/>
+                        <input type="checkbox" th:field="*{palateBlackFruitBlackcurrant}" id="palateBlackFruitBlackcurrant">
+
+                        <label for="palateBlackFruitBlackberry" th:title="#{wset.blackberry}" th:text="#{wset.blackberry}"/>
+                        <input type="checkbox" th:field="*{palateBlackFruitBlackberry}" id="palateBlackFruitBlackberry">
+
+                        <label for="palateBlackFruitBlueberry" th:title="#{wset.blueberry}" th:text="#{wset.blueberry}"/>
+                        <input type="checkbox" th:field="*{palateBlackFruitBlueberry}" id="palateBlackFruitBlueberry">
+
+                        <label for="palateBlackFruitBlackCherry" th:title="#{wset.black_cherry}" th:text="#{wset.black_cherry}"/>
+                        <input type="checkbox" th:field="*{palateBlackFruitBlackCherry}" id="palateBlackFruitBlackCherry">
+
+                        <label for="palateBlackFruitBlackPlum" th:title="#{wset.black_plum}" th:text="#{wset.black_plum}"/>
+                        <input type="checkbox" th:field="*{palateBlackFruitBlackPlum}" id="palateBlackFruitBlackPlum">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.herbaceous', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateHerbaceousGreenBellPepper" th:title="#{wset.green_bell_pepper}" th:text="#{wset.green_bell_pepper}"/>
+                        <input type="checkbox" th:field="*{palateHerbaceousGreenBellPepper}" id="palateHerbaceousGreenBellPepper">
+
+                        <label for="palateHerbaceousGrass" th:title="#{wset.grass}" th:text="#{wset.grass}"/>
+                        <input type="checkbox" th:field="*{palateHerbaceousGrass}" id="palateHerbaceousGrass">
+
+                        <label for="palateHerbaceousTomatoLeaf" th:title="#{wset.tomato_leaf}" th:text="#{wset.tomato_leaf}"/>
+                        <input type="checkbox" th:field="*{palateHerbaceousTomatoLeaf}" id="palateHerbaceousTomatoLeaf">
+
+                        <label for="palateHerbaceousAsparagus" th:title="#{wset.asparagus}" th:text="#{wset.asparagus}"/>
+                        <input type="checkbox" th:field="*{palateHerbaceousAsparagus}" id="palateHerbaceousAsparagus">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.herbal', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateHerbalEucalyptus" th:title="#{wset.eucalyptus}" th:text="#{wset.eucalyptus}"/>
+                        <input type="checkbox" th:field="*{palateHerbalEucalyptus}" id="palateHerbalEucalyptus">
+
+                        <label for="palateHerbalMint" th:title="#{wset.mint}" th:text="#{wset.mint}"/>
+                        <input type="checkbox" th:field="*{palateHerbalMint}" id="palateHerbalMint">
+
+                        <label for="palateHerbalFennel" th:title="#{wset.fennel}" th:text="#{wset.fennel}"/>
+                        <input type="checkbox" th:field="*{palateHerbalFennel}" id="palateHerbalFennel">
+
+                        <label for="palateHerbalDill" th:title="#{wset.dill}" th:text="#{wset.dill}"/>
+                        <input type="checkbox" th:field="*{palateHerbalDill}" id="palateHerbalDill">
+
+                        <label for="palateHerbalDriedHerbs" th:title="#{wset.dried_herbs}" th:text="#{wset.dried_herbs}"/>
+                        <input type="checkbox" th:field="*{palateHerbalDriedHerbs}" id="palateHerbalDriedHerbs">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.spice', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateSpiceBlackWhitePepper" th:title="#{wset.black_white_pepper}" th:text="#{wset.black_white_pepper}"/>
+                        <input type="checkbox" th:field="*{palateSpiceBlackWhitePepper}" id="palateSpiceBlackWhitePepper">
+
+                        <label for="palateSpiceLiquorice" th:title="#{wset.liquorice}" th:text="#{wset.liquorice}"/>
+                        <input type="checkbox" th:field="*{palateSpiceLiquorice}" id="palateSpiceLiquorice">
+
+                        <label for="palateSpiceCinnamon" th:title="#{wset.cinnamon}" th:text="#{wset.cinnamon}"/>
+                        <input type="checkbox" th:field="*{palateSpiceCinnamon}" id="palateSpiceCinnamon">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.fruit_ripeness', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateFruitRipenessUnripeFruit" th:title="#{wset.unripe_fruit}" th:text="#{wset.unripe_fruit}"/>
+                        <input type="checkbox" th:field="*{palateFruitRipenessUnripeFruit}" id="palateFruitRipenessUnripeFruit">
+
+                        <label for="palateFruitRipenessRipeFruit" th:title="#{wset.ripe_fruit}" th:text="#{wset.ripe_fruit}"/>
+                        <input type="checkbox" th:field="*{palateFruitRipenessRipeFruit}" id="palateFruitRipenessRipeFruit">
+
+                        <label for="palateFruitRipenessDriedFruit" th:title="#{wset.dried_fruit}" th:text="#{wset.dried_fruit}"/>
+                        <input type="checkbox" th:field="*{palateFruitRipenessDriedFruit}" id="palateFruitRipenessDriedFruit">
+
+                        <label for="palateFruitRipenessCookedFruit" th:title="#{wset.cooked_fruit}" th:text="#{wset.cooked_fruit}"/>
+                        <input type="checkbox" th:field="*{palateFruitRipenessCookedFruit}" id="palateFruitRipenessCookedFruit">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.other', 'wset.help')}"/></td>
+                      <td class="pct75"><div th:replace="~{fragments/textHelp :: textarea ('palateOther')}"/></td>
+                    </tr>
+                    
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.yeast', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateYeastBiscuit" th:title="#{wset.biscuit}" th:text="#{wset.biscuit}"/>
+                        <input type="checkbox" th:field="*{palateYeastBiscuit}" id="palateYeastBiscuit">
+
+                        <label for="palateYeastPastry" th:title="#{wset.pastry}" th:text="#{wset.pastry}"/>
+                        <input type="checkbox" th:field="*{palateYeastPastry}" id="palateYeastPastry">
+
+                        <label for="palateYeastBread" th:title="#{wset.bread}" th:text="#{wset.bread}"/>
+                        <input type="checkbox" th:field="*{palateYeastBread}" id="palateYeastBread">
+
+                        <label for="palateYeastToastedBread" th:title="#{wset.toasted_bread}" th:text="#{wset.toasted_bread}"/>
+                        <input type="checkbox" th:field="*{palateYeastToastedBread}" id="palateYeastToastedBread">
+
+                        <label for="palateYeastBreadDough" th:title="#{wset.bread_dough}" th:text="#{wset.bread_dough}"/>
+                        <input type="checkbox" th:field="*{palateYeastBreadDough}" id="palateYeastBreadDough">
+
+                        <label for="palateYeastCheese" th:title="#{wset.cheese}" th:text="#{wset.cheese}"/>
+                        <input type="checkbox" th:field="*{palateYeastCheese}" id="palateYeastCheese">
+
+                        <label for="palateYeastYogurt" th:title="#{wset.yogurt}" th:text="#{wset.yogurt}"/>
+                        <input type="checkbox" th:field="*{palateYeastYogurt}" id="palateYeastYogurt">
+
+                        <label for="palateYeastAcetaldehyde" th:title="#{wset.acetaldehyde}" th:text="#{wset.acetaldehyde}"/>
+                        <input type="checkbox" th:field="*{palateYeastAcetaldehyde}" id="palateYeastAcetaldehyde">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.malo', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateMaloButter" th:title="#{wset.butter}" th:text="#{wset.butter}"/>
+                        <input type="checkbox" th:field="*{palateMaloButter}" id="palateMaloButter">
+
+                        <label for="palateMaloCream" th:title="#{wset.cream}" th:text="#{wset.cream}"/>
+                        <input type="checkbox" th:field="*{palateMaloCream}" id="palateMaloCream">
+
+                        <label for="palateMaloCheese" th:title="#{wset.cheese}" th:text="#{wset.cheese}"/>
+                        <input type="checkbox" th:field="*{palateMaloCheese}" id="palateMaloCheese">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.oak', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateOakVanilla" th:title="#{wset.vanilla}" th:text="#{wset.vanilla}"/>
+                        <input type="checkbox" th:field="*{palateOakVanilla}" id="palateOakVanilla">
+
+                        <label for="palateOakCloves" th:title="#{wset.cloves}" th:text="#{wset.cloves}"/>
+                        <input type="checkbox" th:field="*{palateOakCloves}" id="palateOakCloves">
+
+                        <label for="palateOakCoconut" th:title="#{wset.coconut}" th:text="#{wset.coconut}"/>
+                        <input type="checkbox" th:field="*{palateOakCoconut}" id="palateOakCoconut">
+
+                        <label for="palateOakCedar" th:title="#{wset.cedar}" th:text="#{wset.cedar}"/>
+                        <input type="checkbox" th:field="*{palateOakCedar}" id="palateOakCedar">
+
+                        <label for="palateOakCharredWood" th:title="#{wset.charred_wood}" th:text="#{wset.charred_wood}"/>
+                        <input type="checkbox" th:field="*{palateOakCharredWood}" id="palateOakCharredWood">
+
+                        <label for="palateOakSmoke" th:title="#{wset.smoke}" th:text="#{wset.smoke}"/>
+                        <input type="checkbox" th:field="*{palateOakSmoke}" id="palateOakSmoke">
+
+                        <label for="palateOakChocolate" th:title="#{wset.chocolate}" th:text="#{wset.chocolate}"/>
+                        <input type="checkbox" th:field="*{palateOakChocolate}" id="palateOakChocolate">
+
+                        <label for="palateOakCoffee" th:title="#{wset.coffee}" th:text="#{wset.coffee}"/>
+                        <input type="checkbox" th:field="*{palateOakCoffee}" id="palateOakCoffee">
+                      </td>
+                    </tr>
+
+                    <!-- Tertiary: Red -->
+                    <tr th:if="${data.wines[0].colorId == 2 || data.wines[0].colorId == 3}" class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tertiary', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateTertiaryDriedFruit" th:title="#{wset.dried_fruit}" th:text="#{wset.dried_fruit}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryDriedFruit}" id="palateTertiaryDriedFruit">
+
+                        <label for="palateTertiaryCookedFruit" th:title="#{wset.cooked_fruit}" th:text="#{wset.cooked_fruit}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryCookedFruit}" id="palateTertiaryCookedFruit">
+
+                        <label for="palateTertiaryLeather" th:title="#{wset.leather}" th:text="#{wset.leather}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryLeather}" id="palateTertiaryLeather">
+
+                        <label for="palateTertiaryEarth" th:title="#{wset.earth}" th:text="#{wset.earth}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryEarth}" id="palateTertiaryEarth">
+
+                        <label for="palateTertiaryMushroom" th:title="#{wset.mushroom}" th:text="#{wset.mushroom}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryMushroom}" id="palateTertiaryMushroom">
+
+                        <label for="palateTertiaryMeat" th:title="#{wset.meat}" th:text="#{wset.meat}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryMeat}" id="palateTertiaryMeat">
+
+                        <label for="palateTertiaryTobacco" th:title="#{wset.tobacco}" th:text="#{wset.tobacco}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryTobacco}" id="palateTertiaryTobacco">
+
+                        <label for="palateTertiaryWetLeaves" th:title="#{wset.wet_leaves}" th:text="#{wset.wet_leaves}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryWetLeaves}" id="palateTertiaryWetLeaves">
+
+                        <label for="palateTertiaryForestFloor" th:title="#{wset.forest_floor}" th:text="#{wset.forest_floor}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryForestFloor}" id="palateTertiaryForestFloor">
+
+                        <label for="palateTertiaryCaramel" th:title="#{wset.caramel}" th:text="#{wset.caramel}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryCaramel}" id="palateTertiaryCaramel">
+                      </td>
+                    </tr>
+
+                    <!-- Tertiary: White -->
+                    <tr th:if="${data.wines[0].colorId == 1 || data.wines[0].colorId == 4}" class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tertiary', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateTertiaryDriedFruit" th:title="#{wset.dried_fruit}" th:text="#{wset.dried_fruit}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryDriedFruit}" id="palateTertiaryDriedFruit">
+
+                        <label for="palateTertiaryOrangeMarmalade" th:title="#{wset.orange_marmalade}" th:text="#{wset.orange_marmalade}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryOrangeMarmalade}" id="palateTertiaryOrangeMarmalade">
+
+                        <label for="palateTertiaryPetrol" th:title="#{wset.petrol}" th:text="#{wset.petrol}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryPetrol}" id="palateTertiaryPetrol">
+
+                        <label for="palateTertiaryCinnamon" th:title="#{wset.cinnamon}" th:text="#{wset.cinnamon}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryCinnamon}" id="palateTertiaryCinnamon">
+
+                        <label for="palateTertiaryGinger" th:title="#{wset.ginger}" th:text="#{wset.ginger}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryGinger}" id="palateTertiaryGinger">
+
+                        <label for="palateTertiaryNutmeg" th:title="#{wset.nutmeg}" th:text="#{wset.nutmeg}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryNutmeg}" id="palateTertiaryNutmeg">
+
+                        <label for="palateTertiaryAlmond" th:title="#{wset.almond}" th:text="#{wset.almond}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryAlmond}" id="palateTertiaryAlmond">
+
+                        <label for="palateTertiaryHazelnut" th:title="#{wset.hazelnut}" th:text="#{wset.hazelnut}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryHazelnut}" id="palateTertiaryHazelnut">
+
+                        <label for="palateTertiaryHoney" th:title="#{wset.honey}" th:text="#{wset.honey}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryHoney}" id="palateTertiaryHoney">
+
+                        <label for="palateTertiaryCaramel" th:title="#{wset.caramel}" th:text="#{wset.caramel}"/>
+                        <input type="checkbox" th:field="*{palateTertiaryCaramel}" id="palateTertiaryCaramel">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.oxidised', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <label for="palateOxidisedAlmond" th:title="#{wset.almond}" th:text="#{wset.almond}"/>
+                        <input type="checkbox" th:field="*{palateOxidisedAlmond}" id="palateOxidisedAlmond">
+
+                        <label for="palateOxidisedHazelnut" th:title="#{wset.hazelnut}" th:text="#{wset.hazelnut}"/>
+                        <input type="checkbox" th:field="*{palateOxidisedHazelnut}" id="palateOxidisedHazelnut">
+
+                        <label for="palateOxidisedWalnut" th:title="#{wset.walnut}" th:text="#{wset.walnut}"/>
+                        <input type="checkbox" th:field="*{palateOxidisedWalnut}" id="palateOxidisedWalnut">
+
+                        <label for="palateOxidisedChocolate" th:title="#{wset.chocolate}" th:text="#{wset.chocolate}"/>
+                        <input type="checkbox" th:field="*{palateOxidisedChocolate}" id="palateOxidisedChocolate">
+
+                        <label for="palateOxidisedCoffee" th:title="#{wset.coffee}" th:text="#{wset.coffee}"/>
+                        <input type="checkbox" th:field="*{palateOxidisedCoffee}" id="palateOxidisedCoffee">
+
+                        <label for="palateOxidisedCaramel" th:title="#{wset.caramel}" th:text="#{wset.caramel}"/>
+                        <input type="checkbox" th:field="*{palateOxidisedCaramel}" id="palateOxidisedCaramel">
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.observations', 'wset.help')}"/></td>
+                      <td class="pct75"><div th:replace="~{fragments/textHelp :: textarea ('palateObservations')}"/></td>
+                    </tr>
+                    
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.finish', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{palateFinish}">
+                          <option th:value="1" th:text="#{wset.short}"></option>
+                          <option th:value="2" th:text="#{wset.medium_minus}"></option>
+                          <option th:value="3" th:text="#{wset.medium}"></option>
+                          <option th:value="4" th:text="#{wset.medium_plus}"></option>
+                          <option th:value="5" th:text="#{wset.long}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- CONCLUSIONS -->
+              <p/>
+              <h4 class="col-sm-10 wsetSolid" th:text="#{wset.conclusions}">Conclusions</h4>
+              <div class="col-sm-10">
+                <table class="pct100">
+                  <tbody>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.quality', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{conclusionQuality}">
+                          <option th:value="1" th:text="#{wset.poor}"></option>
+                          <option th:value="2" th:text="#{wset.acceptable}"></option>
+                          <option th:value="3" th:text="#{wset.good}"></option>
+                          <option th:value="4" th:text="#{wset.very_good}"></option>
+                          <option th:value="5" th:text="#{wset.outstanding}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.explanation', 'wset.help')}"/></td>
+                      <td class="pct75"><div th:replace="~{fragments/textHelp :: textarea ('conclusionQualityExplanation')}"/></td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.bottle_ageing', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <select th:field="*{conclusionBottle}">
+                          <option th:value="1" th:text="#{wset.suitable}"></option>
+                          <option th:value="2" th:text="#{wset.not_suitable}"></option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.explanation', 'wset.help')}"/></td>
+                      <td class="pct75"><div th:replace="~{fragments/textHelp :: textarea ('conclusionBottleExplanation')}"/></td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+              <p/>
+              <div th:insert="~{fragments/button :: btn-toolbar-cancel-save}"/>
+            </form>
+            <p/>
+            <table class="pct100">
+              <tbody>
+                <tr>
+                  <td><img src="/images/wset100.png" alt="WSET logo"/></td>
+                  <td>Copyright Wine & Spirit Education Trust 2020. For more information see <a th:href="@{/about/wset}">WSET</a>.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/><br/>
+    <div th:replace="~{fragments/layout :: footer}"/>
+    <div th:replace="~{fragments/layout :: scripts}"/>
+  </body>
+  <script>$('.showNotes').prop('checked', true)</script>
+  <script type="text/javascript">
+    function copyDescriptorsWhite() {
+        document.getElementById("palateFloralBlossom").checked = document.getElementById("noseFloralBlossom").checked;
+        document.getElementById("palateFloralElderflower").checked = document.getElementById("noseFloralElderflower").checked;
+        document.getElementById("palateFloralHoneysuckle").checked = document.getElementById("noseFloralHoneysuckle").checked;
+        document.getElementById("palateFloralJasmine").checked = document.getElementById("noseFloralJasmine").checked;
+        document.getElementById("palateFloralRose").checked = document.getElementById("noseFloralRose").checked;
+        document.getElementById("palateFloralViolet").checked = document.getElementById("noseFloralViolet").checked;
+        document.getElementById("palateGreenFruitApple").checked = document.getElementById("noseGreenFruitApple").checked;
+        document.getElementById("palateGreenFruitPear").checked = document.getElementById("noseGreenFruitPear").checked;
+        document.getElementById("palateGreenFruitGooseberry").checked = document.getElementById("noseGreenFruitGooseberry").checked;
+        document.getElementById("palateGreenFruitGrape").checked = document.getElementById("noseGreenFruitGrape").checked;
+        document.getElementById("palateCitrusFruitGrapefruit").checked = document.getElementById("noseCitrusFruitGrapefruit").checked;
+        document.getElementById("palateCitrusFruitLemon").checked = document.getElementById("noseCitrusFruitLemon").checked;
+        document.getElementById("palateCitrusFruitLime").checked = document.getElementById("noseCitrusFruitLime").checked;
+        document.getElementById("palateCitrusFruitOrange").checked = document.getElementById("noseCitrusFruitOrange").checked;
+        document.getElementById("palateStoneFruitPeach").checked = document.getElementById("noseStoneFruitPeach").checked;
+        document.getElementById("palateStoneFruitApricot").checked = document.getElementById("noseStoneFruitApricot").checked;
+        document.getElementById("palateStoneFruitNectarine").checked = document.getElementById("noseStoneFruitNectarine").checked;
+        document.getElementById("palateTropicalFruitBanana").checked = document.getElementById("noseTropicalFruitBanana").checked;
+        document.getElementById("palateTropicalFruitLychee").checked = document.getElementById("noseTropicalFruitLychee").checked;
+        document.getElementById("palateTropicalFruitMango").checked = document.getElementById("noseTropicalFruitMango").checked;
+        document.getElementById("palateTropicalFruitMelon").checked = document.getElementById("noseTropicalFruitMelon").checked;
+        document.getElementById("palateTropicalFruitPassionFruit").checked = document.getElementById("noseTropicalFruitPassionFruit").checked;
+        document.getElementById("palateTropicalFruitPineapple").checked = document.getElementById("noseTropicalFruitPineapple").checked;
+        document.getElementById("palateRedFruitRedcurrant").checked = document.getElementById("noseRedFruitRedcurrant").checked;
+        document.getElementById("palateRedFruitCranberry").checked = document.getElementById("noseRedFruitCranberry").checked;
+        document.getElementById("palateRedFruitRaspberry").checked = document.getElementById("noseRedFruitRaspberry").checked;
+        document.getElementById("palateRedFruitStrawberry").checked = document.getElementById("noseRedFruitStrawberry").checked;
+        document.getElementById("palateRedFruitRedCherry").checked = document.getElementById("noseRedFruitRedCherry").checked;
+        document.getElementById("palateRedFruitRedPlum").checked = document.getElementById("noseRedFruitRedPlum").checked;
+        document.getElementById("palateBlackFruitBlackcurrant").checked = document.getElementById("noseBlackFruitBlackcurrant").checked;
+        document.getElementById("palateBlackFruitBlackberry").checked = document.getElementById("noseBlackFruitBlackberry").checked;
+        document.getElementById("palateBlackFruitBlueberry").checked = document.getElementById("noseBlackFruitBlueberry").checked;
+        document.getElementById("palateBlackFruitBlackCherry").checked = document.getElementById("noseBlackFruitBlackCherry").checked;
+        document.getElementById("palateBlackFruitBlackPlum").checked = document.getElementById("noseBlackFruitBlackPlum").checked;
+        document.getElementById("palateHerbaceousGreenBellPepper").checked = document.getElementById("noseHerbaceousGreenBellPepper").checked;
+        document.getElementById("palateHerbaceousGrass").checked = document.getElementById("noseHerbaceousGrass").checked;
+        document.getElementById("palateHerbaceousTomatoLeaf").checked = document.getElementById("noseHerbaceousTomatoLeaf").checked;
+        document.getElementById("palateHerbaceousAsparagus").checked = document.getElementById("noseHerbaceousAsparagus").checked;
+        document.getElementById("palateHerbalEucalyptus").checked = document.getElementById("noseHerbalEucalyptus").checked;
+        document.getElementById("palateHerbalMint").checked = document.getElementById("noseHerbalMint").checked;
+        document.getElementById("palateHerbalFennel").checked = document.getElementById("noseHerbalFennel").checked;
+        document.getElementById("palateHerbalDill").checked = document.getElementById("noseHerbalDill").checked;
+        document.getElementById("palateHerbalDriedHerbs").checked = document.getElementById("noseHerbalDriedHerbs").checked;
+        document.getElementById("palateSpiceBlackWhitePepper").checked = document.getElementById("noseSpiceBlackWhitePepper").checked;
+        document.getElementById("palateSpiceLiquorice").checked = document.getElementById("noseSpiceLiquorice").checked;
+        document.getElementById("palateSpiceCinnamon").checked = document.getElementById("noseSpiceCinnamon").checked;
+        document.getElementById("palateFruitRipenessUnripeFruit").checked = document.getElementById("noseFruitRipenessUnripeFruit").checked;
+        document.getElementById("palateFruitRipenessRipeFruit").checked = document.getElementById("noseFruitRipenessRipeFruit").checked;
+        document.getElementById("palateFruitRipenessDriedFruit").checked = document.getElementById("noseFruitRipenessDriedFruit").checked;
+        document.getElementById("palateFruitRipenessCookedFruit").checked = document.getElementById("noseFruitRipenessCookedFruit").checked;
+        document.getElementById("palateYeastBiscuit").checked = document.getElementById("noseYeastBiscuit").checked;
+        document.getElementById("palateYeastPastry").checked = document.getElementById("noseYeastPastry").checked;
+        document.getElementById("palateYeastBread").checked = document.getElementById("noseYeastBread").checked;
+        document.getElementById("palateYeastToastedBread").checked = document.getElementById("noseYeastToastedBread").checked;
+        document.getElementById("palateYeastBreadDough").checked = document.getElementById("noseYeastBreadDough").checked;
+        document.getElementById("palateYeastCheese").checked = document.getElementById("noseYeastCheese").checked;
+        document.getElementById("palateYeastYogurt").checked = document.getElementById("noseYeastYogurt").checked;
+        document.getElementById("palateYeastAcetaldehyde").checked = document.getElementById("noseYeastAcetaldehyde").checked;
+        document.getElementById("palateMaloButter").checked = document.getElementById("noseMaloButter").checked;
+        document.getElementById("palateMaloCream").checked = document.getElementById("noseMaloCream").checked;
+        document.getElementById("palateMaloCheese").checked = document.getElementById("noseMaloCheese").checked;
+        document.getElementById("palateOakVanilla").checked = document.getElementById("noseOakVanilla").checked;
+        document.getElementById("palateOakCloves").checked = document.getElementById("noseOakCloves").checked;
+        document.getElementById("palateOakCoconut").checked = document.getElementById("noseOakCoconut").checked;
+        document.getElementById("palateOakCedar").checked = document.getElementById("noseOakCedar").checked;
+        document.getElementById("palateOakCharredWood").checked = document.getElementById("noseOakCharredWood").checked;
+        document.getElementById("palateOakSmoke").checked = document.getElementById("noseOakSmoke").checked;
+        document.getElementById("palateOakChocolate").checked = document.getElementById("noseOakChocolate").checked;
+        document.getElementById("palateOakCoffee").checked = document.getElementById("noseOakCoffee").checked;
+        document.getElementById("palateTertiaryDriedFruit").checked = document.getElementById("noseTertiaryDriedFruit").checked;
+        document.getElementById("palateTertiaryCaramel").checked = document.getElementById("noseTertiaryCaramel").checked;
+        document.getElementById("palateTertiaryOrangeMarmalade").checked = document.getElementById("noseTertiaryOrangeMarmalade").checked;
+        document.getElementById("palateTertiaryPetrol").checked = document.getElementById("noseTertiaryPetrol").checked;
+        document.getElementById("palateTertiaryCinnamon").checked = document.getElementById("noseTertiaryCinnamon").checked;
+        document.getElementById("palateTertiaryGinger").checked = document.getElementById("noseTertiaryGinger").checked;
+        document.getElementById("palateTertiaryNutmeg").checked = document.getElementById("noseTertiaryNutmeg").checked;
+        document.getElementById("palateTertiaryAlmond").checked = document.getElementById("noseTertiaryAlmond").checked;
+        document.getElementById("palateTertiaryHazelnut").checked = document.getElementById("noseTertiaryHazelnut").checked;
+        document.getElementById("palateTertiaryHoney").checked = document.getElementById("noseTertiaryHoney").checked;
+        document.getElementById("palateOxidisedAlmond").checked = document.getElementById("noseOxidisedAlmond").checked;
+        document.getElementById("palateOxidisedHazelnut").checked = document.getElementById("noseOxidisedHazelnut").checked;
+        document.getElementById("palateOxidisedWalnut").checked = document.getElementById("noseOxidisedWalnut").checked;
+        document.getElementById("palateOxidisedChocolate").checked = document.getElementById("noseOxidisedChocolate").checked;
+        document.getElementById("palateOxidisedCoffee").checked = document.getElementById("noseOxidisedCoffee").checked;
+        document.getElementById("palateOxidisedCaramel").checked = document.getElementById("noseOxidisedCaramel").checked;
+
+        document.getElementById("palateOther").value = document.getElementById("noseOther").value;
+    }
+
+    function copyDescriptorsRed() {
+        document.getElementById("palateFloralBlossom").checked = document.getElementById("noseFloralBlossom").checked;
+        document.getElementById("palateFloralElderflower").checked = document.getElementById("noseFloralElderflower").checked;
+        document.getElementById("palateFloralHoneysuckle").checked = document.getElementById("noseFloralHoneysuckle").checked;
+        document.getElementById("palateFloralJasmine").checked = document.getElementById("noseFloralJasmine").checked;
+        document.getElementById("palateFloralRose").checked = document.getElementById("noseFloralRose").checked;
+        document.getElementById("palateFloralViolet").checked = document.getElementById("noseFloralViolet").checked;
+        document.getElementById("palateGreenFruitApple").checked = document.getElementById("noseGreenFruitApple").checked;
+        document.getElementById("palateGreenFruitPear").checked = document.getElementById("noseGreenFruitPear").checked;
+        document.getElementById("palateGreenFruitGooseberry").checked = document.getElementById("noseGreenFruitGooseberry").checked;
+        document.getElementById("palateGreenFruitGrape").checked = document.getElementById("noseGreenFruitGrape").checked;
+        document.getElementById("palateCitrusFruitGrapefruit").checked = document.getElementById("noseCitrusFruitGrapefruit").checked;
+        document.getElementById("palateCitrusFruitLemon").checked = document.getElementById("noseCitrusFruitLemon").checked;
+        document.getElementById("palateCitrusFruitLime").checked = document.getElementById("noseCitrusFruitLime").checked;
+        document.getElementById("palateCitrusFruitOrange").checked = document.getElementById("noseCitrusFruitOrange").checked;
+        document.getElementById("palateStoneFruitPeach").checked = document.getElementById("noseStoneFruitPeach").checked;
+        document.getElementById("palateStoneFruitApricot").checked = document.getElementById("noseStoneFruitApricot").checked;
+        document.getElementById("palateStoneFruitNectarine").checked = document.getElementById("noseStoneFruitNectarine").checked;
+        document.getElementById("palateTropicalFruitBanana").checked = document.getElementById("noseTropicalFruitBanana").checked;
+        document.getElementById("palateTropicalFruitLychee").checked = document.getElementById("noseTropicalFruitLychee").checked;
+        document.getElementById("palateTropicalFruitMango").checked = document.getElementById("noseTropicalFruitMango").checked;
+        document.getElementById("palateTropicalFruitMelon").checked = document.getElementById("noseTropicalFruitMelon").checked;
+        document.getElementById("palateTropicalFruitPassionFruit").checked = document.getElementById("noseTropicalFruitPassionFruit").checked;
+        document.getElementById("palateTropicalFruitPineapple").checked = document.getElementById("noseTropicalFruitPineapple").checked;
+        document.getElementById("palateRedFruitRedcurrant").checked = document.getElementById("noseRedFruitRedcurrant").checked;
+        document.getElementById("palateRedFruitCranberry").checked = document.getElementById("noseRedFruitCranberry").checked;
+        document.getElementById("palateRedFruitRaspberry").checked = document.getElementById("noseRedFruitRaspberry").checked;
+        document.getElementById("palateRedFruitStrawberry").checked = document.getElementById("noseRedFruitStrawberry").checked;
+        document.getElementById("palateRedFruitRedCherry").checked = document.getElementById("noseRedFruitRedCherry").checked;
+        document.getElementById("palateRedFruitRedPlum").checked = document.getElementById("noseRedFruitRedPlum").checked;
+        document.getElementById("palateBlackFruitBlackcurrant").checked = document.getElementById("noseBlackFruitBlackcurrant").checked;
+        document.getElementById("palateBlackFruitBlackberry").checked = document.getElementById("noseBlackFruitBlackberry").checked;
+        document.getElementById("palateBlackFruitBlueberry").checked = document.getElementById("noseBlackFruitBlueberry").checked;
+        document.getElementById("palateBlackFruitBlackCherry").checked = document.getElementById("noseBlackFruitBlackCherry").checked;
+        document.getElementById("palateBlackFruitBlackPlum").checked = document.getElementById("noseBlackFruitBlackPlum").checked;
+        document.getElementById("palateHerbaceousGreenBellPepper").checked = document.getElementById("noseHerbaceousGreenBellPepper").checked;
+        document.getElementById("palateHerbaceousGrass").checked = document.getElementById("noseHerbaceousGrass").checked;
+        document.getElementById("palateHerbaceousTomatoLeaf").checked = document.getElementById("noseHerbaceousTomatoLeaf").checked;
+        document.getElementById("palateHerbaceousAsparagus").checked = document.getElementById("noseHerbaceousAsparagus").checked;
+        document.getElementById("palateHerbalEucalyptus").checked = document.getElementById("noseHerbalEucalyptus").checked;
+        document.getElementById("palateHerbalMint").checked = document.getElementById("noseHerbalMint").checked;
+        document.getElementById("palateHerbalFennel").checked = document.getElementById("noseHerbalFennel").checked;
+        document.getElementById("palateHerbalDill").checked = document.getElementById("noseHerbalDill").checked;
+        document.getElementById("palateHerbalDriedHerbs").checked = document.getElementById("noseHerbalDriedHerbs").checked;
+        document.getElementById("palateSpiceBlackWhitePepper").checked = document.getElementById("noseSpiceBlackWhitePepper").checked;
+        document.getElementById("palateSpiceLiquorice").checked = document.getElementById("noseSpiceLiquorice").checked;
+        document.getElementById("palateSpiceCinnamon").checked = document.getElementById("noseSpiceCinnamon").checked;
+        document.getElementById("palateFruitRipenessUnripeFruit").checked = document.getElementById("noseFruitRipenessUnripeFruit").checked;
+        document.getElementById("palateFruitRipenessRipeFruit").checked = document.getElementById("noseFruitRipenessRipeFruit").checked;
+        document.getElementById("palateFruitRipenessDriedFruit").checked = document.getElementById("noseFruitRipenessDriedFruit").checked;
+        document.getElementById("palateFruitRipenessCookedFruit").checked = document.getElementById("noseFruitRipenessCookedFruit").checked;
+        document.getElementById("palateYeastBiscuit").checked = document.getElementById("noseYeastBiscuit").checked;
+        document.getElementById("palateYeastPastry").checked = document.getElementById("noseYeastPastry").checked;
+        document.getElementById("palateYeastBread").checked = document.getElementById("noseYeastBread").checked;
+        document.getElementById("palateYeastToastedBread").checked = document.getElementById("noseYeastToastedBread").checked;
+        document.getElementById("palateYeastBreadDough").checked = document.getElementById("noseYeastBreadDough").checked;
+        document.getElementById("palateYeastCheese").checked = document.getElementById("noseYeastCheese").checked;
+        document.getElementById("palateYeastYogurt").checked = document.getElementById("noseYeastYogurt").checked;
+        document.getElementById("palateYeastAcetaldehyde").checked = document.getElementById("noseYeastAcetaldehyde").checked;
+        document.getElementById("palateMaloButter").checked = document.getElementById("noseMaloButter").checked;
+        document.getElementById("palateMaloCream").checked = document.getElementById("noseMaloCream").checked;
+        document.getElementById("palateMaloCheese").checked = document.getElementById("noseMaloCheese").checked;
+        document.getElementById("palateOakVanilla").checked = document.getElementById("noseOakVanilla").checked;
+        document.getElementById("palateOakCloves").checked = document.getElementById("noseOakCloves").checked;
+        document.getElementById("palateOakCoconut").checked = document.getElementById("noseOakCoconut").checked;
+        document.getElementById("palateOakCedar").checked = document.getElementById("noseOakCedar").checked;
+        document.getElementById("palateOakCharredWood").checked = document.getElementById("noseOakCharredWood").checked;
+        document.getElementById("palateOakSmoke").checked = document.getElementById("noseOakSmoke").checked;
+        document.getElementById("palateOakChocolate").checked = document.getElementById("noseOakChocolate").checked;
+        document.getElementById("palateOakCoffee").checked = document.getElementById("noseOakCoffee").checked;
+        document.getElementById("palateTertiaryDriedFruit").checked = document.getElementById("noseTertiaryDriedFruit").checked;
+        document.getElementById("palateTertiaryCookedFruit").checked = document.getElementById("noseTertiaryCookedFruit").checked;
+        document.getElementById("palateTertiaryLeather").checked = document.getElementById("noseTertiaryLeather").checked;
+        document.getElementById("palateTertiaryEarth").checked = document.getElementById("noseTertiaryEarth").checked;
+        document.getElementById("palateTertiaryMushroom").checked = document.getElementById("noseTertiaryMushroom").checked;
+        document.getElementById("palateTertiaryMeat").checked = document.getElementById("noseTertiaryMeat").checked;
+        document.getElementById("palateTertiaryTobacco").checked = document.getElementById("noseTertiaryTobacco").checked;
+        document.getElementById("palateTertiaryWetLeaves").checked = document.getElementById("noseTertiaryWetLeaves").checked;
+        document.getElementById("palateTertiaryForestFloor").checked = document.getElementById("noseTertiaryForestFloor").checked;
+        document.getElementById("palateTertiaryCaramel").checked = document.getElementById("noseTertiaryCaramel").checked;
+        document.getElementById("palateOxidisedAlmond").checked = document.getElementById("noseOxidisedAlmond").checked;
+        document.getElementById("palateOxidisedHazelnut").checked = document.getElementById("noseOxidisedHazelnut").checked;
+        document.getElementById("palateOxidisedWalnut").checked = document.getElementById("noseOxidisedWalnut").checked;
+        document.getElementById("palateOxidisedChocolate").checked = document.getElementById("noseOxidisedChocolate").checked;
+        document.getElementById("palateOxidisedCoffee").checked = document.getElementById("noseOxidisedCoffee").checked;
+        document.getElementById("palateOxidisedCaramel").checked = document.getElementById("noseOxidisedCaramel").checked;
+
+        document.getElementById("palateOther").value = document.getElementById("noseOther").value;
+    }
+  </script>
+</html>

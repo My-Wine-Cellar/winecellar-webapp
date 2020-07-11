@@ -11,6 +11,10 @@ package info.mywinecellar.dto;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.util.Image;
 import info.mywinecellar.util.VintageMax;
+import info.mywinecellar.wset.WSET;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
@@ -80,6 +84,7 @@ public class WineDto extends AbstractKeyDto {
     private Long shapeId;
     private Long closureId;
     private Long producerId;
+    private List<Long> wset;
 
     /**
      * Default constructor
@@ -111,6 +116,13 @@ public class WineDto extends AbstractKeyDto {
         this.shapeId = w.getShape().getId();
         this.typeId = w.getType().getId();
         this.colorId = w.getColor().getId();
+        this.wset = new ArrayList<>();
+
+        if (w.getWset() != null) {
+            for (WSET ws : w.getWset()) {
+                wset.add(ws.getId());
+            }
+        }
     }
 
     /**
@@ -121,5 +133,4 @@ public class WineDto extends AbstractKeyDto {
     public boolean isNew() {
         return id == null;
     }
-
 }

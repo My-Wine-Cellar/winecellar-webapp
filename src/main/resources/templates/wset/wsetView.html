@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <head th:include="~{fragments/layout :: head}"/>
+  <body class="tasting-background">
+    <div th:replace="~{fragments/layout :: nav}"/>
+    <br/><br/>
+    <div class="container">
+      <div class="card p-2 shadow">
+        <div class="container">
+          <div class="card shadow p-4 m-3">
+            <h2 class="col-sm-10" th:text="#{wset}"></h2>
+            <div class="col-sm-10 text-left">
+              <ul class="list-inline">
+                <li class="list-inline-item">
+                  <h5>
+                    <a th:href="@{/d/__${data.countries[0].key}__/__${data.regions[0].key}__/__${data.areas[0].key}__/__${data.producers[0].key}__/}"
+                       th:text="${data.producers[0].name}"></a>
+                  </h5>
+                </li>
+                <li class="list-inline-item">
+                  <h5>
+                    <a th:href="@{/d/__${data.countries[0].key}__/__${data.regions[0].key}__/__${data.areas[0].key}__/__${data.producers[0].key}__/__${data.wines[0].key}__/__${data.wines[0].vintage}__/__${data.wines[0].size}__}"
+                       th:text="${data.wines[0].name}"></a>
+                  </h5>
+                </li>
+                <li class="list-inline-item">
+                  <h5 th:text="${data.wines[0].vintage}"></h5>
+                </li>
+                <li class="list-inline-item">
+                  <h5>by <a th:href="@{/users/__${data.users[0].id}__}" th:text="${data.users[0].username}"></a></h5>
+                </li>
+              </ul>
+            </div>
+            <div class="container" th:object="${data.wset[0]}">
+
+              <!-- APPEARANCE -->
+              <h4 class="col-sm-10 wsetSolid" th:text="#{wset.appearance}">Appearance</h4>
+              <div class="col-sm-10">
+                <table class="pct100">
+                  <tbody>
+                    <tr class="wsetOdd">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.intensity', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <div th:switch="*{appearanceIntensity}">
+                          <div th:case="1" th:text="#{wset.pale}"></div>
+                          <div th:case="2" th:text="#{wset.medium}"></div>
+                          <div th:case="3" th:text="#{wset.deep}"></div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="wsetEven">
+                      <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.color', 'wset.help')}"/></td>
+                      <td class="pct75">
+                        <div th:switch="*{appearanceColor}">
+                          <div th:case="1" th:text="#{wset.lemon}"></div>
+                          <div th:case="2" th:text="#{wset.gold}"></div>
+                          <div th:case="3" th:text="#{wset.amber}"></div>
+                          <div th:case="4" th:text="#{wset.brown}"></div>
+                          <div th:case="5" th:text="#{wset.pink}"></div>
+                          <div th:case="6" th:text="#{wset.pink_orange}"></div>
+                          <div th:case="7" th:text="#{wset.orange}"></div>
+                          <div th:case="8" th:text="#{wset.purple}"></div>
+                          <div th:case="9" th:text="#{wset.ruby}"></div>
+                          <div th:case="10" th:text="#{wset.garnet}"></div>
+                          <div th:case="11" th:text="#{wset.tawny}"></div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            <!-- NOSE -->
+            <p/>
+            <h4 class="col-sm-10 wsetSolid" th:text="#{wset.nose}">Nose</h4>
+            <div class="col-sm-10">
+              <table class="pct100">
+                <tbody>
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.intensity', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{noseIntensity}">
+                        <div th:case="1" th:text="#{wset.light}"></div>
+                        <div th:case="2" th:text="#{wset.medium_minus}"></div>
+                        <div th:case="3" th:text="#{wset.medium}"></div>
+                        <div th:case="4" th:text="#{wset.medium_plus}"></div>
+                        <div th:case="5" th:text="#{wset.pronounced}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.floral', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseFloralBlossom}" th:text="|#{wset.blossom}, |"/>
+                      <span th:if="*{noseFloralElderflower}" th:text="|#{wset.elderflower}, |"/>
+                      <span th:if="*{noseFloralHoneysuckle}" th:text="|#{wset.honeysuckle}, |"/>
+                      <span th:if="*{noseFloralJasmine}" th:text="|#{wset.jasmine}, |"/>
+                      <span th:if="*{noseFloralRose}" th:text="|#{wset.rose}, |"/>
+                      <span th:if="*{noseFloralViolet}" th:text="#{wset.violet}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.green_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseGreenFruitApple}" th:text="|#{wset.apple}, |"/>
+                      <span th:if="*{noseGreenFruitPear}" th:text="|#{wset.pear}, |"/>
+                      <span th:if="*{noseGreenFruitGooseberry}" th:text="|#{wset.gooseberry}, |"/>
+                      <span th:if="*{noseGreenFruitGrape}" th:text="#{wset.grape}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.citrus_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseCitrusFruitGrapefruit}" th:text="|#{wset.grapefruit}, |"/>
+                      <span th:if="*{noseCitrusFruitLemon}" th:text="|#{wset.lemon}, |"/>
+                      <span th:if="*{noseCitrusFruitLime}" th:text="|#{wset.lime}, |"/>
+                      <span th:if="*{noseCitrusFruitOrange}" th:text="#{wset.orange}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.stone_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseStoneFruitPeach}" th:text="|#{wset.peach}, |"/>
+                      <span th:if="*{noseStoneFruitApricot}" th:text="|#{wset.apricot}, |"/>
+                      <span th:if="*{noseStoneFruitNectarine}" th:text="#{wset.nectarine}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tropical_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseTropicalFruitBanana}" th:text="|#{wset.banana}, |"/>
+                      <span th:if="*{noseTropicalFruitLychee}" th:text="|#{wset.lychee}, |"/>
+                      <span th:if="*{noseTropicalFruitMango}" th:text="|#{wset.mango}, |"/>
+                      <span th:if="*{noseTropicalFruitMelon}" th:text="|#{wset.melon}, |"/>
+                      <span th:if="*{noseTropicalFruitPassionFruit}" th:text="|#{wset.passion_fruit}, |"/>
+                      <span th:if="*{noseTropicalFruitPineapple}" th:text="#{wset.pineapple}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.red_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseRedFruitRedcurrant}" th:text="|#{wset.redcurrant}, |"/>
+                      <span th:if="*{noseRedFruitCranberry}" th:text="|#{wset.cranberry}, |"/>
+                      <span th:if="*{noseRedFruitRaspberry}" th:text="|#{wset.raspberry}, |"/>
+                      <span th:if="*{noseRedFruitStrawberry}" th:text="|#{wset.strawberry}, |"/>
+                      <span th:if="*{noseRedFruitRedCherry}" th:text="|#{wset.red_cherry}, |"/>
+                      <span th:if="*{noseRedFruitRedPlum}" th:text="#{wset.red_plum}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.black_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseBlackFruitBlackcurrant}" th:text="|#{wset.blackcurrant}, |"/>
+                      <span th:if="*{noseBlackFruitBlackberry}" th:text="|#{wset.blackberry}, |"/>
+                      <span th:if="*{noseBlackFruitBlueberry}" th:text="|#{wset.blueberry}, |"/>
+                      <span th:if="*{noseBlackFruitBlackCherry}" th:text="|#{wset.black_cherry}, |"/>
+                      <span th:if="*{noseBlackFruitBlackPlum}" th:text="#{wset.black_plum}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.herbaceous', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseHerbaceousGreenBellPepper}" th:text="|#{wset.green_bell_pepper}, |"/>
+                      <span th:if="*{noseHerbaceousGrass}" th:text="|#{wset.grass}, |"/>
+                      <span th:if="*{noseHerbaceousTomatoLeaf}" th:text="|#{wset.tomato_leaf}, |"/>
+                      <span th:if="*{noseHerbaceousAsparagus}" th:text="#{wset.asparagus}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.herbal', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseHerbalEucalyptus}" th:text="|#{wset.eucalyptus}, |"/>
+                      <span th:if="*{noseHerbalMint}" th:text="|#{wset.mint}, |"/>
+                      <span th:if="*{noseHerbalFennel}" th:text="|#{wset.fennel}, |"/>
+                      <span th:if="*{noseHerbalDill}" th:text="|#{wset.dill}, |"/>
+                      <span th:if="*{noseHerbalDriedHerbs}" th:text="#{wset.dried_herbs}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.spice', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseSpiceBlackWhitePepper}" th:text="|#{wset.black_white_pepper}, |"/>
+                      <span th:if="*{noseSpiceLiquorice}" th:text="|#{wset.liquorice}, |"/>
+                      <span th:if="*{noseSpiceCinnamon}" th:text="#{wset.cinnamon}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.fruit_ripeness', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseFruitRipenessUnripeFruit}" th:text="|#{wset.unripe_fruit}, |"/>
+                      <span th:if="*{noseFruitRipenessRipeFruit}" th:text="|#{wset.ripe_fruit}, |"/>
+                      <span th:if="*{noseFruitRipenessDriedFruit}" th:text="|#{wset.dried_fruit}, |"/>
+                      <span th:if="*{noseFruitRipenessCookedFruit}" th:text="#{wset.cooked_fruit}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.other', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:text="*{noseOther}"/>
+                    </td>
+                  </tr>
+                  
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.yeast', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseYeastBiscuit}" th:text="|#{wset.biscuit}, |"/>
+                      <span th:if="*{noseYeastPastry}" th:text="|#{wset.pastry}, |"/>
+                      <span th:if="*{noseYeastBread}" th:text="|#{wset.bread}, |"/>
+                      <span th:if="*{noseYeastToastedBread}" th:text="|#{wset.toasted_bread}, |"/>
+                      <span th:if="*{noseYeastBreadDough}" th:text="|#{wset.bread_dough}, |"/>
+                      <span th:if="*{noseYeastCheese}" th:text="|#{wset.cheese}, |"/>
+                      <span th:if="*{noseYeastYogurt}" th:text="|#{wset.yogurt}, |"/>
+                      <span th:if="*{noseYeastAcetaldehyde}" th:text="#{wset.acetaldehyde}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.malo', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseMaloButter}" th:text="|#{wset.butter}, |"/>
+                      <span th:if="*{noseMaloCream}" th:text="|#{wset.cream}, |"/>
+                      <span th:if="*{noseMaloCheese}" th:text="#{wset.cheese}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.oak', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseOakVanilla}" th:text="|#{wset.vanilla}, |"/>
+                      <span th:if="*{noseOakCloves}" th:text="|#{wset.cloves}, |"/>
+                      <span th:if="*{noseOakCoconut}" th:text="|#{wset.coconut}, |"/>
+                      <span th:if="*{noseOakCedar}" th:text="|#{wset.cedar}, |"/>
+                      <span th:if="*{noseOakCharredWood}" th:text="|#{wset.charred_wood}, |"/>
+                      <span th:if="*{noseOakSmoke}" th:text="|#{wset.smoke}, |"/>
+                      <span th:if="*{noseOakChocolate}" th:text="|#{wset.chocolate}, |"/>
+                      <span th:if="*{noseOakCoffee}" th:text="#{wset.coffee}"/>
+                    </td>
+                  </tr>
+
+                  <!-- Tertiary: Red -->
+                  <tr th:if="${data.wines[0].colorId == 2 || data.wines[0].colorId == 3}" class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tertiary', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseTertiaryDriedFruit}" th:text="|#{wset.dried_fruit}, |"/>
+                      <span th:if="*{noseTertiaryCookedFruit}" th:text="|#{wset.cooked_fruit}, |"/>
+                      <span th:if="*{noseTertiaryLeather}" th:text="|#{wset.leather}, |"/>
+                      <span th:if="*{noseTertiaryEarth}" th:text="|#{wset.earth}, |"/>
+                      <span th:if="*{noseTertiaryMushroom}" th:text="|#{wset.mushroom}, |"/>
+                      <span th:if="*{noseTertiaryMeat}" th:text="|#{wset.meat}, |"/>
+                      <span th:if="*{noseTertiaryTobacco}" th:text="|#{wset.tobacco}, |"/>
+                      <span th:if="*{noseTertiaryWetLeaves}" th:text="|#{wset.wet_leaves}, |"/>
+                      <span th:if="*{noseTertiaryForestFloor}" th:text="|#{wset.forest_floor}, |"/>
+                      <span th:if="*{noseTertiaryCaramel}" th:text="#{wset.caramel}"/>
+                    </td>
+                  </tr>
+
+                  <!-- Tertiary: White -->
+                  <tr th:if="${data.wines[0].colorId == 1 || data.wines[0].colorId == 4}" class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tertiary', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseTertiaryDriedFruit}" th:text="|#{wset.dried_fruit}, |"/>
+                      <span th:if="*{noseTertiaryOrangeMarmalade}" th:text="|#{wset.orange_marmalade}, |"/>
+                      <span th:if="*{noseTertiaryPetrol}" th:text="|#{wset.petrol}, |"/>
+                      <span th:if="*{noseTertiaryCinnamon}" th:text="|#{wset.cinnamon}, |"/>
+                      <span th:if="*{noseTertiaryGinger}" th:text="|#{wset.ginger}, |"/>
+                      <span th:if="*{noseTertiaryNutmeg}" th:text="|#{wset.nutmeg}, |"/>
+                      <span th:if="*{noseTertiaryAlmond}" th:text="|#{wset.almond}, |"/>
+                      <span th:if="*{noseTertiaryHazelnut}" th:text="|#{wset.hazelnut}, |"/>
+                      <span th:if="*{noseTertiaryHoney}" th:text="|#{wset.honey}, |"/>
+                      <span th:if="*{noseTertiaryCaramel}" th:text="#{wset.caramel}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.oxidised', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{noseOxidisedAlmond}" th:text="|#{wset.almond}, |"/>
+                      <span th:if="*{noseOxidisedHazelnut}" th:text="|#{wset.hazelnut}, |"/>
+                      <span th:if="*{noseOxidisedWalnut}" th:text="|#{wset.walnut}, |"/>
+                      <span th:if="*{noseOxidisedChocolate}" th:text="|#{wset.chocolate}, |"/>
+                      <span th:if="*{noseOxidisedCoffee}" th:text="|#{wset.coffee}, |"/>
+                      <span th:if="*{noseOxidisedCaramel}" th:text="#{wset.caramel}"/>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+            <!-- PALATE -->
+            <p/>
+            <h4 class="col-sm-10 wsetSolid" th:text="#{wset.palate}">Palate</h4>
+
+            <div class="col-sm-10">
+              <table class="pct100">
+                <tbody>
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.sweetness', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{palateSweetness}">
+                        <div th:case="1" th:text="#{wset.dry}"></div>
+                        <div th:case="2" th:text="#{wset.off_dry}"></div>
+                        <div th:case="3" th:text="#{wset.medium_dry}"></div>
+                        <div th:case="4" th:text="#{wset.medium_sweet}"></div>
+                        <div th:case="5" th:text="#{wset.sweet}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.acidity', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{palateAcidity}">
+                        <div th:case="1" th:text="#{wset.low}"></div>
+                        <div th:case="2" th:text="#{wset.medium_minus}"></div>
+                        <div th:case="3" th:text="#{wset.medium}"></div>
+                        <div th:case="4" th:text="#{wset.medium_plus}"></div>
+                        <div th:case="5" th:text="#{wset.high}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr th:if="${data.wines[0].colorId == 2 || data.wines[0].colorId == 3}" class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tannin_level', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{palateTanninLevel}">
+                        <div th:case="1" th:text="#{wset.low}"></div>
+                        <div th:case="2" th:text="#{wset.medium_minus}"></div>
+                        <div th:case="3" th:text="#{wset.medium}"></div>
+                        <div th:case="4" th:text="#{wset.medium_plus}"></div>
+                        <div th:case="5" th:text="#{wset.high}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr th:if="${data.wines[0].colorId == 2 || data.wines[0].colorId == 3}" class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tannin_nature', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{palateTanninNature}">
+                        <div th:case="1" th:text="#{wset.ripe}"></div>
+                        <div th:case="2" th:text="#{wset.soft}"></div>
+                        <div th:case="3" th:text="#{wset.smooth}"></div>
+                        <div th:case="4" th:text="#{wset.unripe}"></div>
+                        <div th:case="5" th:text="#{wset.green}"></div>
+                        <div th:case="6" th:text="#{wset.coarse}"></div>
+                        <div th:case="7" th:text="#{wset.stalky}"></div>
+                        <div th:case="8" th:text="#{wset.chalky}"></div>
+                        <div th:case="9" th:text="#{wset.fine_grained}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.alcohol', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{palateAlcohol}">
+                        <div th:case="1" th:text="#{wset.low}"></div>
+                        <div th:case="2" th:text="#{wset.medium}"></div>
+                        <div th:case="3" th:text="#{wset.high}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.body', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{palateBody}">
+                        <div th:case="1" th:text="#{wset.light}"></div>
+                        <div th:case="2" th:text="#{wset.medium_minus}"></div>
+                        <div th:case="3" th:text="#{wset.medium}"></div>
+                        <div th:case="4" th:text="#{wset.medium_plus}"></div>
+                        <div th:case="5" th:text="#{wset.full}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.flavour_intensity', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{palateIntensity}">
+                        <div th:case="1" th:text="#{wset.light}"></div>
+                        <div th:case="2" th:text="#{wset.medium_minus}"></div>
+                        <div th:case="3" th:text="#{wset.medium}"></div>
+                        <div th:case="4" th:text="#{wset.medium_plus}"></div>
+                        <div th:case="5" th:text="#{wset.pronounced}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- PALATE DESCRIPTORS -->
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.floral', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateFloralBlossom}" th:text="|#{wset.blossom}, |"/>
+                      <span th:if="*{palateFloralElderflower}" th:text="|#{wset.elderflower}, |"/>
+                      <span th:if="*{palateFloralHoneysuckle}" th:text="|#{wset.honeysuckle}, |"/>
+                      <span th:if="*{palateFloralJasmine}" th:text="|#{wset.jasmine}, |"/>
+                      <span th:if="*{palateFloralRose}" th:text="|#{wset.rose}, |"/>
+                      <span th:if="*{palateFloralViolet}" th:text="#{wset.violet}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.green_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateGreenFruitApple}" th:text="|#{wset.apple}, |"/>
+                      <span th:if="*{palateGreenFruitPear}" th:text="|#{wset.pear}, |"/>
+                      <span th:if="*{palateGreenFruitGooseberry}" th:text="|#{wset.gooseberry}, |"/>
+                      <span th:if="*{palateGreenFruitGrape}" th:text="#{wset.grape}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.citrus_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateCitrusFruitGrapefruit}" th:text="|#{wset.grapefruit}, |"/>
+                      <span th:if="*{palateCitrusFruitLemon}" th:text="|#{wset.lemon}, |"/>
+                      <span th:if="*{palateCitrusFruitLime}" th:text="|#{wset.lime}, |"/>
+                      <span th:if="*{palateCitrusFruitOrange}" th:text="#{wset.orange}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.stone_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateStoneFruitPeach}" th:text="|#{wset.peach}, |"/>
+                      <span th:if="*{palateStoneFruitApricot}" th:text="|#{wset.apricot}, |"/>
+                      <span th:if="*{palateStoneFruitNectarine}" th:text="#{wset.nectarine}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tropical_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateTropicalFruitBanana}" th:text="|#{wset.banana}, |"/>
+                      <span th:if="*{palateTropicalFruitLychee}" th:text="|#{wset.lychee}, |"/>
+                      <span th:if="*{palateTropicalFruitMango}" th:text="|#{wset.mango}, |"/>
+                      <span th:if="*{palateTropicalFruitMelon}" th:text="|#{wset.melon}, |"/>
+                      <span th:if="*{palateTropicalFruitPassionFruit}" th:text="|#{wset.passion_fruit}, |"/>
+                      <span th:if="*{palateTropicalFruitPineapple}" th:text="#{wset.pineapple}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.red_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateRedFruitRedcurrant}" th:text="|#{wset.redcurrant}, |"/>
+                      <span th:if="*{palateRedFruitCranberry}" th:text="|#{wset.cranberry}, |"/>
+                      <span th:if="*{palateRedFruitRaspberry}" th:text="|#{wset.raspberry}, |"/>
+                      <span th:if="*{palateRedFruitStrawberry}" th:text="|#{wset.strawberry}, |"/>
+                      <span th:if="*{palateRedFruitRedCherry}" th:text="|#{wset.red_cherry}, |"/>
+                      <span th:if="*{palateRedFruitRedPlum}" th:text="#{wset.red_plum}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.black_fruit', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateBlackFruitBlackcurrant}" th:text="|#{wset.blackcurrant}, |"/>
+                      <span th:if="*{palateBlackFruitBlackberry}" th:text="|#{wset.blackberry}, |"/>
+                      <span th:if="*{palateBlackFruitBlueberry}" th:text="|#{wset.blueberry}, |"/>
+                      <span th:if="*{palateBlackFruitBlackCherry}" th:text="|#{wset.black_cherry}, |"/>
+                      <span th:if="*{palateBlackFruitBlackPlum}" th:text="#{wset.black_plum}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.herbaceous', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateHerbaceousGreenBellPepper}" th:text="|#{wset.green_bell_pepper}, |"/>
+                      <span th:if="*{palateHerbaceousGrass}" th:text="|#{wset.grass}, |"/>
+                      <span th:if="*{palateHerbaceousTomatoLeaf}" th:text="|#{wset.tomato_leaf}, |"/>
+                      <span th:if="*{palateHerbaceousAsparagus}" th:text="#{wset.asparagus}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.herbal', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateHerbalEucalyptus}" th:text="|#{wset.eucalyptus}, |"/>
+                      <span th:if="*{palateHerbalMint}" th:text="|#{wset.mint}, |"/>
+                      <span th:if="*{palateHerbalFennel}" th:text="|#{wset.fennel}, |"/>
+                      <span th:if="*{palateHerbalDill}" th:text="|#{wset.dill}, |"/>
+                      <span th:if="*{palateHerbalDriedHerbs}" th:text="#{wset.dried_herbs}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.spice', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateSpiceBlackWhitePepper}" th:text="|#{wset.black_white_pepper}, |"/>
+                      <span th:if="*{palateSpiceLiquorice}" th:text="|#{wset.liquorice}, |"/>
+                      <span th:if="*{palateSpiceCinnamon}" th:text="#{wset.cinnamon}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.fruit_ripeness', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateFruitRipenessUnripeFruit}" th:text="|#{wset.unripe_fruit}, |"/>
+                      <span th:if="*{palateFruitRipenessRipeFruit}" th:text="|#{wset.ripe_fruit}, |"/>
+                      <span th:if="*{palateFruitRipenessDriedFruit}" th:text="|#{wset.dried_fruit}, |"/>
+                      <span th:if="*{palateFruitRipenessCookedFruit}" th:text="#{wset.cooked_fruit}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.other', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:text="*{palateOther}"/>
+                    </td>
+                  </tr>
+                  
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.yeast', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateYeastBiscuit}" th:text="|#{wset.biscuit}, |"/>
+                      <span th:if="*{palateYeastPastry}" th:text="|#{wset.pastry}, |"/>
+                      <span th:if="*{palateYeastBread}" th:text="|#{wset.bread}, |"/>
+                      <span th:if="*{palateYeastToastedBread}" th:text="|#{wset.toasted_bread}, |"/>
+                      <span th:if="*{palateYeastBreadDough}" th:text="|#{wset.bread_dough}, |"/>
+                      <span th:if="*{palateYeastCheese}" th:text="|#{wset.cheese}, |"/>
+                      <span th:if="*{palateYeastYogurt}" th:text="|#{wset.yogurt}, |"/>
+                      <span th:if="*{palateYeastAcetaldehyde}" th:text="#{wset.acetaldehyde}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.malo', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateMaloButter}" th:text="|#{wset.butter}, |"/>
+                      <span th:if="*{palateMaloCream}" th:text="|#{wset.cream}, |"/>
+                      <span th:if="*{palateMaloCheese}" th:text="#{wset.cheese}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.oak', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateOakVanilla}" th:text="|#{wset.vanilla}, |"/>
+                      <span th:if="*{palateOakCloves}" th:text="|#{wset.cloves}, |"/>
+                      <span th:if="*{palateOakCoconut}" th:text="|#{wset.coconut}, |"/>
+                      <span th:if="*{palateOakCedar}" th:text="|#{wset.cedar}, |"/>
+                      <span th:if="*{palateOakCharredWood}" th:text="|#{wset.charred_wood}, |"/>
+                      <span th:if="*{palateOakSmoke}" th:text="|#{wset.smoke}, |"/>
+                      <span th:if="*{palateOakChocolate}" th:text="|#{wset.chocolate}, |"/>
+                      <span th:if="*{palateOakCoffee}" th:text="#{wset.coffee}"/>
+                    </td>
+                  </tr>
+
+                  <!-- Tertiary: Red -->
+                  <tr th:if="${data.wines[0].colorId == 2 || data.wines[0].colorId == 3}" class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tertiary', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateTertiaryDriedFruit}" th:text="|#{wset.dried_fruit}, |"/>
+                      <span th:if="*{palateTertiaryCookedFruit}" th:text="|#{wset.cooked_fruit}, |"/>
+                      <span th:if="*{palateTertiaryLeather}" th:text="|#{wset.leather}, |"/>
+                      <span th:if="*{palateTertiaryEarth}" th:text="|#{wset.earth}, |"/>
+                      <span th:if="*{palateTertiaryMushroom}" th:text="|#{wset.mushroom}, |"/>
+                      <span th:if="*{palateTertiaryMeat}" th:text="|#{wset.meat}, |"/>
+                      <span th:if="*{palateTertiaryTobacco}" th:text="|#{wset.tobacco}, |"/>
+                      <span th:if="*{palateTertiaryWetLeaves}" th:text="|#{wset.wet_leaves}, |"/>
+                      <span th:if="*{palateTertiaryForestFloor}" th:text="|#{wset.forest_floor}, |"/>
+                      <span th:if="*{palateTertiaryCaramel}" th:text="#{wset.caramel}"/>
+                    </td>
+                  </tr>
+
+                  <!-- Tertiary: White -->
+                  <tr th:if="${data.wines[0].colorId == 1 || data.wines[0].colorId == 4}" class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.tertiary', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateTertiaryDriedFruit}" th:text="|#{wset.dried_fruit}, |"/>
+                      <span th:if="*{palateTertiaryOrangeMarmalade}" th:text="|#{wset.orange_marmalade}, |"/>
+                      <span th:if="*{palateTertiaryPetrol}" th:text="|#{wset.petrol}, |"/>
+                      <span th:if="*{palateTertiaryCinnamon}" th:text="|#{wset.cinnamon}, |"/>
+                      <span th:if="*{palateTertiaryGinger}" th:text="|#{wset.ginger}, |"/>
+                      <span th:if="*{palateTertiaryNutmeg}" th:text="|#{wset.nutmeg}, |"/>
+                      <span th:if="*{palateTertiaryAlmond}" th:text="|#{wset.almond}, |"/>
+                      <span th:if="*{palateTertiaryHazelnut}" th:text="|#{wset.hazelnut}, |"/>
+                      <span th:if="*{palateTertiaryHoney}" th:text="|#{wset.honey}, |"/>
+                      <span th:if="*{palateTertiaryCaramel}" th:text="#{wset.caramel}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.oxidised', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <span th:if="*{palateOxidisedAlmond}" th:text="|#{wset.almond}, |"/>
+                      <span th:if="*{palateOxidisedHazelnut}" th:text="|#{wset.hazelnut}, |"/>
+                      <span th:if="*{palateOxidisedWalnut}" th:text="|#{wset.walnut}, |"/>
+                      <span th:if="*{palateOxidisedChocolate}" th:text="|#{wset.chocolate}, |"/>
+                      <span th:if="*{palateOxidisedCoffee}" th:text="|#{wset.coffee}, |"/>
+                      <span th:if="*{palateOxidisedCaramel}" th:text="#{wset.caramel}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.observations', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:text="*{palateObservations}"/>
+                    </td>
+                  </tr>
+                  
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.finish', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{palateFinish}">
+                        <div th:case="1" th:text="#{wset.short}"></div>
+                        <div th:case="2" th:text="#{wset.medium_minus}"></div>
+                        <div th:case="3" th:text="#{wset.medium}"></div>
+                        <div th:case="4" th:text="#{wset.medium_plus}"></div>
+                        <div th:case="5" th:text="#{wset.long}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+            <!-- CONCLUSIONS -->
+            <p/>
+            <h4 class="col-sm-10 wsetSolid" th:text="#{wset.conclusions}">Conclusions</h4>
+            <div class="col-sm-10">
+              <table class="pct100">
+                <tbody>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.quality', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{conclusionQuality}">
+                        <div th:case="1" th:text="#{wset.poor}"></div>
+                        <div th:case="2" th:text="#{wset.acceptable}"></div>
+                        <div th:case="3" th:text="#{wset.good}"></div>
+                        <div th:case="4" th:text="#{wset.very_good}"></div>
+                        <div th:case="5" th:text="#{wset.outstanding}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetOdd">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.explanation', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:text="*{conclusionQualityExplanation}"/>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.bottle_ageing', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:switch="*{conclusionBottle}">
+                        <div th:case="1" th:text="#{wset.suitable}"></div>
+                        <div th:case="2" th:text="#{wset.not_suitable}"></div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="wsetEven">
+                    <td class="pct25"><div th:replace="~{fragments/textHelp :: text ('wset.explanation', 'wset.help')}"/></td>
+                    <td class="pct75">
+                      <div th:text="*{conclusionBottleExplanation}"/>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+            <br/>
+            <div sec:authorize="isAuthenticated()" th:if="${#lists.size(data.users) == 1}" class="text-right">
+              <a th:href="@{/wset/__${data.wset[0].id}__/edit}" th:title="#{edit}"><span class="fas fa-edit"></span></a>
+            </div>
+            <p>
+            <table class="pct100">
+              <tbody>
+                <tr>
+                  <td><img src="/images/wset100.png" alt="WSET logo"/></td>
+                  <td>Copyright Wine & Spirit Education Trust 2020. For more information see <a th:href="@{/about/wset}">WSET</a>.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/><br/>
+    <div th:replace="~{fragments/layout :: footer}"/>
+    <div th:replace="~{fragments/layout :: scripts}"/>
+  </body>
+</html>

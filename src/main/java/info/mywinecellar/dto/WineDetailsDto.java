@@ -44,6 +44,7 @@ public class WineDetailsDto extends AbstractKeyDto {
     private ShapeDto shape;
     private ClosureDto closure;
     private ProducerDto producer;
+    private List<Long> wset;
 
     /**
      * Default constructor

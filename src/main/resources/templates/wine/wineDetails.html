@@ -121,6 +121,11 @@
                                       class="far fa-clipboard"></span>
                             </a>
                         </li>
+                        <li class="list-inline-item" th:if="${mywset == null}">
+                            <a th:href="@{/wset/new(wineId=${wine.id})}">
+                                <img src="/images/wset16.png" alt="WSET logo" th:title="#{wset.add}"/>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- TABS -->
@@ -139,6 +144,10 @@
                             <a class="nav-link" id="tastingnotes-tab" data-toggle="tab" href="#tastingnotes" role="tab"
                                aria-controls="tastingnotes" aria-selected="false" th:text="#{tastingNotes}">Tasting
                                 Notes</a>
+                        </li>
+                        <li th:if="${! #lists.isEmpty(wine.wset)}" class="nav-item">
+                            <a class="nav-link" id="wset-tab" data-toggle="tab" href="#wset" role="tab"
+                               aria-controls="wset" aria-selected="false" th:text="#{wset}">WSET</a>
                         </li>
                         <li th:if="${mybottle != null}" class="nav-item" sec:authorize="isAuthenticated()">
                             <a class="nav-link" id="cellar-tab" data-toggle="tab" href="#cellar" role="tab"
