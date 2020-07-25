@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.2.8.RELEASE'
+        springBootVersion = '2.3.2.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -46,6 +46,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-mail')
+    compile('org.springframework.boot:spring-boot-starter-validation')
     compile('org.mockito:mockito-junit-jupiter:2.25.0')
     compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE')
     compile('org.webjars:webjars-locator:0.32')
