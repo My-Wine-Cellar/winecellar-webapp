@@ -28,7 +28,7 @@
     -->
     <property name="severity" value="error"/>
 
-    <property name="fileExtensions" value="java, properties, xml"/>
+    <property name="fileExtensions" value="java"/>
 
     <!-- Excludes all 'module-info.java' files              -->
     <!-- See https://checkstyle.org/config_filefilters.html -->
@@ -79,7 +79,7 @@
     <!-- Checks for Headers                                -->
     <!-- See https://checkstyle.org/config_header.html   -->
     <module name="RegexpHeader">
-      <property name="headerFile" value="${configDir}/java_regexp.header"/>
+      <property name="headerFile" value="config/checkstyle/java_regexp.header"/>
       <property name="fileExtensions" value="java"/>
     </module>
 
