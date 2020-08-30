@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
@@ -24,9 +23,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CountryService extends AbstractService<Country> {
-
-    @Inject
-    private EntityManager em;
 
     @Inject
     private CountryConverter countryConverter;
