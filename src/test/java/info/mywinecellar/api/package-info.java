@@ -7,6 +7,6 @@
  */
 
 /**
- * This package contains the unit tests for the main application.
+ * Api test package
  */
-package info.mywinecellar.unit;
+package info.mywinecellar.api;

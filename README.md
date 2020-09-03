@@ -3,8 +3,9 @@
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [Docker](#docker)
+* [PostgreSQL](#postgresql)
 * [Project Setup](#project-setup)
+* [Integration Tests](#integration-tests)
 * [Contribution](#contribution)
 * [Status](#status)
 * [Contact](#contact)
@@ -13,10 +14,10 @@
 Webapp for keeping track of wines, their tasting notes, and reviews. Goal is to be the premier open-source winecellar application.
 
 ## Technologies
-* Java 8+
+* Java 11
 * Spring Boot
 * Spring Security
-* Gradle (v4.10)
+* Maven
 * Project Lombok
 * Bootstrap
 * Thymeleaf
@@ -49,9 +50,9 @@ This will pull down the latest PostgreSQL image and run the container with all n
 ## Project Setup
 
 ```
-$ git clone https://github.com/pauldpearson/winecellar-webapp
+$ git clone https://github.com/My-Wine-Cellar/winecellar-webapp
 $ cd winecellar-webapp
-$ ./gradlew bootRun
+$ mvn install
 ```
 
 Access here: http://localhost:8080/
@@ -62,9 +63,16 @@ Access here: http://localhost:8080/
 | user2   | user  | password |
 | admin   | admin | password |
 
+## Integration Tests
+
+```mvn verify``` will build and run the winecellar-webapp container to connect with Postgres for 
+executing integration tests against our own API.  If you want to run manual tests in Postman or using curl you can
+use ```mvn docker:start``` and that will launch both containers to test individual endpoints.  Use ```mvn docker:stop```
+to shutdown both containers.
+
 ## Contribution
 
-Feel free!  There are issues and a project board.  Contact info is below.
+Feel free to fork the project.  There are issues and a project board.  Contact info is below.
 
 ## License
 

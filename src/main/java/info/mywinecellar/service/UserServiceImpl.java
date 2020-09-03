@@ -26,7 +26,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
-import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -95,12 +94,11 @@ public class UserServiceImpl implements UserService {
 
     /**
      * @param user user
-     * @throws MessagingException exception
      * @deprecated since v1.0.4
      */
     @Override
     @Deprecated
-    public void createUser(User user) throws MessagingException {
+    public void createUser(User user) {
         user.setUsername(user.getUsername().toLowerCase());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
@@ -111,7 +109,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void registerNewUserAccount(@Valid UserRegisterDto accountDto) throws MessagingException {
+    public void registerNewUserAccount(@Valid UserRegisterDto accountDto) {
 
         if (!accountDto.getPassword().equals(accountDto.getMatchingPassword())) {
             throw new PasswordException();
