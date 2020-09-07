@@ -59,7 +59,7 @@ public class CountryConverter {
      */
     public Country toEntity(Country entity, CountryDto dto) {
         if (entity == null) {
-            entity = new Country(dto.getName(), dto.getDescription(), dto.getWeblink(), dto.getFlag());
+            entity = new Country(dto.getName(), dto.getFlag(), dto.getDescription(), dto.getWeblink());
         } else {
             entity.setDescription(dto.getDescription());
             entity.setWeblink(dto.getWeblink());

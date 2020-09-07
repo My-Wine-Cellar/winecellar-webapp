@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AreaConverter {
 
-    private RegionConverter regionConverter;
+    private final RegionConverter regionConverter;
 
     /**
      * Constructor
@@ -78,15 +78,15 @@ public class AreaConverter {
      * Create an Area entity
      *
      * @param a  An area
-     * @param ui The Dto object
+     * @param dto The Dto object
      * @return The area
      */
-    public Area toEntity(Area a, AreaDto ui) {
+    public Area toEntity(Area a, AreaDto dto) {
         if (a == null) {
-            a = new Area(ui.getName(), ui.getDescription(), ui.getWeblink());
+            a = new Area(dto.getName(), dto.getDescription(), dto.getWeblink());
         } else {
-            a.setDescription(ui.getDescription());
-            a.setWeblink(ui.getWeblink());
+            a.setDescription(dto.getDescription());
+            a.setWeblink(dto.getWeblink());
         }
         return a;
     }
