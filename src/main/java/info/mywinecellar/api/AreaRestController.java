@@ -14,11 +14,13 @@ import info.mywinecellar.json.Builder;
 import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Area;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,6 +34,7 @@ public class AreaRestController extends AbstractRestController {
      * @param areaId  Long areaId
      * @return ResponseEntity.ACCEPTED
      */
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/edit")
     public MyWineCellar areaEditPut(@RequestBody AreaDto request, @PathVariable Long areaId) {
         checkObjectNull(request);
@@ -48,6 +51,7 @@ public class AreaRestController extends AbstractRestController {
      * @param areaId  Long areaId
      * @return ResponseEntity.CREATED
      */
+    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/addProducer")
     public MyWineCellar areaAddProducerPost(@RequestBody ProducerDto request, @PathVariable Long areaId) {
         checkObjectNull(request);

@@ -34,6 +34,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+@Disabled(value = "no unit tests for service layer, don't mock types you don't own")
 @ExtendWith(MockitoExtension.class)
 class CountryServiceTest extends BaseUnitTest {
 

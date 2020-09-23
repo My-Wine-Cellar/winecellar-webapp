@@ -14,7 +14,6 @@ import info.mywinecellar.model.Region;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
@@ -32,9 +31,6 @@ import lombok.ToString;
 public class RegionDto extends AbstractKeyDto {
 
     private Long id;
-
-    @Size(max = 255)
-    @NotEmpty
     private String name;
 
     @Size(max = 8192)

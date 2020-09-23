@@ -32,10 +32,10 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class DataRestControllerUnitTest extends BaseUnitTest {
+class RootApiUnitTest extends BaseUnitTest {
 
     @InjectMocks
-    DataRestController dataRestController;
+    RootRestController rootRestController;
 
     @Mock
     ClosureService closureService;
@@ -53,7 +53,7 @@ class DataRestControllerUnitTest extends BaseUnitTest {
     void dataApiRootGet() {
         when(countryService.findWithRegions()).thenReturn(countries);
 
-        MyWineCellar json = dataRestController.dataApiRootGet();
+        MyWineCellar json = rootRestController.dataApiRootGet();
         assertNotNull(json);
         assertEquals(2, json.getCountries().size());
         assertEquals("italy", json.getCountries().get(0).getKey());
@@ -63,7 +63,7 @@ class DataRestControllerUnitTest extends BaseUnitTest {
     void emptyCountries() {
         when(countryService.findWithRegions()).thenReturn(Collections.emptySet());
 
-        MyWineCellar result = dataRestController.dataApiRootGet();
+        MyWineCellar result = rootRestController.dataApiRootGet();
         assertEquals(0, result.getCountries().size());
     }
 
@@ -71,7 +71,7 @@ class DataRestControllerUnitTest extends BaseUnitTest {
     void countryByNameGet() {
         when(countryService.findByLowerCaseName(anyString())).thenReturn(us);
 
-        MyWineCellar result = dataRestController.countryByNameGet(us.getName());
+        MyWineCellar result = rootRestController.countryByNameGet(us.getName());
         assertNotNull(result);
         assertEquals("united_states", result.getCountries().get(0).getKey());
         assertEquals("california", result.getRegions().get(0).getKey());
@@ -82,7 +82,7 @@ class DataRestControllerUnitTest extends BaseUnitTest {
         when(countryService.findByLowerCaseName(anyString())).thenReturn(us);
         when(regionService.findByLowerCaseName(anyString(), anyLong())).thenReturn(cali);
 
-        MyWineCellar result = dataRestController.regionByNameGet(us.getName(), cali.getName());
+        MyWineCellar result = rootRestController.regionByNameGet(us.getName(), cali.getName());
         assertNotNull(result);
         assertEquals(2, result.getAreas().size());
         assertEquals("napa_valley_ava", result.getAreas().get(0).getKey());
@@ -97,7 +97,7 @@ class DataRestControllerUnitTest extends BaseUnitTest {
         when(regionService.findByLowerCaseName(anyString(), anyLong())).thenReturn(cali);
         when(areaService.findByLowerCaseName(anyString())).thenReturn(napa);
 
-        MyWineCellar result = dataRestController.areaByNameGet(us.getName(), cali.getName(), napa.getName());
+        MyWineCellar result = rootRestController.areaByNameGet(us.getName(), cali.getName(), napa.getName());
         assertNotNull(result);
         assertEquals(1, result.getCountries().size());
         assertEquals(1, result.getRegions().size());
@@ -112,7 +112,7 @@ class DataRestControllerUnitTest extends BaseUnitTest {
         when(areaService.findByLowerCaseName(anyString())).thenReturn(napa);
         when(producerService.findByLowerCaseName(anyString())).thenReturn(opusOne);
 
-        MyWineCellar result = dataRestController.producerByNameGet(us.getName(), cali.getName(),
+        MyWineCellar result = rootRestController.producerByNameGet(us.getName(), cali.getName(),
                 napa.getName(), opusOne.getName());
         assertNotNull(result);
 
@@ -136,7 +136,7 @@ class DataRestControllerUnitTest extends BaseUnitTest {
         when(shapeService.findById(anyLong())).thenReturn(shape);
         when(typeService.findById(anyLong())).thenReturn(type);
 
-        MyWineCellar result = dataRestController.wineByNameGet(us.getName(), cali.getName(), napa.getName(),
+        MyWineCellar result = rootRestController.wineByNameGet(us.getName(), cali.getName(), napa.getName(),
                 opusOne.getName(), opusOne2015.getName(), opusOne2015.getVintage(), opusOne2015.getSize());
         assertNotNull(result);
 

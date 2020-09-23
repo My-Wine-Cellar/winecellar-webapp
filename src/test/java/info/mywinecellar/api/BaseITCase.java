@@ -1,63 +1,86 @@
-/*
- * My-Wine-Cellar, copyright 2020
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0
- */
-
 package info.mywinecellar.api;
 
 import info.mywinecellar.json.MyWineCellar;
 
-import org.junit.Test;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import lombok.extern.slf4j.Slf4j;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Slf4j
+/**
+ * Provides setup for all ITCase's
+ * Plus our API healthcheck
+ */
 public class BaseITCase {
 
-    /**
-     * Api path
-     */
-    protected static final String API_PATH = "http://localhost:8080/api";
+    private final RestTemplate client = new RestTemplate();
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    protected MyWineCellar myWineCellar;
 
-    //TODO execute this before any other test
+    /**
+     * Setup our MyWineCellar response object, used for testing specific nested objects
+     *
+     * @param json The ResponseEntity json
+     * @return Our MyWineCellar json envelope object
+     */
+    protected MyWineCellar setupResponseObject(ResponseEntity<String> json) {
+        try {
+            myWineCellar = objectMapper.readValue(json.getBody(), MyWineCellar.class);
+        } catch (JsonProcessingException ignored) {
+        }
+        return myWineCellar;
+    }
+
+    /**
+     * Request to our API for any/all requests
+     *
+     * @param path       The path of the request past /api
+     * @param body       The body of the request, can be null
+     * @param httpMethod GET, PUT, POST, DELETE
+     * @return The response
+     */
+    protected ResponseEntity<String> apiRequest(String path, String body, HttpMethod httpMethod) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
+        return client.exchange("http://localhost:8080/api" + path,
+                httpMethod, httpEntity, String.class);
+    }
+
+    /**
+     * JSON body used to test entities that can only edit description and weblink
+     *
+     * @return JSONObject.toString
+     */
+    protected String jsonBody() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("description", "edited description");
+            json.put("weblink", "edited weblink");
+        } catch (JSONException ignore) {
+        }
+        return json.toString();
+    }
 
     /**
      * Test our environment
+     * Will be executed with every test that extends this class unfortunately
      */
+    @Order(1)
     @Test
-    public void healthCheck() {
-        RestTemplate client = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-
-        ResponseEntity<MyWineCellar> objectResponse = client.exchange(API_PATH + "/json",
-                HttpMethod.GET, entity, MyWineCellar.class);
-        assertNotNull(objectResponse);
-        assertEquals(200, objectResponse.getStatusCode().value());
-        assertTrue(objectResponse.getStatusCode().is2xxSuccessful());
-
-        ResponseEntity<String> stringResponse = client.exchange(API_PATH + "/json",
-                HttpMethod.GET, entity, String.class);
-        assertNotNull(stringResponse);
-        assertEquals(200, stringResponse.getStatusCodeValue());
-        //TODO convert json to MyWineCellar object
+    void healthCheck() {
+        ResponseEntity<String> response = apiRequest("/json", null, HttpMethod.GET);
+        assertEquals(200, response.getStatusCodeValue());
     }
-
-    protected HttpEntity<String> setupEntity() {
-        HttpHeaders headers = new HttpHeaders();
-        return new HttpEntity<>(null, headers);
-    }
-
 }

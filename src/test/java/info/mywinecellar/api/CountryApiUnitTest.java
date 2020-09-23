@@ -24,7 +24,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CountryRestControllerTest extends BaseUnitTest {
+class CountryApiUnitTest extends BaseUnitTest {
 
     @InjectMocks
     CountryRestController countryRestController;

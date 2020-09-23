@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class DataRestController extends AbstractRestController {
+public class RootRestController extends AbstractRestController {
 
     /**
      * GET Mapping

@@ -47,7 +47,7 @@ class AreaConverterTest extends BaseUnitTest {
     }
 
     @Test
-    public void testInjection() {
+    void testInjection() {
         assertNotNull(regionConverter);
         assertNotNull(areaConverter);
     }
