@@ -41,20 +41,20 @@ import java.util.Set;
  */
 public class Builder {
 
-    private AreaConverter areaConverter;
-    private CountryConverter countryConverter;
-    private GrapeConverter grapeConverter;
-    private ProducerConverter producerConverter;
-    private RegionConverter regionConverter;
-    private UserConverter userConverter;
-    private WineConverter wineConverter;
-    private ClosureConverter closureConverter;
-    private ColorConverter colorConverter;
-    private ShapeConverter shapeConverter;
-    private TypeConverter typeConverter;
-    private WSETConverter wsetConverter;
+    private final AreaConverter areaConverter;
+    private final CountryConverter countryConverter;
+    private final GrapeConverter grapeConverter;
+    private final ProducerConverter producerConverter;
+    private final RegionConverter regionConverter;
+    private final UserConverter userConverter;
+    private final WineConverter wineConverter;
+    private final ClosureConverter closureConverter;
+    private final ColorConverter colorConverter;
+    private final ShapeConverter shapeConverter;
+    private final TypeConverter typeConverter;
+    private final WSETConverter wsetConverter;
 
-    private MyWineCellar json;
+    private final MyWineCellar json;
 
     /**
      * Constructor
@@ -71,7 +71,6 @@ public class Builder {
         shapeConverter = new ShapeConverter();
         typeConverter = new TypeConverter();
         userConverter = new UserConverter();
-        wineConverter = new WineConverter();
         wsetConverter = new WSETConverter();
 
         json = new MyWineCellar();

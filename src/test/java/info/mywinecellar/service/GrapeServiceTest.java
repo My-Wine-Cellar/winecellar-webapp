@@ -14,6 +14,7 @@ import info.mywinecellar.model.Grape;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,6 +27,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
+@Disabled(value = "no unit tests for service layer, don't mock types you don't own")
 @ExtendWith(MockitoExtension.class)
 class GrapeServiceTest extends BaseUnitTest {
 

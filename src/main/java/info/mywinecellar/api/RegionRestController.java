@@ -13,10 +13,12 @@ import info.mywinecellar.json.Builder;
 import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Region;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -30,6 +32,7 @@ public class RegionRestController extends AbstractRestController {
      * @param regionId Long regionId
      * @return MyWineCellar.regions
      */
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/{regionId}/edit")
     public MyWineCellar regionEditPut(@RequestBody RegionDto request, @PathVariable Long regionId) {
         checkObjectNull(request);

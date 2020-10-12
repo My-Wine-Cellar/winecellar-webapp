@@ -27,7 +27,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * MyWineCellar
@@ -36,40 +35,28 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonTypeName(value = "mywinecellar")
 public class MyWineCellar implements Serializable {
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<AreaDto> areas;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<CountryDto> countries;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<GrapeDto> grapes;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<ProducerDto> producers;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<RegionDto> regions;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<WineDto> wines;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<UserDto> users;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<WSETDto> wset;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<ClosureDto> closures;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<ColorDto> colors;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<ShapeDto> shapes;
 
-    @JsonSerialize(using = GenericSerializer.class)
     private List<TypeDto> types;
 
     /**
