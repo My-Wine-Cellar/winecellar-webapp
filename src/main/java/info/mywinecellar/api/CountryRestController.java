@@ -26,17 +26,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class CountryRestController extends AbstractRestController {
 
     /**
-     * PUT mapping to update a Country
+     * Edit a country
      *
-     * @param request   Country request
-     * @param countryId Long countryId
-     * @return MyWineCellar.countries
+     * @param request   Description and weblink are the only fields that can be edited:
+     *                  {@link CountryDto}
+     *                  {@link info.mywinecellar.converter.CountryConverter}
+     * @param countryId The id of the country to edit
+     * @return MyWineCellar JSON envelope and the country
      */
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/{countryId}/edit")
     public MyWineCellar countryEditPut(@RequestBody CountryDto request, @PathVariable Long countryId) {
         checkObjectNull(request);
         Country country = countryService.editCountry(request, countryId);
+        log.info("Updated {} {} ", country.toString(), country.getName());
+
         Builder builder = new Builder();
         builder.country(country);
         return builder.build();

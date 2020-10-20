@@ -25,44 +25,46 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  * MyWineCellar
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)  // won't show null fields/values
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.WRAPPER_OBJECT)
 @JsonTypeName(value = "mywinecellar")
 public class MyWineCellar implements Serializable {
 
-    private List<AreaDto> areas;
-
     private List<CountryDto> countries;
+
+    private List<RegionDto> regions;
+
+    private List<AreaDto> areas;
 
     private List<GrapeDto> grapes;
 
     private List<ProducerDto> producers;
 
-    private List<RegionDto> regions;
-
     private List<WineDto> wines;
 
-    private List<UserDto> users;
-
-    private List<WSETDto> wset;
+    private List<ColorDto> colors;
 
     private List<ClosureDto> closures;
-
-    private List<ColorDto> colors;
 
     private List<ShapeDto> shapes;
 
     private List<TypeDto> types;
 
+    private List<UserDto> users;
+
+    private List<WSETDto> wset;
+
     /**
      * Constructor
      */
-    MyWineCellar() {
+    public MyWineCellar() {
     }
 
     /**
@@ -112,6 +114,7 @@ public class MyWineCellar implements Serializable {
 
     /**
      * Get the users
+     *
      * @return The list
      */
     public List<UserDto> getUsers() {
@@ -165,6 +168,7 @@ public class MyWineCellar implements Serializable {
 
     /**
      * Get the WSET instances
+     *
      * @return The list
      */
     public List<WSETDto> getWset() {
@@ -173,6 +177,7 @@ public class MyWineCellar implements Serializable {
 
     /**
      * Find
+     *
      * @param what What to find
      * @param from The from object
      * @return The result

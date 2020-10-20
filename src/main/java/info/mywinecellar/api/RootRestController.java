@@ -36,9 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RootRestController extends AbstractRestController {
 
     /**
-     * GET Mapping
-     *
-     * @return MyWineCellar
+     * @return MyWineCellar JSON envelope
      */
     @GetMapping("/json")
     public MyWineCellar getJsonEnvelope() {
@@ -63,9 +61,9 @@ public class RootRestController extends AbstractRestController {
     }
 
     /**
-     * GET mapping
+     * Countries that have wine producing regions
      *
-     * @return List of Countries that have wine producing regions
+     * @return MyWineCellar JSON envelope and the countries
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/countries")
@@ -77,14 +75,14 @@ public class RootRestController extends AbstractRestController {
     }
 
     /**
-     * GET mapping
+     * A country and the regions, or states
      * <p>
      * A country's name will be interpreted as lowercase
      * Country's like 'United States' and 'New Zealand' will be separated by an underscore(_)
      * ie united_states and new_zealand
      *
-     * @param country String country lowercase name
-     * @return Country
+     * @param country The name of country
+     * @return MyWineCellar JSON envelope and the country and it's regions
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}")
@@ -98,12 +96,13 @@ public class RootRestController extends AbstractRestController {
     }
 
     /**
-     * GET Mapping
-     * A region's name will be interpreted as lowercase
+     * A country, region, and areas
+     * <p>
+     * A region's name will be interpreted as lowercase and seaprated by underscore
      *
-     * @param country String country
-     * @param region  String region
-     * @return Region
+     * @param country The name of the country
+     * @param region  The name of the region
+     * @return MyWineCellar JSON envelope and the country, region, and areas
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}/{region}")
@@ -119,14 +118,16 @@ public class RootRestController extends AbstractRestController {
     }
 
     /**
-     * GET mapping
+     * A country, region, area and it's producers and grapes
+     * <p>
      * Area's name will be interpreted as lowercase
-     * Need to account for things like ava, doc, aoc
+     * Need to account for ava, doc, aoc
+     * ie napa_valley_ava or abruzzo_doc
      *
-     * @param country String country
-     * @param region  String region
-     * @param area    String area
-     * @return Area
+     * @param country The name of the country
+     * @param region  The name of the region
+     * @param area    The name of the area
+     * @return MyWineCellar JSON envelope and the country, region, area and it's producers and grapes
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}/{region}/{area}")
@@ -146,14 +147,16 @@ public class RootRestController extends AbstractRestController {
     }
 
     /**
-     * GET mapping
-     * Gives us a bookmarkable url for a producer's name
+     * A country, region, area, and the producer
+     * <p>
+     * Producer's name will be interpreted as lowercase
+     * ie Opus One Winery will be opus_one_winery
      *
-     * @param country  String country
-     * @param region   String region
-     * @param area     String area
-     * @param producer String producer
-     * @return Producer
+     * @param country  The name of the country
+     * @param region   The name of the region
+     * @param area     The name of the area
+     * @param producer The name of the producer
+     * @return MyWineCellar JSON envelope and the country, region, area, producer and it's wines
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}/{region}/{area}/{producer}")
@@ -174,17 +177,19 @@ public class RootRestController extends AbstractRestController {
     }
 
     /**
-     * GET Mapping
-     * Gives us a bookmarkable url for a wine
+     * A country, region, area, producer, and wine
+     * <p>
+     * The wine's name will be interpreted as lowercase
+     * ie Opus One will be opus_one
      *
-     * @param country  String country
-     * @param region   String region
-     * @param area     String area
-     * @param producer String producer
-     * @param wine     String wine
-     * @param vintage  Integer vintage
-     * @param size     Float size
-     * @return Wine
+     * @param country  The name of the country
+     * @param region   The name of the region
+     * @param area     The name of the area
+     * @param producer The name of the producer
+     * @param wine     The name of the wine
+     * @param vintage  The vintage year
+     * @param size     The size of the wine bottle or box
+     * @return MyWineCellar JSON envelope and the country, region, area, producer, and wine
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}/{region}/{area}/{producer}/{wine}/{vintage}/{size}")

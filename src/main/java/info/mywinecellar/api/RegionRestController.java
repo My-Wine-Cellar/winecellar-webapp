@@ -26,17 +26,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegionRestController extends AbstractRestController {
 
     /**
-     * PUT mapping to update a Region
+     * Edit a region
      *
-     * @param request  Region request
-     * @param regionId Long regionId
-     * @return MyWineCellar.regions
+     * @param request  Description and weblink are the only fields that can be edited:
+     *                 {@link RegionDto}
+     *                 {@link info.mywinecellar.converter.RegionConverter}
+     * @param regionId The id of the region
+     * @return MyWineCellar JSON envelope and the region
      */
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/{regionId}/edit")
     public MyWineCellar regionEditPut(@RequestBody RegionDto request, @PathVariable Long regionId) {
         checkObjectNull(request);
         Region region = regionService.editRegion(request, regionId);
+        log.info("Updated {} {} ", region.toString(), region.getName());
+
         Builder builder = new Builder();
         builder.region(region);
         return builder.build();

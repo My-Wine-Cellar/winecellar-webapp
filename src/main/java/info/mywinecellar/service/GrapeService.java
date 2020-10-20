@@ -106,10 +106,12 @@ public class GrapeService extends AbstractService<Grape> {
      *
      * @param dto     GrapeDto dto
      * @param grapeId Long grapeId
+     * @return Grape entity
      */
     @Transactional
-    public void editGrape(GrapeDto dto, Long grapeId) {
+    public Grape editGrape(GrapeDto dto, Long grapeId) {
         Grape entity = grapeConverter.toEntity(this.findById(grapeId), dto);
         this.save(entity);
+        return entity;
     }
 }

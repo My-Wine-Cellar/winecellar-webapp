@@ -1,5 +1,6 @@
 package info.mywinecellar.api;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class RegionITCase extends BaseITCase {
         });
     }
 
+    @Disabled(value = "need to fix extraneous Spring logging")
     @Test
     void regionEdit_500() {
         assertThrows(HttpServerErrorException.class,
