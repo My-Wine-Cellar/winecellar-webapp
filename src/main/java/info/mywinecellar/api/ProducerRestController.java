@@ -12,8 +12,11 @@ import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.json.Builder;
 import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Producer;
+import info.mywinecellar.service.ProducerService;
 
 import java.io.IOException;
+
+import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,9 +30,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/producer/{producerId}")
-public class ProducerRestController extends AbstractRestController {
+public class ProducerRestController {
+
+    @Inject
+    ProducerService producerService;
 
     /**
      * Edit a producer
@@ -45,10 +54,7 @@ public class ProducerRestController extends AbstractRestController {
     public MyWineCellar producerEditPut(@PathVariable Long producerId, @RequestBody ProducerDto request) {
         Producer entity = producerService.editProducer(request, producerId);
         log.info("Updated {} {} ", entity.toString(), entity.getName());
-
-        Builder builder = new Builder();
-        builder.producer(entity);
-        return builder.build();
+        return new Builder().producer(entity).build();
     }
 
     /**
@@ -70,10 +76,7 @@ public class ProducerRestController extends AbstractRestController {
         entity.setImage(file.getBytes());
         producerService.save(entity);
         log.info("Image added to {} {} ", entity.toString(), entity.getName());
-
-        Builder builder = new Builder();
-        builder.producer(entity);
-        return builder.build();
+        return new Builder().producer(entity).build();
     }
 
 }

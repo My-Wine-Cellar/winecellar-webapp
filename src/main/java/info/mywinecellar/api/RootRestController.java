@@ -21,8 +21,20 @@ import info.mywinecellar.model.Region;
 import info.mywinecellar.model.Shape;
 import info.mywinecellar.model.Type;
 import info.mywinecellar.model.Wine;
+import info.mywinecellar.service.AreaService;
+import info.mywinecellar.service.ClosureService;
+import info.mywinecellar.service.ColorService;
+import info.mywinecellar.service.CountryService;
+import info.mywinecellar.service.GrapeService;
+import info.mywinecellar.service.ProducerService;
+import info.mywinecellar.service.RegionService;
+import info.mywinecellar.service.ShapeService;
+import info.mywinecellar.service.TypeService;
+import info.mywinecellar.service.WineService;
 
 import java.util.Set;
+
+import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +45,37 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class RootRestController extends AbstractRestController {
+public class RootRestController {
+
+    @Inject
+    GrapeService grapeService;
+
+    @Inject
+    CountryService countryService;
+
+    @Inject
+    RegionService regionService;
+
+    @Inject
+    AreaService areaService;
+
+    @Inject
+    ProducerService producerService;
+
+    @Inject
+    WineService wineService;
+
+    @Inject
+    ClosureService closureService;
+
+    @Inject
+    ColorService colorService;
+
+    @Inject
+    ShapeService shapeService;
+
+    @Inject
+    TypeService typeService;
 
     /**
      * @return MyWineCellar JSON envelope
@@ -51,13 +93,8 @@ public class RootRestController extends AbstractRestController {
         Set<Shape> shapes = shapeService.findAll();
         Set<Type> types = typeService.findAll();
 
-        Builder builder = new Builder();
-        builder.envelope(countries, regions, areas, producers, wines, grapes);
-        builder.closures(closures);
-        builder.colors(colors);
-        builder.shapes(shapes);
-        builder.types(types);
-        return builder.build();
+        return new Builder().countries(countries).regions(regions).areas(areas).producers(producers).wines(wines)
+                .grapes(grapes).closures(closures).colors(colors).shapes(shapes).types(types).build();
     }
 
     /**
@@ -69,9 +106,7 @@ public class RootRestController extends AbstractRestController {
     @GetMapping("/countries")
     public MyWineCellar dataApiRootGet() {
         Set<Country> countries = countryService.findWithRegions();
-        Builder builder = new Builder();
-        builder.countries(countries);
-        return builder.build();
+        return new Builder().countries(countries).build();
     }
 
     /**
@@ -82,23 +117,19 @@ public class RootRestController extends AbstractRestController {
      * ie united_states and new_zealand
      *
      * @param country The name of country
-     * @return MyWineCellar JSON envelope and the country and it's regions
+     * @return MyWineCellar JSON envelope the country and it's regions
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{country}")
     public MyWineCellar countryByNameGet(@PathVariable String country) {
         Country cntry = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
-
-        Builder builder = new Builder();
-        builder.country(cntry);
-        builder.regions(cntry.getRegions());
-        return builder.build();
+        return new Builder().country(cntry).regions(cntry.getRegions()).build();
     }
 
     /**
      * A country, region, and areas
      * <p>
-     * A region's name will be interpreted as lowercase and seaprated by underscore
+     * A region's name will be interpreted as lowercase and separated by an underscore
      *
      * @param country The name of the country
      * @param region  The name of the region
@@ -110,11 +141,7 @@ public class RootRestController extends AbstractRestController {
         Country cntry = countryService.findByLowerCaseName(AbstractKeyDto.fromKey(country));
         Region rgn = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(region), cntry.getId());
 
-        Builder builder = new Builder();
-        builder.country(cntry);
-        builder.region(rgn);
-        builder.areas(rgn.getAreas());
-        return builder.build();
+        return new Builder().country(cntry).region(rgn).areas(rgn.getAreas()).build();
     }
 
     /**
@@ -137,13 +164,8 @@ public class RootRestController extends AbstractRestController {
         Region rgn = regionService.findByLowerCaseName(AbstractKeyDto.fromKey(region), cntry.getId());
         Area ar = areaService.findByLowerCaseName(AbstractKeyDto.fromKey(area));
 
-        Builder builder = new Builder();
-        builder.country(cntry);
-        builder.region(rgn);
-        builder.area(ar);
-        builder.producers(ar.getProducers());
-        builder.grapes(ar.getPrimaryGrapes());
-        return builder.build();
+        return new Builder().country(cntry).region(rgn).area(ar).producers(ar.getProducers())
+                .grapes(ar.getPrimaryGrapes()).build();
     }
 
     /**
@@ -167,13 +189,8 @@ public class RootRestController extends AbstractRestController {
         Area ar = areaService.findByLowerCaseName(AbstractKeyDto.fromKey(area));
         Producer prdcr = producerService.findByLowerCaseName(AbstractKeyDto.fromKey(producer));
 
-        Builder builder = new Builder();
-        builder.country(cntry);
-        builder.region(rgn);
-        builder.area(ar);
-        builder.producer(prdcr);
-        builder.wines(prdcr.getWines());
-        return builder.build();
+        return new Builder().country(cntry).region(rgn).area(ar)
+                .producer(prdcr).wines(prdcr.getWines()).build();
     }
 
     /**
@@ -207,20 +224,8 @@ public class RootRestController extends AbstractRestController {
         Shape shape = shapeService.findById(wn.getShape().getId());
         Type type = typeService.findById(wn.getType().getId());
 
-        Builder builder = new Builder();
-        builder.country(cntry);
-        builder.region(rgn);
-        builder.area(ar);
-        builder.producer(prdcr);
-        if (wn.getVintage().equals(vintage) && wn.getSize().equals(size)) {
-            builder.wine(wn);
-        }
-        builder.closure(closure);
-        builder.color(color);
-        builder.shape(shape);
-        builder.type(type);
-        return builder.build();
+        return new Builder().country(cntry).region(rgn).area(ar).producer(prdcr)
+                .wine(wn).closure(closure).color(color).shape(shape).type(type).build();
     }
-
 
 }

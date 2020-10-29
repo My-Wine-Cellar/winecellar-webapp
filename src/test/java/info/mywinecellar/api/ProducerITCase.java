@@ -1,14 +1,15 @@
 package info.mywinecellar.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import info.mywinecellar.dto.ProducerDto;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ProducerITCase extends BaseITCase {
 
@@ -35,5 +36,9 @@ public class ProducerITCase extends BaseITCase {
     void producerImage() {
         ResponseEntity<String> response = apiImageRequest("/producer/1/image");
         assertEquals(202, response.getStatusCodeValue());
+
+        myWineCellar = setupResponseObject(response);
+        ProducerDto producer = myWineCellar.getProducers().get(0);
+        assertNotNull(producer.getImage());
     }
 }

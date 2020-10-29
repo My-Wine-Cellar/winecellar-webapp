@@ -14,6 +14,12 @@ import info.mywinecellar.json.Builder;
 import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.model.Wine;
+import info.mywinecellar.service.ClosureService;
+import info.mywinecellar.service.ColorService;
+import info.mywinecellar.service.ProducerService;
+import info.mywinecellar.service.ShapeService;
+import info.mywinecellar.service.TypeService;
+import info.mywinecellar.service.WineService;
 
 import java.io.IOException;
 
@@ -33,9 +39,30 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/wine")
-public class WineRestController extends AbstractRestController {
+public class WineRestController {
+
+    @Inject
+    ProducerService producerService;
+
+    @Inject
+    WineService wineService;
+
+    @Inject
+    ClosureService closureService;
+
+    @Inject
+    ColorService colorService;
+
+    @Inject
+    ShapeService shapeService;
+
+    @Inject
+    TypeService typeService;
 
     @Inject
     WineConverter wineConverter;
@@ -74,9 +101,7 @@ public class WineRestController extends AbstractRestController {
         wineService.save(entity);
         log.info("Added new {} {} ", entity.toString(), entity.getName());
 
-        Builder builder = new Builder();
-        builder.wine(entity);
-        return builder.build();
+        return new Builder().wine(entity).build();
     }
 
     /**
@@ -94,10 +119,7 @@ public class WineRestController extends AbstractRestController {
         Wine entity = wineConverter.toEntity(wineService.findById(wineId), request);
         wineService.update(entity);
         log.info("Updated {} {} ", entity.toString(), entity.getName());
-
-        Builder builder = new Builder();
-        builder.wine(entity);
-        return builder.build();
+        return new Builder().wine(entity).build();
     }
 
     /**
@@ -120,9 +142,7 @@ public class WineRestController extends AbstractRestController {
         wineService.update(entity);
         log.info("Image added to {} {} ", entity.toString(), entity.getName());
 
-        Builder builder = new Builder();
-        builder.wine(entity);
-        return builder.build();
+        return new Builder().wine(entity).build();
     }
 
 }

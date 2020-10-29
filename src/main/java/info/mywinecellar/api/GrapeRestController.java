@@ -28,9 +28,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/grape")
-public class GrapeRestController extends AbstractRestController {
+public class GrapeRestController {
 
     @Inject
     GrapeService grapeService;
@@ -44,9 +47,7 @@ public class GrapeRestController extends AbstractRestController {
     @GetMapping("/red")
     public MyWineCellar grapeRedGet() {
         Set<Grape> redGrapes = grapeService.getRedGrapes();
-        Builder builder = new Builder();
-        redGrapes.forEach(builder::grape);
-        return builder.build();
+        return new Builder().grapes(redGrapes).build();
     }
 
     /**
@@ -58,9 +59,7 @@ public class GrapeRestController extends AbstractRestController {
     @GetMapping("/white")
     public MyWineCellar grapeWhiteGet() {
         Set<Grape> whiteGrapes = grapeService.getWhiteGrapes();
-        Builder builder = new Builder();
-        whiteGrapes.forEach(builder::grape);
-        return builder.build();
+        return new Builder().grapes(whiteGrapes).build();
     }
 
     /**
@@ -72,10 +71,8 @@ public class GrapeRestController extends AbstractRestController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{grape}")
     public MyWineCellar grapeDetailsGet(@PathVariable String grape) {
-        Grape grapeDetails = grapeService.findByLowerCaseName(AbstractKeyDto.fromKey(grape));
-        Builder builder = new Builder();
-        builder.grape(grapeDetails);
-        return builder.build();
+        Grape entity = grapeService.findByLowerCaseName(AbstractKeyDto.fromKey(grape));
+        return new Builder().grape(entity).build();
     }
 
     /**
@@ -90,12 +87,8 @@ public class GrapeRestController extends AbstractRestController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{grapeId}/edit")
     public MyWineCellar grapeEditPut(@RequestBody GrapeDto request, @PathVariable Long grapeId) {
-        checkObjectNull(request);
         Grape grape = grapeService.editGrape(request, grapeId);
         log.info("Updated {} {} ", grape.toString(), grape.getName());
-
-        Builder builder = new Builder();
-        builder.grape(grape);
-        return builder.build();
+        return new Builder().grape(grape).build();
     }
 }
