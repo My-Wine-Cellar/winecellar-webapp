@@ -14,6 +14,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -43,7 +44,7 @@ public class WineITCase extends BaseITCase {
         });
     }
 
-    @Disabled()
+    @Disabled
     @Test
     void wineNew_500Exception() {
         // name, vintage, size are required fields
@@ -78,5 +79,9 @@ public class WineITCase extends BaseITCase {
     void wineImage() {
         ResponseEntity<String> response = apiImageRequest("/wine/1/image");
         assertEquals(202, response.getStatusCodeValue());
+
+        myWineCellar = setupResponseObject(response);
+        WineDto wine = myWineCellar.getWines().get(0);
+        assertNotNull(wine);
     }
 }

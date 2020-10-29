@@ -1,10 +1,9 @@
 package info.mywinecellar.api;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpClientErrorException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,10 +23,9 @@ public class CountryITCase extends BaseITCase {
         });
     }
 
-    @Disabled(value = "need to fix extraneous Spring logging")
     @Test
-    void countryEdit_500() {
-        assertThrows(HttpServerErrorException.class,
-                () -> apiRequest("/country/999/edit", jsonBody(), HttpMethod.PUT));
+    void countryEdit_400() {
+        assertThrows(HttpClientErrorException.BadRequest.class,
+                () -> apiRequest("/country/185/edit", null, HttpMethod.PUT));
     }
 }

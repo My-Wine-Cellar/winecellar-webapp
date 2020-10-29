@@ -14,8 +14,12 @@ import info.mywinecellar.json.Builder;
 import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Grape;
+import info.mywinecellar.service.AreaService;
+import info.mywinecellar.service.GrapeService;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +32,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/area/{areaId}")
-public class AreaRestController extends AbstractRestController {
+public class AreaRestController {
+
+    @Inject
+    AreaService areaService;
+
+    @Inject
+    GrapeService grapeService;
 
     /**
      * Details of an area
@@ -42,9 +55,7 @@ public class AreaRestController extends AbstractRestController {
     @GetMapping
     public MyWineCellar areaByIdGet(@PathVariable Long areaId) {
         Area area = areaService.findById(areaId);
-        Builder builder = new Builder();
-        builder.area(area);
-        return builder.build();
+        return new Builder().area(area).build();
     }
 
     /**
@@ -59,13 +70,9 @@ public class AreaRestController extends AbstractRestController {
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/edit")
     public MyWineCellar areaEditPut(@RequestBody AreaDto request, @PathVariable Long areaId) {
-        checkObjectNull(request);
         Area area = areaService.editArea(request, areaId);
         log.info("Updated {} {} ", area.toString(), area.getName());
-
-        Builder builder = new Builder();
-        builder.area(area);
-        return builder.build();
+        return new Builder().area(area).build();
     }
 
     /**
@@ -79,13 +86,9 @@ public class AreaRestController extends AbstractRestController {
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/addProducer")
     public MyWineCellar areaAddProducerPost(@RequestBody ProducerDto request, @PathVariable Long areaId) {
-        checkObjectNull(request);
         Area area = areaService.addProducer(areaId, request);
         log.info("Added {} to {} {} ", request.getName(), area.toString(), area.getName());
-
-        Builder builder = new Builder();
-        builder.area(area);
-        return builder.build();
+        return new Builder().area(area).build();
     }
 
     /**
@@ -107,8 +110,6 @@ public class AreaRestController extends AbstractRestController {
 
         areaService.save(area);
         log.info("Added Grape/s {} to {} {} ", grapeId, area.toString(), area.getName());
-        Builder builder = new Builder();
-        builder.area(area);
-        return builder.build();
+        return new Builder().area(area).build();
     }
 }

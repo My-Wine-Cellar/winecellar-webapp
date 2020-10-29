@@ -12,6 +12,9 @@ import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.json.Builder;
 import info.mywinecellar.json.MyWineCellar;
 import info.mywinecellar.model.Region;
+import info.mywinecellar.service.RegionService;
+
+import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,9 +24,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/region")
-public class RegionRestController extends AbstractRestController {
+public class RegionRestController {
+
+    @Inject
+    RegionService regionService;
 
     /**
      * Edit a region
@@ -37,12 +46,8 @@ public class RegionRestController extends AbstractRestController {
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/{regionId}/edit")
     public MyWineCellar regionEditPut(@RequestBody RegionDto request, @PathVariable Long regionId) {
-        checkObjectNull(request);
         Region region = regionService.editRegion(request, regionId);
         log.info("Updated {} {} ", region.toString(), region.getName());
-
-        Builder builder = new Builder();
-        builder.region(region);
-        return builder.build();
+        return new Builder().region(region).build();
     }
 }
