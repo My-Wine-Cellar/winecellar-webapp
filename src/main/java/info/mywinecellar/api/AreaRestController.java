@@ -84,7 +84,7 @@ public class AreaRestController {
      * @return MyWineCellar JSON envelope and the area
      */
     @ResponseStatus(value = HttpStatus.CREATED)
-    @PostMapping("/addProducer")
+    @PostMapping("/add-producer")
     public MyWineCellar areaAddProducerPost(@RequestBody ProducerDto request, @PathVariable Long areaId) {
         Area area = areaService.addProducer(areaId, request);
         log.info("Added {} to {} {} ", request.getName(), area.toString(), area.getName());
@@ -99,7 +99,7 @@ public class AreaRestController {
      * @return MyWineCellar JSON envelope and the area
      */
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    @PutMapping("/addGrape")
+    @PutMapping("/add-grape")
     public MyWineCellar areaAddGrape(@RequestParam List<Long> grapeId, @PathVariable Long areaId) {
         Area area = areaService.findById(areaId);
 
