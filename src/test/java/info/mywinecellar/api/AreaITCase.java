@@ -44,14 +44,14 @@ public class AreaITCase extends BaseITCase {
     void areaAddProducer() throws JsonProcessingException {
         ProducerDto request = new ProducerDto();
         request.setName("Opus Two");
-        ResponseEntity<String> response = apiRequest("/area/80/addProducer",
+        ResponseEntity<String> response = apiRequest("/area/80/add-producer",
                 objectMapper.writeValueAsString(request), HttpMethod.POST);
         assertEquals(201, response.getStatusCodeValue());
     }
 
     @Test
     void areaAddGrape() {
-        ResponseEntity<String> response = apiRequest("/area/80/addGrape?grapeId=45&grapeId=23&grapeId=1",
+        ResponseEntity<String> response = apiRequest("/area/80/add-grape?grapeId=45&grapeId=23&grapeId=1",
                 null, HttpMethod.PUT);
         assertEquals(202, response.getStatusCodeValue());
 
