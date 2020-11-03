@@ -3,7 +3,6 @@
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [PostgreSQL](#postgresql)
 * [Project Setup](#project-setup)
 * [Integration Tests](#integration-tests)
 * [Contribution](#contribution)
@@ -25,15 +24,20 @@ Webapp for keeping track of wines, their tasting notes, and reviews. Goal is to 
 * Docker
 * PostgreSQL (v9.4 or higher is required)
 
-## PostgreSQL
+## Project Setup
 
-You will need to have either
+#### Maven
+Maven is needed to execute any and all build commands.
+
+#### PostgreSQL
+
+You will need to have either:
 
 * [Docker Engine](https://docs.docker.com/install/)
 * [podman](https://podman.io/)
 * Bare metal [PostgreSQL](https://www.postgresql.org/) instance
 
-installed before proceeding
+installed before proceeding.
 
 *Docker*
 ```
@@ -47,12 +51,10 @@ $ podman run --name winecellar -p 5432:5432 -d -e POSTGRES_USER=winecellar -e PO
 
 This will pull down the latest PostgreSQL image and run the container with all necessary Spring Boot properties for getting a connection. 
 
-## Project Setup
-
 ```
 $ git clone https://github.com/My-Wine-Cellar/winecellar-webapp
 $ cd winecellar-webapp
-$ mvn install
+$ mvn spring-boot:run
 ```
 
 Access here: http://localhost:8080/
@@ -67,7 +69,7 @@ Access here: http://localhost:8080/
 
 ```mvn verify``` will build and run the winecellar-webapp container to connect with Postgres for 
 executing integration tests against our own API.  If you want to run manual tests in Postman or using curl you can
-use ```mvn docker:start``` and that will launch both containers to test individual endpoints.  Use ```mvn docker:stop```
+use ```mvn docker:build docker:start``` and that will launch both containers to test individual endpoints.  Use ```mvn docker:stop```
 to shutdown both containers.
 
 ## Contribution
