@@ -1,24 +1,22 @@
 package info.mywinecellar.api;
 
 import info.mywinecellar.dto.WineDto;
+import info.mywinecellar.json.MyWineCellar;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class WineITCase extends BaseITCase {
+class WineITCase extends BaseITCase {
 
     @Test
     @Order(1)
@@ -28,31 +26,15 @@ public class WineITCase extends BaseITCase {
         body.setVintage(2020);
         body.setSize(0.75f);
 
-        ResponseEntity<String> response = apiRequest("/wine/new?producerId=1",
-                objectMapper.writeValueAsString(body), HttpMethod.POST);
-        assertEquals(201, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/wine/new?producerId=1", objectMapper.writeValueAsString(body), HttpMethod.POST);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        myWineCellar.getWines().forEach(wine -> {
-            assertEquals(4, wine.getId());
-            assertEquals("new_wine", wine.getKey());
-            assertEquals(1, wine.getProducerId());
-            assertEquals(1, wine.getColorId());
-            assertEquals(1, wine.getClosureId());
-            assertEquals(1, wine.getShapeId());
-            assertEquals(1, wine.getTypeId());
+        response.getWines().forEach(wine -> {
+            assertThat(wine.getKey()).isEqualTo("new_wine");
+            assertThat(wine.getName()).isEqualTo("New Wine");
+            assertThat(wine.getVintage()).isEqualTo(2020);
+            assertThat(wine.getSize()).isEqualTo(0.75f);
         });
-    }
-
-    @Disabled
-    @Test
-    void wineNew_500Exception() {
-        // name, vintage, size are required fields
-        WineDto body = new WineDto();
-
-        assertThrows(HttpServerErrorException.class,
-                () -> apiRequest("/wine/new?producerId=1",
-                        objectMapper.writeValueAsString(body), HttpMethod.POST));
     }
 
     @Test
@@ -63,25 +45,30 @@ public class WineITCase extends BaseITCase {
         body.setVintage(2010);
         body.setSize(3.0f);
 
-        ResponseEntity<String> response = apiRequest("/wine/4/edit",
-                objectMapper.writeValueAsString(body), HttpMethod.PUT);
-        assertEquals(202, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/wine/4/edit", objectMapper.writeValueAsString(body), HttpMethod.PUT);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        myWineCellar.getWines().forEach(wine -> {
-            assertEquals(4, wine.getId());
-            assertEquals("edit_wine", wine.getKey());
-            assertEquals(2010, wine.getVintage());
+        assertThat(response.getWines()).isNotEmpty();
+        response.getWines().forEach(wine -> {
+            assertThat(wine.getKey()).isEqualTo("edit_wine");
+            assertThat(wine.getName()).isEqualTo("Edit Wine");
+            assertThat(wine.getVintage()).isEqualTo(2010);
         });
     }
 
     @Test
-    void wineImage() {
-        ResponseEntity<String> response = apiImageRequest("/wine/1/image");
-        assertEquals(202, response.getStatusCodeValue());
+    void wineEdit_Exception() {
+        assertThatExceptionOfType(HttpClientErrorException.class)
+                .isThrownBy(() -> apiRequest("/wine/4/edit", null, HttpMethod.PUT))
+                .withMessageContaining("wine request for id 4 was null");
+    }
 
-        myWineCellar = setupResponseObject(response);
-        WineDto wine = myWineCellar.getWines().get(0);
-        assertNotNull(wine);
+    @Test
+    void wineImage() {
+        MyWineCellar response = apiImageRequest("/wine/1/image");
+        assertThat(response).isNotNull();
+
+        WineDto wine = response.getWines().get(0);
+        assertThat(wine.getImage()).isNotNull();
     }
 }

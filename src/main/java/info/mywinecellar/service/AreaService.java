@@ -17,9 +17,9 @@ import info.mywinecellar.model.Producer;
 
 import javax.inject.Inject;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Area service

@@ -72,8 +72,8 @@ public class CountryController extends AbstractController {
             return Paths.COUNTRY_EDIT;
         } else {
             if (action.equals("save")) {
-                Country country = countryService.editCountry(countryDto, countryId);
-                return redirectCountry(country);
+                Country edit = countryService.editCountry(countryDto, countryId);
+                return redirectCountry(edit);
             } else {
                 return redirectCountry(countryId);
             }

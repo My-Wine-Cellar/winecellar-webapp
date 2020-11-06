@@ -12,7 +12,6 @@ import info.mywinecellar.BaseUnitTest;
 import info.mywinecellar.dto.WineDto;
 import info.mywinecellar.model.Wine;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -62,10 +61,6 @@ class WineConverterTest extends BaseUnitTest {
         assertEquals(opusOne2015.getName(), dto.getName());
     }
 
-    @Test
-    void toDtoEmptyList() {
-        assertThat(WineConverter.toDto(Collections.emptySet())).isEmpty();
-    }
 
     @Test
     void toEntity() {

@@ -90,8 +90,8 @@ public class AreaController extends AbstractController {
             return Paths.AREA_EDIT;
         } else {
             if (action.equals("save")) {
-                Area area = areaService.editArea(areaDto, areaId);
-                return redirectArea(Session.getCountryId(), Session.getRegionId(), area);
+                Area edit = areaService.editArea(areaDto, areaId);
+                return redirectArea(Session.getCountryId(), Session.getRegionId(), edit);
             } else {
                 return redirectArea(Session.getCountryId(), Session.getRegionId(), areaId);
             }

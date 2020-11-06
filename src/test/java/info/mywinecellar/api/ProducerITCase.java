@@ -1,17 +1,18 @@
 package info.mywinecellar.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import info.mywinecellar.dto.ProducerDto;
+import info.mywinecellar.json.MyWineCellar;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
-public class ProducerITCase extends BaseITCase {
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
+class ProducerITCase extends BaseITCase {
 
     @Test
     void producerEdit() throws JsonProcessingException {
@@ -22,23 +23,27 @@ public class ProducerITCase extends BaseITCase {
         edit.setPhone("1234567890");
         edit.setEmail("producer@gmail.com");
 
-        ResponseEntity<String> response = apiRequest("/producer/2/edit",
-                objectMapper.writeValueAsString(edit), HttpMethod.PUT);
-        assertEquals(202, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/producer/2/edit", objectMapper.writeValueAsString(edit), HttpMethod.PUT);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        ProducerDto producer = myWineCellar.getProducers().get(0);
-        assertEquals(2, producer.getId());
-        assertEquals("edited_producer", producer.getKey());
+        assertThat(response.getProducers()).isNotEmpty();
+        ProducerDto producer = response.getProducers().get(0);
+        assertThat(producer.getName()).isEqualTo("Edited Producer");
+        assertThat(producer.getKey()).isEqualTo("edited_producer");
+    }
+
+    @Test
+    void producerEdit_Exception() {
+        assertThatExceptionOfType(HttpClientErrorException.BadRequest.class)
+                .isThrownBy(() -> apiRequest("/producer/2/edit", null, HttpMethod.PUT))
+                .withMessageContaining("producer request for id 2 was null");
     }
 
     @Test
     void producerImage() {
-        ResponseEntity<String> response = apiImageRequest("/producer/1/image");
-        assertEquals(202, response.getStatusCodeValue());
+        MyWineCellar response = apiImageRequest("/producer/1/image");
 
-        myWineCellar = setupResponseObject(response);
-        ProducerDto producer = myWineCellar.getProducers().get(0);
-        assertNotNull(producer.getImage());
+        ProducerDto producer = response.getProducers().get(0);
+        assertThat(producer.getImage()).isNotNull();
     }
 }

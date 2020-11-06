@@ -1,31 +1,32 @@
 package info.mywinecellar.api;
 
+import info.mywinecellar.json.MyWineCellar;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class RegionITCase extends BaseITCase {
+class RegionITCase extends BaseITCase {
 
     @Test
     void regionEdit() {
-        ResponseEntity<String> response = apiRequest("/region/47/edit", jsonBody(), HttpMethod.PUT);
-        assertEquals(202, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/region/47/edit", jsonBody(), HttpMethod.PUT);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        myWineCellar.getRegions().forEach(region -> {
+        response.getRegions().forEach(region -> {
             assertNotNull(region.getDescription());
             assertNotNull(region.getWeblink());
         });
     }
 
     @Test
-    void regionEdit_400() {
-        assertThrows(HttpClientErrorException.BadRequest.class,
-                () -> apiRequest("/region/47/edit", null, HttpMethod.PUT));
+    void regionEdit_Exception() {
+        assertThatExceptionOfType(HttpClientErrorException.BadRequest.class)
+                .isThrownBy(() -> apiRequest("/region/47/edit", null, HttpMethod.PUT))
+                .withMessageContaining("region request for id 47 was null");
     }
 }
