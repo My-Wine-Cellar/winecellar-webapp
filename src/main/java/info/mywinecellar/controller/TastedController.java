@@ -8,12 +8,16 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.TastedConverter;
 import info.mywinecellar.model.Tasted;
 import info.mywinecellar.model.User;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+import info.mywinecellar.service.TastedService;
 
 import java.security.Principal;
+
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +28,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/tasted")
 public class TastedController extends AbstractController {
+
+    @Inject
+    TastedService tastedService;
+
+    @Inject
+    TastedConverter tastedConverter;
 
     /**
      * Default constructor

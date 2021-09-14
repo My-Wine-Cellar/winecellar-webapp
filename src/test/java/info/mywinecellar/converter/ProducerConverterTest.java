@@ -26,15 +26,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ProducerConverterTest extends BaseUnitTest {
 
-    @Inject
-    ProducerConverter producerConverter;
-
     ProducerDto producerDto;
 
     @BeforeEach
     void setUp() {
-        producerConverter = new ProducerConverter();
-
         producerDto = new ProducerDto();
         producerDto.setName("Producer Dto");
         producerDto.setDescription("dto description");
@@ -46,7 +41,7 @@ class ProducerConverterTest extends BaseUnitTest {
 
     @Test
     void toDto() {
-        producerDto = producerConverter.toDto(opusOne);
+        producerDto = ProducerConverter.toDto(opusOne);
         assertNotNull(producerDto);
 
         assertEquals(opusOne.getName(), producerDto.getName());
@@ -56,12 +51,12 @@ class ProducerConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoNull() {
-        assertThrows(IllegalStateException.class, () -> producerConverter.toDto((Producer) null));
+        assertThrows(IllegalStateException.class, () -> ProducerConverter.toDto((Producer) null));
     }
 
     @Test
     void toDtoList() {
-        List<ProducerDto> result = producerConverter.toDto(producers);
+        List<ProducerDto> result = ProducerConverter.toDto(producers);
 
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -73,12 +68,12 @@ class ProducerConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoListNull() {
-        assertThrows(IllegalStateException.class, () -> producerConverter.toDto((Set<Producer>) null));
+        assertThrows(IllegalStateException.class, () -> ProducerConverter.toDto((Set<Producer>) null));
     }
 
     @Test
     void toEntity() {
-        Producer result = producerConverter.toEntity(opusOne, producerDto);
+        Producer result = ProducerConverter.toEntity(opusOne, producerDto);
         assertNotNull(result);
 
         assertEquals(producerDto.getName(), result.getName());
@@ -91,7 +86,7 @@ class ProducerConverterTest extends BaseUnitTest {
 
     @Test
     void toEntityNull() {
-        Producer result = producerConverter.toEntity(null, producerDto);
+        Producer result = ProducerConverter.toEntity(null, producerDto);
         assertNotNull(result);
 
         assertEquals(producerDto.getName(), result.getName());

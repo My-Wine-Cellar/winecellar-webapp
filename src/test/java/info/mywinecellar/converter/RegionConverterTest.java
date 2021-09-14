@@ -27,15 +27,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RegionConverterTest extends BaseUnitTest {
 
-    @Inject
-    RegionConverter regionConverter;
-
     RegionDto regionDto;
 
     @BeforeEach
     void setUp() {
-        regionConverter = new RegionConverter();
-
         regionDto = new RegionDto();
         regionDto.setName("Region Dto");
         regionDto.setDescription("dto description");
@@ -44,7 +39,7 @@ class RegionConverterTest extends BaseUnitTest {
 
     @Test
     void toDto() {
-        regionDto = regionConverter.toDto(cali);
+        regionDto = RegionConverter.toDto(cali);
         assertNotNull(regionDto);
         assertEquals("California", regionDto.getName());
         assertEquals("california", regionDto.getKey());
@@ -52,12 +47,12 @@ class RegionConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoNullRegion() {
-        assertThrows(IllegalStateException.class, () -> regionConverter.toDto((Region) null));
+        assertThrows(IllegalStateException.class, () -> RegionConverter.toDto((Region) null));
     }
 
     @Test
     void toDtoList() {
-        List<RegionDto> result = regionConverter.toDto(usRegions);
+        List<RegionDto> result = RegionConverter.toDto(usRegions);
         RegionDto dto = result.get(0);
         assertEquals(cali.getName(), dto.getName());
         assertEquals("california", dto.getKey());
@@ -65,7 +60,7 @@ class RegionConverterTest extends BaseUnitTest {
 
     @Test
     void toDoListSorted() {
-        List<RegionDto> result = regionConverter.toDto(usRegions);
+        List<RegionDto> result = RegionConverter.toDto(usRegions);
         assertEquals("California", result.get(0).getName());
         assertEquals("california", result.get(0).getKey());
         assertEquals("Washington", result.get(1).getName());
@@ -74,12 +69,12 @@ class RegionConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoNullList() {
-        assertThrows(IllegalStateException.class, () -> regionConverter.toDto((Set<Region>) null));
+        assertThrows(IllegalStateException.class, () -> RegionConverter.toDto((Set<Region>) null));
     }
 
     @Test
     void toEntity() {
-        Region result = regionConverter.toEntity(cali, regionDto);
+        Region result = RegionConverter.toEntity(cali, regionDto);
         assertNotNull(result);
 
         assertNotEquals(regionDto.getName(), result.getName());
@@ -90,7 +85,7 @@ class RegionConverterTest extends BaseUnitTest {
 
     @Test
     void toEntityNull() {
-        Region result = regionConverter.toEntity(null, regionDto);
+        Region result = RegionConverter.toEntity(null, regionDto);
         assertNotNull(result);
 
         assertEquals(regionDto.getName(), result.getName());

@@ -8,15 +8,18 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.BarrelConverter;
 import info.mywinecellar.dto.AbstractKeyDto;
 import info.mywinecellar.dto.BarrelDto;
 import info.mywinecellar.model.Barrel;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+import info.mywinecellar.service.BarrelService;
 
 import java.security.Principal;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/barrel")
 public class BarrelController extends AbstractController {
+
+    @Inject
+    BarrelService barrelService;
 
     /**
      * Default constructor
@@ -62,7 +68,7 @@ public class BarrelController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.BARREL, barrelConverter.toDto(barrels.get(0)));
+        model.addAttribute(Attributes.BARREL, BarrelConverter.toDto(barrels.get(0)));
         return Paths.BARREL_DETAILS;
     }
 
@@ -84,7 +90,7 @@ public class BarrelController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.BARREL, barrelConverter.toDto(barrel));
+        model.addAttribute(Attributes.BARREL, BarrelConverter.toDto(barrel));
         return Paths.BARREL_EDIT;
     }
 
@@ -116,10 +122,10 @@ public class BarrelController extends AbstractController {
 
             if (action.equals("save")) {
                 barrelService.save(b);
-                BarrelDto barrelDto = barrelConverter.toDto(b);
+                BarrelDto barrelDto = BarrelConverter.toDto(b);
                 return Paths.REDIRECT_BARREL + barrelDto.getKey();
             } else {
-                BarrelDto cancelBarrel = barrelConverter.toDto(b);
+                BarrelDto cancelBarrel = BarrelConverter.toDto(b);
                 return Paths.REDIRECT_BARREL + cancelBarrel.getKey();
             }
         }

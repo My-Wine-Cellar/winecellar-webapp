@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Color} and {@link ColorDto} conversion
+ */
+public final class ColorConverter {
 
-@Component
-public class ColorConverter {
+    private ColorConverter() {
+    }
 
     /**
      * Convert Entity to Dto
@@ -26,7 +29,7 @@ public class ColorConverter {
      * @param color Color
      * @return Dto
      */
-    public ColorDto toDto(Color color) {
+    public static ColorDto toDto(Color color) {
         if (color == null) {
             throw new IllegalStateException("Color is null");
         }
@@ -39,7 +42,7 @@ public class ColorConverter {
      * @param colors List of Colors
      * @return ColorDto list
      */
-    public List<ColorDto> toDto(Set<Color> colors) {
+    public static List<ColorDto> toDto(Set<Color> colors) {
         if (colors == null) {
             throw new IllegalStateException("Color list is null");
         }
@@ -56,7 +59,7 @@ public class ColorConverter {
      * @param dto    ColorDto dto
      * @return Color entity
      */
-    public Color toEntity(Color entity, ColorDto dto) {
+    public static Color toEntity(Color entity, ColorDto dto) {
         if (entity == null) {
             entity = new Color(dto.getName(), dto.getDescription(), dto.getWeblink());
         } else {

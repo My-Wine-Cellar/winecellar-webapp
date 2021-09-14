@@ -15,8 +15,6 @@ import info.mywinecellar.model.Grape;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,15 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GrapeConverterTest extends BaseUnitTest {
 
-    @Inject
-    GrapeConverter grapeConverter;
-
     GrapeDto grapeDto;
 
     @BeforeEach
     void setUp() {
-        grapeConverter = new GrapeConverter();
-
         grapeDto = new GrapeDto();
         grapeDto.setName("Grape dto");
         grapeDto.setDescription("dto description");
@@ -45,7 +38,7 @@ class GrapeConverterTest extends BaseUnitTest {
 
     @Test
     void toDto() {
-        grapeDto = grapeConverter.toDto(pinotNoir);
+        grapeDto = GrapeConverter.toDto(pinotNoir);
         assertNotNull(grapeDto);
 
         assertEquals(pinotNoir.getName(), grapeDto.getName());
@@ -54,12 +47,12 @@ class GrapeConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoNull() {
-        assertThrows(IllegalStateException.class, () -> grapeConverter.toDto((Grape) null));
+        assertThrows(IllegalStateException.class, () -> GrapeConverter.toDto((Grape) null));
     }
 
     @Test
     void testToDtoList() {
-        List<GrapeDto> result = grapeConverter.toDto(grapes);
+        List<GrapeDto> result = GrapeConverter.toDto(grapes);
 
         assertEquals(2, result.size());
         GrapeDto dto = result.get(0);
@@ -69,7 +62,7 @@ class GrapeConverterTest extends BaseUnitTest {
 
     @Test
     void testToDtoListSorted() {
-        List<GrapeDto> result = grapeConverter.toDto(grapes);
+        List<GrapeDto> result = GrapeConverter.toDto(grapes);
         assertEquals("Albarino", result.get(0).getName());
         assertEquals("albarino", result.get(0).getKey());
         assertEquals("Pinot Noir", result.get(1).getName());
@@ -78,12 +71,12 @@ class GrapeConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoListNull() {
-        assertThrows(IllegalStateException.class, () -> grapeConverter.toDto((Set<Grape>) null));
+        assertThrows(IllegalStateException.class, () -> GrapeConverter.toDto((Set<Grape>) null));
     }
 
     @Test
     void toEntity() {
-        Grape result = grapeConverter.toEntity(pinotNoir, grapeDto);
+        Grape result = GrapeConverter.toEntity(pinotNoir, grapeDto);
         assertNotNull(result);
 
         assertNotEquals(grapeDto.getName(), result.getName());
@@ -94,7 +87,7 @@ class GrapeConverterTest extends BaseUnitTest {
 
     @Test
     void toEntityNull() {
-        Grape result = grapeConverter.toEntity(null, grapeDto);
+        Grape result = GrapeConverter.toEntity(null, grapeDto);
         assertNotNull(result);
 
         assertEquals(grapeDto.getName(), result.getName());

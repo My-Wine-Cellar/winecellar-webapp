@@ -8,6 +8,8 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.AreaConverter;
+import info.mywinecellar.converter.ProducerConverter;
 import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.nav.Attributes;
@@ -69,8 +71,8 @@ public class ProducerController extends AbstractController {
     public String producerEditGet(@PathVariable Long producerId, Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.AREA, areaConverter.toDto(areaService.findById(Session.getAreaId())));
-        model.addAttribute(Attributes.PRODUCER, producerConverter.toDto(producerService.findById(producerId)));
+        model.addAttribute(Attributes.AREA, AreaConverter.toDto(areaService.findById(Session.getAreaId())));
+        model.addAttribute(Attributes.PRODUCER, ProducerConverter.toDto(producerService.findById(producerId)));
 
         return Paths.PRODUCER_ADD_EDIT;
     }

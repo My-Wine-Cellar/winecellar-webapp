@@ -15,7 +15,6 @@ import info.mywinecellar.model.Country;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.inject.Inject;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
@@ -23,9 +22,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CountryService extends AbstractService<Country> {
-
-    @Inject
-    private CountryConverter countryConverter;
 
     /**
      * Super constructor
@@ -95,7 +91,7 @@ public class CountryService extends AbstractService<Country> {
      */
     @Transactional
     public Country editCountry(CountryDto dto, Long countryId) {
-        Country country = countryConverter.toEntity(this.findById(countryId), dto);
+        Country country = CountryConverter.toEntity(this.findById(countryId), dto);
         this.save(country);
         return country;
     }

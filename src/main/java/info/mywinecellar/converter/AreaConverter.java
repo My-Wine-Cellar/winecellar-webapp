@@ -18,24 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
-
 /**
- * Area converter
+ * Utility class for {@link Area} and {@link AreaDto} conversion
  */
-@Component
-public class AreaConverter {
+public final class AreaConverter {
 
-    private final RegionConverter regionConverter;
-
-    /**
-     * Constructor
-     * Field injection of RegionConverter throw's NPE
-     *
-     * @param regionConverter RegionConverter
-     */
-    public AreaConverter(RegionConverter regionConverter) {
-        this.regionConverter = regionConverter;
+    private AreaConverter() {
     }
 
     /**
@@ -44,7 +32,7 @@ public class AreaConverter {
      * @param areas The areas
      * @return The Dto objects
      */
-    public List<AreaDto> toDto(Set<Area> areas) {
+    public static List<AreaDto> toDto(Set<Area> areas) {
         if (areas == null) {
             throw new IllegalStateException("Area list is null");
         }
@@ -54,7 +42,7 @@ public class AreaConverter {
         areas.forEach(area -> {
             result.add(toDto(area));
             Region region = area.getRegions().iterator().next();
-            regions.add(regionConverter.toDto(region));
+            regions.add(RegionConverter.toDto(region));
         });
 
         result.sort(new AreaDtoSorter(regions));
@@ -67,7 +55,7 @@ public class AreaConverter {
      * @param a An area
      * @return dto object
      */
-    public AreaDto toDto(Area a) {
+    public static AreaDto toDto(Area a) {
         if (a == null) {
             throw new IllegalStateException("Area is null");
         }
@@ -81,7 +69,7 @@ public class AreaConverter {
      * @param dto The Dto object
      * @return The area
      */
-    public Area toEntity(Area a, AreaDto dto) {
+    public static Area toEntity(Area a, AreaDto dto) {
         if (a == null) {
             a = new Area(dto.getName(), dto.getDescription(), dto.getWeblink());
         } else {

@@ -16,10 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Country} and {@link CountryDto} conversion
+ */
+public final class CountryConverter {
 
-@Component
-public class CountryConverter {
+    private CountryConverter() {
+    }
 
     /**
      * Convert Country entity to CountryDto
@@ -27,7 +30,7 @@ public class CountryConverter {
      * @param country Country country
      * @return CountryDto object
      */
-    public CountryDto toDto(Country country) {
+    public static CountryDto toDto(Country country) {
         if (country == null) {
             throw new IllegalStateException("Country is null");
         }
@@ -40,7 +43,7 @@ public class CountryConverter {
      * @param countries List<Country> countries
      * @return List<CountryDto> countryDto's
      */
-    public List<CountryDto> toDto(Set<Country> countries) {
+    public static List<CountryDto> toDto(Set<Country> countries) {
         if (countries == null) {
             throw new IllegalStateException("Country list is null");
         }
@@ -57,7 +60,7 @@ public class CountryConverter {
      * @param dto    CountryDto dto
      * @return Country entity
      */
-    public Country toEntity(Country entity, CountryDto dto) {
+    public static Country toEntity(Country entity, CountryDto dto) {
         if (entity == null) {
             entity = new Country(dto.getName(), dto.getFlag(), dto.getDescription(), dto.getWeblink());
         } else {

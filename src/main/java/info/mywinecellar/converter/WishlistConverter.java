@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Wishlist} and {@link WishlistDto} conversion
+ */
+public final class WishlistConverter {
 
-@Component
-public class WishlistConverter {
+    private WishlistConverter() {
+    }
 
     /**
      * Convert entity to dto
@@ -26,7 +29,7 @@ public class WishlistConverter {
      * @param wishlist wishlist
      * @return dto object
      */
-    public WishlistDto toDto(Wishlist wishlist) {
+    private static WishlistDto toDto(Wishlist wishlist) {
         if (wishlist == null) {
             throw new IllegalStateException("Wishlist is null");
         }
@@ -39,7 +42,7 @@ public class WishlistConverter {
      * @param wishlists wishlists
      * @return dto list
      */
-    public List<WishlistDto> toDto(Set<Wishlist> wishlists) {
+    public static List<WishlistDto> toDto(Set<Wishlist> wishlists) {
         if (wishlists == null) {
             throw new IllegalStateException("Wishlist list is null");
         }

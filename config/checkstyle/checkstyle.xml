@@ -90,9 +90,6 @@
         <module name="InvalidJavadocPosition"/>
         <module name="JavadocMethod"/>
         <module name="JavadocType"/>
-        <module name="JavadocVariable">
-          <property name="scope" value="protected"/>
-        </module>
         <module name="JavadocStyle">
           <property name="scope" value="protected"/>
           <property name="checkFirstSentence" value="false"/>

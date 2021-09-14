@@ -16,20 +16,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
-
 /**
- * Producer converter
+ * Utility class for {@link Producer} and {@link ProducerDto} conversion
  */
-@Component
-public class ProducerConverter {
+public final class ProducerConverter {
+
+    private ProducerConverter() {
+    }
 
     /**
      * Create a list of Dto objects
+     *
      * @param producers The producers
      * @return The Dto objects
      */
-    public List<ProducerDto> toDto(Set<Producer> producers) {
+    public static List<ProducerDto> toDto(Set<Producer> producers) {
         if (producers == null) {
             throw new IllegalStateException("Producers is null");
         }
@@ -42,10 +43,11 @@ public class ProducerConverter {
 
     /**
      * Create a Dto object
+     *
      * @param p A producer
      * @return The Dto
      */
-    public ProducerDto toDto(Producer p) {
+    public static ProducerDto toDto(Producer p) {
         if (p == null) {
             throw new IllegalStateException("Producer is null");
         }
@@ -55,15 +57,16 @@ public class ProducerConverter {
 
     /**
      * Create a Producer entity
-     * @param p The entity
+     *
+     * @param p   The entity
      * @param dto The Dto object
      * @return The new entity
      */
-    public Producer toEntity(Producer p, ProducerDto dto) {
+    public static Producer toEntity(Producer p, ProducerDto dto) {
         if (p == null) {
             p = new Producer(dto.getName(), dto.getDescription(), dto.getPhone(),
-                             dto.getFax(), dto.getEmail(), dto.getWebsite(),
-                             Image.decode(dto.getImage()));
+                    dto.getFax(), dto.getEmail(), dto.getWebsite(),
+                    Image.decode(dto.getImage()));
         } else {
             p.setName(dto.getName());
             p.setDescription(dto.getDescription());

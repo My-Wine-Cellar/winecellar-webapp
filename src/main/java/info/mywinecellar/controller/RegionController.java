@@ -8,6 +8,7 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.RegionConverter;
 import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.model.Region;
 import info.mywinecellar.nav.Attributes;
@@ -49,7 +50,7 @@ public class RegionController extends AbstractController {
     public String regionEditGet(@PathVariable Long regionId, Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.REGION, regionConverter.toDto(regionService.findById(regionId)));
+        model.addAttribute(Attributes.REGION, RegionConverter.toDto(regionService.findById(regionId)));
         return Paths.REGION_EDIT;
     }
 

@@ -64,9 +64,6 @@ public class WineRestController {
     @Inject
     TypeService typeService;
 
-    @Inject
-    WineConverter wineConverter;
-
     /**
      * Add a new wine
      *
@@ -88,7 +85,7 @@ public class WineRestController {
                                     @RequestParam(defaultValue = "1") Long typeId,
                                     @RequestParam(defaultValue = "1") Long closureId) {
 
-        Wine entity = wineConverter.toEntity(null, request);
+        Wine entity = WineConverter.toEntity(null, request);
 
         Producer producer = producerService.findById(producerId);
         entity.setProducer(producer);
@@ -116,7 +113,7 @@ public class WineRestController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{wineId}/edit")
     public MyWineCellar wineEditPut(@PathVariable Long wineId, @RequestBody WineDto request) {
-        Wine entity = wineConverter.toEntity(wineService.findById(wineId), request);
+        Wine entity = WineConverter.toEntity(wineService.findById(wineId), request);
         wineService.update(entity);
         log.info("Updated {} {} ", entity.toString(), entity.getName());
         return new Builder().wine(entity).build();

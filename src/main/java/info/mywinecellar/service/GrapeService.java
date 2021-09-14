@@ -15,7 +15,6 @@ import info.mywinecellar.model.Grape;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.inject.Inject;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
@@ -26,9 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Component
 public class GrapeService extends AbstractService<Grape> {
-
-    @Inject
-    private GrapeConverter grapeConverter;
 
     /**
      * Constructor
@@ -110,7 +106,7 @@ public class GrapeService extends AbstractService<Grape> {
      */
     @Transactional
     public Grape editGrape(GrapeDto dto, Long grapeId) {
-        Grape entity = grapeConverter.toEntity(this.findById(grapeId), dto);
+        Grape entity = GrapeConverter.toEntity(this.findById(grapeId), dto);
         this.save(entity);
         return entity;
     }

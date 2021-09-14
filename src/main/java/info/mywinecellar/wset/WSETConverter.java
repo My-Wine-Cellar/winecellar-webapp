@@ -41,9 +41,6 @@ public class WSETConverter {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Inject
-    private WineConverter wineConverter;
-
-    @Inject
     private UserService userService;
 
     @Inject
@@ -66,7 +63,7 @@ public class WSETConverter {
         List<WineDto> wines = new ArrayList<>();
         for (WSET w : wsets) {
             result.add(toDto(w));
-            wines.add(wineConverter.toDto(w.getWine()));
+            wines.add(WineConverter.toDto(w.getWine()));
         }
         Collections.sort(result, new WSETDtoSorter(wines));
 

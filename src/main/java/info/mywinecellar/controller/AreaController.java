@@ -8,15 +8,19 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.AreaConverter;
+import info.mywinecellar.converter.GrapeConverter;
 import info.mywinecellar.dto.AreaDto;
 import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
+import info.mywinecellar.service.GrapeService;
 
 import java.security.Principal;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -34,6 +38,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/area")
 public class AreaController extends AbstractController {
+
+    @Inject
+    GrapeService grapeService;
 
     /**
      * Default constructor
@@ -60,7 +67,7 @@ public class AreaController extends AbstractController {
     public String areaEditGet(@PathVariable Long areaId, Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.AREA, areaConverter.toDto(areaService.findById(areaId)));
+        model.addAttribute(Attributes.AREA, AreaConverter.toDto(areaService.findById(areaId)));
         return Paths.AREA_EDIT;
     }
 
@@ -101,7 +108,7 @@ public class AreaController extends AbstractController {
     public String areaAddProducerGet(@PathVariable Long areaId, Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.AREA, areaConverter.toDto(areaService.findById(areaId)));
+        model.addAttribute(Attributes.AREA, AreaConverter.toDto(areaService.findById(areaId)));
         model.addAttribute(Attributes.PRODUCER, new ProducerDto());
         return Paths.PRODUCER_ADD_EDIT;
     }
@@ -145,9 +152,9 @@ public class AreaController extends AbstractController {
     public String areaAddGrapeGet(Model model, @PathVariable Long areaId, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.AREA, areaConverter.toDto(areaService.findById(areaId)));
-        model.addAttribute(Attributes.RED_GRAPES, grapeConverter.toDto(grapeService.getRedGrapes()));
-        model.addAttribute(Attributes.WHITE_GRAPES, grapeConverter.toDto(grapeService.getWhiteGrapes()));
+        model.addAttribute(Attributes.AREA, AreaConverter.toDto(areaService.findById(areaId)));
+        model.addAttribute(Attributes.RED_GRAPES, GrapeConverter.toDto(grapeService.getRedGrapes()));
+        model.addAttribute(Attributes.WHITE_GRAPES, GrapeConverter.toDto(grapeService.getWhiteGrapes()));
         return Paths.AREA_ADD_GRAPE;
     }
 

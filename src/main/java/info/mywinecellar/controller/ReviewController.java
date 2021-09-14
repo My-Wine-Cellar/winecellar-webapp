@@ -8,14 +8,18 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.ReviewConverter;
 import info.mywinecellar.model.Review;
 import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+import info.mywinecellar.service.ReviewService;
 
 import java.security.Principal;
 import java.sql.Date;
+
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +35,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/review")
 public class ReviewController extends AbstractController {
+
+    @Inject
+    ReviewService reviewService;
 
     /**
      * Default constructor
@@ -142,7 +149,7 @@ public class ReviewController extends AbstractController {
             user = userService.findByUsername(principal.getName());
         }
 
-        model.addAttribute(Attributes.REVIEW, reviewConverter.toDto(review));
+        model.addAttribute(Attributes.REVIEW, ReviewConverter.toDto(review));
         model.addAttribute(Attributes.USER, user);
 
         return Paths.REVIEW_VIEW;
@@ -249,7 +256,7 @@ public class ReviewController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.REVIEWS, reviewConverter.toDto(user.getReviews()));
+        model.addAttribute(Attributes.REVIEWS, ReviewConverter.toDto(user.getReviews()));
         return Paths.REVIEW_LIST;
     }
 }

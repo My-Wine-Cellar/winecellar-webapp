@@ -18,13 +18,13 @@ import info.mywinecellar.model.Wine;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 /**
- * GrapeComponent converter
+ * Utility class for {@link GrapeComponent} and {@link GrapeComponentDto} conversion
  */
-@Component
-public class GrapeComponentConverter {
+public final class GrapeComponentConverter {
+
+    private GrapeComponentConverter() {
+    }
 
     /**
      * Convert entity to dto
@@ -32,7 +32,7 @@ public class GrapeComponentConverter {
      * @param grapeComponent GrapeComponent
      * @return dto
      */
-    public GrapeComponentDto toDto(GrapeComponent grapeComponent) {
+    public static GrapeComponentDto toDto(GrapeComponent grapeComponent) {
         if (grapeComponent == null) {
             throw new IllegalStateException("GrapeComponent is null");
         }
@@ -46,7 +46,7 @@ public class GrapeComponentConverter {
      * @param dto    GrapeComponentDto
      * @return entity
      */
-    public GrapeComponent toEntity(GrapeComponent entity, GrapeComponentDto dto) {
+    public static GrapeComponent toEntity(GrapeComponent entity, GrapeComponentDto dto) {
         Grape grape = new Grape();
         grape.setId(dto.getGrapeId());
 
@@ -90,7 +90,7 @@ public class GrapeComponentConverter {
      * @param dtoList GrapeComponentDto list
      * @return entity list
      */
-    public List<GrapeComponent> toEntity(List<GrapeComponentDto> dtoList) {
+    public static List<GrapeComponent> toEntity(List<GrapeComponentDto> dtoList) {
         List<GrapeComponent> list = new ArrayList<>();
         dtoList.forEach(dto -> list.add(toEntity(null, dto)));
         return list;
