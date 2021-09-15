@@ -256,8 +256,7 @@ public abstract class BaseUnitTest {
     }
 
     private Set<Wine> setupWines() {
-        opusOne2015 = new Wine();
-        opusOne2015.setId(1L);
+        opusOne2015 = Wine.createWineById(1L);
         opusOne2015.setName("Opus One");
         opusOne2015.setVintage(2015);
         opusOne2015.setSize(0.75f);

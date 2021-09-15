@@ -27,72 +27,25 @@ import org.hibernate.annotations.DynamicUpdate;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @Entity
 @DynamicUpdate
 public class Wine extends BaseEntity implements Comparable<Wine> {
 
-    /**
-     * Default constructor
-     */
-    public Wine() {
-        super();
+    protected Wine() {
     }
 
     /**
-     * Wine constructor
+     * Create a Wine by an id
      *
-     * @param name        name
-     * @param vintage     vintage
-     * @param alcohol     alcohol
-     * @param size        size
-     * @param acid        acid
-     * @param pH          pH
-     * @param bottleAging bottleAging
-     * @param description description
-     * @param weblink     weblink
-     * @param producer    producer
-     * @param closure     closure
-     * @param shape       shape
-     * @param color       color
-     * @param type        type
-     * @param image       image
+     * @param id the id
+     * @return the Wine
      */
-    public Wine(String name, Integer vintage, Float alcohol, Float size,
-                Float acid, Float pH, Integer bottleAging, String description, String weblink,
-                Producer producer, Closure closure, Shape shape, Color color, Type type, byte[] image) {
-        super();
-        this.name = name;
-        this.vintage = vintage;
-        this.alcohol = alcohol;
-        this.size = size;
-        this.acid = acid;
-        this.pH = pH;
-        this.bottleAging = bottleAging;
-        this.description = description;
-        this.weblink = weblink;
-        this.producer = producer;
-        this.closure = closure;
-        this.shape = shape;
-        this.color = color;
-        this.type = type;
-        this.image = image;
-    }
-
-    /**
-     * Wine constructor
-     *
-     * @param name    String name
-     * @param vintage Integer vintage
-     * @param size    Float size
-     */
-    public Wine(String name, Integer vintage, Float size) {
-        super();
-        this.name = name;
-        this.vintage = vintage;
-        this.size = size;
+    public static Wine createWineById(Long id) {
+        Wine wine = new Wine();
+        wine.setId(id);
+        return wine;
     }
 
     @NotNull
@@ -103,12 +56,12 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     @Column(name = "vintage")
     private Integer vintage;
 
-    @Column(name = "alcohol")
-    private Float alcohol;
-
     @NotNull
     @Column(name = "size")
     private Float size;
+
+    @Column(name = "alcohol")
+    private Float alcohol;
 
     @Column(name = "acid")
     private Float acid;
@@ -200,4 +153,227 @@ public class Wine extends BaseEntity implements Comparable<Wine> {
     public String toString() {
         return "Wine(" + id + ")";
     }
+
+
+    /**
+     * Builder class for Wine
+     */
+    public static class Builder {
+        private final String name;
+        private final Integer vintage;
+        private final Float size;
+
+        /**
+         * Builder constructor with non-null fields
+         *
+         * @param name    the name
+         * @param vintage the vintage
+         * @param size    the size
+         */
+        public Builder(String name, Integer vintage, Float size) {
+            this.name = name;
+            this.vintage = vintage;
+            this.size = size;
+        }
+
+        private Float alcohol;
+
+        /**
+         * Build with alcohol
+         *
+         * @param val the value for alcohol
+         * @return the Builder
+         */
+        public Builder alcohol(Float val) {
+            alcohol = val;
+            return this;
+        }
+
+        private Float acid;
+
+        /**
+         * Build with acid
+         *
+         * @param val the value for acid
+         * @return the Builder
+         */
+        public Builder acid(Float val) {
+            acid = val;
+            return this;
+        }
+
+        private Float pH;
+
+        /**
+         * Build with pH
+         *
+         * @param val the value for pH
+         * @return the Builder
+         */
+        public Builder pH(Float val) {
+            pH = val;
+            return this;
+        }
+
+        private Integer bottleAging;
+
+        /**
+         * Build with bottleAging
+         *
+         * @param val the value for a bottle's age
+         * @return the Builder
+         */
+        public Builder bottleAging(Integer val) {
+            bottleAging = val;
+            return this;
+        }
+
+        private String description;
+
+        /**
+         * Build with description
+         *
+         * @param val the value for the description
+         * @return the Builder
+         */
+        public Builder description(String val) {
+            description = val;
+            return this;
+        }
+
+        private String weblink;
+
+        /**
+         * Build with weblink
+         *
+         * @param val the value for a weblink
+         * @return the Builder
+         */
+        public Builder weblink(String val) {
+            weblink = val;
+            return this;
+        }
+
+        private String subarea;
+
+        /**
+         * Build with subarea
+         *
+         * @param val the value for a subarea
+         * @return the Builder
+         */
+        public Builder subarea(String val) {
+            subarea = val;
+            return this;
+        }
+
+        private byte[] image;
+
+        /**
+         * Build with image
+         *
+         * @param val the value for an image
+         * @return the Builder
+         */
+        public Builder image(byte[] val) {
+            image = val;
+            return this;
+        }
+
+        private Producer producer;
+
+        /**
+         * Build with producer
+         *
+         * @param val the value for the Producer
+         * @return the Builder
+         */
+        public Builder producer(Producer val) {
+            producer = val;
+            return this;
+        }
+
+        private Closure closure;
+
+        /**
+         * Build with closure
+         *
+         * @param val the value for the Closure
+         * @return the Builder
+         */
+        public Builder closure(Closure val) {
+            closure = val;
+            return this;
+        }
+
+        private Color color;
+
+        /**
+         * Build with color
+         *
+         * @param val the value for the Color
+         * @return the Builder
+         */
+        public Builder color(Color val) {
+            color = val;
+            return this;
+        }
+
+        private Shape shape;
+
+        /**
+         * Build with shape
+         *
+         * @param val the value for the Shape
+         * @return the Builder
+         */
+        public Builder shape(Shape val) {
+            shape = val;
+            return this;
+        }
+
+        private Type type;
+
+        /**
+         * Build with type
+         *
+         * @param val the value for the Type
+         * @return the Builder
+         */
+        public Builder type(Type val) {
+            type = val;
+            return this;
+        }
+
+        /**
+         * Build our Wine
+         *
+         * @return the Wine
+         */
+        public Wine build() {
+            return new Wine(this);
+        }
+    }
+
+    private Wine(Builder builder) {
+        name = builder.name;
+        vintage = builder.vintage;
+        size = builder.size;
+
+        alcohol = builder.alcohol;
+        acid = builder.acid;
+        pH = builder.pH;
+        bottleAging = builder.bottleAging;
+        description = builder.description;
+        weblink = builder.weblink;
+        image = builder.image;
+        subarea = builder.subarea;
+
+        producer = builder.producer;
+        closure = builder.closure;
+        color = builder.color;
+        shape = builder.shape;
+        type = builder.type;
+    }
+
 }

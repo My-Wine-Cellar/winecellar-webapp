@@ -8,6 +8,7 @@
 
 package info.mywinecellar.model;
 
+import info.mywinecellar.dto.UserRegisterDto;
 import info.mywinecellar.wset.WSET;
 
 import java.sql.Date;
@@ -30,32 +31,46 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "users")
 @DynamicUpdate
 public class User implements UserDetails {
 
+    protected User() {
+    }
+
+    /**
+     * Create a User instance
+     *
+     * @param dto {@link UserRegisterDto} the dto used to create the instance
+     * @return a new User instance
+     */
+    public static User createUser(UserRegisterDto dto) {
+        User user = new User();
+        user.setFirstName(dto.getFirstName());
+        user.setMiddleName(dto.getMiddleName());
+        user.setLastName(dto.getLastName());
+        user.setEmail(dto.getEmail());
+        user.setUsername(dto.getUserName());
+        user.setEnabled(true);
+        return user;
+    }
+
     @Id
     @GeneratedValue(generator = "sequence-generator")
     @GenericGenerator(
-        name = "sequence-generator",
-        strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-        parameters = {
-            @Parameter(name = "sequence_name", value = "user_sequence"),
-            @Parameter(name = "initial_value", value = "4"),
-            @Parameter(name = "increment_size", value = "1")
-        }
+            name = "sequence-generator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @Parameter(name = "sequence_name", value = "user_sequence"),
+                    @Parameter(name = "initial_value", value = "4"),
+                    @Parameter(name = "increment_size", value = "1")
+            }
     )
     private int id;
 

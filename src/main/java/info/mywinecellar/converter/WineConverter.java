@@ -94,9 +94,11 @@ public final class WineConverter {
         closure.setId(dto.getClosureId());
 
         if (entity == null) {
-            entity = new Wine(dto.getName(), dto.getVintage(), dto.getAlcohol(), dto.getSize(),
-                    dto.getAcid(), dto.getPH(), dto.getBottleAging(), dto.getDescription(), dto.getWeblink(),
-                    producer, closure, shape, color, type, Image.decode(dto.getImage()));
+            entity = new Wine.Builder(dto.getName(), dto.getVintage(), dto.getSize())
+                    .alcohol(dto.getAlcohol()).acid(dto.getAcid()).pH(dto.getPH()).bottleAging(dto.getBottleAging())
+                    .description(dto.getDescription()).weblink(dto.getWeblink()).image(Image.decode(dto.getImage()))
+                    .producer(producer).closure(closure).color(color).type(type).shape(shape)
+                    .build();
         } else {
             entity.setName(dto.getName());
             entity.setVintage(dto.getVintage());

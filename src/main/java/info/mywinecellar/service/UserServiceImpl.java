@@ -123,14 +123,8 @@ public class UserServiceImpl implements UserService {
             throw new UsernameException();
         }
 
-        final User user = new User();
-        user.setFirstName(accountDto.getFirstName());
-        user.setMiddleName(accountDto.getMiddleName());
-        user.setLastName(accountDto.getLastName());
+        User user = User.createUser(accountDto);
         user.setPassword(bCryptPasswordEncoder.encode(accountDto.getPassword()));
-        user.setEmail(accountDto.getEmail());
-        user.setUsername(accountDto.getUserName());
-        user.setEnabled(true);
         user.setAuthorities(Collections.singleton(authorityRepository.findByAuthority("ROLE_USER")));
         userRepository.save(user);
         //String userToken = this.createVerificationToken(user);

@@ -50,8 +50,7 @@ public final class GrapeComponentConverter {
         Grape grape = new Grape();
         grape.setId(dto.getGrapeId());
 
-        Wine wine = new Wine();
-        wine.setId(dto.getWineId());
+        Wine wine = Wine.createWineById(dto.getWineId());
 
         Fermentation fermentation = new Fermentation();
         fermentation.setId(dto.getFermentationId());
