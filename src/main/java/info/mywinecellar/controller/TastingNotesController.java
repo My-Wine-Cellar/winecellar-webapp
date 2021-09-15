@@ -20,6 +20,7 @@ import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
 import info.mywinecellar.service.TastingNotesService;
+import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -42,6 +43,9 @@ public class TastingNotesController extends AbstractController {
 
     @Inject
     TastingNotesService tastingNotesService;
+
+    @Inject
+    private UserService userService;
 
     /**
      * Default constructor

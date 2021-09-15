@@ -15,6 +15,7 @@ import info.mywinecellar.model.Wine;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.service.ReviewService;
+import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
 import java.sql.Date;
@@ -38,6 +39,9 @@ public class ReviewController extends AbstractController {
 
     @Inject
     ReviewService reviewService;
+
+    @Inject
+    private UserService userService;
 
     /**
      * Default constructor

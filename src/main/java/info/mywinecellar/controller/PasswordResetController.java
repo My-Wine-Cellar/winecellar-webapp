@@ -11,7 +11,9 @@ package info.mywinecellar.controller;
 import info.mywinecellar.dto.UserResetDto;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+import info.mywinecellar.service.UserService;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/password-reset")
 public class PasswordResetController extends AbstractController {
+
+    @Inject
+    private UserService userService;
 
     /**
      * @param model model

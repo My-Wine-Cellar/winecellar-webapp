@@ -17,6 +17,7 @@ import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.service.BottleService;
 import info.mywinecellar.service.TastedService;
+import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
 
@@ -42,6 +43,9 @@ public class BottleController extends AbstractController {
 
     @Inject
     TastedService tastedService;
+
+    @Inject
+    private UserService userService;
 
     /**
      * Default constructor

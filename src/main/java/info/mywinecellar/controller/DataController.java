@@ -38,6 +38,7 @@ import info.mywinecellar.nav.Session;
 import info.mywinecellar.service.BottleService;
 import info.mywinecellar.service.ReviewService;
 import info.mywinecellar.service.TastingNotesService;
+import info.mywinecellar.service.UserService;
 import info.mywinecellar.service.WishlistService;
 import info.mywinecellar.util.Image;
 import info.mywinecellar.wset.WSET;
@@ -74,6 +75,9 @@ public class DataController extends AbstractController {
 
     @Inject
     private WishlistService wishlistService;
+
+    @Inject
+    private UserService userService;
 
     /**
      * Default constructor

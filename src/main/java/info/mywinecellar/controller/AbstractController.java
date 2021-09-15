@@ -25,7 +25,6 @@ import info.mywinecellar.service.AreaService;
 import info.mywinecellar.service.CountryService;
 import info.mywinecellar.service.ProducerService;
 import info.mywinecellar.service.RegionService;
-import info.mywinecellar.service.UserService;
 import info.mywinecellar.service.WineService;
 
 import java.security.Principal;
@@ -37,9 +36,6 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractController {
 
-    /**
-     * Logger
-     */
     final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Inject
@@ -53,9 +49,6 @@ public abstract class AbstractController {
 
     @Inject
     RegionService regionService;
-
-    @Inject
-    UserService userService;
 
     @Inject
     WineService wineService;

@@ -14,6 +14,7 @@ import info.mywinecellar.model.User;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.service.TastedService;
+import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
 
@@ -34,6 +35,9 @@ public class TastedController extends AbstractController {
 
     @Inject
     TastedConverter tastedConverter;
+
+    @Inject
+    private UserService userService;
 
     /**
      * Default constructor
