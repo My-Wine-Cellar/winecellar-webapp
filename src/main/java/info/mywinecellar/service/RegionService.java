@@ -12,7 +12,6 @@ import info.mywinecellar.converter.RegionConverter;
 import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.model.Region;
 
-import javax.inject.Inject;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
@@ -24,9 +23,6 @@ public class RegionService extends AbstractService<Region> {
     protected RegionService() {
         super(Region.class);
     }
-
-    @Inject
-    RegionConverter regionConverter;
 
     /**
      * Find Region by it's name
@@ -74,7 +70,7 @@ public class RegionService extends AbstractService<Region> {
      */
     @Transactional
     public Region editRegion(RegionDto dto, Long regionId) {
-        Region region = regionConverter.toEntity(this.findById(regionId), dto);
+        Region region = RegionConverter.toEntity(this.findById(regionId), dto);
         this.save(region);
         return region;
     }

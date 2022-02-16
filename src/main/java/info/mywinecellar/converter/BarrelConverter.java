@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Barrel} and {@link BarrelDto} conversion
+ */
+public final class BarrelConverter {
 
-@Component
-public class BarrelConverter {
+    private BarrelConverter() {
+    }
 
     /**
      * Convert Barrel entity to BarrelDto
@@ -26,7 +29,7 @@ public class BarrelConverter {
      * @param barrel Barrel barrel
      * @return BarrelDto object
      */
-    public BarrelDto toDto(Barrel barrel) {
+    public static BarrelDto toDto(Barrel barrel) {
         if (barrel == null) {
             throw new IllegalStateException("Barrel is null");
         }
@@ -39,7 +42,7 @@ public class BarrelConverter {
      * @param barrels Barrel list
      * @return entity list
      */
-    public List<BarrelDto> toDto(Set<Barrel> barrels) {
+    public static List<BarrelDto> toDto(Set<Barrel> barrels) {
         if (barrels == null) {
             throw new IllegalStateException("Barrel list is null");
         }

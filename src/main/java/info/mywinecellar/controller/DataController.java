@@ -8,6 +8,12 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.AreaConverter;
+import info.mywinecellar.converter.CountryConverter;
+import info.mywinecellar.converter.GrapeConverter;
+import info.mywinecellar.converter.ProducerConverter;
+import info.mywinecellar.converter.RegionConverter;
+import info.mywinecellar.converter.WineConverter;
 import info.mywinecellar.dto.AbstractKeyDto;
 import info.mywinecellar.dto.AgingDto;
 import info.mywinecellar.dto.BarrelDto;
@@ -32,6 +38,7 @@ import info.mywinecellar.nav.Session;
 import info.mywinecellar.service.BottleService;
 import info.mywinecellar.service.ReviewService;
 import info.mywinecellar.service.TastingNotesService;
+import info.mywinecellar.service.UserService;
 import info.mywinecellar.service.WishlistService;
 import info.mywinecellar.util.Image;
 import info.mywinecellar.wset.WSET;
@@ -69,6 +76,9 @@ public class DataController extends AbstractController {
     @Inject
     private WishlistService wishlistService;
 
+    @Inject
+    private UserService userService;
+
     /**
      * Default constructor
      */
@@ -83,7 +93,7 @@ public class DataController extends AbstractController {
     @GetMapping("/")
     public String dataRootGet(Model model) {
         Set<Country> countries = countryService.findWithRegions();
-        model.addAttribute(Attributes.COUNTRIES, countryConverter.toDto(countries));
+        model.addAttribute(Attributes.COUNTRIES, CountryConverter.toDto(countries));
 
         Session.updateSessionAttributes(null, null, null, null, null);
 
@@ -111,8 +121,8 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
-        model.addAttribute(Attributes.REGIONS, regionConverter.toDto(c.getRegions()));
+        model.addAttribute(Attributes.COUNTRY, CountryConverter.toDto(c));
+        model.addAttribute(Attributes.REGIONS, RegionConverter.toDto(c.getRegions()));
 
         Session.updateSessionAttributes(c.getId(), null, null, null, null);
 
@@ -144,9 +154,9 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
-        model.addAttribute(Attributes.REGION, regionConverter.toDto(r));
-        model.addAttribute(Attributes.AREAS, areaConverter.toDto(r.getAreas()));
+        model.addAttribute(Attributes.COUNTRY, CountryConverter.toDto(c));
+        model.addAttribute(Attributes.REGION, RegionConverter.toDto(r));
+        model.addAttribute(Attributes.AREAS, AreaConverter.toDto(r.getAreas()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), null, null, null);
 
@@ -191,11 +201,11 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
-        model.addAttribute(Attributes.REGION, regionConverter.toDto(r));
-        model.addAttribute(Attributes.AREA, areaConverter.toDto(a));
-        model.addAttribute(Attributes.PRODUCERS, producerConverter.toDto(a.getProducers()));
-        model.addAttribute(Attributes.PRIMARY_GRAPES, grapeConverter.toDto(a.getPrimaryGrapes()));
+        model.addAttribute(Attributes.COUNTRY, CountryConverter.toDto(c));
+        model.addAttribute(Attributes.REGION, RegionConverter.toDto(r));
+        model.addAttribute(Attributes.AREA, AreaConverter.toDto(a));
+        model.addAttribute(Attributes.PRODUCERS, ProducerConverter.toDto(a.getProducers()));
+        model.addAttribute(Attributes.PRIMARY_GRAPES, GrapeConverter.toDto(a.getPrimaryGrapes()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), null, null);
 
@@ -252,11 +262,11 @@ public class DataController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
-        model.addAttribute(Attributes.REGION, regionConverter.toDto(r));
-        model.addAttribute(Attributes.AREA, areaConverter.toDto(a));
-        model.addAttribute(Attributes.PRODUCER, producerConverter.toDto(p));
-        model.addAttribute(Attributes.WINES, wineConverter.toDto(p.getWines()));
+        model.addAttribute(Attributes.COUNTRY, CountryConverter.toDto(c));
+        model.addAttribute(Attributes.REGION, RegionConverter.toDto(r));
+        model.addAttribute(Attributes.AREA, AreaConverter.toDto(a));
+        model.addAttribute(Attributes.PRODUCER, ProducerConverter.toDto(p));
+        model.addAttribute(Attributes.WINES, WineConverter.toDto(p.getWines()));
 
         Session.updateSessionAttributes(c.getId(), r.getId(), a.getId(), p.getId(), null);
 
@@ -374,11 +384,11 @@ public class DataController extends AbstractController {
         }
         winegrapes.sort(new GrapeComponentSorter());
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(c));
-        model.addAttribute(Attributes.REGION, regionConverter.toDto(r));
-        model.addAttribute(Attributes.AREA, areaConverter.toDto(a));
-        model.addAttribute(Attributes.PRODUCER, producerConverter.toDto(p));
-        model.addAttribute(Attributes.WINE, wineConverter.toDetailsDto(w));
+        model.addAttribute(Attributes.COUNTRY, CountryConverter.toDto(c));
+        model.addAttribute(Attributes.REGION, RegionConverter.toDto(r));
+        model.addAttribute(Attributes.AREA, AreaConverter.toDto(a));
+        model.addAttribute(Attributes.PRODUCER, ProducerConverter.toDto(p));
+        model.addAttribute(Attributes.WINE, WineConverter.toDetailsDto(w));
         model.addAttribute(Attributes.ENCODED_IMAGE, Image.encode(w.getImage()));
         model.addAttribute(Attributes.WINEGRAPES, winegrapes);
         model.addAttribute(Attributes.MYBOTTLE, bottle);

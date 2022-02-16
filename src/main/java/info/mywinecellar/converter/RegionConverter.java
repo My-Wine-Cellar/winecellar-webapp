@@ -16,10 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Region} and {@link RegionDto} conversion
+ */
+public final class RegionConverter {
 
-@Component
-public class RegionConverter {
+    private RegionConverter() {
+    }
 
     /**
      * Convert Region entity to RegionDto
@@ -27,7 +30,7 @@ public class RegionConverter {
      * @param region Region region
      * @return RegionDto object
      */
-    public RegionDto toDto(Region region) {
+    public static RegionDto toDto(Region region) {
         if (region == null) {
             throw new IllegalStateException("Region is null");
         }
@@ -40,7 +43,7 @@ public class RegionConverter {
      * @param regions List<Region> regions
      * @return List<RegionDto> regionDto's
      */
-    public List<RegionDto> toDto(Set<Region> regions) {
+    public static List<RegionDto> toDto(Set<Region> regions) {
         if (regions == null) {
             throw new IllegalStateException("Region list is null");
         }
@@ -54,10 +57,10 @@ public class RegionConverter {
      * Update and convert a Region entity from RegionDto to prepare for save
      *
      * @param entity Region entity
-     * @param dto     RegionDto dto
+     * @param dto    RegionDto dto
      * @return Region entity
      */
-    public Region toEntity(Region entity, RegionDto dto) {
+    public static Region toEntity(Region entity, RegionDto dto) {
         if (entity == null) {
             entity = new Region(dto.getName(), dto.getDescription(), dto.getWeblink());
         } else {

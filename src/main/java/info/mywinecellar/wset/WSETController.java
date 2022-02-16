@@ -8,7 +8,6 @@
 
 package info.mywinecellar.wset;
 
-import info.mywinecellar.controller.AbstractController;
 import info.mywinecellar.json.Builder;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Country;
@@ -18,6 +17,8 @@ import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+import info.mywinecellar.service.UserService;
+import info.mywinecellar.service.WineService;
 
 import java.security.Principal;
 
@@ -35,19 +36,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/wset")
-public class WSETController extends AbstractController {
+public class WSETController {
 
-    /**
-     * WSETConverter
-     */
     @Inject
     private WSETConverter wsetConverter;
 
-    /**
-     * WSETService
-     */
     @Inject
     private WSETService wsetService;
+
+    @Inject
+    private UserService userService;
+
+    @Inject
+    private WineService wineService;
 
     /**
      * Default constructor

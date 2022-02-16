@@ -8,6 +8,10 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.ProducerConverter;
+import info.mywinecellar.converter.TastingNotesConverter;
+import info.mywinecellar.converter.UserConverter;
+import info.mywinecellar.converter.WineConverter;
 import info.mywinecellar.dto.GenericTastingNotesDto;
 import info.mywinecellar.model.GenericTastingNotes;
 import info.mywinecellar.model.User;
@@ -15,10 +19,13 @@ import info.mywinecellar.model.Wine;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
 import info.mywinecellar.nav.Session;
+import info.mywinecellar.service.TastingNotesService;
+import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
 import java.sql.Date;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -33,6 +40,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/tastingnotes")
 public class TastingNotesController extends AbstractController {
+
+    @Inject
+    TastingNotesService tastingNotesService;
+
+    @Inject
+    private UserService userService;
 
     /**
      * Default constructor
@@ -53,7 +66,7 @@ public class TastingNotesController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.NOTES, tastingNotesConverter.toDto(user.getGenericTastingNotes()));
+        model.addAttribute(Attributes.NOTES, TastingNotesConverter.toDto(user.getGenericTastingNotes()));
         return Paths.TASTING_NOTES_LIST;
     }
 
@@ -77,9 +90,9 @@ public class TastingNotesController extends AbstractController {
         }
 
         GenericTastingNotesDto dto = new GenericTastingNotesDto();
-        dto.setUser(userConverter.toDto(user));
-        dto.setWine(wineConverter.toDto(wine));
-        dto.setProducer(producerConverter.toDto(wine.getProducer()));
+        dto.setUser(UserConverter.toDto(user));
+        dto.setWine(WineConverter.toDto(wine));
+        dto.setProducer(ProducerConverter.toDto(wine.getProducer()));
         dto.setArea(getAreaDto(Session.getAreaId()));
         dto.setRegion(getRegionDto(Session.getRegionId()));
         dto.setCountry(getCountryDto(Session.getCountryId()));
@@ -147,8 +160,8 @@ public class TastingNotesController extends AbstractController {
             }
         }
 
-        model.addAttribute(Attributes.NOTE, tastingNotesConverter.toDto(gtn));
-        model.addAttribute(Attributes.USER, userConverter.toDto(user));
+        model.addAttribute(Attributes.NOTE, TastingNotesConverter.toDto(gtn));
+        model.addAttribute(Attributes.USER, UserConverter.toDto(user));
         return Paths.TASTING_NOTES_VIEW;
     }
 
@@ -169,7 +182,7 @@ public class TastingNotesController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.NOTE, tastingNotesConverter.toDto(gtn));
+        model.addAttribute(Attributes.NOTE, TastingNotesConverter.toDto(gtn));
         return Paths.TASTING_NOTES_ADD_EDIT;
     }
 

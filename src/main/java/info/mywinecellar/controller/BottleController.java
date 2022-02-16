@@ -8,14 +8,20 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.BottleConverter;
 import info.mywinecellar.model.Bottle;
 import info.mywinecellar.model.Tasted;
 import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+import info.mywinecellar.service.BottleService;
+import info.mywinecellar.service.TastedService;
+import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
+
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +37,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/bottle")
 public class BottleController extends AbstractController {
+
+    @Inject
+    BottleService bottleService;
+
+    @Inject
+    TastedService tastedService;
+
+    @Inject
+    private UserService userService;
 
     /**
      * Default constructor
@@ -203,7 +218,7 @@ public class BottleController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.BOTTLES, bottleConverter.toDto(user.getBottles()));
+        model.addAttribute(Attributes.BOTTLES, BottleConverter.toDto(user.getBottles()));
         return Paths.BOTTLE_LIST;
     }
 }

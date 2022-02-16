@@ -15,8 +15,6 @@ import info.mywinecellar.model.Area;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,19 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AreaConverterTest extends BaseUnitTest {
 
-    @Inject
-    AreaConverter areaConverter;
-
-    @Inject
-    RegionConverter regionConverter;
-
-    AreaDto areaDto;
+    private AreaDto areaDto;
 
     @BeforeEach
     void setUp() {
-        regionConverter = new RegionConverter();
-        areaConverter = new AreaConverter(regionConverter);
-
         areaDto = new AreaDto();
         areaDto.setName("Area Dto");
         areaDto.setDescription("dto description");
@@ -47,14 +36,8 @@ class AreaConverterTest extends BaseUnitTest {
     }
 
     @Test
-    void testInjection() {
-        assertNotNull(regionConverter);
-        assertNotNull(areaConverter);
-    }
-
-    @Test
     void toDto() {
-        areaDto = areaConverter.toDto(napa);
+        areaDto = AreaConverter.toDto(napa);
         assertNotNull(areaDto);
 
         assertEquals(napa.getName(), areaDto.getName());
@@ -65,12 +48,12 @@ class AreaConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoNull() {
-        assertThrows(IllegalStateException.class, () -> areaConverter.toDto((Area) null));
+        assertThrows(IllegalStateException.class, () -> AreaConverter.toDto((Area) null));
     }
 
     @Test
     void toDtoList() {
-        List<AreaDto> result = areaConverter.toDto(caliAreas);
+        List<AreaDto> result = AreaConverter.toDto(caliAreas);
 
         assertNotNull(result);
         assertEquals(2, result.size());
@@ -82,7 +65,7 @@ class AreaConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoListSorted() {
-        List<AreaDto> result = areaConverter.toDto(caliAreas);
+        List<AreaDto> result = AreaConverter.toDto(caliAreas);
 
         assertEquals("Napa Valley AVA", result.get(0).getName());
         assertEquals("Sonoma Valley AVA", result.get(1).getName());
@@ -90,12 +73,12 @@ class AreaConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoListNull() {
-        assertThrows(IllegalStateException.class, () -> areaConverter.toDto((Set<Area>) null));
+        assertThrows(IllegalStateException.class, () -> AreaConverter.toDto((Set<Area>) null));
     }
 
     @Test
     void toEntity() {
-        Area result = areaConverter.toEntity(napa, areaDto);
+        Area result = AreaConverter.toEntity(napa, areaDto);
         assertNotNull(result);
 
         assertNotEquals(areaDto.getName(), result.getName());
@@ -106,7 +89,7 @@ class AreaConverterTest extends BaseUnitTest {
 
     @Test
     void toEntityNull() {
-        Area result = areaConverter.toEntity(null, areaDto);
+        Area result = AreaConverter.toEntity(null, areaDto);
         assertNotNull(result);
 
         assertEquals(areaDto.getName(), result.getName());

@@ -8,14 +8,17 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.GrapeConverter;
 import info.mywinecellar.dto.AbstractKeyDto;
 import info.mywinecellar.dto.GrapeDto;
 import info.mywinecellar.model.Grape;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+import info.mywinecellar.service.GrapeService;
 
 import java.security.Principal;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/grape")
 public class GrapeController extends AbstractController {
+
+    @Inject
+    GrapeService grapeService;
 
     /**
      * Default constructor
@@ -55,9 +61,9 @@ public class GrapeController extends AbstractController {
      */
     @GetMapping("/list")
     public String grapeListGet(Model model) {
-        model.addAttribute(Attributes.RED_GRAPES, grapeConverter
+        model.addAttribute(Attributes.RED_GRAPES, GrapeConverter
                 .toDto(grapeService.getRedGrapes()));
-        model.addAttribute(Attributes.WHITE_GRAPES, grapeConverter
+        model.addAttribute(Attributes.WHITE_GRAPES, GrapeConverter
                 .toDto(grapeService.getWhiteGrapes()));
         return Paths.GRAPE_LIST;
     }
@@ -75,7 +81,7 @@ public class GrapeController extends AbstractController {
             return Paths.REDIRECT_ROOT;
         }
 
-        model.addAttribute(Attributes.GRAPE, grapeConverter.toDto(entity));
+        model.addAttribute(Attributes.GRAPE, GrapeConverter.toDto(entity));
         return Paths.GRAPE_DETAILS;
     }
 
@@ -89,7 +95,7 @@ public class GrapeController extends AbstractController {
     public String grapeEditGet(@PathVariable Long grapeId, Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.GRAPE, grapeConverter.toDto(grapeService.findById(grapeId)));
+        model.addAttribute(Attributes.GRAPE, GrapeConverter.toDto(grapeService.findById(grapeId)));
         return Paths.GRAPE_EDIT;
     }
 
@@ -111,13 +117,13 @@ public class GrapeController extends AbstractController {
             return Paths.GRAPE_EDIT;
         } else {
             Grape entity = grapeService.findById(grapeId);
-            entity = grapeConverter.toEntity(entity, grapeDto);
+            entity = GrapeConverter.toEntity(entity, grapeDto);
             if (action.equals("save")) {
                 grapeService.save(entity);
-                GrapeDto save = grapeConverter.toDto(entity);
+                GrapeDto save = GrapeConverter.toDto(entity);
                 return Paths.REDIRECT_GRAPE + save.getKey();
             } else {
-                GrapeDto cancel = grapeConverter.toDto(entity);
+                GrapeDto cancel = GrapeConverter.toDto(entity);
                 return Paths.REDIRECT_GRAPE + cancel.getKey();
             }
         }

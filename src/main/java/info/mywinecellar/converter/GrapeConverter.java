@@ -17,13 +17,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
-
 /**
- * Grape converter
+ * Utility class for {@link Grape} and {@link GrapeDto} conversion
  */
-@Component
-public class GrapeConverter {
+public final class GrapeConverter {
+
+    private GrapeConverter() {
+    }
 
     /**
      * Create a list of Dto objects
@@ -31,7 +31,7 @@ public class GrapeConverter {
      * @param grapes The grapes
      * @return The Dto objects
      */
-    public List<GrapeDto> toDto(List<Grape> grapes) {
+    public static List<GrapeDto> toDto(List<Grape> grapes) {
         return convert(grapes);
     }
 
@@ -41,7 +41,7 @@ public class GrapeConverter {
      * @param grapes The grapes
      * @return The Dto objects
      */
-    public List<GrapeDto> toDto(Set<Grape> grapes) {
+    public static List<GrapeDto> toDto(Set<Grape> grapes) {
         return convert(grapes);
     }
 
@@ -51,7 +51,7 @@ public class GrapeConverter {
      * @param g A grape
      * @return The Dto
      */
-    public GrapeDto toDto(Grape g) {
+    public static GrapeDto toDto(Grape g) {
         if (g == null) {
             throw new IllegalStateException("Grape is null");
         }
@@ -66,7 +66,7 @@ public class GrapeConverter {
      * @param dto The Dto object
      * @return The new entity
      */
-    public Grape toEntity(Grape g, GrapeDto dto) {
+    public static Grape toEntity(Grape g, GrapeDto dto) {
         if (g == null) {
             g = new Grape(dto.getName(), dto.getColor(), dto.getDescription(), dto.getWeblink());
         } else {
@@ -79,10 +79,11 @@ public class GrapeConverter {
 
     /**
      * Create a list of Dto objects
+     *
      * @param grapes The grapes
      * @return The Dto objects
      */
-    private List<GrapeDto> convert(Collection<Grape> grapes) {
+    private static List<GrapeDto> convert(Collection<Grape> grapes) {
         if (grapes == null) {
             throw new IllegalStateException("Grapes is null");
         }

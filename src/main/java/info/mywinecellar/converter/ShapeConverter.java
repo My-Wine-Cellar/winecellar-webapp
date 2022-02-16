@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Shape} and {@link ShapeDto} conversion
+ */
+public final class ShapeConverter {
 
-@Component
-public class ShapeConverter {
+    private ShapeConverter() {
+    }
 
     /**
      * Convert Entity to Dto
@@ -26,7 +29,7 @@ public class ShapeConverter {
      * @param shape Shape
      * @return Dto
      */
-    public ShapeDto toDto(Shape shape) {
+    public static ShapeDto toDto(Shape shape) {
         if (shape == null) {
             throw new IllegalStateException("Shape is null");
         }
@@ -39,7 +42,7 @@ public class ShapeConverter {
      * @param shapes List of Shapes
      * @return ShapeDto list
      */
-    public List<ShapeDto> toDto(Set<Shape> shapes) {
+    public static List<ShapeDto> toDto(Set<Shape> shapes) {
         if (shapes == null) {
             throw new IllegalStateException("Shape list is null");
         }
@@ -56,7 +59,7 @@ public class ShapeConverter {
      * @param dto   ShapeDto dto
      * @return Shape entity
      */
-    public Shape toEntity(Shape shape, ShapeDto dto) {
+    public static Shape toEntity(Shape shape, ShapeDto dto) {
         if (shape == null) {
             shape = new Shape(dto.getName(), dto.getDescription(), dto.getWeblink());
         } else {

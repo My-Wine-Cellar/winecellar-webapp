@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Bottle} and {@link BottleDto} conversion
+ */
+public final class BottleConverter {
 
-@Component
-public class BottleConverter {
+    private BottleConverter() {
+    }
 
     /**
      * Convert Bottle to BottleDto
@@ -26,7 +29,7 @@ public class BottleConverter {
      * @param bottle bottle
      * @return BottleDto
      */
-    public BottleDto toDto(Bottle bottle) {
+    public static BottleDto toDto(Bottle bottle) {
         if (bottle == null) {
             throw new IllegalStateException("Bottle is null");
         }
@@ -39,7 +42,7 @@ public class BottleConverter {
      * @param bottles List of bottles
      * @return List of BottleDto's
      */
-    public List<BottleDto> toDto(Set<Bottle> bottles) {
+    public static List<BottleDto> toDto(Set<Bottle> bottles) {
         if (bottles == null) {
             throw new IllegalStateException("Bottle list is null");
         }

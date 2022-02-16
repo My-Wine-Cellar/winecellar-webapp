@@ -8,6 +8,7 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.CountryConverter;
 import info.mywinecellar.dto.CountryDto;
 import info.mywinecellar.model.Country;
 import info.mywinecellar.nav.Attributes;
@@ -48,7 +49,7 @@ public class CountryController extends AbstractController {
     public String countryEditGet(@PathVariable Long countryId, Model model, Principal principal) {
         principalNull(principal);
 
-        model.addAttribute(Attributes.COUNTRY, countryConverter.toDto(countryService.findById(countryId)));
+        model.addAttribute(Attributes.COUNTRY, CountryConverter.toDto(countryService.findById(countryId)));
         return Paths.COUNTRY_EDIT;
     }
 

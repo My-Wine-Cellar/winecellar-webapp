@@ -33,7 +33,6 @@ import info.mywinecellar.model.Wine;
 import info.mywinecellar.wset.WSET;
 import info.mywinecellar.wset.WSETConverter;
 
-import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -41,17 +40,6 @@ import java.util.Set;
  */
 public class Builder {
 
-    private final AreaConverter areaConverter;
-    private final CountryConverter countryConverter;
-    private final GrapeConverter grapeConverter;
-    private final ProducerConverter producerConverter;
-    private final RegionConverter regionConverter;
-    private final UserConverter userConverter;
-    private final WineConverter wineConverter;
-    private final ClosureConverter closureConverter;
-    private final ColorConverter colorConverter;
-    private final ShapeConverter shapeConverter;
-    private final TypeConverter typeConverter;
     private final WSETConverter wsetConverter;
 
     private final MyWineCellar json;
@@ -60,17 +48,6 @@ public class Builder {
      * Constructor
      */
     public Builder() {
-        countryConverter = new CountryConverter();
-        regionConverter = new RegionConverter();
-        areaConverter = new AreaConverter(regionConverter);
-        grapeConverter = new GrapeConverter();
-        producerConverter = new ProducerConverter();
-        wineConverter = new WineConverter();
-        closureConverter = new ClosureConverter();
-        colorConverter = new ColorConverter();
-        shapeConverter = new ShapeConverter();
-        typeConverter = new TypeConverter();
-        userConverter = new UserConverter();
         wsetConverter = new WSETConverter();
 
         json = new MyWineCellar();
@@ -84,7 +61,7 @@ public class Builder {
      */
     public Builder area(Area a) {
         if (!json.hasArea(a.getId())) {
-            json.addArea(areaConverter.toDto(a));
+            json.addArea(AreaConverter.toDto(a));
         }
         return this;
     }
@@ -96,7 +73,7 @@ public class Builder {
      * @return The builder
      */
     public Builder areas(Set<Area> areas) {
-        json.addAreas(areaConverter.toDto(areas));
+        json.addAreas(AreaConverter.toDto(areas));
         return this;
     }
 
@@ -108,7 +85,7 @@ public class Builder {
      */
     public Builder country(Country c) {
         if (!json.hasCountry(c.getId())) {
-            json.addCountry(countryConverter.toDto(c));
+            json.addCountry(CountryConverter.toDto(c));
         }
         return this;
     }
@@ -120,7 +97,7 @@ public class Builder {
      * @return The builder
      */
     public Builder countries(Set<Country> countries) {
-        json.addCountries(countryConverter.toDto(countries));
+        json.addCountries(CountryConverter.toDto(countries));
         return this;
     }
 
@@ -132,7 +109,7 @@ public class Builder {
      */
     public Builder grape(Grape g) {
         if (!json.hasGrape(g.getId())) {
-            json.addGrape(grapeConverter.toDto(g));
+            json.addGrape(GrapeConverter.toDto(g));
         }
         return this;
     }
@@ -144,7 +121,7 @@ public class Builder {
      * @return The builder
      */
     public Builder grapes(Set<Grape> grapes) {
-        json.addGrapes(grapeConverter.toDto(grapes));
+        json.addGrapes(GrapeConverter.toDto(grapes));
         return this;
     }
 
@@ -156,7 +133,7 @@ public class Builder {
      */
     public Builder producer(Producer p) {
         if (!json.hasProducer(p.getId())) {
-            json.addProducer(producerConverter.toDto(p));
+            json.addProducer(ProducerConverter.toDto(p));
         }
         return this;
     }
@@ -168,7 +145,7 @@ public class Builder {
      * @return The builder
      */
     public Builder producers(Set<Producer> producers) {
-        json.addProducers(producerConverter.toDto(producers));
+        json.addProducers(ProducerConverter.toDto(producers));
         return this;
     }
 
@@ -180,7 +157,7 @@ public class Builder {
      */
     public Builder region(Region r) {
         if (!json.hasRegion(r.getId())) {
-            json.addRegion(regionConverter.toDto(r));
+            json.addRegion(RegionConverter.toDto(r));
         }
         return this;
     }
@@ -192,7 +169,7 @@ public class Builder {
      * @return The builder
      */
     public Builder regions(Set<Region> regions) {
-        json.addRegions(regionConverter.toDto(regions));
+        json.addRegions(RegionConverter.toDto(regions));
         return this;
     }
 
@@ -203,7 +180,7 @@ public class Builder {
      */
     public Builder user(User u) {
         if (!json.hasUser(u.getId())) {
-            json.addUser(userConverter.toDto(u));
+            json.addUser(UserConverter.toDto(u));
         }
         return this;
     }
@@ -216,7 +193,7 @@ public class Builder {
      */
     public Builder wine(Wine w) {
         if (!json.hasWine(w.getId())) {
-            json.addWine(wineConverter.toDto(w));
+            json.addWine(WineConverter.toDto(w));
         }
         return this;
     }
@@ -228,7 +205,7 @@ public class Builder {
      * @return The builder
      */
     public Builder wines(Set<Wine> wines) {
-        json.addWines(wineConverter.toDto(wines));
+        json.addWines(WineConverter.toDto(wines));
         return this;
     }
 
@@ -240,7 +217,7 @@ public class Builder {
      */
     public Builder closure(Closure c) {
         if (!json.hasClosure(c.getId())) {
-            json.addClosure(closureConverter.toDto(c));
+            json.addClosure(ClosureConverter.toDto(c));
         }
         return this;
     }
@@ -252,7 +229,7 @@ public class Builder {
      * @return The builder
      */
     public Builder closures(Set<Closure> closures) {
-        json.addClosures(closureConverter.toDto(closures));
+        json.addClosures(ClosureConverter.toDto(closures));
         return this;
     }
 
@@ -264,7 +241,7 @@ public class Builder {
      */
     public Builder color(Color c) {
         if (!json.hasColor(c.getId())) {
-            json.addColor(colorConverter.toDto(c));
+            json.addColor(ColorConverter.toDto(c));
         }
         return this;
     }
@@ -276,7 +253,7 @@ public class Builder {
      * @return The builder
      */
     public Builder colors(Set<Color> colors) {
-        json.addColors(colorConverter.toDto(colors));
+        json.addColors(ColorConverter.toDto(colors));
         return this;
     }
 
@@ -288,7 +265,7 @@ public class Builder {
      */
     public Builder shape(Shape s) {
         if (!json.hasShape(s.getId())) {
-            json.addShape(shapeConverter.toDto(s));
+            json.addShape(ShapeConverter.toDto(s));
         }
         return this;
     }
@@ -312,7 +289,7 @@ public class Builder {
      * @return The builder
      */
     public Builder shapes(Set<Shape> shapes) {
-        json.addShapes(shapeConverter.toDto(shapes));
+        json.addShapes(ShapeConverter.toDto(shapes));
         return this;
     }
 
@@ -324,7 +301,7 @@ public class Builder {
      */
     public Builder type(Type t) {
         if (!json.hasType(t.getId())) {
-            json.addType(typeConverter.toDto(t));
+            json.addType(TypeConverter.toDto(t));
         }
         return this;
     }
@@ -336,34 +313,7 @@ public class Builder {
      * @return The builder
      */
     public Builder types(Set<Type> types) {
-        json.addTypes(typeConverter.toDto(types));
-        return this;
-    }
-
-    /**
-     * Builds our entire envelope
-     *
-     * @param c Countries
-     * @param r Regions
-     * @param a Areas
-     * @param p Producers
-     * @param w Wines
-     * @param g Grapes
-     * @return Json envelope
-     */
-    public Builder envelope(Set<Country> c, Set<Region> r, Set<Area> a,
-                            Set<Producer> p, Set<Wine> w, Set<Grape> g) {
-        if (c == null) {
-            this.countries(Collections.emptySet());
-        } else {
-            this.countries(c);
-        }
-
-        this.regions(r);
-        this.areas(a);
-        this.producers(p);
-        this.wines(w);
-        this.grapes(g);
+        json.addTypes(TypeConverter.toDto(types));
         return this;
     }
 

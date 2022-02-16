@@ -18,10 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link BarrelComponent} and {@link BarrelDto} conversion
+ */
+public final class BarrelComponentConverter {
 
-@Component
-public class BarrelComponentConverter {
+    private BarrelComponentConverter() {
+    }
 
     /**
      * Convert entity to dto
@@ -29,7 +32,7 @@ public class BarrelComponentConverter {
      * @param bc BarrelComponent
      * @return BarrelDto
      */
-    public BarrelDto toDto(BarrelComponent bc) {
+    public static BarrelDto toDto(BarrelComponent bc) {
         if (bc == null) {
             throw new IllegalStateException("BarrelComponent is null");
         }
@@ -42,7 +45,7 @@ public class BarrelComponentConverter {
      * @param barrels BarrelComponent list
      * @return BarrelDto list
      */
-    public List<BarrelDto> toDto(Set<BarrelComponent> barrels) {
+    public static List<BarrelDto> toDto(Set<BarrelComponent> barrels) {
         if (barrels == null) {
             throw new IllegalStateException("Barrel list is null");
         }
@@ -59,7 +62,7 @@ public class BarrelComponentConverter {
      * @param dto    BarrelDto
      * @return entity
      */
-    public BarrelComponent toEntity(BarrelComponent entity, BarrelDto dto) {
+    public static BarrelComponent toEntity(BarrelComponent entity, BarrelDto dto) {
         Barrel barrel = new Barrel();
         barrel.setId(dto.getBarrelId());
 
@@ -84,7 +87,7 @@ public class BarrelComponentConverter {
      * @param dtoList BarrelDto list
      * @return entity list
      */
-    public List<BarrelComponent> toEntity(List<BarrelDto> dtoList) {
+    public static List<BarrelComponent> toEntity(List<BarrelDto> dtoList) {
         List<BarrelComponent> list = new ArrayList<>();
         dtoList.forEach(dto -> list.add(toEntity(null, dto)));
         return list;

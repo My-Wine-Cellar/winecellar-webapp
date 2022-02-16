@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Review} and {@link ReviewDto} conversion
+ */
+public final class ReviewConverter {
 
-@Component
-public class ReviewConverter {
+    private ReviewConverter() {
+    }
 
     /**
      * Conver entity to dto
@@ -26,7 +29,7 @@ public class ReviewConverter {
      * @param review review
      * @return dto object
      */
-    public ReviewDto toDto(Review review) {
+    public static ReviewDto toDto(Review review) {
         if (review == null) {
             throw new IllegalStateException("Review is null");
         }
@@ -39,7 +42,7 @@ public class ReviewConverter {
      * @param reviews reviews
      * @return dto list
      */
-    public List<ReviewDto> toDto(Set<Review> reviews) {
+    public static List<ReviewDto> toDto(Set<Review> reviews) {
         if (reviews == null) {
             throw new IllegalStateException("Review list is null");
         }

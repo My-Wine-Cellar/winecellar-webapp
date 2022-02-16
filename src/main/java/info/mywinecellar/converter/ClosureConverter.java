@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Closure} and {@link ClosureDto} conversion
+ */
+public final class ClosureConverter {
 
-@Component
-public class ClosureConverter {
+    private ClosureConverter() {
+    }
 
     /**
      * Convert Entity to Dto
@@ -26,7 +29,7 @@ public class ClosureConverter {
      * @param closure Closure
      * @return Dto
      */
-    public ClosureDto toDto(Closure closure) {
+    public static ClosureDto toDto(Closure closure) {
         if (closure == null) {
             throw new IllegalStateException("Closure is null");
         }
@@ -39,7 +42,7 @@ public class ClosureConverter {
      * @param closures List of Closures
      * @return ClosureDto list
      */
-    public List<ClosureDto> toDto(Set<Closure> closures) {
+    public static List<ClosureDto> toDto(Set<Closure> closures) {
         if (closures == null) {
             throw new IllegalStateException("Closure list is null");
         }
@@ -56,7 +59,7 @@ public class ClosureConverter {
      * @param dto     ClosureDto dto
      * @return Closure entity
      */
-    public Closure toEntity(Closure closure, ClosureDto dto) {
+    public static Closure toEntity(Closure closure, ClosureDto dto) {
         if (closure == null) {
             closure = new Closure(dto.getName(), dto.getDescription(), dto.getWeblink());
         } else {

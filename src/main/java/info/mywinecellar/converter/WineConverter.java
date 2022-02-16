@@ -23,10 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Wine}, {@link WineDetailsDto}, and {@link WineDto} conversion
+ */
+public final class WineConverter {
 
-@Component
-public class WineConverter {
+    private WineConverter() {
+    }
 
     /**
      * Convert entity to dto
@@ -34,7 +37,7 @@ public class WineConverter {
      * @param wine wine
      * @return dto object
      */
-    public WineDto toDto(Wine wine) {
+    public static WineDto toDto(Wine wine) {
         if (wine == null) {
             throw new IllegalStateException("Wine is null");
         }
@@ -47,7 +50,7 @@ public class WineConverter {
      * @param wine wine
      * @return dto object
      */
-    public WineDetailsDto toDetailsDto(Wine wine) {
+    public static WineDetailsDto toDetailsDto(Wine wine) {
         if (wine == null) {
             throw new IllegalStateException("Wine is null");
         }
@@ -60,7 +63,7 @@ public class WineConverter {
      * @param wines wines
      * @return dto list
      */
-    public List<WineDto> toDto(Set<Wine> wines) {
+    public static List<WineDto> toDto(Set<Wine> wines) {
         if (wines == null) {
             throw new IllegalStateException("Wine list is null");
         }
@@ -77,7 +80,7 @@ public class WineConverter {
      * @param dto    dto
      * @return entity
      */
-    public Wine toEntity(Wine entity, WineDto dto) {
+    public static Wine toEntity(Wine entity, WineDto dto) {
         Producer producer = new Producer();
         producer.setId(dto.getProducerId());
 
@@ -91,9 +94,11 @@ public class WineConverter {
         closure.setId(dto.getClosureId());
 
         if (entity == null) {
-            entity = new Wine(dto.getName(), dto.getVintage(), dto.getAlcohol(), dto.getSize(),
-                    dto.getAcid(), dto.getPH(), dto.getBottleAging(), dto.getDescription(), dto.getWeblink(),
-                    producer, closure, shape, color, type, Image.decode(dto.getImage()));
+            entity = new Wine.Builder(dto.getName(), dto.getVintage(), dto.getSize())
+                    .alcohol(dto.getAlcohol()).acid(dto.getAcid()).pH(dto.getPH()).bottleAging(dto.getBottleAging())
+                    .description(dto.getDescription()).weblink(dto.getWeblink()).image(Image.decode(dto.getImage()))
+                    .producer(producer).closure(closure).color(color).type(type).shape(shape)
+                    .build();
         } else {
             entity.setName(dto.getName());
             entity.setVintage(dto.getVintage());

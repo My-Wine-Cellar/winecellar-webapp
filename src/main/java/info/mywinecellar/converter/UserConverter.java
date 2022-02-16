@@ -11,10 +11,13 @@ package info.mywinecellar.converter;
 import info.mywinecellar.dto.UserDto;
 import info.mywinecellar.model.User;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link User} and {@link UserDto} conversion
+ */
+public final class UserConverter {
 
-@Component
-public class UserConverter {
+    private UserConverter() {
+    }
 
     /**
      * Convert entity to dto
@@ -22,7 +25,7 @@ public class UserConverter {
      * @param user user
      * @return dto object
      */
-    public UserDto toDto(User user) {
+    public static UserDto toDto(User user) {
         if (user == null) {
             throw new IllegalStateException("User is null");
         }

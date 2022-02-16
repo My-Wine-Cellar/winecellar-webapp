@@ -8,14 +8,20 @@
 
 package info.mywinecellar.controller;
 
+import info.mywinecellar.converter.WishlistConverter;
 import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.model.Wishlist;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+import info.mywinecellar.service.UserService;
+import info.mywinecellar.service.WineService;
+import info.mywinecellar.service.WishlistService;
 
 import java.security.Principal;
 import java.sql.Date;
+
+import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +35,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/wishlist")
 public class WishlistController extends AbstractController {
+
+    @Inject
+    WishlistService wishlistService;
+    @Inject
+    UserService userService;
+
+    @Inject
+    WineService wineService;
+
+
 
     /**
      * Default constructor
@@ -106,7 +122,7 @@ public class WishlistController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.WISHLIST, wishlistConverter.toDto(user.getWishlist()));
+        model.addAttribute(Attributes.WISHLIST, WishlistConverter.toDto(user.getWishlist()));
         return Paths.WISHLIST_LIST;
     }
 }

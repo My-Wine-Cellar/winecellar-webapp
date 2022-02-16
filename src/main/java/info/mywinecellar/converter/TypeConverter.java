@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link Type} and {@link TypeDto} conversion
+ */
+public final class TypeConverter {
 
-@Component
-public class TypeConverter {
+    private TypeConverter() {
+    }
 
     /**
      * Convert Entity to Dto
@@ -26,7 +29,7 @@ public class TypeConverter {
      * @param type Type
      * @return Dto
      */
-    public TypeDto toDto(Type type) {
+    public static TypeDto toDto(Type type) {
         if (type == null) {
             throw new IllegalStateException("Type is null");
         }
@@ -39,7 +42,7 @@ public class TypeConverter {
      * @param types List of Types
      * @return TypeDto list
      */
-    public List<TypeDto> toDto(Set<Type> types) {
+    public static List<TypeDto> toDto(Set<Type> types) {
         if (types == null) {
             throw new IllegalStateException("Type list is null");
         }
@@ -56,7 +59,7 @@ public class TypeConverter {
      * @param dto  TypeDto dto
      * @return Type entity
      */
-    public Type toEntity(Type type, TypeDto dto) {
+    public static Type toEntity(Type type, TypeDto dto) {
         if (type == null) {
             type = new Type(dto.getName(), dto.getDescription(), dto.getWeblink());
         } else {

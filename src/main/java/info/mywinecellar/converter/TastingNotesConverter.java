@@ -15,10 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+/**
+ * Utility class for {@link GenericTastingNotes} and {@link GenericTastingNotesDto} conversion
+ */
+public final class TastingNotesConverter {
 
-@Component
-public class TastingNotesConverter {
+    private TastingNotesConverter() {
+    }
 
     /**
      * Convert entity to dto
@@ -26,7 +29,7 @@ public class TastingNotesConverter {
      * @param gtn gtn
      * @return dto object
      */
-    public GenericTastingNotesDto toDto(GenericTastingNotes gtn) {
+    public static GenericTastingNotesDto toDto(GenericTastingNotes gtn) {
         if (gtn == null) {
             throw new IllegalStateException("Tasting notes is null");
         }
@@ -39,7 +42,7 @@ public class TastingNotesConverter {
      * @param notes notes
      * @return ui list
      */
-    public List<GenericTastingNotesDto> toDto(Set<GenericTastingNotes> notes) {
+    public static List<GenericTastingNotesDto> toDto(Set<GenericTastingNotes> notes) {
         if (notes == null) {
             throw new IllegalStateException("Tasting notes list is null");
         }

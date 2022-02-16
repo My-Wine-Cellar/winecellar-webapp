@@ -11,7 +11,9 @@ package info.mywinecellar.controller;
 import info.mywinecellar.dto.UserRegisterDto;
 import info.mywinecellar.nav.Attributes;
 import info.mywinecellar.nav.Paths;
+import info.mywinecellar.service.UserService;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/register")
 public class RegistrationController extends AbstractController {
+
+    @Inject
+    private UserService userService;
 
     /**
      * @param model model

@@ -32,13 +32,7 @@ public class AreaService extends AbstractService<Area> {
     }
 
     @Inject
-    private AreaConverter areaConverter;
-
-    @Inject
     private ProducerService producerService;
-
-    @Inject
-    private ProducerConverter producerConverter;
 
     /**
      * Find by name
@@ -83,7 +77,7 @@ public class AreaService extends AbstractService<Area> {
     @Transactional
     public Area editArea(AreaDto dto, Long areaId) {
         Area area = this.findById(areaId);
-        area = areaConverter.toEntity(area, dto);
+        area = AreaConverter.toEntity(area, dto);
         this.save(area);
         return area;
     }
@@ -97,7 +91,7 @@ public class AreaService extends AbstractService<Area> {
      */
     public Area addProducer(Long areaId, ProducerDto dto) {
         Area area = this.findById(areaId);
-        Producer producer = producerConverter.toEntity(null, dto);
+        Producer producer = ProducerConverter.toEntity(null, dto);
         area.getProducers().add(producer);
         producerService.save(producer);
         return area;
