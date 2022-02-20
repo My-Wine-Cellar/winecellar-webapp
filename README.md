@@ -10,9 +10,12 @@
 * [Contact](#contact)
 
 ## General info
-Webapp for keeping track of wines, their tasting notes, and reviews. Goal is to be the premier open-source winecellar application.
+Web application to keep track of wines, their tasting notes, and reviews.
+
+The goal is to be the premier open-source wine cellar application.
 
 ## Technologies
+
 * Java 11
 * Spring Boot
 * Spring Security
@@ -21,12 +24,12 @@ Webapp for keeping track of wines, their tasting notes, and reviews. Goal is to 
 * Bootstrap
 * Thymeleaf
 * Hibernate
-* Docker
-* PostgreSQL (v9.4 or higher is required)
+* PostgreSQL (v10 or higher is required)
 
 ## Project Setup
 
 #### Maven
+
 Maven is needed to execute any and all build commands.
 
 #### PostgreSQL
@@ -41,15 +44,17 @@ installed before proceeding.
 
 *Docker*
 ```
-$ docker run --name winecellar-postgres -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
+$ docker run --name winecellardb -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
 ```
 
 *podman*
 ```
-$ podman run --name winecellar -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
+$ podman run --name winecellardb -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
 ```
 
 This will pull down the latest PostgreSQL image and run the container with all necessary Spring Boot properties for getting a connection. 
+
+#### Running
 
 ```
 $ git clone https://github.com/My-Wine-Cellar/winecellar-webapp
@@ -67,12 +72,23 @@ Access here: http://localhost:8080/
 
 ## Integration Tests
 
-```mvn verify``` will build and run the winecellar-webapp container to connect with Postgres for 
-executing integration tests against our own API.  If you want to run manual tests in Postman or using curl you can
+```mvn verify``` will build and run the winecellar-webapp container to connect with PostgreSQL for 
+executing integration tests against our own API.
+
+If you want to run manual tests in Postman or using curl you can
 use ```mvn docker:build docker:start``` and that will launch both containers to test individual endpoints.  Use ```mvn docker:stop```
 to shutdown both containers.
 
 ## Contribution
+
+Contributions to winecellar-webapp are managed on [GitHub.com](https://github.com/My-Wine-Cellar/winecellar-webapp)
+
+* [Ask a question](https://github.com/My-Wine-Cellar/winecellar-webapp/discussions)
+* [Raise an issue](https://github.com/My-Wine-Cellar/winecellar-webapp/issues)
+* [Feature request](https://github.com/My-Wine-Cellar/winecellar-webapp/issues)
+* [Code submission](https://github.com/My-Wine-Cellar/winecellar-webapp/pulls)
+
+Contributions are most welcome !
 
 Feel free to fork the project.  There are issues and a project board.  Contact info is below.
 
