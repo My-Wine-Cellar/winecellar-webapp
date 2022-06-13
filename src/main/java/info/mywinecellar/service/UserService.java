@@ -10,82 +10,150 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.dto.UserRegisterDto;
 import info.mywinecellar.dto.UserResetDto;
+import info.mywinecellar.exception.EmailException;
+import info.mywinecellar.exception.PasswordException;
+import info.mywinecellar.exception.UsernameException;
+import info.mywinecellar.model.Authority;
 import info.mywinecellar.model.User;
 
+import java.sql.Date;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-public interface UserService extends UserDetailsService {
+@Service
+public class UserService implements UserDetailsService {
 
-    /**
-     * @param id id
-     * @return User
-     */
-    User findById(Integer id);
+    @Inject
+    private UserRepository userRepository;
 
-    /**
-     * @param username username
-     * @return User
-     */
-    User findByUsername(String username);
+    @Inject
+    private AuthorityRepository authorityRepository;
 
-    /**
-     * @param email email
-     * @return User
-     */
-    User findUserByEmail(String email);
+    @Inject
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
-     * @return User list
+     * Find a user by their id
+     *
+     * @param id the id of the user
+     * @return {@link User}
      */
-    List<User> findAll();
+    public User findById(Integer id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
     /**
-     * @param user user
-     * @throws Exception exception
+     * Find a user by their username
+     *
+     * @param username the username of the user
+     * @return {@link User}
      */
-    void createUser(User user) throws Exception;
+    public User findByUsername(String username) {
+        return userRepository.findUserByUsername(username);
+    }
 
     /**
-     * @param userId userId
+     * Load a user their username
+     *
+     * @param username the username of the user
+     * @return {@link UserDetails}
+     * @throws UsernameNotFoundException the exception to be thrown
      */
-    void deleteUserById(Long userId);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Invalid username and password");
+        }
+        user.setLastLogin(new Date(System.currentTimeMillis()));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+                user.getPassword(), mapRolesToAuthorities(user.getAuthorities()));
+    }
+
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Authority> authorities) {
+        return authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.getAuthority()))
+                .collect(Collectors.toList());
+    }
 
     /**
-     * @param accountDto accountDto
-     * @throws Exception exception
+     * Find all users
+     *
+     * @return the list of {@link User}'s
      */
-    void registerNewUserAccount(@Valid UserRegisterDto accountDto) throws Exception;
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
     /**
-     * @param user user
-     * @return String
+     * Regiser a new user
+     *
+     * @param accountDto the object {@link UserRegisterDto} to be used for registration
      */
-    String createVerificationToken(User user);
+    @Transactional
+    public void registerNewUserAccount(@Valid UserRegisterDto accountDto) {
+
+        if (!accountDto.getPassword().equals(accountDto.getMatchingPassword())) {
+            throw new PasswordException();
+        }
+
+        if (this.emailExists(accountDto.getEmail())) {
+            throw new EmailException();
+        }
+
+        if (this.usernameExists(accountDto.getUserName())) {
+            throw new UsernameException();
+        }
+
+        User user = User.createUser(accountDto);
+        user.setPassword(bCryptPasswordEncoder.encode(accountDto.getPassword()));
+        user.setAuthorities(Collections.singleton(authorityRepository.findByAuthority("ROLE_USER")));
+        userRepository.save(user);
+    }
 
     /**
-     * @param token token
-     * @return String
+     * Check to see if the email already exists
+     *
+     * @param email the email to check
+     * @return true if the email exists
      */
-    String validateVerificationToken(String token);
+    public boolean emailExists(String email) {
+        User user = userRepository.findUserByEmail(email);
+        return user != null;
+    }
 
     /**
-     * @param userDto user
+     * Check to see if the username already exists
+     *
+     * @param username the username to check
+     * @return true if the username exists
      */
-    void resetPassword(UserResetDto userDto);
+    public boolean usernameExists(String username) {
+        User user = userRepository.findUserByUsername(username);
+        return user != null;
+    }
 
     /**
-     * @param username username
-     * @return true
+     * Reset a users password
+     *
+     * @param userDto {@link UserResetDto}
      */
-    boolean usernameExists(String username);
-
-    /**
-     * @param email email
-     * @return true
-     */
-    boolean emailExists(String email);
+    public void resetPassword(UserResetDto userDto) {
+        User user = userRepository.findUserByUsername(userDto.getUserName());
+        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        userRepository.save(user);
+    }
 }

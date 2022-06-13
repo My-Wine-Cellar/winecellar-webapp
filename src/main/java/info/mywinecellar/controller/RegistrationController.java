@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/register")
@@ -46,12 +45,10 @@ public class RegistrationController extends AbstractController {
      * @param user   user
      * @param result result
      * @return View
-     * @throws Exception exception
      */
     @PostMapping
     public String userRegistrationPost(@ModelAttribute(Attributes.USER) @Valid UserRegisterDto user,
-                                       BindingResult result)
-            throws Exception {
+                                       BindingResult result) {
         if (userService.emailExists(user.getEmail())) {
             result.rejectValue("email", "error.email");
             return Paths.SECURITY_REGISTER;
@@ -74,22 +71,6 @@ public class RegistrationController extends AbstractController {
     @GetMapping("/success")
     public String userRegistrationSuccess() {
         return Paths.SECURITY_SUCCESS;
-    }
-
-    /**
-     * @param token token
-     * @return View
-     */
-    @GetMapping("/confirm")
-    public String userRegistrationVerificationGet(@RequestParam("token") String token) {
-
-        String result = userService.validateVerificationToken(token);
-        if (result.equals("valid")) {
-            return Paths.SECURITY_LOGIN;
-        } else if (result.equals("invalidToken") || result.equals("expired")) {
-            return Paths.SECURITY_BAD_TOKEN;
-        }
-        return Paths.ERROR_PAGE;
     }
 
 }
