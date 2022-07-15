@@ -9,12 +9,15 @@
 package info.mywinecellar.converter;
 
 import info.mywinecellar.dto.CountryDto;
-import info.mywinecellar.dto.CountryDtoSorter;
 import info.mywinecellar.model.Country;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Utility class for {@link Country} and {@link CountryDto} conversion
@@ -31,26 +34,23 @@ public final class CountryConverter {
      * @return CountryDto object
      */
     public static CountryDto toDto(Country country) {
-        if (country == null) {
-            throw new IllegalStateException("Country is null");
-        }
-        return new CountryDto(country);
+        return Optional.ofNullable(country)
+                .map(CountryDto::new)
+                .orElse(null);
     }
 
     /**
-     * Convert a list of Countries to a list of CountryDto objects
+     * Convert a list of {@link Country}'s to a list of {@link CountryDto} objects
      *
-     * @param countries List<Country> countries
-     * @return List<CountryDto> countryDto's
+     * @param countries this list of countries
+     * @return the list of {@link CountryDto}'s sorted by name, or an empty list
      */
     public static List<CountryDto> toDto(Set<Country> countries) {
-        if (countries == null) {
-            throw new IllegalStateException("Country list is null");
-        }
-        List<CountryDto> result = new ArrayList<>();
-        countries.forEach(country -> result.add(toDto(country)));
-        result.sort(new CountryDtoSorter());
-        return result;
+        return Stream.ofNullable(countries)
+                .flatMap(Collection::stream)
+                .map(CountryConverter::toDto)
+                .sorted(Comparator.comparing(CountryDto::getName))
+                .collect(Collectors.toList());
     }
 
     /**

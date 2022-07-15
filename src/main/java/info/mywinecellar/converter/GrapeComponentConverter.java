@@ -15,8 +15,11 @@ import info.mywinecellar.model.GrapeComponent;
 import info.mywinecellar.model.Maceration;
 import info.mywinecellar.model.Wine;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Utility class for {@link GrapeComponent} and {@link GrapeComponentDto} conversion
@@ -33,10 +36,9 @@ public final class GrapeComponentConverter {
      * @return dto
      */
     public static GrapeComponentDto toDto(GrapeComponent grapeComponent) {
-        if (grapeComponent == null) {
-            throw new IllegalStateException("GrapeComponent is null");
-        }
-        return new GrapeComponentDto(grapeComponent);
+        return Optional.ofNullable(grapeComponent)
+                .map(GrapeComponentDto::new)
+                .orElse(null);
     }
 
     /**
@@ -90,9 +92,10 @@ public final class GrapeComponentConverter {
      * @return entity list
      */
     public static List<GrapeComponent> toEntity(List<GrapeComponentDto> dtoList) {
-        List<GrapeComponent> list = new ArrayList<>();
-        dtoList.forEach(dto -> list.add(toEntity(null, dto)));
-        return list;
+        return Stream.ofNullable(dtoList)
+                .flatMap(Collection::stream)
+                .map(dto -> GrapeComponentConverter.toEntity(null, dto))
+                .collect(Collectors.toList());
     }
 
 

@@ -11,9 +11,12 @@ package info.mywinecellar.converter;
 import info.mywinecellar.dto.ColorDto;
 import info.mywinecellar.model.Color;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Utility class for {@link Color} and {@link ColorDto} conversion
@@ -30,10 +33,9 @@ public final class ColorConverter {
      * @return Dto
      */
     public static ColorDto toDto(Color color) {
-        if (color == null) {
-            throw new IllegalStateException("Color is null");
-        }
-        return new ColorDto(color);
+        return Optional.ofNullable(color)
+                .map(ColorDto::new)
+                .orElse(null);
     }
 
     /**
@@ -43,13 +45,10 @@ public final class ColorConverter {
      * @return ColorDto list
      */
     public static List<ColorDto> toDto(Set<Color> colors) {
-        if (colors == null) {
-            throw new IllegalStateException("Color list is null");
-        }
-        List<ColorDto> result = new ArrayList<>();
-        colors.forEach(color -> result.add(toDto(color)));
-        /* SORTING */
-        return result;
+        return Stream.ofNullable(colors)
+                .flatMap(Collection::stream)
+                .map(ColorConverter::toDto)
+                .collect(Collectors.toList());
     }
 
     /**

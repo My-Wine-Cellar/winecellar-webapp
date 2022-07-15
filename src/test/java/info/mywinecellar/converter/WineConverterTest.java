@@ -14,16 +14,14 @@ import info.mywinecellar.model.Wine;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class WineConverterTest extends BaseUnitTest {
 
@@ -49,7 +47,7 @@ class WineConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoNull() {
-        assertThrows(IllegalStateException.class, () -> WineConverter.toDto((Wine) null));
+        assertThat(WineConverter.toDto((Wine) null)).isNull();
     }
 
     @Test
@@ -66,18 +64,7 @@ class WineConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoEmptyList() {
-        List<WineDto> result = WineConverter.toDto(Collections.emptySet());
-        assertNotNull(result);
-        assertTrue(result.isEmpty());
-    }
-
-    @Test
-    void toDtoListSorted() {
-    }
-
-    @Test
-    void toDtoListNull() {
-        assertThrows(IllegalStateException.class, () -> WineConverter.toDto((Set<Wine>) null));
+        assertThat(WineConverter.toDto(Collections.emptySet())).isEmpty();
     }
 
     @Test

@@ -11,9 +11,10 @@ package info.mywinecellar.converter;
 import info.mywinecellar.dto.TypeDto;
 import info.mywinecellar.model.Type;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for {@link Type} and {@link TypeDto} conversion
@@ -30,10 +31,9 @@ public final class TypeConverter {
      * @return Dto
      */
     public static TypeDto toDto(Type type) {
-        if (type == null) {
-            throw new IllegalStateException("Type is null");
-        }
-        return new TypeDto(type);
+        return Optional.ofNullable(type)
+                .map(TypeDto::new)
+                .orElse(null);
     }
 
     /**
@@ -43,13 +43,9 @@ public final class TypeConverter {
      * @return TypeDto list
      */
     public static List<TypeDto> toDto(Set<Type> types) {
-        if (types == null) {
-            throw new IllegalStateException("Type list is null");
-        }
-        List<TypeDto> result = new ArrayList<>();
-        types.forEach(type -> result.add(toDto(type)));
-        /* SORTING */
-        return result;
+        return types.stream()
+                .map(TypeConverter::toDto)
+                .collect(Collectors.toList());
     }
 
     /**

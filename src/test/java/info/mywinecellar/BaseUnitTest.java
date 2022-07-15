@@ -243,11 +243,13 @@ public abstract class BaseUnitTest {
 
     private Set<Grape> setupGrapes() {
         pinotNoir = new Grape();
+        pinotNoir.setId(1L);
         pinotNoir.setName("Pinot Noir");
         pinotNoir.setAreas(caliAreas);
         pinotNoir.setColor("Red");
         grapes.add(pinotNoir);
         albarino = new Grape();
+        albarino.setId(2L);
         albarino.setName("Albarino");
         albarino.setAreas(caliAreas);
         albarino.setColor("White");

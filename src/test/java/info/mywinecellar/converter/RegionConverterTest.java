@@ -12,18 +12,16 @@ import info.mywinecellar.BaseUnitTest;
 import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.model.Region;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-
-import javax.inject.Inject;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RegionConverterTest extends BaseUnitTest {
 
@@ -47,7 +45,7 @@ class RegionConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoNullRegion() {
-        assertThrows(IllegalStateException.class, () -> RegionConverter.toDto((Region) null));
+        assertThat(RegionConverter.toDto((Region) null)).isNull();
     }
 
     @Test
@@ -61,15 +59,13 @@ class RegionConverterTest extends BaseUnitTest {
     @Test
     void toDoListSorted() {
         List<RegionDto> result = RegionConverter.toDto(usRegions);
-        assertEquals("California", result.get(0).getName());
-        assertEquals("california", result.get(0).getKey());
-        assertEquals("Washington", result.get(1).getName());
-        assertEquals("washington", result.get(1).getKey());
+        assertThat(result.get(0).getName()).isEqualTo("California").isNotEqualTo("Washington");
+        assertThat(result.get(1).getName()).isEqualTo("Washington").isNotEqualTo("California");
     }
 
     @Test
     void toDtoNullList() {
-        assertThrows(IllegalStateException.class, () -> RegionConverter.toDto((Set<Region>) null));
+        assertThat(RegionConverter.toDto(Collections.emptySet())).isEmpty();
     }
 
     @Test

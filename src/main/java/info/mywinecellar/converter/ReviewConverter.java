@@ -11,9 +11,11 @@ package info.mywinecellar.converter;
 import info.mywinecellar.dto.ReviewDto;
 import info.mywinecellar.model.Review;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for {@link Review} and {@link ReviewDto} conversion
@@ -30,10 +32,9 @@ public final class ReviewConverter {
      * @return dto object
      */
     public static ReviewDto toDto(Review review) {
-        if (review == null) {
-            throw new IllegalStateException("Review is null");
-        }
-        return new ReviewDto(review);
+        return Optional.ofNullable(review)
+                .map(ReviewDto::new)
+                .orElse(null);
     }
 
     /**
@@ -43,12 +44,9 @@ public final class ReviewConverter {
      * @return dto list
      */
     public static List<ReviewDto> toDto(Set<Review> reviews) {
-        if (reviews == null) {
-            throw new IllegalStateException("Review list is null");
-        }
-        List<ReviewDto> result = new ArrayList<>();
-        reviews.forEach(review -> result.add(toDto(review)));
-        /* SORTING */
-        return result;
+        return reviews.stream()
+                .map(ReviewConverter::toDto)
+                .sorted(Comparator.comparing(ReviewDto::getStars))
+                .collect(Collectors.toList());
     }
 }

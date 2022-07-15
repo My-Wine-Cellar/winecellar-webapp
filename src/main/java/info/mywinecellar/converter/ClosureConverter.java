@@ -11,9 +11,12 @@ package info.mywinecellar.converter;
 import info.mywinecellar.dto.ClosureDto;
 import info.mywinecellar.model.Closure;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Utility class for {@link Closure} and {@link ClosureDto} conversion
@@ -30,10 +33,9 @@ public final class ClosureConverter {
      * @return Dto
      */
     public static ClosureDto toDto(Closure closure) {
-        if (closure == null) {
-            throw new IllegalStateException("Closure is null");
-        }
-        return new ClosureDto(closure);
+        return Optional.ofNullable(closure)
+                .map(ClosureDto::new)
+                .orElse(null);
     }
 
     /**
@@ -43,13 +45,10 @@ public final class ClosureConverter {
      * @return ClosureDto list
      */
     public static List<ClosureDto> toDto(Set<Closure> closures) {
-        if (closures == null) {
-            throw new IllegalStateException("Closure list is null");
-        }
-        List<ClosureDto> result = new ArrayList<>();
-        closures.forEach(closure -> result.add(toDto(closure)));
-        /* SORTING */
-        return result;
+        return Stream.ofNullable(closures)
+                .flatMap(Collection::stream)
+                .map(ClosureConverter::toDto)
+                .collect(Collectors.toList());
     }
 
     /**

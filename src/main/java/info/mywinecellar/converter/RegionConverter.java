@@ -9,12 +9,13 @@
 package info.mywinecellar.converter;
 
 import info.mywinecellar.dto.RegionDto;
-import info.mywinecellar.dto.RegionDtoSorter;
 import info.mywinecellar.model.Region;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for {@link Region} and {@link RegionDto} conversion
@@ -31,10 +32,9 @@ public final class RegionConverter {
      * @return RegionDto object
      */
     public static RegionDto toDto(Region region) {
-        if (region == null) {
-            throw new IllegalStateException("Region is null");
-        }
-        return new RegionDto(region);
+        return Optional.ofNullable(region)
+                .map(RegionDto::new)
+                .orElse(null);
     }
 
     /**
@@ -44,13 +44,10 @@ public final class RegionConverter {
      * @return List<RegionDto> regionDto's
      */
     public static List<RegionDto> toDto(Set<Region> regions) {
-        if (regions == null) {
-            throw new IllegalStateException("Region list is null");
-        }
-        List<RegionDto> result = new ArrayList<>();
-        regions.forEach(region -> result.add(toDto(region)));
-        result.sort(new RegionDtoSorter());
-        return result;
+        return regions.stream()
+                .map(RegionConverter::toDto)
+                .sorted(Comparator.comparing(RegionDto::getName))
+                .collect(Collectors.toList());
     }
 
     /**

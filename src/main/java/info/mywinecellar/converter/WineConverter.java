@@ -10,7 +10,6 @@ package info.mywinecellar.converter;
 
 import info.mywinecellar.dto.WineDetailsDto;
 import info.mywinecellar.dto.WineDto;
-import info.mywinecellar.dto.WineDtoSorter;
 import info.mywinecellar.model.Closure;
 import info.mywinecellar.model.Color;
 import info.mywinecellar.model.Producer;
@@ -19,9 +18,11 @@ import info.mywinecellar.model.Type;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.util.Image;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for {@link Wine}, {@link WineDetailsDto}, and {@link WineDto} conversion
@@ -38,10 +39,9 @@ public final class WineConverter {
      * @return dto object
      */
     public static WineDto toDto(Wine wine) {
-        if (wine == null) {
-            throw new IllegalStateException("Wine is null");
-        }
-        return new WineDto(wine);
+        return Optional.ofNullable(wine)
+                .map(WineDto::new)
+                .orElse(null);
     }
 
     /**
@@ -51,10 +51,9 @@ public final class WineConverter {
      * @return dto object
      */
     public static WineDetailsDto toDetailsDto(Wine wine) {
-        if (wine == null) {
-            throw new IllegalStateException("Wine is null");
-        }
-        return new WineDetailsDto(wine);
+        return Optional.ofNullable(wine)
+                .map(WineDetailsDto::new)
+                .orElse(null);
     }
 
     /**
@@ -64,13 +63,12 @@ public final class WineConverter {
      * @return dto list
      */
     public static List<WineDto> toDto(Set<Wine> wines) {
-        if (wines == null) {
-            throw new IllegalStateException("Wine list is null");
-        }
-        List<WineDto> result = new ArrayList<>();
-        wines.forEach(wine -> result.add(toDto(wine)));
-        result.sort(new WineDtoSorter());
-        return result;
+        return wines.stream()
+                .map(WineConverter::toDto)
+                .sorted(Comparator.comparing(WineDto::getName)
+                        .thenComparing(WineDto::getVintage)
+                        .thenComparing(WineDto::getSize))
+                .collect(Collectors.toList());
     }
 
     /**

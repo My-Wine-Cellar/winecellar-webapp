@@ -11,6 +11,8 @@ package info.mywinecellar.converter;
 import info.mywinecellar.dto.UserDto;
 import info.mywinecellar.model.User;
 
+import java.util.Optional;
+
 /**
  * Utility class for {@link User} and {@link UserDto} conversion
  */
@@ -26,9 +28,8 @@ public final class UserConverter {
      * @return dto object
      */
     public static UserDto toDto(User user) {
-        if (user == null) {
-            throw new IllegalStateException("User is null");
-        }
-        return new UserDto(user);
+        return Optional.ofNullable(user)
+                .map(UserDto::new)
+                .orElse(null);
     }
 }
