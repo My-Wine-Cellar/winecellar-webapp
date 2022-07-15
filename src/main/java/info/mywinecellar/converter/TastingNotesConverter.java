@@ -11,9 +11,10 @@ package info.mywinecellar.converter;
 import info.mywinecellar.dto.GenericTastingNotesDto;
 import info.mywinecellar.model.GenericTastingNotes;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for {@link GenericTastingNotes} and {@link GenericTastingNotesDto} conversion
@@ -30,10 +31,9 @@ public final class TastingNotesConverter {
      * @return dto object
      */
     public static GenericTastingNotesDto toDto(GenericTastingNotes gtn) {
-        if (gtn == null) {
-            throw new IllegalStateException("Tasting notes is null");
-        }
-        return new GenericTastingNotesDto(gtn);
+        return Optional.ofNullable(gtn)
+                .map(GenericTastingNotesDto::new)
+                .orElse(null);
     }
 
     /**
@@ -43,12 +43,8 @@ public final class TastingNotesConverter {
      * @return ui list
      */
     public static List<GenericTastingNotesDto> toDto(Set<GenericTastingNotes> notes) {
-        if (notes == null) {
-            throw new IllegalStateException("Tasting notes list is null");
-        }
-        List<GenericTastingNotesDto> result = new ArrayList<>();
-        notes.forEach(tasting -> result.add(toDto(tasting)));
-        /* SORTING */
-        return result;
+        return notes.stream()
+                .map(TastingNotesConverter::toDto)
+                .collect(Collectors.toList());
     }
 }

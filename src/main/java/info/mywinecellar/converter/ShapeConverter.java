@@ -11,9 +11,10 @@ package info.mywinecellar.converter;
 import info.mywinecellar.dto.ShapeDto;
 import info.mywinecellar.model.Shape;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for {@link Shape} and {@link ShapeDto} conversion
@@ -30,10 +31,9 @@ public final class ShapeConverter {
      * @return Dto
      */
     public static ShapeDto toDto(Shape shape) {
-        if (shape == null) {
-            throw new IllegalStateException("Shape is null");
-        }
-        return new ShapeDto(shape);
+        return Optional.ofNullable(shape)
+                .map(ShapeDto::new)
+                .orElse(null);
     }
 
     /**
@@ -43,13 +43,10 @@ public final class ShapeConverter {
      * @return ShapeDto list
      */
     public static List<ShapeDto> toDto(Set<Shape> shapes) {
-        if (shapes == null) {
-            throw new IllegalStateException("Shape list is null");
-        }
-        List<ShapeDto> result = new ArrayList<>();
-        shapes.forEach(shape -> result.add(toDto(shape)));
-        /* SORTING */
-        return result;
+        return shapes.stream()
+                .map(ShapeConverter::toDto)
+                //.sorted()
+                .collect(Collectors.toList());
     }
 
     /**

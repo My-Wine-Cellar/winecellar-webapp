@@ -11,9 +11,11 @@ package info.mywinecellar.converter;
 import info.mywinecellar.dto.BarrelDto;
 import info.mywinecellar.model.Barrel;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for {@link Barrel} and {@link BarrelDto} conversion
@@ -30,10 +32,9 @@ public final class BarrelConverter {
      * @return BarrelDto object
      */
     public static BarrelDto toDto(Barrel barrel) {
-        if (barrel == null) {
-            throw new IllegalStateException("Barrel is null");
-        }
-        return new BarrelDto(barrel);
+        return Optional.ofNullable(barrel)
+                .map(BarrelDto::new)
+                .orElse(null);
     }
 
     /**
@@ -43,12 +44,12 @@ public final class BarrelConverter {
      * @return entity list
      */
     public static List<BarrelDto> toDto(Set<Barrel> barrels) {
-        if (barrels == null) {
-            throw new IllegalStateException("Barrel list is null");
-        }
-        List<BarrelDto> result = new ArrayList<>();
-        barrels.forEach(dto -> result.add(toDto(dto)));
-        /* SORTING */
-        return result;
+        return barrels.stream()
+                .map(BarrelConverter::toDto)
+                .sorted(Comparator.comparing(BarrelDto::getPercentage)
+                        .thenComparing(BarrelDto::getAging)
+                        .thenComparing(BarrelDto::getSize)
+                        .thenComparing(BarrelDto::getName))
+                .collect(Collectors.toList());
     }
 }

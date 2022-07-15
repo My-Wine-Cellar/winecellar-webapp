@@ -9,13 +9,15 @@
 package info.mywinecellar.converter;
 
 import info.mywinecellar.dto.GrapeDto;
-import info.mywinecellar.dto.GrapeDtoSorter;
 import info.mywinecellar.model.Grape;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Utility class for {@link Grape} and {@link GrapeDto} conversion
@@ -52,11 +54,9 @@ public final class GrapeConverter {
      * @return The Dto
      */
     public static GrapeDto toDto(Grape g) {
-        if (g == null) {
-            throw new IllegalStateException("Grape is null");
-        }
-
-        return new GrapeDto(g);
+        return Optional.ofNullable(g)
+                .map(GrapeDto::new)
+                .orElse(null);
     }
 
     /**
@@ -84,14 +84,11 @@ public final class GrapeConverter {
      * @return The Dto objects
      */
     private static List<GrapeDto> convert(Collection<Grape> grapes) {
-        if (grapes == null) {
-            throw new IllegalStateException("Grapes is null");
-        }
-
-        List<GrapeDto> result = new ArrayList<>();
-        grapes.forEach(grape -> result.add(toDto(grape)));
-        result.sort(new GrapeDtoSorter());
-        return result;
+        return Stream.ofNullable(grapes)
+                .flatMap(Collection::stream)
+                .map(GrapeConverter::toDto)
+                .sorted(Comparator.comparing(GrapeDto::getName))
+                .collect(Collectors.toList());
     }
 
 }

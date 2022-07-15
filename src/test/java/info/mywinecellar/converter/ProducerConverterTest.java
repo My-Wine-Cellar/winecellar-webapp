@@ -13,16 +13,13 @@ import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Producer;
 
 import java.util.List;
-import java.util.Set;
-
-import javax.inject.Inject;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ProducerConverterTest extends BaseUnitTest {
 
@@ -51,7 +48,7 @@ class ProducerConverterTest extends BaseUnitTest {
 
     @Test
     void toDtoNull() {
-        assertThrows(IllegalStateException.class, () -> ProducerConverter.toDto((Producer) null));
+        assertThat(ProducerConverter.toDto((Producer) null)).isNull();
     }
 
     @Test
@@ -64,11 +61,6 @@ class ProducerConverterTest extends BaseUnitTest {
         ProducerDto dto = result.get(0);
         assertNotNull(dto);
         assertEquals(opusOne.getName(), dto.getName());
-    }
-
-    @Test
-    void toDtoListNull() {
-        assertThrows(IllegalStateException.class, () -> ProducerConverter.toDto((Set<Producer>) null));
     }
 
     @Test

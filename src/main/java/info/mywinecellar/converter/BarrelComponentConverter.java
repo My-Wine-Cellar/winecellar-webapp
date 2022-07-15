@@ -9,14 +9,17 @@
 package info.mywinecellar.converter;
 
 import info.mywinecellar.dto.BarrelDto;
-import info.mywinecellar.dto.BarrelDtoSorter;
 import info.mywinecellar.model.Barrel;
 import info.mywinecellar.model.BarrelComponent;
 import info.mywinecellar.model.GrapeComponent;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Utility class for {@link BarrelComponent} and {@link BarrelDto} conversion
@@ -33,10 +36,9 @@ public final class BarrelComponentConverter {
      * @return BarrelDto
      */
     public static BarrelDto toDto(BarrelComponent bc) {
-        if (bc == null) {
-            throw new IllegalStateException("BarrelComponent is null");
-        }
-        return new BarrelDto(bc);
+        return Optional.ofNullable(bc)
+                .map(BarrelDto::new)
+                .orElse(null);
     }
 
     /**
@@ -46,13 +48,14 @@ public final class BarrelComponentConverter {
      * @return BarrelDto list
      */
     public static List<BarrelDto> toDto(Set<BarrelComponent> barrels) {
-        if (barrels == null) {
-            throw new IllegalStateException("Barrel list is null");
-        }
-        List<BarrelDto> result = new ArrayList<>();
-        barrels.forEach(barrel -> result.add(toDto(barrel)));
-        result.sort(new BarrelDtoSorter());
-        return result;
+        return Stream.ofNullable(barrels)
+                .flatMap(Collection::stream)
+                .map(BarrelComponentConverter::toDto)
+                .sorted(Comparator.comparing(BarrelDto::getPercentage)
+                        .thenComparing(BarrelDto::getAging)
+                        .thenComparing(BarrelDto::getSize)
+                        .thenComparing(BarrelDto::getName))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -88,8 +91,9 @@ public final class BarrelComponentConverter {
      * @return entity list
      */
     public static List<BarrelComponent> toEntity(List<BarrelDto> dtoList) {
-        List<BarrelComponent> list = new ArrayList<>();
-        dtoList.forEach(dto -> list.add(toEntity(null, dto)));
-        return list;
+        return Stream.ofNullable(dtoList)
+                .flatMap(Collection::stream)
+                .map(dto -> BarrelComponentConverter.toEntity(null, dto))
+                .collect(Collectors.toList());
     }
 }

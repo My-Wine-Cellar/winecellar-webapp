@@ -17,9 +17,7 @@ import info.mywinecellar.converter.WineConverter;
 import info.mywinecellar.dto.AbstractKeyDto;
 import info.mywinecellar.dto.AgingDto;
 import info.mywinecellar.dto.BarrelDto;
-import info.mywinecellar.dto.BarrelDtoSorter;
 import info.mywinecellar.dto.GrapeComponentDto;
-import info.mywinecellar.dto.GrapeComponentSorter;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.BarrelComponent;
 import info.mywinecellar.model.Bottle;
@@ -46,6 +44,7 @@ import info.mywinecellar.wset.WSETService;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -370,7 +369,10 @@ public class DataController extends AbstractController {
                 }
             }
 
-            barrels.sort(new BarrelDtoSorter());
+            barrels.sort(Comparator.comparing(BarrelDto::getPercentage)
+                    .thenComparing(BarrelDto::getAging)
+                    .thenComparing(BarrelDto::getSize)
+                    .thenComparing(BarrelDto::getName));
 
             winegrapes.add(new GrapeComponentDto(gc.getPercentage(),
                     gc.getGrape().getName(), gc.getGrape().getId(),
@@ -382,7 +384,9 @@ public class DataController extends AbstractController {
                     barrels
             ));
         }
-        winegrapes.sort(new GrapeComponentSorter());
+
+        winegrapes.sort(Comparator.comparing(GrapeComponentDto::getPercentage)
+                .thenComparing(GrapeComponentDto::getName));
 
         model.addAttribute(Attributes.COUNTRY, CountryConverter.toDto(c));
         model.addAttribute(Attributes.REGION, RegionConverter.toDto(r));

@@ -11,9 +11,10 @@ package info.mywinecellar.converter;
 import info.mywinecellar.dto.BottleDto;
 import info.mywinecellar.model.Bottle;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for {@link Bottle} and {@link BottleDto} conversion
@@ -30,10 +31,9 @@ public final class BottleConverter {
      * @return BottleDto
      */
     public static BottleDto toDto(Bottle bottle) {
-        if (bottle == null) {
-            throw new IllegalStateException("Bottle is null");
-        }
-        return new BottleDto(bottle);
+        return Optional.ofNullable(bottle)
+                .map(BottleDto::new)
+                .orElse(null);
     }
 
     /**
@@ -43,12 +43,8 @@ public final class BottleConverter {
      * @return List of BottleDto's
      */
     public static List<BottleDto> toDto(Set<Bottle> bottles) {
-        if (bottles == null) {
-            throw new IllegalStateException("Bottle list is null");
-        }
-        List<BottleDto> result = new ArrayList<>();
-        bottles.forEach(bottle -> result.add(toDto(bottle)));
-        /* SORTING */
-        return result;
+        return bottles.stream()
+                .map(BottleConverter::toDto)
+                .collect(Collectors.toList());
     }
 }

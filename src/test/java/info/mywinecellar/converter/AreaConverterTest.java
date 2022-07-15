@@ -18,10 +18,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class AreaConverterTest extends BaseUnitTest {
 
@@ -33,68 +30,58 @@ class AreaConverterTest extends BaseUnitTest {
         areaDto.setName("Area Dto");
         areaDto.setDescription("dto description");
         areaDto.setWeblink("dto weblink");
+
+        Area california = new Area("California", "", "");
+        california.setRegions(Set.of());
+        california.setPrimaryGrapes(Set.of());
+        caliAreas.add(california);
     }
 
     @Test
     void toDto() {
         areaDto = AreaConverter.toDto(napa);
-        assertNotNull(areaDto);
+        assertThat(areaDto).isNotNull();
 
-        assertEquals(napa.getName(), areaDto.getName());
-        assertEquals("napa_valley_ava", areaDto.getKey());
-        assertEquals(2, areaDto.getPrimaryGrapes().size());
-        assertEquals(1, areaDto.getRegions().size());
+        assertThat(napa.getName()).isEqualTo(areaDto.getName());
+        assertThat(napa.getName()).isEqualTo(areaDto.getName());
+        assertThat(areaDto.getKey()).isEqualTo("napa_valley_ava");
+        assertThat(areaDto.getPrimaryGrapes()).hasSize(2);
+        assertThat(areaDto.getRegions()).hasSize(1);
     }
 
     @Test
     void toDtoNull() {
-        assertThrows(IllegalStateException.class, () -> AreaConverter.toDto((Area) null));
+        assertThat(AreaConverter.toDto((Area) null)).isNull();
     }
 
     @Test
     void toDtoList() {
         List<AreaDto> result = AreaConverter.toDto(caliAreas);
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
+        assertThat(result).isNotNull().hasSize(3); 
 
         AreaDto dto = result.get(0);
-        assertNotNull(dto);
-        assertEquals(napa.getName(), dto.getName());
-    }
-
-    @Test
-    void toDtoListSorted() {
-        List<AreaDto> result = AreaConverter.toDto(caliAreas);
-
-        assertEquals("Napa Valley AVA", result.get(0).getName());
-        assertEquals("Sonoma Valley AVA", result.get(1).getName());
-    }
-
-    @Test
-    void toDtoListNull() {
-        assertThrows(IllegalStateException.class, () -> AreaConverter.toDto((Set<Area>) null));
+        assertThat(dto).isNotNull(); 
+        assertThat(dto.getName()).isNotNull().isEqualTo("California").isNotEqualTo("Napa Valley AVA"); 
     }
 
     @Test
     void toEntity() {
         Area result = AreaConverter.toEntity(napa, areaDto);
-        assertNotNull(result);
+        assertThat(result).isNotNull();
 
-        assertNotEquals(areaDto.getName(), result.getName());
-
-        assertEquals(areaDto.getDescription(), result.getDescription());
-        assertEquals(areaDto.getWeblink(), result.getWeblink());
+        assertThat(areaDto.getName()).isNotEqualTo(result.getName());
+        assertThat(areaDto.getDescription()).isEqualTo(result.getDescription());
+        assertThat(areaDto.getWeblink()).isEqualTo(result.getWeblink());
     }
 
     @Test
     void toEntityNull() {
         Area result = AreaConverter.toEntity(null, areaDto);
-        assertNotNull(result);
+        assertThat(result).isNotNull();
 
-        assertEquals(areaDto.getName(), result.getName());
-        assertEquals(areaDto.getDescription(), result.getDescription());
-        assertEquals(areaDto.getWeblink(), result.getWeblink());
+        assertThat(areaDto.getName()).isEqualTo(result.getName());
+        assertThat(areaDto.getDescription()).isEqualTo(result.getDescription());
+        assertThat(areaDto.getWeblink()).isEqualTo(result.getWeblink());
     }
 
 }

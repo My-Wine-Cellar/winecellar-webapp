@@ -18,10 +18,10 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CountryConverterUnitTest extends BaseUnitTest {
 
@@ -45,9 +45,9 @@ class CountryConverterUnitTest extends BaseUnitTest {
         assertEquals("united_states", dto.getKey());
     }
 
-    @Test()
+    @Test
     void toDtoNullCountry() {
-        assertThrows(IllegalStateException.class, () -> CountryConverter.toDto((Country) null));
+        assertThat(CountryConverter.toDto((Country) null)).isNull();
     }
 
     @Test
@@ -62,15 +62,13 @@ class CountryConverterUnitTest extends BaseUnitTest {
     @Test
     void testToDtoListSorted() {
         List<CountryDto> result = CountryConverter.toDto(countries);
-        assertEquals("Italy", result.get(0).getName());
-        assertEquals("italy", result.get(0).getKey());
-        assertEquals("United States", result.get(1).getName());
-        assertEquals("united_states", result.get(1).getKey());
+        assertThat(result.get(0).getName()).isEqualTo("Italy").isNotEqualTo("United States");
+        assertThat(result.get(1).getName()).isEqualTo("United States").isNotEqualTo("Italy");
     }
 
     @Test
     void testToDtoNullList() {
-        assertThrows(IllegalStateException.class, () -> CountryConverter.toDto((Set<Country>) null));
+        assertThat(CountryConverter.toDto((Set<Country>) null)).isEmpty();
     }
 
     @Test

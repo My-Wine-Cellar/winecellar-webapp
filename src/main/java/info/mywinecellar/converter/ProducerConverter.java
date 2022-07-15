@@ -12,9 +12,11 @@ import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Producer;
 import info.mywinecellar.util.Image;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for {@link Producer} and {@link ProducerDto} conversion
@@ -31,14 +33,10 @@ public final class ProducerConverter {
      * @return The Dto objects
      */
     public static List<ProducerDto> toDto(Set<Producer> producers) {
-        if (producers == null) {
-            throw new IllegalStateException("Producers is null");
-        }
-
-        List<ProducerDto> result = new ArrayList<>();
-        producers.forEach(producer -> result.add(toDto(producer)));
-        /* SORTING */
-        return result;
+        return producers.stream()
+                .map(ProducerConverter::toDto)
+                .sorted(Comparator.comparing(ProducerDto::getName))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -48,11 +46,9 @@ public final class ProducerConverter {
      * @return The Dto
      */
     public static ProducerDto toDto(Producer p) {
-        if (p == null) {
-            throw new IllegalStateException("Producer is null");
-        }
-
-        return new ProducerDto(p);
+        return Optional.ofNullable(p)
+                .map(ProducerDto::new)
+                .orElse(null);
     }
 
     /**
