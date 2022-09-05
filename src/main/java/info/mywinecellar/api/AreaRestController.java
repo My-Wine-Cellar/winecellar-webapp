@@ -8,6 +8,7 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.api.exception.ApiException;
 import info.mywinecellar.dto.AreaDto;
 import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.json.Builder;
@@ -18,8 +19,6 @@ import info.mywinecellar.service.AreaService;
 import info.mywinecellar.service.GrapeService;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,18 +31,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
-@Slf4j
+@Log4j2
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/area/{areaId}")
+@RequestMapping("${apiPrefix}/area/{areaId}")
 public class AreaRestController {
 
-    @Inject
-    AreaService areaService;
-
-    @Inject
-    GrapeService grapeService;
+    private final AreaService areaService;
+    private final GrapeService grapeService;
 
     /**
      * Details of an area
@@ -61,55 +59,67 @@ public class AreaRestController {
     /**
      * Edit an area
      *
+     * @param areaId  The id of the area to edit
      * @param request Description and weblink are the only fields that can be edited:
      *                {@link AreaDto}
      *                {@link info.mywinecellar.converter.AreaConverter}
-     * @param areaId  The id of the area to edit
      * @return MyWineCellar JSON envelope and the area
      */
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/edit")
-    public MyWineCellar areaEditPut(@RequestBody AreaDto request, @PathVariable Long areaId) {
-        Area area = areaService.editArea(request, areaId);
-        log.info("Updated {} {} ", area.toString(), area.getName());
-        return new Builder().area(area).build();
+    public MyWineCellar areaEditPut(@PathVariable Long areaId, @RequestBody(required = false) AreaDto request) {
+        if (request != null) {
+            Area edit = areaService.editArea(request, areaId);
+            return new Builder().area(edit).build();
+        } else {
+            log.debug("area request was null for id {}", areaId);
+            throw new ApiException(HttpStatus.BAD_REQUEST, String.format("area request for id %d was null", areaId));
+        }
     }
 
     /**
      * Add producer to an area
      *
+     * @param areaId  The id of the area
      * @param request Name is the only required field:
      *                {@link ProducerDto}
-     * @param areaId  The id of the area
      * @return MyWineCellar JSON envelope and the area
      */
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/add-producer")
-    public MyWineCellar areaAddProducerPost(@RequestBody ProducerDto request, @PathVariable Long areaId) {
-        Area area = areaService.addProducer(areaId, request);
-        log.info("Added {} to {} {} ", request.getName(), area.toString(), area.getName());
-        return new Builder().area(area).build();
+    public MyWineCellar areaAddProducerPost(@PathVariable Long areaId, @RequestBody(required = false) ProducerDto request) {
+        if (request != null) {
+            Area area = areaService.addProducer(areaId, request);
+            return new Builder().area(area).build();
+        } else {
+            log.debug("producer request was null, trying to add to areaId {}", areaId);
+            throw new ApiException(HttpStatus.BAD_REQUEST, String.format("producer request for area id %d", areaId));
+        }
     }
 
     /**
      * Add a grape, or grapes, to an area
      *
-     * @param grapeId Multiple id's or a single id
      * @param areaId  The id of the area
+     * @param grapeId Multiple id's or a single id
      * @return MyWineCellar JSON envelope and the area
      */
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @PutMapping("/add-grape")
-    public MyWineCellar areaAddGrape(@RequestParam List<Long> grapeId, @PathVariable Long areaId) {
-        Area area = areaService.findById(areaId);
+    public MyWineCellar areaAddGrape(@PathVariable Long areaId, @RequestParam(required = false) List<Long> grapeId) {
+        if (grapeId != null) {
+            Area area = areaService.findById(areaId);
 
-        grapeId.forEach(id -> {
-            Grape grape = grapeService.findById(id);
-            grape.getAreas().add(area);
-        });
+            grapeId.forEach(id -> {
+                Grape grape = grapeService.findById(id);
+                grape.getAreas().add(area);
+            });
 
-        areaService.save(area);
-        log.info("Added Grape/s {} to {} {} ", grapeId, area.toString(), area.getName());
-        return new Builder().area(area).build();
+            areaService.save(area);
+            return new Builder().area(area).build();
+        } else {
+            throw new ApiException(HttpStatus.BAD_REQUEST, String.format("grape was null for area id %d", areaId));
+        }
     }
+
 }

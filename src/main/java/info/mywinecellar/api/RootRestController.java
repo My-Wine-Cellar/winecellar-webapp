@@ -34,8 +34,6 @@ import info.mywinecellar.service.WineService;
 
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,39 +41,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api")
+@RequestMapping("${apiPrefix}")
 public class RootRestController {
 
-    @Inject
-    GrapeService grapeService;
-
-    @Inject
-    CountryService countryService;
-
-    @Inject
-    RegionService regionService;
-
-    @Inject
-    AreaService areaService;
-
-    @Inject
-    ProducerService producerService;
-
-    @Inject
-    WineService wineService;
-
-    @Inject
-    ClosureService closureService;
-
-    @Inject
-    ColorService colorService;
-
-    @Inject
-    ShapeService shapeService;
-
-    @Inject
-    TypeService typeService;
+    private final GrapeService grapeService;
+    private final CountryService countryService;
+    private final RegionService regionService;
+    private final AreaService areaService;
+    private final ProducerService producerService;
+    private final WineService wineService;
+    private final ClosureService closureService;
+    private final ColorService colorService;
+    private final ShapeService shapeService;
+    private final TypeService typeService;
 
     /**
      * @return MyWineCellar JSON envelope

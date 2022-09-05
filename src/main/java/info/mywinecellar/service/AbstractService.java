@@ -10,6 +10,7 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.BaseEntity;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 public abstract class AbstractService<T extends BaseEntity> {
 
     @Inject
@@ -70,9 +74,9 @@ public abstract class AbstractService<T extends BaseEntity> {
         try {
             em.persist(entity);
         } catch (Exception e) {
-            System.out.println(entity.getClass());
-            System.out.println(e.getMessage());
-            e.printStackTrace(System.out);
+            log.error(String.valueOf(entity.getClass()));
+            log.error(e.getMessage());
+            log.trace(Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -86,9 +90,9 @@ public abstract class AbstractService<T extends BaseEntity> {
         try {
             em.remove(entity);
         } catch (Exception e) {
-            System.out.println(entity.getClass());
-            System.out.println(e.getMessage());
-            e.printStackTrace(System.out);
+            log.error(String.valueOf(entity.getClass()));
+            log.error(e.getMessage());
+            log.trace(Arrays.toString(e.getStackTrace()));
         }
     }
 

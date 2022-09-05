@@ -12,6 +12,8 @@ import info.mywinecellar.converter.CountryConverter;
 import info.mywinecellar.dto.CountryDto;
 import info.mywinecellar.model.Country;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -20,6 +22,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Component
 public class CountryService extends AbstractService<Country> {
 
@@ -42,6 +47,8 @@ public class CountryService extends AbstractService<Country> {
             query.setParameter("name", name);
             return (Country) query.getSingleResult();
         } catch (Exception e) {
+            log.error(e.getMessage());
+            log.trace(Arrays.toString(e.getStackTrace()));
             return null;
         }
     }
@@ -78,7 +85,7 @@ public class CountryService extends AbstractService<Country> {
                     "ORDER BY country.name", Country.class);
             return new TreeSet<>(query.getResultList());
         } catch (Exception e) {
-            return null;
+            return Collections.emptySet();
         }
     }
 

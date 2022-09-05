@@ -8,6 +8,7 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.api.exception.ApiException;
 import info.mywinecellar.dto.AbstractKeyDto;
 import info.mywinecellar.dto.GrapeDto;
 import info.mywinecellar.json.Builder;
@@ -16,8 +17,6 @@ import info.mywinecellar.model.Grape;
 import info.mywinecellar.service.GrapeService;
 
 import java.util.Set;
-
-import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,15 +27,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
-@Slf4j
+@Log4j2
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/grape")
+@RequestMapping("${apiPrefix}/grape")
 public class GrapeRestController {
 
-    @Inject
-    GrapeService grapeService;
+    private final GrapeService grapeService;
 
     /**
      * Red grapes
@@ -78,17 +78,21 @@ public class GrapeRestController {
     /**
      * Edit a grape
      *
+     * @param grapeId The id of the grape to edit
      * @param request Description and weblink are the only fields that can be edited:
      *                {@link GrapeDto}
      *                {@link info.mywinecellar.converter.GrapeConverter}
-     * @param grapeId The id of the grape to edit
      * @return MyWineCellar JSON envelope and the grape
      */
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{grapeId}/edit")
-    public MyWineCellar grapeEditPut(@RequestBody GrapeDto request, @PathVariable Long grapeId) {
-        Grape grape = grapeService.editGrape(request, grapeId);
-        log.info("Updated {} {} ", grape.toString(), grape.getName());
-        return new Builder().grape(grape).build();
+    public MyWineCellar grapeEditPut(@PathVariable Long grapeId, @RequestBody(required = false) GrapeDto request) {
+        if (request != null) {
+            Grape grape = grapeService.editGrape(request, grapeId);
+            return new Builder().grape(grape).build();
+        } else {
+            log.debug("grape request was null for id {}", grapeId);
+            throw new ApiException(HttpStatus.BAD_REQUEST, String.format("grape request for id %d was null", grapeId));
+        }
     }
 }

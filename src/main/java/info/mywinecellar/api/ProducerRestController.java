@@ -8,6 +8,7 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.api.exception.ApiException;
 import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.json.Builder;
 import info.mywinecellar.json.MyWineCellar;
@@ -15,8 +16,6 @@ import info.mywinecellar.model.Producer;
 import info.mywinecellar.service.ProducerService;
 
 import java.io.IOException;
-
-import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,33 +27,37 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
-@Slf4j
+@Log4j2
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/producer/{producerId}")
+@RequestMapping("${apiPrefix}/producer/{producerId}")
 public class ProducerRestController {
 
-    @Inject
-    ProducerService producerService;
+    private final ProducerService producerService;
 
     /**
      * Edit a producer
      *
+     * @param producerId The id of the producer to edit
      * @param request    A variety of fields are available in the request:
      *                   {@link ProducerDto}
      *                   {@link info.mywinecellar.converter.ProducerConverter}
-     * @param producerId The id of the producer to edit
      * @return MyWineCellar JSON envelope and the producer
      */
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/edit")
-    public MyWineCellar producerEditPut(@PathVariable Long producerId, @RequestBody ProducerDto request) {
-        Producer entity = producerService.editProducer(request, producerId);
-        log.info("Updated {} {} ", entity.toString(), entity.getName());
-        return new Builder().producer(entity).build();
+    public MyWineCellar producerEditPut(@PathVariable Long producerId, @RequestBody(required = false) ProducerDto request) {
+        if (request != null) {
+            Producer entity = producerService.editProducer(request, producerId);
+            return new Builder().producer(entity).build();
+        } else {
+            log.debug("producer request was null for id {}", producerId);
+            throw new ApiException(HttpStatus.BAD_REQUEST, String.format("producer request for id %d was null", producerId));
+        }
     }
 
     /**
@@ -67,16 +70,19 @@ public class ProducerRestController {
      */
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public MyWineCellar producerImagePut(@PathVariable Long producerId, @RequestPart MultipartFile file)
-            throws IOException {
-        Producer entity = producerService.findById(producerId);
-        if (file.getBytes().length >= 5242880L) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image cannot exceed 5MB");
+    public MyWineCellar producerImagePut(@PathVariable Long producerId, @RequestPart MultipartFile file) throws IOException {
+        if (file != null) {
+            Producer entity = producerService.findById(producerId);
+            if (file.getBytes().length >= 5242880L) {
+                log.debug("image file exceeded length of 5242880L, size equal to 5MB");
+                throw new ApiException(HttpStatus.BAD_REQUEST, "image cannot exceed 5MB");
+            }
+            entity.setImage(file.getBytes());
+            producerService.save(entity);
+            return new Builder().producer(entity).build();
+        } else {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "image file was not included in request");
         }
-        entity.setImage(file.getBytes());
-        producerService.save(entity);
-        log.info("Image added to {} {} ", entity.toString(), entity.getName());
-        return new Builder().producer(entity).build();
     }
 
 }

@@ -1,56 +1,65 @@
 package info.mywinecellar.api;
 
 import info.mywinecellar.dto.GrapeDto;
+import info.mywinecellar.json.MyWineCellar;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class GrapeITCase extends BaseITCase {
+class GrapeITCase extends BaseITCase {
 
     @Test
     void grapeRedGet() {
-        ResponseEntity<String> response = apiRequest("/grape/red", null, HttpMethod.GET);
-        assertEquals(200, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/grape/red", null, HttpMethod.GET);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        myWineCellar.getGrapes().forEach(grape -> assertEquals("Red", grape.getColor()));
-        assertEquals(122, myWineCellar.getGrapes().size());
+        response.getGrapes().forEach(grape -> assertEquals("Red", grape.getColor()));
+        assertThat(response.getGrapes()).hasSize(122);
     }
 
     @Test
     void grapeWhiteGet() {
-        ResponseEntity<String> response = apiRequest("/grape/white", null, HttpMethod.GET);
-        assertEquals(200, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/grape/white", null, HttpMethod.GET);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        myWineCellar.getGrapes().forEach(grape -> assertEquals("White", grape.getColor()));
-        assertEquals(99, myWineCellar.getGrapes().size());
+        assertThat(response.getGrapes()).isNotEmpty();
+        response.getGrapes().forEach(grape -> assertEquals("White", grape.getColor()));
+        assertThat(response.getGrapes()).hasSize(99);
     }
 
     @Test
     void grapeDetailsGet() {
-        ResponseEntity<String> response = apiRequest("/grape/albarino", null, HttpMethod.GET);
-        assertEquals(200, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/grape/albarino", null, HttpMethod.GET);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        GrapeDto grape = myWineCellar.getGrapes().get(0);
-        assertEquals("Albarino", grape.getName());
-        assertEquals("albarino", grape.getKey());
+        assertThat(response.getGrapes()).isNotEmpty();
+
+        GrapeDto grape = response.getGrapes().get(0);
+        assertThat(grape.getName()).isEqualTo("Albarino");
+        assertThat(grape.getKey()).isEqualTo("albarino");
     }
 
     @Test
     void grapeEdit() {
-        ResponseEntity<String> response = apiRequest("/grape/4/edit", jsonBody(), HttpMethod.PUT);
-        assertEquals(202, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/grape/4/edit", jsonBody(), HttpMethod.PUT);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        myWineCellar.getGrapes().forEach(grape -> {
-            assertNotNull(grape.getDescription());
-            assertNotNull(grape.getWeblink());
+        assertThat(response.getGrapes()).isNotEmpty();
+        response.getGrapes().forEach(grape -> {
+            assertThat(grape.getDescription()).isNotNull();
+            assertThat(grape.getWeblink()).isNotNull();
         });
+    }
+
+    @Test
+    void grapeEdit_Exception() {
+        assertThatExceptionOfType(HttpClientErrorException.BadRequest.class)
+                .isThrownBy(() -> apiRequest("/grape/4/edit", null, HttpMethod.PUT))
+                .withMessageContaining("grape request for id 4 was null");
     }
 }

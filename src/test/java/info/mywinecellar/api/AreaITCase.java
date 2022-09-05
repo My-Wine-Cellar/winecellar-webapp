@@ -2,25 +2,27 @@ package info.mywinecellar.api;
 
 import info.mywinecellar.dto.AreaDto;
 import info.mywinecellar.dto.ProducerDto;
+import info.mywinecellar.json.MyWineCellar;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class AreaITCase extends BaseITCase {
+class AreaITCase extends BaseITCase {
 
     @Test
     void areaByIdGet() {
-        ResponseEntity<String> response = apiRequest("/area/80", null, HttpMethod.GET);
-        assertEquals(200, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/area/80", null, HttpMethod.GET);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        myWineCellar.getAreas().forEach(area -> {
+        response.getAreas().forEach(area -> {
             assertEquals(1, area.getRegions().size());
             assertEquals(1, area.getPrimaryGrapes().size());
             assertEquals("Napa Valley AVA", area.getName());
@@ -30,33 +32,45 @@ public class AreaITCase extends BaseITCase {
 
     @Test
     void areaEdit() {
-        ResponseEntity<String> response = apiRequest("/area/80/edit", jsonBody(), HttpMethod.PUT);
-        assertEquals(202, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/area/80/edit", jsonBody(), HttpMethod.PUT);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        myWineCellar.getAreas().forEach(area -> {
+        response.getAreas().forEach(area -> {
             assertNotNull(area.getDescription());
             assertNotNull(area.getWeblink());
         });
     }
 
     @Test
+    void areaEdit_Exception() {
+        assertThatExceptionOfType(HttpClientErrorException.BadRequest.class)
+                .isThrownBy(() -> apiRequest("/area/80/edit", null, HttpMethod.PUT))
+                .withMessageContaining("area request for id 80 was null");
+    }
+
+    @Test
     void areaAddProducer() throws JsonProcessingException {
         ProducerDto request = new ProducerDto();
         request.setName("Opus Two");
-        ResponseEntity<String> response = apiRequest("/area/80/add-producer",
-                objectMapper.writeValueAsString(request), HttpMethod.POST);
-        assertEquals(201, response.getStatusCodeValue());
+
+        MyWineCellar response = apiRequest("/area/80/add-producer", objectMapper.writeValueAsString(request), HttpMethod.POST);
+        assertThat(response).isNotNull();
     }
 
     @Test
     void areaAddGrape() {
-        ResponseEntity<String> response = apiRequest("/area/80/add-grape?grapeId=45&grapeId=23&grapeId=1",
-                null, HttpMethod.PUT);
-        assertEquals(202, response.getStatusCodeValue());
+        MyWineCellar response = apiRequest("/area/80/add-grape?grapeId=45&grapeId=23&grapeId=1", null, HttpMethod.PUT);
+        assertThat(response).isNotNull();
 
-        myWineCellar = setupResponseObject(response);
-        AreaDto dto = myWineCellar.getAreas().get(0);
-        assertEquals(4, dto.getPrimaryGrapes().size());
+        AreaDto dto = response.getAreas().get(0);
+        assertThat(dto.getPrimaryGrapes()).hasSize(4);
     }
+
+    @Test
+    void areaAddGrape_Exception() {
+        assertThatExceptionOfType(HttpClientErrorException.class)
+                .isThrownBy(() -> apiRequest("/area/80/add-grape", null, HttpMethod.PUT))
+                .withMessageContaining("grape was null for area id 80");
+    }
+
 }

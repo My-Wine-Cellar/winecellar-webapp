@@ -8,6 +8,7 @@
 
 package info.mywinecellar.api;
 
+import info.mywinecellar.api.exception.ApiException;
 import info.mywinecellar.converter.WineConverter;
 import info.mywinecellar.dto.WineDto;
 import info.mywinecellar.json.Builder;
@@ -23,8 +24,6 @@ import info.mywinecellar.service.WineService;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,32 +36,22 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
-@Slf4j
+@Log4j2
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/wine")
+@RequestMapping("${apiPrefix}/wine")
 public class WineRestController {
 
-    @Inject
-    ProducerService producerService;
-
-    @Inject
-    WineService wineService;
-
-    @Inject
-    ClosureService closureService;
-
-    @Inject
-    ColorService colorService;
-
-    @Inject
-    ShapeService shapeService;
-
-    @Inject
-    TypeService typeService;
+    private final ProducerService producerService;
+    private final WineService wineService;
+    private final ClosureService closureService;
+    private final ColorService colorService;
+    private final ShapeService shapeService;
+    private final TypeService typeService;
 
     /**
      * Add a new wine
@@ -79,26 +68,28 @@ public class WineRestController {
      */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/new")
-    public MyWineCellar wineNewPost(@RequestBody WineDto request, @RequestParam Long producerId,
+    public MyWineCellar wineNewPost(@RequestBody(required = false) WineDto request, @RequestParam Long producerId,
                                     @RequestParam(defaultValue = "1") Long shapeId,
                                     @RequestParam(defaultValue = "1") Long colorId,
                                     @RequestParam(defaultValue = "1") Long typeId,
                                     @RequestParam(defaultValue = "1") Long closureId) {
+        if (request != null) {
+            Wine entity = WineConverter.toEntity(null, request);
 
-        Wine entity = WineConverter.toEntity(null, request);
+            Producer producer = producerService.findById(producerId);
+            entity.setProducer(producer);
+            producer.getWines().add(entity);
 
-        Producer producer = producerService.findById(producerId);
-        entity.setProducer(producer);
-        producer.getWines().add(entity);
+            entity.setShape(shapeService.findById(shapeId));
+            entity.setColor(colorService.findById(colorId));
+            entity.setType(typeService.findById(typeId));
+            entity.setClosure(closureService.findById(closureId));
+            wineService.save(entity);
 
-        entity.setShape(shapeService.findById(shapeId));
-        entity.setColor(colorService.findById(colorId));
-        entity.setType(typeService.findById(typeId));
-        entity.setClosure(closureService.findById(closureId));
-        wineService.save(entity);
-        log.info("Added new {} {} ", entity.toString(), entity.getName());
-
-        return new Builder().wine(entity).build();
+            return new Builder().wine(entity).build();
+        } else {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "wine request was null");
+        }
     }
 
     /**
@@ -112,11 +103,15 @@ public class WineRestController {
      */
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{wineId}/edit")
-    public MyWineCellar wineEditPut(@PathVariable Long wineId, @RequestBody WineDto request) {
-        Wine entity = WineConverter.toEntity(wineService.findById(wineId), request);
-        wineService.update(entity);
-        log.info("Updated {} {} ", entity.toString(), entity.getName());
-        return new Builder().wine(entity).build();
+    public MyWineCellar wineEditPut(@PathVariable Long wineId, @RequestBody(required = false) WineDto request) {
+        if (request != null) {
+            Wine entity = WineConverter.toEntity(wineService.findById(wineId), request);
+            wineService.update(entity);
+            return new Builder().wine(entity).build();
+        } else {
+            throw new ApiException(HttpStatus.BAD_REQUEST, String.format("wine request for id %d was null", wineId));
+        }
+
     }
 
     /**
@@ -129,17 +124,19 @@ public class WineRestController {
      */
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping(value = "/{wineId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public MyWineCellar wineImagePut(@PathVariable Long wineId, @RequestPart MultipartFile file)
-            throws IOException {
-        Wine entity = wineService.findById(wineId);
-        if (file.getBytes().length >= 5242880L) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image cannot exceed 5MB");
+    public MyWineCellar wineImagePut(@PathVariable Long wineId, @RequestPart(required = false) MultipartFile file) throws IOException {
+        if (file != null) {
+            Wine entity = wineService.findById(wineId);
+            if (file.getBytes().length >= 5242880L) {
+                log.debug("image file exceeded length of 5242880L, size equal to 5MB");
+                throw new ApiException(HttpStatus.BAD_REQUEST, "image cannot exceed 5MB");
+            }
+            entity.setImage(file.getBytes());
+            wineService.update(entity);
+            return new Builder().wine(entity).build();
+        } else {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "image file was included on the request");
         }
-        entity.setImage(file.getBytes());
-        wineService.update(entity);
-        log.info("Image added to {} {} ", entity.toString(), entity.getName());
-
-        return new Builder().wine(entity).build();
     }
 
 }
