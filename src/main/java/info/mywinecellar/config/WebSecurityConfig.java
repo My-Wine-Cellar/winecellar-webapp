@@ -10,6 +10,7 @@ package info.mywinecellar.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -24,6 +25,11 @@ public class WebSecurityConfig {
 
         // Public access to login, landing, and error pages
         http.authorizeRequests().antMatchers("/", "/login", "/errorpage").permitAll();
+
+        // Logged user edit access
+        http.authorizeRequests().antMatchers(HttpMethod.POST,
+                "/country/*/edit", "/grape/*/edit", "/area/*/edit", "/region/*/edit")
+                .hasRole("USER");
 
         // Public access to countries, grapes, wines, wine reviews, tasting notes, and producers
         http.authorizeRequests().antMatchers("/d/**", "/grape/**", "/review/**", "/tastingnotes/**").permitAll();
