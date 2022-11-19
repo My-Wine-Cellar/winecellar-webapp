@@ -50,7 +50,7 @@ public class WineDto extends AbstractKeyDto {
     private Integer vintage;
 
     @Max(18)
-    @Digits(integer = 2, fraction = 2)
+    @Digits(integer = 2, fraction = 3)
     @NotNull
     private Float size;
 
