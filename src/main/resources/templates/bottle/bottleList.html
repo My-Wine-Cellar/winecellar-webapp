@@ -35,6 +35,8 @@
                     <td th:text="|${bottle.wine.size}L|"></td>
                     <td th:text="${bottle.location}"></td>
                     <td>
+                        <a th:href="@{/bottle/__${bottle.id}__/up}" th:title="#{increase}"><span class="fas fa-arrow-up"></span></a>
+                        <a th:href="@{/bottle/__${bottle.id}__/down}" th:title="#{decrease}"><span class="fas fa-arrow-down"></span></a>
                         <a th:href="@{/bottle/__${bottle.id}__/edit}" th:title="#{edit}"><span class="fas fa-edit"></span></a>
                     </td>
                 </tr>

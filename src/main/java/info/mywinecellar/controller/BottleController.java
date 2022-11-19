@@ -207,6 +207,84 @@ public class BottleController extends AbstractController {
     }
 
     /**
+     * @param bottle    bottle
+     * @param result    result
+     * @param model     model
+     * @param bottleId  bottleId
+     * @param principal principal
+     * @return View
+     */
+    @GetMapping("/{bottleId}/up")
+    public String bottleUpPost(Bottle bottle, BindingResult result, Model model,
+                               @PathVariable Long bottleId, Principal principal) {
+        if (principal == null) {
+            return Paths.REDIRECT_ROOT;
+        }
+
+        if (result.hasErrors()) {
+            model.addAttribute(Attributes.BOTTLE, bottle);
+            return Paths.BOTTLE_ADD_EDIT;
+        } else {
+            User user = userService.findByUsername(principal.getName());
+            Bottle b = bottleService.findByUser(user.getId(), bottleId);
+
+            if (b != null) {
+               b.setNumber(b.getNumber() + 1);
+               bottleService.save(b);
+
+               return Paths.REDIRECT_BOTTLE_LIST;
+            }
+            return Paths.REDIRECT_ROOT;
+        }
+    }
+
+    /**
+     * @param bottle    bottle
+     * @param result    result
+     * @param model     model
+     * @param bottleId  bottleId
+     * @param principal principal
+     * @return View
+     */
+    @GetMapping("/{bottleId}/down")
+    public String bottleDownPost(Bottle bottle, BindingResult result, Model model,
+                                 @PathVariable Long bottleId, Principal principal) {
+        if (principal == null) {
+            return Paths.REDIRECT_ROOT;
+        }
+
+        if (result.hasErrors()) {
+            model.addAttribute(Attributes.BOTTLE, bottle);
+            return Paths.BOTTLE_ADD_EDIT;
+        } else {
+            User user = userService.findByUsername(principal.getName());
+            Bottle b = bottleService.findByUser(user.getId(), bottleId);
+
+            if (b != null) {
+                if (b.getNumber() > 1) {
+                    b.setNumber(b.getNumber() - 1);
+
+                    bottleService.save(b);
+
+                    return Paths.REDIRECT_BOTTLE_LIST;
+
+                } else {
+                    user.getBottles().remove(b);
+                    bottleService.delete(b);
+
+                    Wine wine = wineService.findById(b.getWine().getId());
+                    Tasted tasted = new Tasted(user, wine);
+                    user.getTasted().add(tasted);
+                    tastedService.save(tasted);
+
+                    return Paths.REDIRECT_TASTED_LIST;
+                }
+            }
+            return Paths.REDIRECT_ROOT;
+        }
+    }
+
+    /**
      * @param model     model
      * @param principal principal
      * @return View
