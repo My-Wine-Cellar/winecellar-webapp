@@ -120,7 +120,7 @@
         <!-- Checks for imports orders -->
         <!-- https://checkstyle.org/apidocs/com/puppycrawl/tools/checkstyle/checks/imports/ImportOrderCheck.html -->
         <module name="ImportOrder">
-          <property name="groups" value="info.mywinecellar,java,javax,org"/>
+          <property name="groups" value="info.mywinecellar,java,jakarta,javax,org"/>
           <property name="ordered" value="true"/>
           <property name="separated" value="true"/>
           <property name="separatedStaticGroups" value="true"/>

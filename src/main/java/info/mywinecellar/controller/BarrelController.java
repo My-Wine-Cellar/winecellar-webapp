@@ -19,8 +19,8 @@ import info.mywinecellar.service.BarrelService;
 import java.security.Principal;
 import java.util.List;
 
+import jakarta.validation.Valid;
 import javax.inject.Inject;
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

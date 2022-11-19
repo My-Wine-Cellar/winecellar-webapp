@@ -10,10 +10,10 @@ package info.mywinecellar.wset;
 
 import info.mywinecellar.model.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;

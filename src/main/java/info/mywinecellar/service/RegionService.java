@@ -12,8 +12,8 @@ import info.mywinecellar.converter.RegionConverter;
 import info.mywinecellar.dto.RegionDto;
 import info.mywinecellar.model.Region;
 
-import javax.persistence.Query;
-import javax.transaction.Transactional;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 

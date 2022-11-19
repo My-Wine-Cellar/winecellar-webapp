@@ -10,7 +10,7 @@ package info.mywinecellar.dto;
 
 import info.mywinecellar.model.Grape;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

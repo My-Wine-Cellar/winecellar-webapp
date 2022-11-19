@@ -16,7 +16,7 @@ The goal is to be the premier open-source wine cellar application.
 
 ## Technologies
 
-* Java 11
+* Java 17
 * Spring Boot
 * Spring Security
 * Maven

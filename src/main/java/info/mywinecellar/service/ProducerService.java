@@ -12,8 +12,8 @@ import info.mywinecellar.converter.ProducerConverter;
 import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Producer;
 
-import javax.persistence.Query;
-import javax.transaction.Transactional;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 

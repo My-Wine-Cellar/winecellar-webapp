@@ -15,7 +15,7 @@ import info.mywinecellar.model.Grape;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.persistence.Query;
+import jakarta.persistence.Query;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

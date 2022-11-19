@@ -10,7 +10,7 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.Wishlist;
 
-import javax.persistence.Query;
+import jakarta.persistence.Query;
 
 import org.springframework.stereotype.Component;
 

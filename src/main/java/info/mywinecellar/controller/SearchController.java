@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.stereotype.Controller;

@@ -17,8 +17,8 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.persistence.Query;
-import javax.transaction.Transactional;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 

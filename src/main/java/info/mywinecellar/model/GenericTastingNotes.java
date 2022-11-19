@@ -14,13 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
 import lombok.Getter;
@@ -284,7 +285,7 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
 
     @NotNull
     @Column(name = "data")
-    @Type(type = "info.mywinecellar.hibernate.JSONB")
+    @JdbcTypeCode(SqlTypes.JSON)
     private Map<String, Serializable> data;
 
     @Override

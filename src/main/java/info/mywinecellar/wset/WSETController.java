@@ -22,8 +22,8 @@ import info.mywinecellar.service.WineService;
 
 import java.security.Principal;
 
+import jakarta.validation.Valid;
 import javax.inject.Inject;
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

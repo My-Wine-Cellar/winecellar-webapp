@@ -24,20 +24,20 @@ public class WebSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // Public access to login, landing, and error pages
-        http.authorizeRequests().antMatchers("/", "/login", "/errorpage").permitAll();
+        http.authorizeRequests().requestMatchers(HttpMethod.GET, "/", "/login", "/errorpage").permitAll();
 
         // Logged user edit access
-        http.authorizeRequests().antMatchers(HttpMethod.POST,
+        http.authorizeRequests().requestMatchers(HttpMethod.POST,
                 "/country/*/edit", "/grape/*/edit", "/area/*/edit", "/region/*/edit")
                 .hasRole("USER");
 
         // Public access to countries, grapes, wines, wine reviews, tasting notes, and producers
-        http.authorizeRequests().antMatchers("/d/**", "/grape/**", "/review/**", "/tastingnotes/**").permitAll();
+        http.authorizeRequests().requestMatchers(HttpMethod.GET, "/d/**", "/grape/**", "/review/**", "/tastingnotes/**").permitAll();
 
         // Static resource permissions
         http.authorizeRequests()
-                .antMatchers("/css/**", "/fonts/**", "/images/**",
-                        "/webfonts/**", "/js/**", "/webjars/**", "/messages/**")
+                .requestMatchers(HttpMethod.GET, "/css/**", "/fonts/**", "/images/**",
+                                 "/webfonts/**", "/js/**", "/webjars/**", "/messages/**")
                 .permitAll();
 
         // Login specifications
@@ -54,7 +54,7 @@ public class WebSecurityConfig {
                 .permitAll();
 
         // Admin only access
-        http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
+        http.authorizeRequests().requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN");
 
         // Csrf protection
         http.exceptionHandling().and().csrf().disable();

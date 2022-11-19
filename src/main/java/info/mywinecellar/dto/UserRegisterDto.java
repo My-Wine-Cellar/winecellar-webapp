@@ -8,9 +8,9 @@
 
 package info.mywinecellar.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
 

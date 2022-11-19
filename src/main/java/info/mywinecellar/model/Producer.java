@@ -10,17 +10,18 @@ package info.mywinecellar.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -82,7 +83,7 @@ public class Producer extends BaseEntity implements Comparable<Producer> {
     private String website;
 
     @Lob
-    @Type(type = "org.hibernate.type.ImageType")
+    @JdbcTypeCode(SqlTypes.VARBINARY)
     private byte[] image;
 
     @ManyToMany(mappedBy = "producers")

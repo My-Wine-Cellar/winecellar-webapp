@@ -10,12 +10,12 @@ package info.mywinecellar.model;
 
 import java.util.Set;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
