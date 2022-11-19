@@ -9,6 +9,8 @@
 package info.mywinecellar.controller;
 
 import info.mywinecellar.converter.TastedConverter;
+import info.mywinecellar.dto.TastedDto;
+import info.mywinecellar.dto.TastedDtoSorter;
 import info.mywinecellar.model.Tasted;
 import info.mywinecellar.model.User;
 import info.mywinecellar.nav.Attributes;
@@ -17,6 +19,8 @@ import info.mywinecellar.service.TastedService;
 import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -81,7 +85,9 @@ public class TastedController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.TASTED, tastedConverter.toDto(user, user.getTasted()));
+        List<TastedDto> tasted = tastedConverter.toDto(user, user.getTasted());
+        Collections.sort(tasted, new TastedDtoSorter());
+        model.addAttribute(Attributes.TASTED, tasted);
         return Paths.TASTED_LIST;
     }
 }

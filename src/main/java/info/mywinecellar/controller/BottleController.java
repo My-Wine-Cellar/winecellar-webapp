@@ -9,6 +9,8 @@
 package info.mywinecellar.controller;
 
 import info.mywinecellar.converter.BottleConverter;
+import info.mywinecellar.dto.BottleDto;
+import info.mywinecellar.dto.BottleDtoSorter;
 import info.mywinecellar.model.Bottle;
 import info.mywinecellar.model.Tasted;
 import info.mywinecellar.model.User;
@@ -20,6 +22,8 @@ import info.mywinecellar.service.TastedService;
 import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -296,7 +300,9 @@ public class BottleController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.BOTTLES, BottleConverter.toDto(user.getBottles()));
+        List<BottleDto> bottles = BottleConverter.toDto(user.getBottles());
+        Collections.sort(bottles, new BottleDtoSorter());
+        model.addAttribute(Attributes.BOTTLES, bottles);
         return Paths.BOTTLE_LIST;
     }
 }
