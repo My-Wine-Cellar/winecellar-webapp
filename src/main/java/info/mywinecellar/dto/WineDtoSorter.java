@@ -97,10 +97,7 @@ public class WineDtoSorter implements Comparator<WineDto> {
         result = w1.getName().compareTo(w2.getName());
 
         if (result == 0) {
-            result = w1.getVintage().compareTo(w2.getVintage());
-            if (result != 0) {
-                return -result;
-            }
+            return w1.getVintage().compareTo(w2.getVintage());
         }
 
         return result;
