@@ -9,6 +9,8 @@
 package info.mywinecellar.controller;
 
 import info.mywinecellar.converter.WishlistConverter;
+import info.mywinecellar.dto.WishlistDto;
+import info.mywinecellar.dto.WishlistDtoSorter;
 import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
 import info.mywinecellar.model.Wishlist;
@@ -20,6 +22,8 @@ import info.mywinecellar.service.WishlistService;
 
 import java.security.Principal;
 import java.sql.Date;
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -122,7 +126,9 @@ public class WishlistController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.WISHLIST, WishlistConverter.toDto(user.getWishlist()));
+        List<WishlistDto> list = WishlistConverter.toDto(user.getWishlist());
+        Collections.sort(list, new WishlistDtoSorter());
+        model.addAttribute(Attributes.WISHLIST, list);
         return Paths.WISHLIST_LIST;
     }
 }
