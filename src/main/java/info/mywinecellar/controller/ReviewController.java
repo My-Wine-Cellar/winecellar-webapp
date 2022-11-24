@@ -9,6 +9,8 @@
 package info.mywinecellar.controller;
 
 import info.mywinecellar.converter.ReviewConverter;
+import info.mywinecellar.dto.ReviewDto;
+import info.mywinecellar.dto.ReviewDtoSorter;
 import info.mywinecellar.model.Review;
 import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
@@ -19,6 +21,8 @@ import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
 import java.sql.Date;
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -260,7 +264,9 @@ public class ReviewController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.REVIEWS, ReviewConverter.toDto(user.getReviews()));
+        List<ReviewDto> reviews = ReviewConverter.toDto(user.getReviews());
+        Collections.sort(reviews, new ReviewDtoSorter());
+        model.addAttribute(Attributes.REVIEWS, reviews);
         return Paths.REVIEW_LIST;
     }
 }
