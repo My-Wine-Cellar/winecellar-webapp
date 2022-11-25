@@ -10,6 +10,7 @@ package info.mywinecellar.wset;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;

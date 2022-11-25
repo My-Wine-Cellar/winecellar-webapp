@@ -14,6 +14,7 @@ import info.mywinecellar.nav.Paths;
 import info.mywinecellar.service.UserService;
 
 import jakarta.validation.Valid;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
