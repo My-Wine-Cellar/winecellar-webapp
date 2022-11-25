@@ -40,21 +40,6 @@ import lombok.Setter;
 public class WSET extends BaseEntity implements Comparable<WSET> {
 
     /**
-     * NOSE
-     */
-    public static final String NOSE = "nose";
-
-    /**
-     * PALATE
-     */
-    public static final String PALATE = "palate";
-
-    /**
-     * OBSERVATIONS
-     */
-    public static final String OBSERVATIONS = "observations";
-
-    /**
      * Default constructor
      */
     public WSET() {
@@ -434,9 +419,14 @@ public class WSET extends BaseEntity implements Comparable<WSET> {
     @Column(name = "conclusion_bottle_explanation", length = 8192)
     private String conclusionBottleExplanation;
 
-    @Column(name = "other")
-    @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Serializable> other;
+    @Column(name = "nose_other", length = 8192)
+    private String noseOther;
+
+    @Column(name = "palate_other", length = 8192)
+    private String palateOther;
+
+    @Column(name = "palate_observations", length = 8192)
+    private String palateObservations;
 
     @NotNull
     @ManyToOne

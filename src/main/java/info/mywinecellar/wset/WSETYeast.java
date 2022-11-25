@@ -43,14 +43,17 @@ public class WSETYeast extends BaseEntity implements Comparable<WSETYeast> {
     /** BREAD_DOUGH */
     public static final Long BREAD_DOUGH = 5L;
 
+    /** BRIOCHE */
+    public static final Long BRIOCHE = 6L;
+
     /** CHEESE */
-    public static final Long CHEESE = 6L;
+    public static final Long CHEESE = 7L;
 
     /** YOGURT */
-    public static final Long YOGURT = 7L;
+    public static final Long YOGURT = 8L;
 
     /** ACETALDEHYDE */
-    public static final Long ACETALDEHYDE = 8L;
+    public static final Long ACETALDEHYDE = 9L;
 
     /**
      * Default constructor

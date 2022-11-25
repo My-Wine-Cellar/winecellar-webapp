@@ -103,6 +103,7 @@ public class WSETDto implements Serializable {
     private Boolean noseYeastBread = Boolean.FALSE;
     private Boolean noseYeastToastedBread = Boolean.FALSE;
     private Boolean noseYeastBreadDough = Boolean.FALSE;
+    private Boolean noseYeastBrioche = Boolean.FALSE;
     private Boolean noseYeastCheese = Boolean.FALSE;
     private Boolean noseYeastYogurt = Boolean.FALSE;
     private Boolean noseYeastAcetaldehyde = Boolean.FALSE;
@@ -200,6 +201,7 @@ public class WSETDto implements Serializable {
     private Boolean palateYeastBread = Boolean.FALSE;
     private Boolean palateYeastToastedBread = Boolean.FALSE;
     private Boolean palateYeastBreadDough = Boolean.FALSE;
+    private Boolean palateYeastBrioche = Boolean.FALSE;
     private Boolean palateYeastCheese = Boolean.FALSE;
     private Boolean palateYeastYogurt = Boolean.FALSE;
     private Boolean palateYeastAcetaldehyde = Boolean.FALSE;
@@ -287,20 +289,6 @@ public class WSETDto implements Serializable {
         processNoseTertiary(w);
         processNoseOxidised(w);
 
-        if (w.getOther() != null) {
-            StringBuilder sb = new StringBuilder();
-            JsonArray value = (JsonArray) w.getOther().get(WSET.NOSE);
-            for (int i = 0; i < value.size(); i++) {
-                sb.append(value.getString(i));
-                if (i < value.size() - 1) {
-                    sb.append(", ");
-                }
-            }
-            noseOther = sb.toString();
-        } else {
-            noseOther = "";
-        }
-
         processPalateFloral(w);
         processPalateGreenFruit(w);
         processPalateCitrusFruit(w);
@@ -317,31 +305,6 @@ public class WSETDto implements Serializable {
         processPalateOak(w);
         processPalateTertiary(w);
         processPalateOxidised(w);
-
-        if (w.getOther() != null) {
-            StringBuilder sb = new StringBuilder();
-            JsonArray value = (JsonArray) w.getOther().get(WSET.PALATE);
-            for (int i = 0; i < value.size(); i++) {
-                sb.append(value.getString(i));
-                if (i < value.size() - 1) {
-                    sb.append(", ");
-                }
-            }
-            palateOther = sb.toString();
-
-            sb = new StringBuilder();
-            value = (JsonArray) w.getOther().get(WSET.OBSERVATIONS);
-            for (int i = 0; i < value.size(); i++) {
-                sb.append(value.getString(i));
-                if (i < value.size() - 1) {
-                    sb.append(", ");
-                }
-            }
-            palateObservations = sb.toString();
-        } else {
-            palateOther = "";
-            palateObservations = "";
-        }
     }
 
     private void setInfo(Wine w, User u) {
@@ -365,6 +328,10 @@ public class WSETDto implements Serializable {
         conclusionQualityExplanation = w.getConclusionQualityExplanation();
         conclusionBottle = w.getConclusionBottle().getId();
         conclusionBottleExplanation = w.getConclusionBottleExplanation();
+
+        noseOther = w.getNoseOther();
+        palateOther = w.getPalateOther();
+        palateObservations = w.getPalateObservations();
     }
 
     private void processNoseFloral(WSET w) {
@@ -580,6 +547,8 @@ public class WSETDto implements Serializable {
                     noseYeastToastedBread = Boolean.TRUE;
                 } else if (WSETYeast.BREAD_DOUGH.equals(f.getId())) {
                     noseYeastBreadDough = Boolean.TRUE;
+                } else if (WSETYeast.BRIOCHE.equals(f.getId())) {
+                    noseYeastBrioche = Boolean.TRUE;
                 } else if (WSETYeast.CHEESE.equals(f.getId())) {
                     noseYeastCheese = Boolean.TRUE;
                 } else if (WSETYeast.YOGURT.equals(f.getId())) {
@@ -910,6 +879,8 @@ public class WSETDto implements Serializable {
                     palateYeastToastedBread = Boolean.TRUE;
                 } else if (WSETYeast.BREAD_DOUGH.equals(f.getId())) {
                     palateYeastBreadDough = Boolean.TRUE;
+                } else if (WSETYeast.BRIOCHE.equals(f.getId())) {
+                    palateYeastBrioche = Boolean.TRUE;
                 } else if (WSETYeast.CHEESE.equals(f.getId())) {
                     palateYeastCheese = Boolean.TRUE;
                 } else if (WSETYeast.YOGURT.equals(f.getId())) {

@@ -161,31 +161,9 @@ public class WSETConverter {
         w.setConclusionBottle(wsetService.find(WSETConclusionBottleAgeing.class, u.getConclusionBottle()));
         w.setConclusionBottleExplanation(u.getConclusionBottleExplanation());
 
-        Map<String, Serializable> otherMap = new HashMap<>();
-        List<String> nose = new ArrayList<>();
-        List<String> palate = new ArrayList<>();
-        List<String> observations = new ArrayList<>();
-
-        StringTokenizer st = new StringTokenizer(u.getNoseOther(), ",");
-        while (st.hasMoreTokens()) {
-            nose.add(st.nextToken().trim());
-        }
-
-        st = new StringTokenizer(u.getPalateOther(), ",");
-        while (st.hasMoreTokens()) {
-            palate.add(st.nextToken().trim());
-        }
-
-        st = new StringTokenizer(u.getPalateObservations(), ",");
-        while (st.hasMoreTokens()) {
-            observations.add(st.nextToken().trim());
-        }
-
-        otherMap.put(WSET.NOSE, (Serializable) nose);
-        otherMap.put(WSET.PALATE, (Serializable) palate);
-        otherMap.put(WSET.OBSERVATIONS, (Serializable) observations);
-
-        w.setOther(otherMap);
+        w.setNoseOther(u.getNoseOther());
+        w.setPalateOther(u.getPalateOther());
+        w.setPalateObservations(u.getPalateObservations());
     }
 
     private void processNoseFloral(WSET w, WSETDto u) {
@@ -630,6 +608,9 @@ public class WSETConverter {
         }
         if (u.getNoseYeastBreadDough()) {
             ids.add(WSETYeast.BREAD_DOUGH);
+        }
+        if (u.getNoseYeastBrioche()) {
+            ids.add(WSETYeast.BRIOCHE);
         }
         if (u.getNoseYeastCheese()) {
             ids.add(WSETYeast.CHEESE);
@@ -1310,6 +1291,9 @@ public class WSETConverter {
         }
         if (u.getPalateYeastBreadDough()) {
             ids.add(WSETYeast.BREAD_DOUGH);
+        }
+        if (u.getPalateYeastBrioche()) {
+            ids.add(WSETYeast.BRIOCHE);
         }
         if (u.getPalateYeastCheese()) {
             ids.add(WSETYeast.CHEESE);
