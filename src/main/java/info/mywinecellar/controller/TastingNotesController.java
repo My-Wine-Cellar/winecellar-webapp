@@ -13,6 +13,7 @@ import info.mywinecellar.converter.TastingNotesConverter;
 import info.mywinecellar.converter.UserConverter;
 import info.mywinecellar.converter.WineConverter;
 import info.mywinecellar.dto.GenericTastingNotesDto;
+import info.mywinecellar.dto.GenericTastingNotesDtoSorter;
 import info.mywinecellar.model.GenericTastingNotes;
 import info.mywinecellar.model.User;
 import info.mywinecellar.model.Wine;
@@ -24,6 +25,8 @@ import info.mywinecellar.service.UserService;
 
 import java.security.Principal;
 import java.sql.Date;
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -66,7 +69,9 @@ public class TastingNotesController extends AbstractController {
         }
 
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute(Attributes.NOTES, TastingNotesConverter.toDto(user.getGenericTastingNotes()));
+        List<GenericTastingNotesDto> notes = TastingNotesConverter.toDto(user.getGenericTastingNotes());
+        Collections.sort(notes, new GenericTastingNotesDtoSorter());
+        model.addAttribute(Attributes.NOTES, notes);
         return Paths.TASTING_NOTES_LIST;
     }
 
