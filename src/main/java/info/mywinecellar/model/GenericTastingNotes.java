@@ -8,9 +8,7 @@
 
 package info.mywinecellar.model;
 
-import java.io.Serializable;
 import java.sql.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -252,7 +250,7 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
                                Map<String, List<String>> palate, Map<String, List<String>> conclusion,
                                Boolean show, Date date, User user, Wine wine) {
         super();
-        this.data = new HashMap<>();
+        this.data = new JsonObject();
 
         this.data.put(SIGHT, new JsonObject(sight));
         this.data.put(NOSE, new JsonObject(nose));
@@ -286,7 +284,7 @@ public class GenericTastingNotes extends BaseEntity implements Comparable<Generi
     @NotNull
     @Column(name = "data")
     @JdbcTypeCode(SqlTypes.JSON)
-    private Map<String, Serializable> data;
+    private JsonObject data;
 
     @Override
     public int compareTo(GenericTastingNotes gtn) {
