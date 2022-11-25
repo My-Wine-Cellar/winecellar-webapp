@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="~{fragments/layout :: head}"/>
+<head th:insert="~{fragments/layout :: head}" th:remove="tag"/>
 <body class="grape-background">
 <div th:replace="~{fragments/layout :: nav}"/>
 <br/><br/>

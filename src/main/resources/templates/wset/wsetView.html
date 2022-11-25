@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-  <head th:include="~{fragments/layout :: head}"/>
+  <head th:insert="~{fragments/layout :: head}" th:remove="tag"/>
   <body class="tasting-background">
     <div th:replace="~{fragments/layout :: nav}"/>
     <br/><br/>
