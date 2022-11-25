@@ -44,6 +44,7 @@ import info.mywinecellar.wset.WSETService;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -385,7 +386,7 @@ public class DataController extends AbstractController {
             ));
         }
 
-        winegrapes.sort(Comparator.comparing(GrapeComponentDto::getPercentage)
+        winegrapes.sort(Comparator.comparing(GrapeComponentDto::getPercentage).reversed()
                 .thenComparing(GrapeComponentDto::getName));
 
         model.addAttribute(Attributes.COUNTRY, CountryConverter.toDto(c));
