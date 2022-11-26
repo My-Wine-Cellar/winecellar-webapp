@@ -19,6 +19,9 @@ The goal is to be the premier open-source wine cellar application.
 
 [Java](https://www.oracle.com/java/technologies/) and [Apache Maven](https://maven.apache.org/) are needed to execute any of the build commands.
 
+[git](https://git-scm.com/) is needed to control the source code repository. You can learn more about [git](https://git-scm.com/) in the
+[Pro Git](https://git-scm.com/book/en/v2) book.
+
 ### PostgreSQL
 
 You will need to have either:
