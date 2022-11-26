@@ -1,38 +1,25 @@
 # Winecellar ![Github Actions Status](https://github.com/My-Wine-Cellar/winecellar-webapp/workflows/CI/badge.svg)
 
-## Table of contents
-* [General info](#general-info)
-* [Technologies](#technologies)
-* [Project Setup](#project-setup)
-* [Integration Tests](#integration-tests)
-* [Contribution](#contribution)
-* [Status](#status)
-* [Contact](#contact)
-
-## General info
 Web application to keep track of wines, their tasting notes, and reviews.
 
 The goal is to be the premier open-source wine cellar application.
 
 ## Technologies
 
-* Java 17
-* Spring Boot
-* Spring Security
-* Maven
-* Project Lombok
-* Bootstrap
-* Thymeleaf
-* Hibernate
-* PostgreSQL (v10 or higher is required)
+* [Java 17](https://www.oracle.com/java/technologies/)
+* [Apache Maven](https://maven.apache.org/)
+* [Spring Boot](https://spring.io/projects/spring-boot)
+* [Spring Security](https://spring.io/projects/spring-security)
+* [Thymeleaf](https://www.thymeleaf.org/)
+* [PostgreSQL 11+](https://www.postgresql.org/)
 
 ## Project Setup
 
-#### Maven
+### Java and Apache Maven
 
-Maven is needed to execute any and all build commands.
+[Java](https://www.oracle.com/java/technologies/) and [Apache Maven](https://maven.apache.org/) are needed to execute any of the build commands.
 
-#### PostgreSQL
+### PostgreSQL
 
 You will need to have either:
 
@@ -54,7 +41,7 @@ $ podman run --name winecellardb -p 5432:5432 -d -e POSTGRES_USER=winecellar -e 
 
 This will pull down the latest PostgreSQL image and run the container with all necessary Spring Boot properties for getting a connection. 
 
-#### Running
+### Running
 
 ```
 $ git clone https://github.com/My-Wine-Cellar/winecellar-webapp
@@ -64,20 +51,11 @@ $ mvn spring-boot:run
 
 Access here: http://localhost:8080/
 
-| Account | Type  | Password |
-| ------- | ----- | -------- |
-| user1   | user  | password |
-| user2   | user  | password |
-| admin   | admin | password |
-
-## Integration Tests
-
-```mvn verify``` will build and run the winecellar-webapp container to connect with PostgreSQL for 
-executing integration tests against our own API.
-
-If you want to run manual tests in Postman or using curl you can
-use ```mvn docker:build docker:start``` and that will launch both containers to test individual endpoints.  Use ```mvn docker:stop```
-to shutdown both containers.
+| Account   | Type  | Password   |
+| --------- | ----- | ---------- |
+| `user1`   | user  | `password` |
+| `user2`   | user  | `password` |
+| `admin`   | admin | `password` |
 
 ## Contribution
 
