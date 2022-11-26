@@ -13,9 +13,7 @@ The goal is to be the premier open-source wine cellar application.
 * [Thymeleaf](https://www.thymeleaf.org/)
 * [PostgreSQL 11+](https://www.postgresql.org/)
 
-## Project Setup
-
-### Java and Apache Maven
+## Prerequisites
 
 [Java](https://www.oracle.com/java/technologies/) and [Apache Maven](https://maven.apache.org/) are needed to execute any of the build commands.
 
@@ -34,17 +32,17 @@ installed before proceeding.
 
 *Docker*
 ```
-$ docker run --name winecellardb -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
+docker run --name winecellardb -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
 ```
 
 *podman*
 ```
-$ podman run --name winecellardb -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
+podman run --name winecellardb -p 5432:5432 -d -e POSTGRES_USER=winecellar -e POSTGRES_PASSWORD=winecellar -e POSTGRES_DB=winecellar postgres
 ```
 
 This will pull down the latest PostgreSQL image and run the container with all necessary Spring Boot properties for getting a connection. 
 
-### Running
+## Running
 
 ```
 $ git clone https://github.com/My-Wine-Cellar/winecellar-webapp
@@ -54,11 +52,11 @@ $ mvn spring-boot:run
 
 Access here: http://localhost:8080/
 
-| Account   | Type  | Password   |
-| --------- | ----- | ---------- |
-| `user1`   | user  | `password` |
-| `user2`   | user  | `password` |
-| `admin`   | admin | `password` |
+| Account   | Password   | Type  |
+| --------- | ---------- | ----- |
+| `user1`   | `password` | user  |
+| `user2`   | `password` | user  |
+| `admin`   | `password` | admin |
 
 ## Contribution
 
@@ -70,8 +68,6 @@ Contributions to winecellar-webapp are managed on [GitHub.com](https://github.co
 * [Code submission](https://github.com/My-Wine-Cellar/winecellar-webapp/pulls)
 
 Contributions are most welcome !
-
-Feel free to fork the project.  There are issues and a project board.  Contact info is below.
 
 ## License
 
