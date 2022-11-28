@@ -69,6 +69,13 @@ Contributions to winecellar-webapp are managed on [GitHub.com](https://github.co
 
 Contributions are most welcome !
 
+Please, consult our [Code of Conduct](./CODE_OF_CONDUCT.md) policies for interacting in our
+community.
+
+Consider giving the project a [star](https://github.com/My-Wine-Cellar/winecellar-webapp/stargazers) on
+[GitHub](https://github.com/My-Wine-Cellar/winecellar-webapp) if you find it useful.
+
+
 ## License
 
 [![License](https://img.shields.io/badge/License-EPL%202.0-orange.svg)](https://www.eclipse.org/legal/epl-2.0/)
