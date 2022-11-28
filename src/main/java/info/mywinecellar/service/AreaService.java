@@ -15,10 +15,9 @@ import info.mywinecellar.dto.ProducerDto;
 import info.mywinecellar.model.Area;
 import info.mywinecellar.model.Producer;
 
+import jakarta.inject.Inject;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
-
-import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
 

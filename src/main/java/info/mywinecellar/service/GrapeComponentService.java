@@ -10,10 +10,9 @@ package info.mywinecellar.service;
 
 import info.mywinecellar.model.GrapeComponent;
 
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-
-import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
 

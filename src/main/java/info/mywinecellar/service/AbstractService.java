@@ -14,13 +14,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
-
-import javax.inject.Inject;
 
 import lombok.extern.log4j.Log4j2;
 

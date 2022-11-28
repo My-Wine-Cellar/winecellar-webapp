@@ -48,7 +48,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

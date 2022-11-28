@@ -22,10 +22,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-
-import javax.inject.Inject;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
