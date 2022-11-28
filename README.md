@@ -62,9 +62,9 @@ Access here: http://localhost:8080/
 
 Contributions to winecellar-webapp are managed on [GitHub.com](https://github.com/My-Wine-Cellar/winecellar-webapp)
 
-* [Ask a question](https://github.com/My-Wine-Cellar/winecellar-webapp/discussions)
-* [Raise an issue](https://github.com/My-Wine-Cellar/winecellar-webapp/issues)
-* [Feature request](https://github.com/My-Wine-Cellar/winecellar-webapp/issues)
+* [Ask a question](https://github.com/My-Wine-Cellar/winecellar-webapp/discussions/categories/general)
+* [Raise an issue](https://github.com/My-Wine-Cellar/winecellar-webapp/issues/new?assignees=&labels=bug&template=bug_report.md&title=)
+* [Feature request](https://github.com/My-Wine-Cellar/winecellar-webapp/issues/new?assignees=&labels=feature&template=feature_request.md&title=)
 * [Code submission](https://github.com/My-Wine-Cellar/winecellar-webapp/pulls)
 
 Contributions are most welcome !
